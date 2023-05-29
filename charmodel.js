@@ -19,11 +19,17 @@ class PlayerCharacter {
     this.alignment = null;
 
     this.str = null;
+    this.strmax = 20;
     this.dex = null;
+    this.dexmax = 20;
     this.con = null;
+    this.conmax = 20;
     this.int = null;
+    this.intmax = 20;
     this.wis = null;
+    this.wismax = 20;
     this.cha = null;
+    this.chamax = 20;
     this.primary_abilities = [];
     this.saving_throws = [];
     this.proficiency_bonus = null;
@@ -65,7 +71,7 @@ class PlayerCharacter {
     this.skin = null;
     this.hair = null;
 
-    this.armor_equipped = null;
+    this.armor_equipped = [];
     this.weapon_equipped = [];
     this.shield = null;
     this.backpack = null;
@@ -77,7 +83,6 @@ class PlayerCharacter {
     this.custom_equipment = null;
     this.image_link = null;
   }
-
 }
 
 class Race {
@@ -181,66 +186,51 @@ const Barbarian = {
       "Danger Sense: Advantage on DEX saves against effects you can see. You can't do this if you are blinded, deafened, or incapacitated.",
     ],
     [
-      "Primal Path: Choose a path that shapes the nature of your rage."
+      'Primal Path: Choose a path that shapes the nature of your rage.',
     ],
+    ['ASI'],
     [
-      "ASI"
+      'Extra Attack: You may attack twice whenever you take the Attack actin on your turn',
+      "Fast Movement: Your speed increases by 10 feet while you aren't wearing heavy armor",
     ],
-    [],
-    [],
-    [],
-    [
-      "ASI"
-    ],
-    [],
-    [],
     [],
     [
-      "ASI"
+      "Feral Instinct: You have advantage on initiative rolls. If you are surprised at the beginning of combat and aren't incapacitated, you can act normall on your first turn, but only if you enter your rage before doiug anything else.",
     ],
-    [],
-    [],
+    ['ASI'],
+    [
+      'Brutal Critical: You can roll one additional weapon damage die when determining the extra damage for a critical hit with a melee attack.',
+    ],
     [],
     [
-      "ASI"
+      "Relentless Rage: If you drop to 0 hit points while raging and don't die outright, you can make a DC 10 CON save to drop to 1 hit point instead. The DC increases by 5 each time until you finish a short or long rest.",
+    ],
+    ['ASI'],
+    [
+      'Brutal Critical: You can roll two additional weapon damage die when determining the extra damage for a critical hit with a melee attack.',
     ],
     [],
+    [
+      'Persistent Rage: Your rage is so fierce that it ends early only if you fall unconscious or if you choose to end it.',
+    ],
+    ['ASI'],
+    [
+      'Brutal Critical: You can roll three additional weapon damage die when determining the extra damage for a critical hit with a melee attack.',
+    ],
+    [
+      'Indomitable Might: If your total for a Strength check is less than your Strength score, you may use that score instead',
+    ],
     [],
-    [],
-    [],
+    [
+      'Primal Champion: Your STR and CON scores increase by 4, your maximum for those scores is now 24.',
+    ],
   ],
-  functions: [
-    [
-      Roundup(character) {
-        if(character.armor_equipped == '') {
-          character.ac = 10 + AbilityModifier(character.dex);
-        }
-      }
-    ],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],
-  ]
 
+  //two empty at the beginning for levels 1 and 2, I don't want to complicate parsing this data
+  //I want to treat it the same as the features array
   subclasses: [
     {
-      name: "Berserker",
+      name: 'Berserker',
       features: [
         [],
         [],
@@ -262,10 +252,10 @@ const Barbarian = {
         [],
         [],
         [],
-      ]
-    }
+      ],
+    },
     {
-      name: "Totem Warrior",
+      name: 'Totem Warrior',
       features: [
         [],
         [],
@@ -287,13 +277,36 @@ const Barbarian = {
         [],
         [],
         [],
-      ]
-    }
-  ]
+      ],
+    },
+  ],
 
   AfterStats(character) {
-    //hp at level 1 == 12 + Con modifier
     character.starting_hp += AbilityModifier(character.con);
+
+    //Fast Movement
+    if (
+      character.level > 2 &&
+      !character.armor_equipped.includes('heavy') &&
+      !character.armor_equipped.includes('plate')
+    ) {
+      character.speed += 10;
+    }
+
+    //Primal Champion
+    if (character.level > 19) {
+      character.strmax = 24;
+      character.conmax - 24;
+      character.str += 4;
+      character.con += 4;
+    }
+  },
+
+  Roundup(character) {
+    //Unarmored Defense - base
+    if (character.armor_equipped == []) {
+      character.ac = 10 + AbilityModifier(character.dex);
+    }
   },
 
   LevelUp(character) {
@@ -310,5 +323,6 @@ const Barbarian = {
     AfterBackground
     AfterFeats
     Roundup
+    LevelUp
 
 */
