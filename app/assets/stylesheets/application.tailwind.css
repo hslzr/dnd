@@ -2,12 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
-/*
 
 @layer components {
-  .btn-primary {
-    @apply py-2 px-4 bg-blue-200;
+  .container-alert {
+    @apply flex flex-col justify-center w-[100vw] fixed bottom-10
+  }
+  
+  .alert {
+    @apply bg-orange-300 text-slate-900 border border-slate-700 px-6 flex w-[80vw] rounded-tl-[3.2rem] rounded-tr-xl rounded-br-[3.2rem] rounded-bl-xl font-raleway p-4 justify-between items-center fixed bottom-4 left-10;
+  }
+
+  .notice {
+    @apply text-white border border-slate-100 px-6 flex w-[80vw] rounded-tl-[3.2rem] rounded-tr-xl rounded-br-[3.2rem] rounded-bl-xl font-raleway p-4 justify-between items-center fixed bottom-4 left-10;
   }
 }
-
-*/

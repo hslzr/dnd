@@ -9,12 +9,28 @@
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Cormorant+Garamond:wght@400;500;600;700&family=EB+Garamond:wght@400;500;600;700;800&family=Inter+Tight:wght@100;200;300;400;500;600;700;800;900&family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Nunito:wght@200;300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700;800;900&family=Tinos:wght@400;700&display=swap" rel="stylesheet">
+  
+    <%= yield(:head_tags) %>
   </head>
 
+   <% if notice %>
+    <div class="flex flex-row absolute left-10 bottom-10">
+      <%= render 'layouts/notice' %>
+    </div>
+  <% end %>
+  
+  <% if alert %>
+    <div class="flex flex-row absolute left-10 bottom-10">
+      <%= render 'layouts/alert' %>
+    </div>
+  <% end %>
+
   <body>
-    <main class="container mx-auto mt-28 px-5 flex">
-      <p class="notice"><%= notice %></p>
-      <p class="alert"><%= alert %></p>
+    <main class="bg-black">
       <%= yield %>
     </main>
   </body>
