@@ -77,9 +77,7 @@ class PlayerCharacter {
     this.custom_equipment = null;
     this.image_link = null;
   }
-  applyBasics() {}
 
-  applyMods() {}
 }
 
 class Race {
@@ -182,25 +180,116 @@ const Barbarian = {
       'Reckless Attack: Advantage on your first melee STR attack roll and attacks against you until your next turn.',
       "Danger Sense: Advantage on DEX saves against effects you can see. You can't do this if you are blinded, deafened, or incapacitated.",
     ],
+    [
+      "Primal Path: Choose a path that shapes the nature of your rage."
+    ],
+    [
+      "ASI"
+    ],
     [],
     [],
     [],
+    [
+      "ASI"
+    ],
     [],
     [],
     [],
+    [
+      "ASI"
+    ],
     [],
     [],
     [],
-    [],
-    [],
-    [],
-    [],
-    [],
+    [
+      "ASI"
+    ],
     [],
     [],
     [],
     [],
   ],
+  functions: [
+    [
+      Roundup(character) {
+        if(character.armor_equipped == '') {
+          character.ac = 10 + AbilityModifier(character.dex);
+        }
+      }
+    ],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+  ]
+
+  subclasses: [
+    {
+      name: "Berserker",
+      features: [
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+      ]
+    }
+    {
+      name: "Totem Warrior",
+      features: [
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+      ]
+    }
+  ]
 
   AfterStats(character) {
     //hp at level 1 == 12 + Con modifier
@@ -211,3 +300,15 @@ const Barbarian = {
     character.max_hp += 7 + AbilityModifier(character.con);
   },
 };
+
+/*
+
+  Lifecycle Events of Character Creation
+    AfterRace
+    AfterClass
+    AfterStats
+    AfterBackground
+    AfterFeats
+    Roundup
+
+*/
