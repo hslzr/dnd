@@ -1,0 +1,25 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  asi: 1
+  languages: MyString
+  extra_languages: 1
+  weapons: MyString
+  armor: MyString
+  tools: MyString
+  skills: MyString
+  racial_traits: MyString
+  method: MyString
+
+two:
+  name: MyString
+  asi: 1
+  languages: MyString
+  extra_languages: 1
+  weapons: MyString
+  armor: MyString
+  tools: MyString
+  skills: MyString
+  racial_traits: MyString
+  method: MyString

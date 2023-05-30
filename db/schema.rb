@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_30_070847) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_30_073839) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -71,6 +71,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_30_070847) do
     t.string "bkgd_specialty"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "subrace_id"
   end
 
   create_table "feats", force: :cascade do |t|
@@ -120,6 +121,23 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_30_070847) do
     t.string "size", default: "medium"
     t.integer "speed", default: 15
     t.string "racial_traits", default: [], array: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "skills", default: [], array: true
+  end
+
+  create_table "subraces", force: :cascade do |t|
+    t.integer "race_id"
+    t.string "name"
+    t.integer "asi", default: [], array: true
+    t.string "languages", default: [], array: true
+    t.integer "extra_languages"
+    t.string "weapons", default: [], array: true
+    t.string "armor", default: [], array: true
+    t.string "tools", default: [], array: true
+    t.string "skills", default: [], array: true
+    t.string "racial_traits", default: [], array: true
+    t.string "method"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
