@@ -298,19 +298,19 @@ const Barbarian = {
         [],
         [],
       ],
-      totem_spirit: null;
+      totem_spirit: null,
       totem_choices: [
         'Bear: While raging, you have resistance to all damage except psychic damage. The spirit of the bear makes you tough enough to stand up to any punishment.',
         'Eagle: While you\'re ragina and aren\'t wearing heavy armor, other creatures have disadvantage on opportunity attack rolls against you, and you can use the Dash action as a bonus action on your turn. The spirit of the eagle makes you into a predator who can weave through the gray with ease.',
         "Wolf: While you're raging, your friends have advantage on melee attack rolls against any creature within 5 feet of you that is hostile to you. The spirit of the wolf makes you a leader of hunters."
       ],
-      beast_aspect: null;
+      beast_aspect: null,
       aspect_choices: [
         "Bear: You gain the might of a bear. your carrying capacity is doubled, and you have advantage on STR checks made to push, pull, lift, or break objects.",
         "Eagle: You gain the eyesight of an eagle. you can see up to 1 mile away with no difficulty, able to discern even fine details as though looking at something no more than 100 feet away from you. Additionally, dim light doesn't impose disadvantage on your Wisdom(Perception) checks.",
         "Wolf: You gain the hunting sensibilities of a wolf. You can track other creatures while traveling at a fast pace, and you can move stealthily while traveling at a normal pace."
       ],
-      totemic_attunement: null;
+      totemic_attunement: null,
       attunement_choices: [
         "Bear: While you're raging, any creature within 5 feet of you that's hostile to you has disadvantage on attack rolls against targets other than you or another character with this feature. An enemy is immune to this effect if it can't see or hear you or if it can't be frightened.",
         "Eagle: While raging, you have a flying speed equal to your current walking speed. This benefit works only in short bursts; you fall if you end your turn in the air and nothing else is holding you aloft.",
@@ -386,4 +386,5 @@ const Barbarian = {
     LevelUp
 
   Subclasses have an Initial() lifecycle function I want called when they are chosen
+  as well as a LevelUp() function that should be called to update subclass features
 */
