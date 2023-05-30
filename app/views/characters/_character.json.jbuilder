@@ -1,0 +1,2 @@
+json.extract! character, :id, :race_id, :player_class_id, :background_id, :feat_id, :user_id, :player_name, :char_name, :age, :height, :eyes, :hair, :skin, :gender, :description, :languages, :weapon_prof, :armor_prof, :tool_prof, :skill_prof, :expertise, :size, :speed, :hp_max, :equipment, :gold, :silver, :copper, :spells, :spell_slots, :trait, :ideal, :bond, :flaw, :bkgd_specialty, :created_at, :updated_at
+json.url character_url(character, format: :json)

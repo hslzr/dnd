@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_30_030914) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_30_062222) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -30,6 +30,45 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_30_030914) do
     t.string "flaws", default: [], array: true
     t.string "specialties", default: [], array: true
     t.string "specialty_description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "characters", force: :cascade do |t|
+    t.integer "race_id"
+    t.integer "player_class_id"
+    t.integer "background_id"
+    t.integer "feat_id"
+    t.integer "user_id"
+    t.string "player_name"
+    t.string "char_name"
+    t.string "age"
+    t.string "height"
+    t.string "eyes"
+    t.string "hair"
+    t.string "skin"
+    t.string "gender"
+    t.string "description"
+    t.string "languages", default: [], array: true
+    t.string "weapon_prof", default: [], array: true
+    t.string "armor_prof", default: [], array: true
+    t.string "tool_prof", default: [], array: true
+    t.string "skill_prof", default: [], array: true
+    t.string "expertise", default: [], array: true
+    t.string "size"
+    t.integer "speed"
+    t.integer "hp_max"
+    t.string "equipment", default: [], array: true
+    t.integer "gold"
+    t.integer "silver"
+    t.integer "copper"
+    t.string "spells", default: [], array: true
+    t.integer "spell_slots", default: [], array: true
+    t.string "trait"
+    t.string "ideal"
+    t.string "bond"
+    t.string "flaw"
+    t.string "bkgd_specialty"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

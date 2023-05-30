@@ -1,0 +1,177 @@
+<div id="<%= dom_id character %>">
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Race:</strong>
+    <%= character.race_id %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Player class:</strong>
+    <%= character.player_class_id %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Background:</strong>
+    <%= character.background_id %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Feat:</strong>
+    <%= character.feat_id %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">User:</strong>
+    <%= character.user_id %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Player name:</strong>
+    <%= character.player_name %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Char name:</strong>
+    <%= character.char_name %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Age:</strong>
+    <%= character.age %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Height:</strong>
+    <%= character.height %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Eyes:</strong>
+    <%= character.eyes %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Hair:</strong>
+    <%= character.hair %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Skin:</strong>
+    <%= character.skin %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Gender:</strong>
+    <%= character.gender %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Description:</strong>
+    <%= character.description %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Languages:</strong>
+    <%= character.languages %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Weapon prof:</strong>
+    <%= character.weapon_prof %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Armor prof:</strong>
+    <%= character.armor_prof %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Tool prof:</strong>
+    <%= character.tool_prof %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Skill prof:</strong>
+    <%= character.skill_prof %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Expertise:</strong>
+    <%= character.expertise %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Size:</strong>
+    <%= character.size %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Speed:</strong>
+    <%= character.speed %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Hp max:</strong>
+    <%= character.hp_max %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Equipment:</strong>
+    <%= character.equipment %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Gold:</strong>
+    <%= character.gold %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Silver:</strong>
+    <%= character.silver %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Copper:</strong>
+    <%= character.copper %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Spells:</strong>
+    <%= character.spells %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Spell slots:</strong>
+    <%= character.spell_slots %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Trait:</strong>
+    <%= character.trait %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Ideal:</strong>
+    <%= character.ideal %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Bond:</strong>
+    <%= character.bond %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Flaw:</strong>
+    <%= character.flaw %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Bkgd specialty:</strong>
+    <%= character.bkgd_specialty %>
+  </p>
+
+  <% if action_name != "show" %>
+    <%= link_to "Show this character", character, class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+    <%= link_to 'Edit this character', edit_character_path(character), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
+    <hr class="mt-6">
+  <% end %>
+</div>
