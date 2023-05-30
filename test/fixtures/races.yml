@@ -1,0 +1,29 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  asi: 1
+  age_limit: 1
+  height: 1
+  languages: MyString
+  extra_languages: 1
+  weapons: MyString
+  armor: MyString
+  tool_choice: MyString
+  size: MyString
+  speed: 1
+  racial_traits: MyString
+
+two:
+  name: MyString
+  asi: 1
+  age_limit: 1
+  height: 1
+  languages: MyString
+  extra_languages: 1
+  weapons: MyString
+  armor: MyString
+  tool_choice: MyString
+  size: MyString
+  speed: 1
+  racial_traits: MyString

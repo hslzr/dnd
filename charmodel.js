@@ -10,6 +10,7 @@ class PlayerCharacter {
     this.racial_traits = [];
     this.class = null;
     this.subclass = null;
+
     this.class_features = [];
     this.background = null;
 
@@ -67,6 +68,7 @@ class PlayerCharacter {
     this.cantrips = [];
 
     this.age = null;
+    this.age_limmit = null;
     this.height = null;
     this.weight = null;
     this.eyes = null;
@@ -93,7 +95,6 @@ class Race {
     this.name = race.name;
     this.ability_score_increase = race.ability_score_increase;
     this.age_limit = race.age_limit;
-    this.alignment_default = race.alignment_default;
     this.height = race.height;
     this.languages = race.languages;
     this.language_choices = race.language_choices;
@@ -103,6 +104,11 @@ class Race {
     this.speed = race.speed;
     this.racial_traits = race.racial_traits;
     this.subraces = race.subraces;
+    this.chosen_subrace = null;
+  }
+
+  choose_subrace(subrace) {
+    this.chosen_subrace = subrace;
   }
 }
 
@@ -110,7 +116,6 @@ const Dwarven_Race = {
   name: 'Dwarf',
   ability_score_increase: ['con', 2],
   age_limit: 450,
-  alignment_default: ['lawful', 'good'],
   height: [4, 5],
   languages: ['Common', 'Dwarvish'],
   language_choices: [0],
@@ -152,6 +157,28 @@ const Dwarven_Race = {
   ],
 };
 
+class PlayerClass {
+  constructor(pclass) {
+    this.name = pclass.name;
+    this.hit_die_size = pclass.hit_die_size;
+    this.num_of_hit_die = pclass.num_of_hit_die;
+    this.starting_hp = pclass.starting_hp;
+    this.primary_abilities = pclass.primary_abilities;
+    this.saving_throws = pclass.saving_throws;
+    this.armor = pclass.armor;
+    this.weapons = pclass.weapons;
+    this.skillchoice = pclass.skillchoice;
+    this.weapon_choices = pclass.weapon_choices;
+    this.equipment = pclss.equipment;
+    this.backpack = pclass.backpack;
+    this.starting_wealth_die = pclass.starting_wealth_die;
+    this.starting_wealth_multiplier = pclass.starting_wealth_multiplier;
+    this.features = pclass.features;
+
+    
+  }
+}
+
 const Barbarian = {
   name: 'Barbarian',
   hit_die_size: 12,
@@ -178,6 +205,8 @@ const Barbarian = {
   ],
   equipment: ['4 Javelins'],
   backpack: ['Explorer`s Pack'],
+  starting_wealth_die: 2,
+  starting_wealth_multiplier: 10,
 
   features: [
     [
@@ -465,3 +494,25 @@ const Acolyte = {
   feature:
     'Shelter of the Faithful: You command the respect of those who share your faith, and you can perform the religious ceremonies of your deity. You and your party can expect to receive free healing and care at a temple, shrine, or other established presence of your faith, though you must provide any material components needed for spells. Those who share your religion will support you at a modest lifestyle. You might have ties to a specific temple where you have a residence and the priests can be called upon for non-hazardous assistance near there.',
 };
+
+class Feat {
+  constructor(feat) {
+    this.name = feat.name; //string
+    this.description = feat.description; //string
+    this.features = feat.features; //array of strings
+    this.Roundup = feat.Roundup: //lifecycle function
+  }
+}
+
+const Alert_feat = {
+  name: 'Alert',
+  description: 'Always on the lookout for danger, you won`t be fooled by just anyone.',
+  features: [
+    'You gain +5 to initiative.',
+    'You can`t be surprised while you are conscious.',
+    'Other creatures don`t gain advantage on attack rolls against you as a result of being unseen by you.'
+  ],
+  Roundup(character) {
+    character.initiative += 5;
+  }
+}

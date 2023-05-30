@@ -1,0 +1,43 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  hit_die: 1
+  starting_hp: 1
+  primary_abilities: 1
+  saving_throws: 1
+  armor_prof: MyString
+  weapon_prof: MyString
+  tool_prof: MyString
+  skill_choices: MyString
+  num_skills: 1
+  equipment_choices: MyString
+  equipment: MyString
+  spellcasting_ability: 1
+  num_cantrips: 1
+  num_spells: 1
+  spell_list: 1
+  wealth_die: 1
+  wealth_mult: 1
+  features: MyString
+
+two:
+  name: MyString
+  hit_die: 1
+  starting_hp: 1
+  primary_abilities: 1
+  saving_throws: 1
+  armor_prof: MyString
+  weapon_prof: MyString
+  tool_prof: MyString
+  skill_choices: MyString
+  num_skills: 1
+  equipment_choices: MyString
+  equipment: MyString
+  spellcasting_ability: 1
+  num_cantrips: 1
+  num_spells: 1
+  spell_list: 1
+  wealth_die: 1
+  wealth_mult: 1
+  features: MyString

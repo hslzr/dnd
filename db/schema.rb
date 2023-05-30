@@ -10,9 +10,71 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_29_083815) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_30_030914) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "backgrounds", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.string "skill_prof", default: [], array: true
+    t.string "tool_prof", default: [], array: true
+    t.string "languages", default: [], array: true
+    t.string "equipment_choices", default: [], array: true
+    t.string "equipment", default: [], array: true
+    t.integer "gold"
+    t.text "feature"
+    t.string "traits", default: [], array: true
+    t.string "ideals", default: [], array: true
+    t.string "bonds", default: [], array: true
+    t.string "flaws", default: [], array: true
+    t.string "specialties", default: [], array: true
+    t.string "specialty_description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "player_classes", force: :cascade do |t|
+    t.string "name"
+    t.integer "hit_die"
+    t.integer "starting_hp"
+    t.integer "primary_abilities", default: [], array: true
+    t.integer "saving_throws", default: [], array: true
+    t.string "armor_prof", default: [], array: true
+    t.string "weapon_prof", default: [], array: true
+    t.string "tool_prof", default: [], array: true
+    t.string "skill_choices", default: [], array: true
+    t.integer "num_skills"
+    t.string "equipment_choices", default: [], array: true
+    t.string "equipment", default: [], array: true
+    t.integer "spellcasting_ability"
+    t.integer "num_cantrips"
+    t.integer "num_spells"
+    t.integer "spell_list", default: [], array: true
+    t.integer "wealth_die"
+    t.integer "wealth_mult"
+    t.string "features", default: [], array: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "races", force: :cascade do |t|
+    t.string "name"
+    t.integer "asi", default: [0, 0, 0, 0, 0, 0], array: true
+    t.integer "age_limit", default: 500
+    t.string "heightlow", default: "4'6\""
+    t.string "heighthigh", default: "7\"6"
+    t.string "languages", default: [], array: true
+    t.integer "extra_languages", default: 0
+    t.string "weapons", default: [], array: true
+    t.string "armor", default: [], array: true
+    t.string "tool_choice", default: [], array: true
+    t.string "size", default: "medium"
+    t.integer "speed", default: 15
+    t.string "racial_traits", default: [], array: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false

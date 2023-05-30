@@ -1,0 +1,35 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  description: MyText
+  skill_prof: MyString
+  tool_prof: MyString
+  languages: MyString
+  equipment_choices: MyString
+  equipment: MyString
+  gold: 1
+  feature: MyText
+  traits: MyString
+  ideals: MyString
+  bonds: MyString
+  flaws: MyString
+  specialties: MyString
+  specialty_description: MyString
+
+two:
+  name: MyString
+  description: MyText
+  skill_prof: MyString
+  tool_prof: MyString
+  languages: MyString
+  equipment_choices: MyString
+  equipment: MyString
+  gold: 1
+  feature: MyText
+  traits: MyString
+  ideals: MyString
+  bonds: MyString
+  flaws: MyString
+  specialties: MyString
+  specialty_description: MyString
