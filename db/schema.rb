@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_30_073839) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_30_092548) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -32,6 +32,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_30_073839) do
     t.string "specialty_description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "weapon_prof", default: [], array: true
+    t.string "armor_prof", default: [], array: true
   end
 
   create_table "characters", force: :cascade do |t|
@@ -93,14 +95,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_30_073839) do
     t.string "weapon_prof", default: [], array: true
     t.string "tool_prof", default: [], array: true
     t.string "skill_choices", default: [], array: true
-    t.integer "num_skills"
+    t.integer "num_skills", default: 0
     t.string "equipment_choices", default: [], array: true
     t.string "equipment", default: [], array: true
     t.integer "spellcasting_ability", default: 0
     t.integer "num_cantrips", default: 0
     t.integer "num_spells", default: 0
     t.integer "spell_list", default: [], array: true
-    t.integer "wealth_die", default: 4
+    t.integer "wealth_die", default: 2
     t.integer "wealth_mult", default: 10
     t.string "features", default: [], array: true
     t.datetime "created_at", null: false
@@ -124,6 +126,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_30_073839) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "skills", default: [], array: true
+  end
+
+  create_table "subclasses", force: :cascade do |t|
+    t.integer "player_class_id"
+    t.string "name"
+    t.string "features", default: [], array: true
+    t.text "custom", default: ""
+    t.string "method", default: ""
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "subraces", force: :cascade do |t|
