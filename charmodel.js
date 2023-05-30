@@ -175,7 +175,7 @@ class PlayerClass {
     this.starting_wealth_multiplier = pclass.starting_wealth_multiplier;
     this.features = pclass.features;
 
-    
+
   }
 }
 

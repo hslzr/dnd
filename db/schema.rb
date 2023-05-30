@@ -96,12 +96,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_30_073839) do
     t.integer "num_skills"
     t.string "equipment_choices", default: [], array: true
     t.string "equipment", default: [], array: true
-    t.integer "spellcasting_ability"
-    t.integer "num_cantrips"
-    t.integer "num_spells"
+    t.integer "spellcasting_ability", default: 0
+    t.integer "num_cantrips", default: 0
+    t.integer "num_spells", default: 0
     t.integer "spell_list", default: [], array: true
-    t.integer "wealth_die"
-    t.integer "wealth_mult"
+    t.integer "wealth_die", default: 4
+    t.integer "wealth_mult", default: 10
     t.string "features", default: [], array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
