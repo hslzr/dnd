@@ -1,4 +1,20 @@
-<div>
-  <h1 class="font-bold text-4xl">Creation#sheet</h1>
-  <p>Find me in app/views/creation/sheet.html.erb</p>
+<div class="flex flex-col align-bottom gap-2">
+  <h1 class="font-black text-4xl">Creation</h1>
+
+  <%= turbo_frame_tag "form" do %>
+    <%= form_tag creation_sheet_path, method: :get, data: { controller: "dropdown", action: "change->dropdown#submit" } do %>
+      <%= select_tag :race, options_from_collection_for_select(@races, "id", "name", @race&.id), prompt: "- Please select -" %>
+      <%= select_tag :subrace, options_from_collection_for_select(@subraces, "id", "name", @subrace&.id), prompt: "- Subrace -" %>
+    <% end %>
+    
+    <% if @subrace %>
+      <div class="block mt-4">
+        <%= "#{@subrace.name} is always a good choice." %>
+        <div class="mt-4"><%= link_to "Pick Another", creation_sheet_path, class: "text=blue-600 underline" %></div>
+      </div>
+    <% end %>
+  <% end %>
+
 </div>
+
+

@@ -62,6 +62,40 @@ DwarvenRace.subraces.create(
   method: ''
 )
 
+SliverRace = Race.create(
+  name: 'Sliver',
+  asi: [0,1,0,1,0,0],
+  age_limit: 15,
+  heightlow: "4'",
+  heighthigh: "6'",
+  languages: ['Common', 'Infernal'],
+  weapons: ['Spear'],
+  speed: 35,
+  racial_traits: [
+    'Spells affecting members of your party affect you as well.',
+    'Darkvision',
+    'Sliverskin: Resistance to Psychic damage.',
+    'Hive Wisdom: You have advantage on Wisdom(Perception) checks underground.',
+  ]
+)
+
+SliverRace.subraces.create(
+  name: 'Gemhide Slivers',
+  asi: [0,0,0,1,1,0],
+  racial_traits: ['Mana Armor: Resistance to magic damage the first time it is taken each day.'],
+  skills: ['Arcana'],
+  extra_languages: 0,
+  method: ''
+)
+
+SliverRace.subraces.create(
+  name: 'Hive Slivers',
+  asi: [0,0,1,0,0,0],
+  racial_traits: ['Clone: You may create a simulacrum of yourself once per long rest that lasts for 4 hours.'],
+  extra_languages: 0,
+  method: ''
+)
+
 Barbarian = PlayerClass.create(
   name: 'Barbarian',
   hit_die: 12,
