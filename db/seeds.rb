@@ -8,7 +8,9 @@
 
 User.destroy_all
 Race.destroy_all
+Subrace.destroy_all
 PlayerClass.destroy_all
+Subclass.destroy_all
 Background.destroy_all
 Feat.destroy_all
 Character.destroy_all
@@ -179,7 +181,7 @@ Barbarian.subclasses.create(
   "
 )
 
-Background.create(
+Acolyte = Background.create(
   name: "Acolyte",
   description: 'You have spent your life in the service of a temple. You act as an intermediary between the realm of the holy and the mortal world.',
   skill_prof: ['insight', 'religion'],
@@ -228,4 +230,15 @@ Background.create(
   ],
   feature:
     'Shelter of the Faithful: You command the respect of those who share your faith, and you can perform the religious ceremonies of your deity. You and your party can expect to receive free healing and care at a temple, shrine, or other established presence of your faith, though you must provide any material components needed for spells. Those who share your religion will support you at a modest lifestyle. You might have ties to a specific temple where you have a residence and the priests can be called upon for non-hazardous assistance near there.',
+)
+
+Feat_alert = Feat.create(
+  name: 'Alert',
+  description: 'Always on the lookout for danger, you won`t be fooled by just anyone.',
+  features: [
+    'You gain +5 to initiative.',
+    'You can`t be surprised while you are conscious.',
+    'Other creatures don`t gain advantage on attack rolls against you as a result of being unseen by you.'
+  ],
+  method: ''
 )
