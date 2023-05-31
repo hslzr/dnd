@@ -2,6 +2,6 @@
 
 * Ruby 3.1.2
 
-* PostgreSQL
+* PostgreSQL 1.1
 
 * Tailwind CSS

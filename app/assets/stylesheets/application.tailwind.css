@@ -9,10 +9,30 @@
   }
   
   .alert {
-    @apply bg-orange-300 text-slate-900 border border-slate-700 px-6 flex w-[80vw] rounded-tl-[3.2rem] rounded-tr-xl rounded-br-[3.2rem] rounded-bl-xl font-raleway p-4 justify-between items-center fixed bottom-4 left-10;
+    @apply bg-orange-300 text-slate-900 border border-slate-700 px-6 flex w-[80vw] rounded-tl-[3.2rem] rounded-tr-xl rounded-br-[3.2rem] rounded-bl-xl font-inter p-4 justify-between items-center fixed bottom-4 left-10;
   }
 
   .notice {
-    @apply text-white border border-slate-100 px-6 flex w-[80vw] rounded-tl-[3.2rem] rounded-tr-xl rounded-br-[3.2rem] rounded-bl-xl font-raleway p-4 justify-between items-center fixed bottom-4 left-10;
+    @apply text-white border border-slate-100 px-6 flex w-[80vw] rounded-tl-[3.2rem] rounded-tr-xl rounded-br-[3.2rem] rounded-bl-xl font-inter p-4 justify-between items-center fixed bottom-4 left-10;
+  }
+
+  .formfield {
+    @apply block border border-gray-200 outline-none px-3 py-2 mt-2 w-1/2;
+  }
+
+  .formid {
+    @apply bg-blue-300 w-1/6 rounded-full;
+  }
+
+  .formcalc {
+    @apply bg-orange-300 w-1/6 rounded-full;
+  }
+
+  .formentry {
+    @apply bg-green-300 w-1/4 rounded-md;
+  }
+
+  .formselect {
+    @apply bg-zinc-400 w-1/4;
   }
 }
