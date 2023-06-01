@@ -6,7 +6,7 @@
       <%= select_tag :race, options_from_collection_for_select(@races, "id", "name", @race&.id), prompt: "- Please select -" %>
       <%= select_tag :subrace, options_from_collection_for_select(@subraces, "id", "name", @subrace&.id), prompt: "- Subrace -" %>
     <% end %>
-    
+
     <% if @subrace %>
       <div class="block mt-4">
         <%= "#{@subrace.name} is always a good choice." %>
@@ -200,7 +200,7 @@
 
 
   </div>
-  <div class="flex flex-col gap-2 border-2 border-green-300 w-1/4" id="secondcolumn">
+  <div class="flex flex-col gap-2 border-2 border-green-300" id="secondcolumn">
     <div class="flex flex-col border-2 border-blue-400 text-center p-2" id="about">
       <div class="flex w-full justify-center gap-2">
         <div class="flex flex-col">
@@ -237,15 +237,15 @@
     </div>
     <div class="flex gap-4 border-2 border-red-400 text-center" id="substats">
       <div class="tracking-box">
-          <p class="sheetcell" data-sheet-target="substatAC"></p>
+          <p class="sheetcalc" data-sheet-target="substatAC"></p>
           <p class="text-xs mx-2">AC</p>
       </div>
       <div class="tracking-box">
-          <p class="sheetcell" data-sheet-target="substatInitiative"></p>
+          <p class="sheetcalc" data-sheet-target="substatInitiative"></p>
           <p class="text-xs mx-2">Initiative</p>
       </div>
       <div class="tracking-box">
-          <p class="sheetcell" data-sheet-target="substatSpeed"></p>
+          <p class="sheetcalc" data-sheet-target="substatSpeed"></p>
           <p class="text-xs mx-2">Speed</p>
       </div>
       <div class="tracking-box">
@@ -256,19 +256,19 @@
     <div class="flex flex-col gap-2 border-2 border-teal-300 text-center" id="playtracking">
       <div class="flex gap-2 items-top justify-center">
         <div class="tracking-box">
-          <p class="sheetcell" data-sheet-target="trackingMaxHP"></p>
+          <p class="sheetcalc" data-sheet-target="trackingMaxHP"></p>
           <p class="text-xs mx-2">MAX HP</p>
-          <p class="sheetcell" data-sheet-target="trackingCurrentHP"></p>
+          <p class="sheetcalc" data-sheet-target="trackingCurrentHP"></p>
           <p class="text-xs mx-2">CURRENT HP</p>
         </div>
         <div class="tracking-box">
-          <p class="sheetcell" data-sheet-target="trackingTemporaryHP"></p>
+          <p class="sheetcalc" data-sheet-target="trackingTemporaryHP"></p>
           <p class="text-xs mx-2">TEMPORARY HP</p>
         </div>
       </div>
       <div class="flex gap-2 items-top justify-center">
         <div class="tracking-box">
-          <p class="sheetcell" data-sheet-target="trackingHitDice"></p>
+          <p class="sheetcalc" data-sheet-target="trackingHitDice"></p>
           <p class="text-xs mx-2">HIT DICE</p>
         </div>
         <div class="tracking-box">
@@ -283,40 +283,165 @@
     <div class="flex gap-1 border-2 border-orange-300 rounded-sm text-center justify-center" id="attacklist">
       <div class="flex flex-col w-1/3">
         <p class="text-xs font-bold">NAME</p>
-        <p class="sheetcell w-full"></p>
-        <p class="sheetcell w-full"></p>
-        <p class="sheetcell w-full"></p>
-        <p class="sheetcell w-full"></p>
+        <p class="sheetcalc w-full"></p>
+        <p class="sheetcalc w-full"></p>
+        <p class="sheetcalc w-full"></p>
+        <p class="sheetcalc w-full"></p>
       </div>
       <div class="flex flex-col w-1/6">
         <p class="text-xs font-bold">BONUS</p>
-        <p class="sheetcell w-full"></p>
-        <p class="sheetcell w-full"></p>
-        <p class="sheetcell w-full"></p>
-        <p class="sheetcell w-full"></p>
+        <p class="sheetcalc w-full"></p>
+        <p class="sheetcalc w-full"></p>
+        <p class="sheetcalc w-full"></p>
+        <p class="sheetcalc w-full"></p>
       </div>
       <div class="flex flex-col w-1/3">
         <p class="text-xs font-bold">DAMAGE</p>
-        <p class="sheetcell w-full"></p>
-        <p class="sheetcell w-full"></p>
-        <p class="sheetcell w-full"></p>
-        <p class="sheetcell w-full"></p>
+        <p class="sheetcalc w-full"></p>
+        <p class="sheetcalc w-full"></p>
+        <p class="sheetcalc w-full"></p>
+        <p class="sheetcalc w-full"></p>
       </div>
     </div>
     <div class="w-full h-full bg-red-200" id="featurestraits" data-sheet-target="featureList"></div>
   </div>
-  <div class="flex flex-col" id="thirdcolumn">
-    <div class="flex">
-      <div class="flex flex-col" id="spells">
+    <div class="flex flex-col" id="thirdcolumn">
+      <div class="flex gap-4 border-2 border-red-400 text-center" id="castingstats">
+        <div class="tracking-box">
+          <p class="sheetcalc" data-sheet-target="castingAbility"></p>
+          <p class="text-xs mx-2">SPELLCASTING ABILITY</p>
+        </div>
+        <div class="tracking-box">
+          <p class="sheetcalc" data-sheet-target="castingSaveDC"></p>
+          <p class="text-xs mx-2">SPELL SAVE DC</p>
+        </div>
+        <div class="tracking-box">
+          <p class="sheetcalc" data-sheet-target="castingAttackBonus"></p>
+          <p class="text-xs mx-2">SPELL ATTACK BONUS</p>
+        </div>
       </div>
-      <div class="flex flex-col" id="appearance">
+      <div class="flex flex-col text-center" id="spells">
+        <h2 class="tracking-box">Spells</h2>
+        <div class="flex flex-col" id="cantrips">
+          <h4 class="font-bold text-sm">Cantrips</h4>
+        </div>
+        <div class="flex flex-col" id="spell1">
+          <div class="flex justify-around">
+            <h4 class="font-bold text-sm">1</h4>
+            <div class="tracking-box">
+              <p data-sheet-target="spellSlots1">0</p>
+              <p>Spell Slots</p>
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-col" id="spell2">
+          <div class="flex justify-around">
+            <h4 class="font-bold text-sm">2</h4>
+            <div class="tracking-box">
+              <p data-sheet-target="spellSlots2">0</p>
+              <p>Spell Slots</p>
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-col" id="spell3">
+          <div class="flex justify-around">
+            <h4 class="font-bold text-sm">3</h4>
+            <div class="tracking-box">
+              <p data-sheet-target="spellSlots3">0</p>
+              <p>Spell Slots</p>
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-col" id="spell4">
+          <div class="flex justify-around">
+            <h4 class="font-bold text-sm">4</h4>
+            <div class="tracking-box">
+              <p data-sheet-target="spellSlots4">0</p>
+              <p>Spell Slots</p>
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-col" id="spell5">
+          <div class="flex justify-around">
+            <h4 class="font-bold text-sm">5</h4>
+            <div class="tracking-box">
+              <p data-sheet-target="spellSlots5">0</p>
+              <p>Spell Slots</p>
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-col" id="spell6">
+          <div class="flex justify-around">
+            <h4 class="font-bold text-sm">6</h4>
+            <div class="tracking-box">
+              <p data-sheet-target="spellSlots6">0</p>
+              <p>Spell Slots</p>
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-col" id="spell7">
+          <div class="flex justify-around">
+            <h4 class="font-bold text-sm">7</h4>
+            <div class="tracking-box">
+              <p data-sheet-target="spellSlots7">0</p>
+              <p>Spell Slots</p>
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-col" id="spell8">
+          <div class="flex justify-around">
+            <h4 class="font-bold text-sm">8</h4>
+            <div class="tracking-box">
+              <p data-sheet-target="spellSlots8">0</p>
+              <p>Spell Slots</p>
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-col" id="spell9">
+          <div class="flex justify-around">
+            <h4 class="font-bold text-sm">9</h4>
+            <div class="tracking-box">
+              <p data-sheet-target="spellSlots9">0</p>
+              <p>Spell Slots</p>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="flex">
+      <div class="flex flex-col text-center" id="tbif">
+        <div class="tracking-box">
+          <h4 class="font-bold font-sm">Personality Traits</h4>
+        </div>
+        <div class="tracking-box">
+          <h4 class="font-bold font-sm">Bonds</h4>
+        </div>
+        <div class="tracking-box">
+          <h4 class="font-bold font-sm">Ideals</h4>
+        </div>
+        <div class="tracking-box">
+          <h4 class="font-bold font-sm">Flaws</h4>
+        </div>
+      </div>
       <div class="flex flex-col" id="equipment">
-      </div>
-      <div class="flex flex-col" id="customequipment">
-      </div>
+        <div class="flex text-center">
+          <div class="tracking-box">
+            <p class="sheetcell" data-sheet-target="equipGP"></p>
+            <p class="text-xs mx-2">GP</p>
+          </div>
+          <div class="tracking-box">
+            <p class="sheetcell" data-sheet-target="equipSP"></p>
+            <p class="text-xs mx-2">SP</p>
+          </div>
+          <div class="tracking-box">
+            <p class="sheetcell" data-sheet-target="equipCP"></p>
+            <p class="text-xs mx-2">CP</p>
+          </div>
+        </div>
+        <h4 class="font-bold">Weapons</h4>
+        <h4 class="font-bold">Armor</h4>
+        <h4 class="font-bold">Tools</h4>
+        <h4 class="font-bold">Magical</h4>
+        <h4 class="font-bold">Misc.</h4>
+      </h4>
     </div>
   </div>
 </section>

@@ -7,7 +7,7 @@
   .container-alert {
     @apply flex flex-col justify-center w-[100vw] fixed bottom-10
   }
-  
+
   .alert {
     @apply bg-orange-300 text-slate-900 border border-slate-700 px-6 flex w-[80vw] rounded-tl-[3.2rem] rounded-tr-xl rounded-br-[3.2rem] rounded-bl-xl font-inter p-4 justify-between items-center fixed bottom-4 left-10;
   }
@@ -38,6 +38,10 @@
 
   .sheetcell {
     @apply px-2 text-center bg-blue-200 border-2 border-black min-w-[1.6rem] min-h-[1.6rem];
+  }
+
+  .sheetcalc {
+    @apply px-2 text-center bg-green-200 border-2 border-black min-w-[1.6rem] min-h-[1.6rem];
   }
 
   .statframe {
