@@ -37,7 +37,7 @@
   }
 
   .sheetcell {
-    @apply m-2 w-full bg-blue-200 border-2 border-black;
+    @apply m-2 px-2 text-center bg-blue-200 border-2 border-black min-w-[1.6rem] min-h-[1.6rem];
   }
 
   .statframe {
@@ -46,6 +46,10 @@
 
   .base-statbox {
     @apply w-1/2 h-16 bg-blue-200;
+  }
+
+  .prof-list {
+    @apply flex flex-col w-1/2 p-2 justify-center border-2 border-black;
   }
 
   .modifier-box {
