@@ -37,7 +37,7 @@
   }
 
   .sheetcell {
-    @apply m-2 px-2 text-center bg-blue-200 border-2 border-black min-w-[1.6rem] min-h-[1.6rem];
+    @apply px-2 text-center bg-blue-200 border-2 border-black min-w-[1.6rem] min-h-[1.6rem];
   }
 
   .statframe {
@@ -58,5 +58,9 @@
 
   .proficiency-box {
     @apply border-2 border-blue-400 rounded-full w-4 h-4 mr-2;
+  }
+
+  .tracking-box {
+    @apply flex flex-col p-2 border-2 border-black rounded-sm;
   }
 }

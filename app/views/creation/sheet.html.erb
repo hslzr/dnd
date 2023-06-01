@@ -18,7 +18,7 @@
 </div>
 
 <section class="flex" id="sheet" data-controller="sheet">
-  <div class="flex flex-col gap-2 border-2 border-green-300 w-1/4" id="stats">
+  <div class="flex flex-col gap-2 border-2 border-green-300 w-1/4" id="firstcolumn">
 
     <p><span class="sheetcell" data-sheet-target="charName">Dartagnan</span>Character Name</p>
     <p><span class="sheetcell" data-sheet-target="profBonus">2</span>Proficiency bonus</p>
@@ -200,9 +200,9 @@
 
 
   </div>
-  <div class="flex flex-col gap-2 border-2 border-green-300 w-1/4" id="features">
-    <div class="flex flex-col border-2 border-blue-400 text-center" id="about">
-      <div class="flex w-full justify-center gap-auto">
+  <div class="flex flex-col gap-2 border-2 border-green-300 w-1/4" id="secondcolumn">
+    <div class="flex flex-col border-2 border-blue-400 text-center p-2" id="about">
+      <div class="flex w-full justify-center gap-2">
         <div class="flex flex-col">
           <p class="sheetcell" data-sheet-target="aboutClass">Barbarian</p>
           <p class="text-xs mx-2">CLASS</p>
@@ -220,7 +220,7 @@
           <p class="text-xs mx-2">PLAYER NAME</p>
         </div>
       </div>
-      <div class="flex w-full justify-center gap-auto">
+      <div class="flex w-full justify-center gap-2">
         <div class="flex flex-col">
           <p class="sheetcell" data-sheet-target="aboutRace">Dwarf</p>
           <p class="text-xs mx-2">RACE</p>
@@ -235,24 +235,75 @@
         </div>
       </div>
     </div>
-    <div class="flex gap-4 border-2 border-sky-300 text-center" id="substats">
-      <div class="flex flex-col m-2 border-2 border-black rounded-sm">
+    <div class="flex gap-4 border-2 border-red-400 text-center" id="substats">
+      <div class="tracking-box">
           <p class="sheetcell" data-sheet-target="substatAC"></p>
           <p class="text-xs mx-2">AC</p>
       </div>
-      <div class="flex flex-col m-2 border-2 border-black rounded-sm">
+      <div class="tracking-box">
           <p class="sheetcell" data-sheet-target="substatInitiative"></p>
           <p class="text-xs mx-2">Initiative</p>
       </div>
-      <div class="flex flex-col m-2 border-2 border-black rounded-sm">
+      <div class="tracking-box">
           <p class="sheetcell" data-sheet-target="substatSpeed"></p>
           <p class="text-xs mx-2">Speed</p>
       </div>
-      <div class="flex flex-col m-2 border-2 border-black rounded-sm">
+      <div class="tracking-box">
           <p class="sheetcell" data-sheet-target="substatInspiration"></p>
           <p class="text-xs mx-2">Inspiration</p>
       </div>
     </div>
+    <div class="flex flex-col gap-2 border-2 border-teal-300 text-center" id="playtracking">
+      <div class="flex gap-2 items-top justify-center">
+        <div class="tracking-box">
+          <p class="sheetcell" data-sheet-target="trackingMaxHP"></p>
+          <p class="text-xs mx-2">MAX HP</p>
+          <p class="sheetcell" data-sheet-target="trackingCurrentHP"></p>
+          <p class="text-xs mx-2">CURRENT HP</p>
+        </div>
+        <div class="tracking-box">
+          <p class="sheetcell" data-sheet-target="trackingTemporaryHP"></p>
+          <p class="text-xs mx-2">TEMPORARY HP</p>
+        </div>
+      </div>
+      <div class="flex gap-2 items-top justify-center">
+        <div class="tracking-box">
+          <p class="sheetcell" data-sheet-target="trackingHitDice"></p>
+          <p class="text-xs mx-2">HIT DICE</p>
+        </div>
+        <div class="tracking-box">
+          <p class="sheetcell" data-sheet-target="trackingDeathSaveSuccess"></p>
+          <p class="text-xs mx-2">SUCCESSES</p>
+          <p class="sheetcell" data-sheet-target="trackingDeathSaveFailure"></p>
+          <p class="text-xs mx-2">FAILURES</p>
+          <p class="text-xs mx-2 -mb-2 font-black">DEATH SAVES</p>
+        </div>
+      </div>
+    </div>
+    <div class="flex gap-1 border-2 border-orange-300 rounded-sm text-center justify-center" id="attacklist">
+      <div class="flex flex-col w-1/3">
+        <p class="text-xs font-bold">NAME</p>
+        <p class="sheetcell w-full"></p>
+        <p class="sheetcell w-full"></p>
+        <p class="sheetcell w-full"></p>
+        <p class="sheetcell w-full"></p>
+      </div>
+      <div class="flex flex-col w-1/6">
+        <p class="text-xs font-bold">BONUS</p>
+        <p class="sheetcell w-full"></p>
+        <p class="sheetcell w-full"></p>
+        <p class="sheetcell w-full"></p>
+        <p class="sheetcell w-full"></p>
+      </div>
+      <div class="flex flex-col w-1/3">
+        <p class="text-xs font-bold">DAMAGE</p>
+        <p class="sheetcell w-full"></p>
+        <p class="sheetcell w-full"></p>
+        <p class="sheetcell w-full"></p>
+        <p class="sheetcell w-full"></p>
+      </div>
+    </div>
+    <div class="w-full h-full bg-red-200" id="featurestraits" data-sheet-target="featureList"></div>
   </div>
   <div class="flex flex-col" id="thirdcolumn">
     <div class="flex">

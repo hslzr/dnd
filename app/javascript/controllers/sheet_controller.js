@@ -35,9 +35,24 @@ export default class extends Controller {
         "intimidationMod",
         "performanceMod",
         "persuasionMod",
-
-
-
+        "aboutClass",
+        "aboutLevel",
+        "aboutBackground",
+        "aboutPName",
+        "aboutRace",
+        "aboutAlignment",
+        "aboutExperiencePoints",
+        "substatAC",
+        "substatInitiative",
+        "substatSpeed",
+        "substatInspiration",
+        "trackingMaxHP",
+        "trackingCurrentHP",
+        "trackingTemporaryHP",
+        "trackingHitDice",
+        "trackingDeathSaveSuccess",
+        "trackingDeathSaveFailure",
+        "featureList"
 
     ]
 
