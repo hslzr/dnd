@@ -1,4 +1,4 @@
-<div class="flex flex-col align-bottom gap-2">
+<div class="flex flex-col align-bottom gap-4">
   <h1 class="font-black text-4xl">Creation</h1>
 
   <%= turbo_frame_tag "form" do %>
@@ -17,4 +17,203 @@
 
 </div>
 
+<section class="flex" id="sheet" data-controller="sheet">
+  <div class="flex flex-col gap-4 border-2 border-green-300 w-1/4" id="stats">
 
+    <p data-sheet-target="charName" class="sheetcell">Character Name</p>
+    <p><span class="sheetcell" data-sheet-target="profBonus"></span>Proficiency bonus</p>
+    <p><span class="sheetcell" data-sheet-target="passPerception"></span>Passive Perception</p>
+
+    <div class="flex align-center" id ="strblock">
+      <div class="statframe">
+        <p class="base-statbox" data-sheet-target="strBase"></p>
+        <p>STRENGTH</p>
+      </div>
+      <div class="flex flex-col w-1/2">
+        <div class="flex justify-between gap-2 items-center">
+          <div class="modifier-box" data-sheet-target="strSavingThrowMod"></div>
+          <p class="text-xs font-semibold text-center">Save</p>
+          <div class="proficiency-box"></div>
+        </div>
+        <div class="flex justify-between items-center">
+          <div class="modifier-box" data-sheet-target="athleticsMod"></div>
+          <p class="text-xs font-semibold text-center">Athletics</p>
+          <div class="proficiency-box"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex align-center" id ="dexblock">
+      <div class="statframe">
+        <p class="base-statbox" data-sheet-target="dexBase"></p>
+        <p>DEXTERITY</p>
+      </div>
+      <div class="flex flex-col w-1/2">
+        <div class="flex justify-between items-center">
+          <div class="modifier-box" data-sheet-target="dexSavingThrowMod"></div>
+          <p class="text-xs font-semibold text-center">Save</p>
+          <div class="proficiency-box"></div>
+        </div>
+        <div class="flex justify-between items-center">
+          <div class="modifier-box" data-sheet-target="acrobaticsMod"></div>
+          <p class="text-xs font-semibold text-center">Acrobatics</p>
+          <div class="proficiency-box"></div>
+        </div>
+        <div class="flex justify-between items-center">
+          <div class="modifier-box" data-sheet-target="sleightOfHandMod"></div>
+          <p class="text-xs font-semibold text-center">Sleight of Hand</p>
+          <div class="proficiency-box"></div>
+        </div>
+        <div class="flex justify-between items-center">
+          <div class="modifier-box" data-sheet-target="stealthMod"></div>
+          <p class="text-xs font-semibold text-center">Stealth</p>
+          <div class="proficiency-box"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex align-center" id ="conblock">
+      <div class="statframe">
+        <p class="base-statbox" data-sheet-target="conBase"></p>
+        <p>CONSTITUTION</p>
+      </div>
+      <div class="flex flex-col w-1/2">
+        <div class="flex justify-between items-center">
+          <div class="modifier-box" data-sheet-target="conSavingThrowMod"></div>
+          <p class="text-xs font-semibold text-center">Save</p>
+          <div class="proficiency-box"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex align-center" id ="intblock">
+      <div class="statframe">
+        <p class="base-statbox" data-sheet-target="intBase"></p>
+        <p>INTELLIGENCE</p>
+      </div>
+      <div class="flex flex-col w-1/2">
+        <div class="flex justify-between items-center">
+          <div class="modifier-box" data-sheet-target="intSavingThrowMod"></div>
+          <p class="text-xs font-semibold text-center">Save</p>
+          <div class="proficiency-box"></div>
+        </div>
+        <div class="flex justify-between items-center">
+          <div class="modifier-box" data-sheet-target="arcanaMod"></div>
+          <p class="text-xs font-semibold text-center">Arcana</p>
+          <div class="proficiency-box"></div>
+        </div>
+        <div class="flex justify-between items-center">
+          <div class="modifier-box" data-sheet-target="historyMod"></div>
+          <p class="text-xs font-semibold text-center">History</p>
+          <div class="proficiency-box"></div>
+        </div>
+        <div class="flex justify-between items-center">
+          <div class="modifier-box" data-sheet-target="investigationMod"></div>
+          <p class="text-xs font-semibold text-center">Investigation</p>
+          <div class="proficiency-box"></div>
+        </div>
+        <div class="flex justify-between items-center">
+          <div class="modifier-box" data-sheet-target="natureMod"></div>
+          <p class="text-xs font-semibold text-center">Nature</p>
+          <div class="proficiency-box"></div>
+        </div>
+        <div class="flex justify-between items-center">
+          <div class="modifier-box" data-sheet-target="religionMod"></div>
+          <p class="text-xs font-semibold text-center">Religion</p>
+          <div class="proficiency-box"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex align-center" id ="wisblock">
+      <div class="statframe">
+        <p class="base-statbox" data-sheet-target="wisBase"></p>
+        <p>WISDOM</p>
+      </div>
+      <div class="flex flex-col w-1/2">
+        <div class="flex justify-between items-center">
+          <div class="modifier-box" data-sheet-target="wisSavingThrowMod"></div>
+          <p class="text-xs font-semibold text-center">Save</p>
+          <div class="proficiency-box"></div>
+        </div>
+        <div class="flex justify-between items-center">
+          <div class="modifier-box" data-sheet-target="animalHandlingMod"></div>
+          <p class="text-xs font-semibold text-center">Animal Handling</p>
+          <div class="proficiency-box"></div>
+        </div>
+        <div class="flex justify-between items-center">
+          <div class="modifier-box" data-sheet-target="insightMod"></div>
+          <p class="text-xs font-semibold text-center">Insight</p>
+          <div class="proficiency-box"></div>
+        </div>
+        <div class="flex justify-between items-center">
+          <div class="modifier-box" data-sheet-target="medicineMod"></div>
+          <p class="text-xs font-semibold text-center">Medicine</p>
+          <div class="proficiency-box"></div>
+        </div>
+        <div class="flex justify-between items-center">
+          <div class="modifier-box" data-sheet-target="perceptionMod"></div>
+          <p class="text-xs font-semibold text-center">Perception</p>
+          <div class="proficiency-box"></div>
+        </div>
+        <div class="flex justify-between items-center">
+          <div class="modifier-box" data-sheet-target="survivalMod"></div>
+          <p class="text-xs font-semibold text-center">Survival</p>
+          <div class="proficiency-box"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex align-center" id ="chablock">
+      <div class="statframe">
+        <p class="base-statbox" data-sheet-target="chaBase"></p>
+        <p>CHARISMA</p>
+      </div>
+      <div class="flex flex-col w-1/2">
+        <div class="flex justify-between items-center">
+          <div class="modifier-box" data-sheet-target="chaSavingThrowMod"></div>
+          <p class="text-xs font-semibold text-center">Save</p>
+          <div class="proficiency-box"></div>
+        </div>
+        <div class="flex justify-between items-center">
+          <div class="modifier-box" data-sheet-target="deceptionMod"></div>
+          <p class="text-xs font-semibold text-center">Deception</p>
+          <div class="proficiency-box"></div>
+        </div>
+        <div class="flex justify-between items-center">
+          <div class="modifier-box" data-sheet-target="intimidationMod"></div>
+          <p class="text-xs font-semibold text-center">Intimidation</p>
+          <div class="proficiency-box"></div>
+        </div>
+        <div class="flex justify-between items-center">
+          <div class="modifier-box" data-sheet-target="performanceMod"></div>
+          <p class="text-xs font-semibold text-center">Performance</p>
+          <div class="proficiency-box"></div>
+        </div>
+        <div class="flex justify-between items-center">
+          <div class="modifier-box" data-sheet-target="persuasionMod"></div>
+          <p class="text-xs font-semibold text-center">Persuasion</p>
+          <div class="proficiency-box"></div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+  <div class="flex flex-col h-full" id="features">
+  </div>
+  <div class="flex flex-col h-full">
+    <div class="flex">
+      <div class="flex flex-col" id="spells">
+      </div>
+      <div class="flex flex-col" id="appearance">
+      </div>
+    </div>
+    <div class="flex">
+      <div class="flex flex-col" id="equipment">
+      </div>
+      <div class="flex flex-col" id="customequipment">
+      </div>
+    </div>
+  </div>
+</section>

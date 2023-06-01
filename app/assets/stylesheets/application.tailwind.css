@@ -35,4 +35,24 @@
   .formselect {
     @apply bg-zinc-400 w-1/4;
   }
+
+  .sheetcell {
+    @apply m-2 w-full bg-blue-200 border-2 border-black;
+  }
+
+  .statframe {
+    @apply flex flex-col gap-4 align-middle justify-between border-4 border-black p-2 mr-2 text-xs font-black items-center w-1/2;
+  }
+
+  .base-statbox {
+    @apply w-1/2 h-16 bg-blue-200;
+  }
+
+  .modifier-box {
+    @apply border-2 border-blue-400 w-6 h-6;
+  }
+
+  .proficiency-box {
+    @apply border-2 border-blue-400 rounded-full w-4 h-4 mr-2;
+  }
 }
