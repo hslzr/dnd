@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_30_092548) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_08_082852) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -79,7 +79,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_30_092548) do
   create_table "feats", force: :cascade do |t|
     t.string "name"
     t.string "description"
-    t.string "features", default: [], array: true
+    t.text "features", default: "{}"
     t.string "method"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -104,7 +104,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_30_092548) do
     t.integer "spell_list", default: [], array: true
     t.integer "wealth_die", default: 2
     t.integer "wealth_mult", default: 10
-    t.string "features", default: [], array: true
+    t.text "features", default: "{}"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -131,8 +131,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_30_092548) do
   create_table "subclasses", force: :cascade do |t|
     t.integer "player_class_id"
     t.string "name"
-    t.string "features", default: [], array: true
-    t.text "custom", default: ""
+    t.text "features", default: "{}"
+    t.text "custom"
     t.string "method", default: ""
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

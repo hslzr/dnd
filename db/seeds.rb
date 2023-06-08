@@ -119,100 +119,72 @@ Barbarian = PlayerClass.create(
   ],
   equipment: ['4 Javelins', 'Explorer`s Pack'],
   wealth_die: 2,
-  features: [
-    'Rage: Advantage on STR checks and STR saves, Rage Damage bonus, resistance to bludgeoning, piercing and slashing damage. | Unarmored Defense: Without armor your AC is 10 + Dex modifier',
-    'Reckless Attack: Advantage on your first melee STR attack roll and attacks against you until your next turn. | Danger Sense: Advantage on DEX saves against effects you can see. You can`t do this if you are blinded, deafened, or incapacitated.',
-    'Primal Path: Choose a path that shapes the nature of your rage.',
-    'ASI',
-    'Extra Attack: You may attack twice whenever you take the Attack actin on your turn | Fast Movement: Your speed increases by 10 feet while you aren`t wearing heavy armor',
-    'none',
-    'Feral Instinct: You have advantage on initiative rolls. If you are surprised at the beginning of combat and aren`t incapacitated, you can act normall on your first turn, but only if you enter your rage before doiug anything else.',
-    'ASI',
-    'Brutal Critical: You can roll one additional weapon damage die when determining the extra damage for a critical hit with a melee attack.',
-    'none',
-    'Relentless Rage: If you drop to 0 hit points while raging and don`t die outright, you can make a DC 10 CON save to drop to 1 hit point instead. The DC increases by 5 each time until you finish a short or long rest.',
-    'ASI',
-    'Brutal Critical: You can roll two additional weapon damage die when determining the extra damage for a critical hit with a melee attack.',
-    'none',
-    'Persistent Rage: Your rage is so fierce that it ends early only if you fall unconscious or if you choose to end it.',
-    'ASI',
-    'Brutal Critical: You can roll three additional weapon damage die when determining the extra damage for a critical hit with a melee attack.',
-    'Indomitable Might: If your total for a Strength check is less than your Strength score, you may use that score instead',
-    'none',
-    'Primal Champion: Your STR and CON scores increase by 4, your maximum for those scores is now 24.',
-  ],
+  features: {
+    1=>[
+      'Rage: Advantage on STR checks and STR saves, Rage Damage bonus, resistance to bludgeoning, piercing and slashing damage.',
+      'Unarmored Defense: Without armor your AC is 10 + Dex modifier'
+    ],
+    2=>[
+      'Reckless Attack: Advantage on your first melee STR attack roll and attacks against you until your next turn.',
+      'Danger Sense: Advantage on DEX saves against effects you can see. You can`t do this if you are blinded, deafened, or incapacitated.'
+    ],
+    3=>['Primal Path: Choose a path that shapes the nature of your rage.'],
+    4=>['ASI'],
+    5=>['Extra Attack: You may attack twice whenever you take the Attack actin on your turn.',
+       'Fast Movement: Your speed increases by 10 feet while you aren`t wearing heavy armor'
+      ],
+    7=>['Feral Instinct: You have advantage on initiative rolls. If you are surprised at the beginning of combat and aren`t incapacitated, you can act normall on your first turn, but only if you enter your rage before doiug anything else.'],
+    8=>['ASI'],
+    9=>['Brutal Critical: You can roll one additional weapon damage die when determining the extra damage for a critical hit with a melee attack.'],
+    11=>['Relentless Rage: If you drop to 0 hit points while raging and don`t die outright, you can make a DC 10 CON save to drop to 1 hit point instead. The DC increases by 5 each time until you finish a short or long rest.'],
+    12=>['ASI'],
+    13=>['Brutal Critical: You can roll two additional weapon damage die when determining the extra damage for a critical hit with a melee attack.'],
+    15=>['Persistent Rage: Your rage is so fierce that it ends early only if you fall unconscious or if you choose to end it.'],
+    16=>['ASI'],
+    17=>['Brutal Critical: You can roll three additional weapon damage die when determining the extra damage for a critical hit with a melee attack.'],
+    18=>['Indomitable Might: If your total for a Strength check is less than your Strength score, you may use that score instead'],
+    20=>['Primal Champion: Your STR and CON scores increase by 4, your maximum for those scores is now 24.'],
+  }
 )
 
 Barbarian.subclasses.create(
   name: "Berserker",
-  features: [
-        'none',
-        'none',
-        'Frenzy: You can go into a frenzy when you rage. If you do so, for the duration of your rage, you can make a single melee weapon attack as a bonus action on each of your turns after this one. When your rage ends, you suffer one level of exhaustion.',
-        'none',
-        'none',
-        'Mindless Rage: You can`t be charmed or frightened while raging. If you are charmed or frightened when you enter your rage, the effect is suspended for the duration of the rage.',
-        'none',
-        'none',
-        'none',
-        'Intimidating Presence: You can use your action to frighten someone with your menacing presence. Choose one creature you can see within 30 feet, if it can see or hear you it must succeed on a WIS save with DC of 8 plus your proficiency bonus plus your CHA modifier, or be frightened of you until the end of your next turn. On subsequent turns you can use your action to extend this effect another turn. The effect ends if the creature ends its turn out of line of sight or more than 60 feet away. If they successfully save, you can`t use this on them again for 24 hours.',
-        'none',
-        'none',
-        'none',
-        'Retaliation: When you take damage from a creature within 5 feet of you, you can use your reaction to make a melee weapon attack against that creature.',
-        'none',
-        'none',
-        'none',
-        'none',
-        'none',
-        'none',
-  ]
+  features: {
+    3=> ['Frenzy: You can go into a frenzy when you rage. If you do so, for the duration of your rage, you can make a single melee weapon attack as a bonus action on each of your turns after this one. When your rage ends, you suffer one level of exhaustion.'],
+    6=> ['Mindless Rage: You can`t be charmed or frightened while raging. If you are charmed or frightened when you enter your rage, the effect is suspended for the duration of the rage.'],
+    10=> ['Intimidating Presence: You can use your action to frighten someone with your menacing presence. Choose one creature you can see within 30 feet, if it can see or hear you it must succeed on a WIS save with DC of 8 plus your proficiency bonus plus your CHA modifier, or be frightened of you until the end of your next turn. On subsequent turns you can use your action to extend this effect another turn. The effect ends if the creature ends its turn out of line of sight or more than 60 feet away. If they successfully save, you can`t use this on them again for 24 hours.'],
+    14=> ['Retaliation: When you take damage from a creature within 5 feet of you, you can use your reaction to make a melee weapon attack against that creature.']
+  }
 )
 
 Barbarian.subclasses.create(
   name: "Totem Warrior",
-  features: [
-        'none',
-        'none',
-        'Spirit Seeker: You gain the ability to cast Beast Sense and Speak With Animals as rituals. | Totem Spirit: Choose a totem spirit and acquire its feature. You must make or acquire a physical totem object that imcorporates fur or feathers, claws, teeth, or bones of the totem aniumal. At your option, you also gain minior physical attributes that are reminiscent of your totem spirit. For example, if you have a bear totem spirit, you might be unusually hairy and thick-skinned, or if your totem is the eagle, your eyes turn bright yellow. Your totem animal might be an animal related to those listed here but more appropriate to your homeland.',
-        'none',
-        'none',
-        'Aspect of the Beast: You gain a magical benefit based on the totem animal of your choice.',
-        'none',
-        'none',
-        'none',
-        'Spirit Walker: You can cast the Commune With Nature spell as a ritual. When you do, a spiritual version of one of your totem animals appears to you to convey the information you seek.',
-        'none',
-        'none',
-        'none',
-        'Totemic Attunement: You gain a magical benefit based on the totem animal of your choice.',
-        'none',
-        'none',
-        'none',
-        'none',
-        'none',
-        'none',
-  ],
-  custom: "
-    totem_spirit: 0,
-    totem_choices: [
+  features: {
+    3=> ['Spirit Seeker: You gain the ability to cast Beast Sense and Speak With Animals as rituals.', 'Totem Spirit: Choose a totem spirit and acquire its feature. You must make or acquire a physical totem object that imcorporates fur or feathers, claws, teeth, or bones of the totem aniumal. At your option, you also gain minior physical attributes that are reminiscent of your totem spirit. For example, if you have a bear totem spirit, you might be unusually hairy and thick-skinned, or if your totem is the eagle, your eyes turn bright yellow. Your totem animal might be an animal related to those listed here but more appropriate to your homeland.'],
+    6=> ['Aspect of the Beast: You gain a magical benefit based on the totem animal of your choice.'],
+    10=> ['Spirit Walker: You can cast the Commune With Nature spell as a ritual. When you do, a spiritual version of one of your totem animals appears to you to convey the information you seek.'],
+    14=> ['Totemic Attunement: You gain a magical benefit based on the totem animal of your choice.']
+  },
+  custom: {
+    'totem_spirit'=> nil,
+    'totem_choices'=> [
       'Bear: While raging, you have resistance to all damage except psychic damage. The spirit of the bear makes you tough enough to stand up to any punishment.',
       'Eagle: While you`re ragina and aren`t wearing heavy armor, other creatures have disadvantage on opportunity attack rolls against you, and you can use the Dash action as a bonus action on your turn. The spirit of the eagle makes you into a predator who can weave through the gray with ease.',
       'Wolf: While you`re raging, your friends have advantage on melee attack rolls against any creature within 5 feet of you that is hostile to you. The spirit of the wolf makes you a leader of hunters.',
     ],
-    beast_aspect: 0,
-    aspect_choices: [
+    'beast_aspect'=> nil,
+    'aspect_choices'=> [
       'Bear: You gain the might of a bear. your carrying capacity is doubled, and you have advantage on STR checks made to push, pull, lift, or break objects.',
       'Eagle: You gain the eyesight of an eagle. you can see up to 1 mile away with no difficulty, able to discern even fine details as though looking at something no more than 100 feet away from you. Additionally, dim light doesn`t impose disadvantage on your Wisdom(Perception) checks.',
       'Wolf: You gain the hunting sensibilities of a wolf. You can track other creatures while traveling at a fast pace, and you can move stealthily while traveling at a normal pace.',
     ],
-    totemic_attunement: 0,
-    attunement_choices: [
+    'totemic_attunement'=> nil,
+    'attunement_choices'=> [
       'Bear: While you`re raging, any creature within 5 feet of you that`s hostile to you has disadvantage on attack rolls against targets other than you or another character with this feature. An enemy is immune to this effect if it can`t see or hear you or if it can`t be frightened.',
       'Eagle: While raging, you have a flying speed equal to your current walking speed. This benefit works only in short bursts; you fall if you end your turn in the air and nothing else is holding you aloft.',
       'Wolf: While you`re raging, you can use a bonus action on your turn to knock a Large or smaller creature prone when you hit it with meleee weapon attack.',
     ]
-  "
+  }
 )
 
 Acolyte = Background.create(
@@ -269,10 +241,12 @@ Acolyte = Background.create(
 Feat_alert = Feat.create(
   name: 'Alert',
   description: 'Always on the lookout for danger, you won`t be fooled by just anyone.',
-  features: [
-    'You gain +5 to initiative.',
-    'You can`t be surprised while you are conscious.',
-    'Other creatures don`t gain advantage on attack rolls against you as a result of being unseen by you.'
-  ],
+  features: {
+    0 => [
+      'You gain +5 to initiative.',
+      'You can`t be surprised while you are conscious.',
+      'Other creatures don`t gain advantage on attack rolls against you as a result of being unseen by you.'
+    ]
+  },
   method: ''
 )
