@@ -92,16 +92,16 @@ export default class extends Controller {
   }
 
   raceHandler(event) {
-    let racelist = event.target.children;
+    let racelist = event.target.children; //the target is the dropdown div containing options
     for (let i = 0; i < racelist.length; i++) {
+      //racelist is an HTMLCollection
       if (racelist.item(i).selected) {
-        fetch('/races/index')
+        name = racelist.item(i).innerText;
+        fetch(`/races/${name}`)
           .then((response) => response.json())
-          .then((data) => (this.allRaces = data));
-
-        console.log(this.allRaces);
-        //console.log(racelist.item(i).innerText);
+          .then((data) => console.log(data));
       }
+      //racelist.item(i).innerText
     }
   }
 }

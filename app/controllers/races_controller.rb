@@ -1,13 +1,11 @@
 class RacesController < ApplicationController
-  before_action :set_race, only: %i[ show ]
+  before_action :set_race, only: [ :show ]
 
   def index
     @races = Race.all
 
     respond_to do |format|
-      format.json {
-        render json: @races
-      }
+      format.json { render json: @races }
     end
   end
 
@@ -19,6 +17,6 @@ class RacesController < ApplicationController
 
   private
   def set_race
-    @race = Race.find(params[:id])
+    @race = Race.find_by(name: params[:name])
   end
 end
