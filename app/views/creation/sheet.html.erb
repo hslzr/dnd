@@ -2,6 +2,9 @@
   <div class="flex flex-col align-bottom gap-4">
     <h1 class="font-black text-4xl">Creation</h1>
 
+    <%#
+      We just use the turbo_frame for conditional form select population, the sheet is handled with JS
+    %>
     <%= turbo_frame_tag "form" do %>
       <%= form_tag creation_sheet_path, method: :get, data: { controller: "dropdown", action: "change->dropdown#submit submit->sheet#update" } do %>
         <%= select_tag :race, options_from_collection_for_select(@races, "id", "name", @race&.id), prompt: "- Please select -" %>

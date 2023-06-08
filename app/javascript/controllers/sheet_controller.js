@@ -63,6 +63,7 @@ export default class extends Controller {
   ];
 
   connect() {
+    //we'll take over from the turbo frame and store the form data in a Map
     this.choices = new Map();
     this.choices.set('race', 'none');
     this.choices.set('subrace', 'none');
@@ -72,12 +73,16 @@ export default class extends Controller {
   }
 
   update() {
+    //iterator replaes forEach on Map objects
     let iterchoice = this.choices.entries();
 
+    //there are 5 choices to make
     for (let i = 0; i < 5; i++) {
+      //we get the options for each form select in an HTMLCollection
       let label = iterchoice.next().value[0];
       let options = document.getElementById(label).children;
 
+      //we have to use set and item to deal with the HTMLCollection
       for (let j = 0; j < options.length; j++) {
         if (options.item(j).selected)
           this.choices.set(label, options.item(j).innerText);

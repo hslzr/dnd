@@ -1,11 +1,12 @@
 class CreationController < ApplicationController
-  before_action :find_mains
+  before_action :find_mains #update on turbo_frame submit
 
   def sheet
     @races = Race.all
     @player_classes = PlayerClass.all
     @backgrounds = Background.all
 
+    #conditional form select population
     @subraces = @race&.subraces || []
     @subclasses = @player_class&.subclasses || []
     @traits = @background&.traits || []
@@ -17,6 +18,7 @@ class CreationController < ApplicationController
   private
 
     def find_mains
+      #conditional form select population
       @race = Race.find_by(id: params[:race].presence)
       @subrace = Subrace.find_by(id: params[:subrace].presence)
       @player_class = PlayerClass.find_by(id: params[:player_class].presence)
