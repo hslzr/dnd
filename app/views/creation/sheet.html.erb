@@ -7,7 +7,7 @@
     %>
     <%= turbo_frame_tag "form" do %>
       <%= form_tag creation_sheet_path, method: :get, data: { controller: "dropdown", action: "change->dropdown#submit submit->sheet#update" } do %>
-        <%= select_tag :race, options_from_collection_for_select(@races, "id", "name", @race&.id), prompt: "- Please select -" %>
+        <%= select_tag :race, options_from_collection_for_select(@races, "id", "name", @race&.id), prompt: "- Please select -", data: { action: "change->sheet#raceHandler" } %>
         <%= select_tag :subrace, options_from_collection_for_select(@subraces, "id", "name", @subrace&.id), prompt: "- Subrace -" %>
         <%= select_tag :player_class, options_from_collection_for_select(@player_classes, "id", "name", @player_class&.id), prompt: "- Class -" %>
         <%= select_tag :subclass, options_from_collection_for_select(@subclasses, "id", "name", @subclass&.id), prompt: "- Subclass -" %>

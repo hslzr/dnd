@@ -90,4 +90,18 @@ export default class extends Controller {
     }
     console.log(this.choices);
   }
+
+  raceHandler(event) {
+    let racelist = event.target.children;
+    for (let i = 0; i < racelist.length; i++) {
+      if (racelist.item(i).selected) {
+        fetch('/races/index')
+          .then((response) => response.json())
+          .then((data) => (this.allRaces = data));
+
+        console.log(this.allRaces);
+        //console.log(racelist.item(i).innerText);
+      }
+    }
+  }
 }
