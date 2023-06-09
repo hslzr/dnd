@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   resources :characters
   resources :races, param: :name, only: [ :show ]
   resources :subraces, param: :name, only: [ :show ]
+  resources :player_classes, param: :name, only: [ :show ]
 
   devise_for :users
 

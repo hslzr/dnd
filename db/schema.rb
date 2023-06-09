@@ -91,9 +91,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_09_030206) do
     t.integer "starting_hp"
     t.integer "primary_abilities", default: [], array: true
     t.integer "saving_throws", default: [], array: true
-    t.string "armor_prof", default: [], array: true
-    t.string "weapon_prof", default: [], array: true
-    t.string "tool_prof", default: [], array: true
+    t.string "armor", default: [], array: true
+    t.string "weapons", default: [], array: true
+    t.string "tools", default: [], array: true
     t.string "skill_choices", default: [], array: true
     t.integer "num_skills", default: 0
     t.string "equipment_choices", default: [], array: true

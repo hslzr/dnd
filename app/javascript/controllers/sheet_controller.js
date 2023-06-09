@@ -66,8 +66,6 @@ export default class extends Controller {
     'backgroundSkills',
     'raceLanguages',
     'subraceLanguages',
-    'classLanguages',
-    'subclassLanguages',
     'backgroundLanguages',
     'raceWeapons',
     'subraceWeapons',
@@ -175,6 +173,70 @@ export default class extends Controller {
     }
   }
 
+  categoryHandler(event) {
+    let labels = event.params;
+    let list = event.target.children;
+
+    for (let i = 0; i < list.length; i++) {
+      //list is an HTMLCollection
+      if (list.item(i).selected) {
+        let name = list.item(i).innerText;
+        fetch(`${labels.url}${name}`)
+          .then((response) => response.json())
+          .then((data) => this.catUpdate(data, event.target.id));
+      }
+    }
+  }
+
+  catUpdate(data, cat_type) {
+    let languages, skills, weps, arm, tools;
+    switch (cat_type) {
+      case 'race':
+        console.log('Detected Race');
+        break;
+      case 'subrace':
+        console.log('Detected Subrace');
+        break;
+      case 'player_class':
+        console.log('Detected Class');
+        languages = this.classLanguagesTarget;
+        skills = this.classSkillsTarget;
+        weps = this.classWeaponsTarget;
+        arm = this.classArmorTarget;
+        tools = this.classToolsTarget;
+        //features aren't an array so PutList breaks because it calls forEach on it
+        //skills are a choice for class
+        break;
+      case 'subclass':
+        console.log('Detected Subclass');
+        break;
+      case 'background':
+        console.log('Detected Background');
+        break;
+      default:
+        console.log('Default Case');
+        break;
+    }
+    console.log('language');
+    if (cat_type != 'player_class') {
+      //no languages in class, skipping skills due to choice available
+      this.putList(data, data.languages, languages);
+
+      console.log('skills');
+      this.putList(data, data.skills, skills);
+    }
+    console.log('weps');
+    this.putList(data, data.weapons, weps);
+
+    console.log('armor');
+    this.putList(data, data.armor, arm);
+
+    console.log('tools');
+    this.putList(data, data.tools, tools);
+
+    console.log('done');
+  }
+
   subraceUpdate(subrace) {
     this.aboutSubraceTarget.innerText = subrace.name;
 
@@ -204,6 +266,8 @@ export default class extends Controller {
     //Subrace Tools
     this.putList(subrace, subrace.tools, this.subraceToolsTarget);
   }
+
+  //Utility Methods//
 
   //creates p tags for collection and appends list to target with label for category name
   //clears allChildfren of Target before appending so I use it in specific labeled targets only
