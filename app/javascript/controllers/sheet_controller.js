@@ -55,6 +55,16 @@ export default class extends Controller {
     'featureList',
     'raceFeatures',
     'raceLanguages',
+    'raceWeapons',
+    'subraceWeapons',
+    'classWeapons',
+    'subclassWeapons',
+    'backgroundWeapons',
+    'raceArmor',
+    'subraceArmor',
+    'classArmor',
+    'subclassArmor',
+    'backgroundArmor',
     'castingClass',
     'castingAbility',
     'castingSaveDC',
@@ -111,31 +121,26 @@ export default class extends Controller {
     this.aboutRaceTarget.innerText = race.name;
 
     //Racial Languages
-    //clear previous choices
-    this.removeAllChildNodes(this.raceLanguagesTarget);
-    //race label
-    let race_tag = document.createElement('p');
-    race_tag.append(`${race.name}:`);
-    this.raceLanguagesTarget.append(race_tag);
-    //fill list
-    race.languages.forEach((language) => {
-      let l_item = document.createElement('p');
-      l_item.classList.add('font-semibold');
-      l_item.append(language);
-      this.raceLanguagesTarget.append(l_item);
-    });
+    this.putList(race, race.languages, this.raceLanguagesTarget);
 
     //Racial Features
-    //clear previous choices
-    this.removeAllChildNodes(this.raceFeaturesTarget);
-    //race label
-    this.raceFeaturesTarget.append(race_tag);
-    //fill list
-    race.racial_traits.forEach((feature) => {
+    this.putList(race, race.racial_traits, this.raceFeaturesTarget);
+
+    //Racial Weapons
+    this.putList(race, race.weapons, this.raceWeaponsTarget);
+
+    //Racial Armor
+    this.putList(race, race.armor, this.raceArmorTarget);
+  }
+
+  //made for race but should work elsewhere
+  putList(category, collection, target) {
+    this.removeAllChildNodes(target);
+    target.append(this.getPTag(category.name));
+    collection.forEach((item) => {
       let l_item = document.createElement('p');
-      l_item.classList.add('font-semibold');
-      l_item.append(feature);
-      this.raceFeaturesTarget.append(l_item);
+      l_item.append(item);
+      target.append(l_item);
     });
   }
 
@@ -144,5 +149,12 @@ export default class extends Controller {
     while (parent.firstChild) {
       parent.removeChild(parent.firstChild);
     }
+  }
+
+  getPTag(string) {
+    let out = document.createElement('p');
+    out.classList.add('font-medium');
+    out.append(string + ':');
+    return out;
   }
 }
