@@ -121,59 +121,6 @@ export default class extends Controller {
     }
   }
 
-  //called on change in Race dropdown
-  raceHandler(event) {
-    let racelist = event.target.children; //the target is the dropdown div containing options
-    for (let i = 0; i < racelist.length; i++) {
-      //racelist is an HTMLCollection
-      if (racelist.item(i).selected) {
-        name = racelist.item(i).innerText;
-        fetch(`/races/${name}`)
-          .then((response) => response.json())
-          .then((data) => this.raceUpdate(data));
-      }
-    }
-  }
-
-  //called by async function in raceHandler()
-  //unhandled: tool choices, extra languages
-  raceUpdate(race) {
-    this.aboutRaceTarget.innerText = race.name;
-
-    this.substatSpeedTarget.innerText = race.speed;
-
-    //Racial Languages
-    this.putList(race, race.languages, this.raceLanguagesTarget);
-
-    //Racial Features
-    this.putList(race, race.racial_traits, this.raceFeaturesTarget);
-
-    //Racial Skills
-    this.putList(race, race.skills, this.raceSkillsTarget);
-
-    //Racial Weapons
-    this.putList(race, race.weapons, this.raceWeaponsTarget);
-
-    //Racial Armor
-    this.putList(race, race.armor, this.raceArmorTarget);
-
-    //Racial Tools
-    this.putList(race, race.tools, this.raceToolsTarget);
-  }
-
-  subraceHandler(event) {
-    let subracelist = event.target.children; //the target is the dropdown div containing options
-    for (let i = 0; i < subracelist.length; i++) {
-      //racelist is an HTMLCollection
-      if (subracelist.item(i).selected) {
-        name = subracelist.item(i).innerText;
-        fetch(`/subraces/${name}`)
-          .then((response) => response.json())
-          .then((data) => this.subraceUpdate(data));
-      }
-    }
-  }
-
   categoryHandler(event) {
     let labels = event.params;
     let list = event.target.children;
@@ -190,7 +137,7 @@ export default class extends Controller {
   }
 
   catUpdate(data, cat_type) {
-    let languages, skills, weps, arm, tools;
+    let languages, skills, weps, arm, tools, features;
 
     //Handle category specific behaviors here
     switch (cat_type) {
@@ -274,35 +221,6 @@ export default class extends Controller {
     if (cat_type != 'player_class') {
       this.putList(data, data.skills, skills);
     }
-  }
-
-  subraceUpdate(subrace) {
-    this.aboutSubraceTarget.innerText = subrace.name;
-    //Subrace Languages
-    this.putList(
-      subrace,
-      subrace.languages,
-      this.subraceLanguagesTarget
-    );
-
-    //Subrace Features
-    this.putList(
-      subrace,
-      subrace.racial_traits,
-      this.subraceFeaturesTarget
-    );
-
-    //Subrace Skills
-    this.putList(subrace, subrace.skills, this.subraceSkillsTarget);
-
-    //Subrace Weapons
-    this.putList(subrace, subrace.weapons, this.subraceWeaponsTarget);
-
-    //Subrace Armor
-    this.putList(subrace, subrace.armor, this.subraceArmorTarget);
-
-    //Subrace Tools
-    this.putList(subrace, subrace.tools, this.subraceToolsTarget);
   }
 
   //Utility Methods//

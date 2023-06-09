@@ -18,7 +18,6 @@ class CreationController < ApplicationController
     for i in 1..20 do
       @levels.push([i,i])
     end
-
   end
 
   private
