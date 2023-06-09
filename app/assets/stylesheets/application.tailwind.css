@@ -45,7 +45,7 @@
   }
 
   .statframe {
-    @apply flex flex-col gap-4 align-middle justify-between border-4 border-black p-2 mr-2 text-xs font-black items-center w-1/2;
+    @apply flex flex-col gap-2 align-middle justify-start border-4 border-black py-2 mx-2 text-xs font-black items-center w-1/3;
   }
 
   .base-statbox {
@@ -53,11 +53,11 @@
   }
 
   .prof-list {
-    @apply flex flex-col w-1/2 p-2 justify-center border-2 border-black;
+    @apply flex flex-col w-1/2 p-1 justify-center border-2 border-black;
   }
 
   .modifier-box {
-    @apply border-2 border-blue-400 w-6 h-6;
+    @apply border-2 border-blue-400 w-8 h-6;
   }
 
   .proficiency-box {

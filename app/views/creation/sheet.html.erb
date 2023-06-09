@@ -17,6 +17,8 @@
 
   </div>
 
+
+
   <section class="flex" id="sheet">
     <div class="flex flex-col gap-2 border-2 border-green-300 w-1/4" id="firstcolumn">
 
@@ -200,7 +202,7 @@
 
 
     </div>
-    <div class="flex flex-col gap-2 border-2 border-green-300" id="secondcolumn">
+    <div class="flex flex-col gap-2 border-2 border-green-300 w-1/2" id="secondcolumn">
       <div class="flex flex-col border-2 border-blue-400 text-center p-2" id="about">
         <div class="flex w-full justify-center gap-2">
           <div class="flex flex-col">
@@ -304,11 +306,25 @@
         </div>
       </div>
       <div class="w-full h-full bg-orange-100 font-light" id="featurestraits" data-sheet-target="featureList">
-        <div>
-          <p class="font-black">Features</p>
+        <div class="flex flex-col align-end">
+          <p class="font-black flex flex-col align-bottom">Features</p>
           <div data-sheet-target="raceFeatures"></div>
+          <div data-sheet-target="subraceFeatures"></div>
+          <div data-sheet-target="classFeatures"></div>
+          <div data-sheet-target="subclassFeatures"></div>
+          <div data-sheet-target="backgroundFeatures"></div>
+          <p class="font-black">Skills</p>
+          <div class="flex gap-2" data-sheet-target="raceSkills"></div>
+          <div class="flex gap-2" data-sheet-target="subraceSkills"></div>
+          <div class="flex gap-2" data-sheet-target="classSkills"></div>
+          <div class="flex gap-2" data-sheet-target="subclassSkills"></div>
+          <div class="flex gap-2" data-sheet-target="backgroundSkills"></div>
           <p class="font-black">Languages</p>
           <div class="flex gap-2" data-sheet-target="raceLanguages"></div>
+          <div class="flex gap-2" data-sheet-target="subraceLanguages"></div>
+          <div class="flex gap-2" data-sheet-target="classLanguages"></div>
+          <div class="flex gap-2" data-sheet-target="subclassLanguages"></div>
+          <div class="flex gap-2" data-sheet-target="backgroundLanguages"></div>
           <p class="font-black">Weapons</p>
           <div class="flex gap-2" data-sheet-target="raceWeapons"></div>
           <div class="flex gap-2" data-sheet-target="subraceWeapons"></div>
@@ -321,10 +337,16 @@
           <div class="flex gap-2" data-sheet-target="classArmor"></div>
           <div class="flex gap-2" data-sheet-target="subclassArmor"></div>
           <div class="flex gap-2" data-sheet-target="backgroundArmor"></div>
+          <p class="font-black">Tools</p>
+          <div class="flex gap-2" data-sheet-target="raceTools"></div>
+          <div class="flex gap-2" data-sheet-target="subraceTools"></div>
+          <div class="flex gap-2" data-sheet-target="classTools"></div>
+          <div class="flex gap-2" data-sheet-target="subclassTools"></div>
+          <div class="flex gap-2" data-sheet-target="backgroundTools"></div>
         </div>
       </div>
     </div>
-      <div class="flex flex-col" id="thirdcolumn">
+      <div class="flex flex-col w-1/4" id="thirdcolumn">
         <div class="flex gap-4 border-2 border-red-400 text-center" id="castingstats">
           <div class="tracking-box">
             <p class="sheetcalc" data-sheet-target="castingAbility"></p>

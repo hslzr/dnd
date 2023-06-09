@@ -54,7 +54,20 @@ export default class extends Controller {
     'trackingDeathSaveFailure',
     'featureList',
     'raceFeatures',
+    'subraceFeatures',
+    'classFeatures',
+    'subclassFeatures',
+    'backgroundFeatures',
+    'raceSkills',
+    'subraceSkills',
+    'classSkills',
+    'subclassSkills',
+    'backgroundSkills',
     'raceLanguages',
+    'subraceLanguages',
+    'classLanguages',
+    'subclassLanguages',
+    'backgroundLanguages',
     'raceWeapons',
     'subraceWeapons',
     'classWeapons',
@@ -65,6 +78,11 @@ export default class extends Controller {
     'classArmor',
     'subclassArmor',
     'backgroundArmor',
+    'raceTools',
+    'subraceTools',
+    'classTools',
+    'subclassTools',
+    'backgroundTools',
     'castingClass',
     'castingAbility',
     'castingSaveDC',
@@ -85,7 +103,7 @@ export default class extends Controller {
   }
 
   update() {
-    //we'll call this whenever there's a change in the top form
+    //we'll call this whenever there's a change in the top form to update the state object this.choices
     //iterator replaces forEach on Map objects
     let iterchoice = this.choices.entries();
 
@@ -103,6 +121,7 @@ export default class extends Controller {
     }
   }
 
+  //called on change in Race dropdown
   raceHandler(event) {
     let racelist = event.target.children; //the target is the dropdown div containing options
     for (let i = 0; i < racelist.length; i++) {
@@ -113,12 +132,15 @@ export default class extends Controller {
           .then((response) => response.json())
           .then((data) => this.raceUpdate(data));
       }
-      //racelist.item(i).innerText
     }
   }
 
+  //called by async function in raceHandler()
+  //unhandled: tool choices, extra languages
   raceUpdate(race) {
     this.aboutRaceTarget.innerText = race.name;
+
+    this.substatSpeedTarget.innerText = race.speed;
 
     //Racial Languages
     this.putList(race, race.languages, this.raceLanguagesTarget);
@@ -126,16 +148,27 @@ export default class extends Controller {
     //Racial Features
     this.putList(race, race.racial_traits, this.raceFeaturesTarget);
 
+    //Racial Skills
+    this.putList(race, race.skills, this.raceSkillsTarget);
+
     //Racial Weapons
     this.putList(race, race.weapons, this.raceWeaponsTarget);
 
     //Racial Armor
     this.putList(race, race.armor, this.raceArmorTarget);
+
+    //Racial Tools
+    this.putList(race, race.tools, this.raceToolsTarget);
   }
 
-  //made for race but should work elsewhere
+  //creates p tags for collection and appends list to target with label for category name
+  //clears allChildfren of Target before appending so I use it in specific labeled targets only
   putList(category, collection, target) {
     this.removeAllChildNodes(target);
+
+    //after removal of nodes so switching to something without a collection is OK
+    if (collection.length == 0) return;
+
     target.append(this.getPTag(category.name));
     collection.forEach((item) => {
       let l_item = document.createElement('p');
