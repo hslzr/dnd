@@ -53,6 +53,8 @@ export default class extends Controller {
     'trackingDeathSaveSuccess',
     'trackingDeathSaveFailure',
     'featureList',
+    'raceFeatures',
+    'raceLanguages',
     'castingClass',
     'castingAbility',
     'castingSaveDC',
@@ -73,7 +75,8 @@ export default class extends Controller {
   }
 
   update() {
-    //iterator replaes forEach on Map objects
+    //we'll call this whenever there's a change in the top form
+    //iterator replaces forEach on Map objects
     let iterchoice = this.choices.entries();
 
     //there are 5 choices to make
@@ -88,7 +91,6 @@ export default class extends Controller {
           this.choices.set(label, options.item(j).innerText);
       }
     }
-    console.log(this.choices);
   }
 
   raceHandler(event) {
@@ -99,9 +101,48 @@ export default class extends Controller {
         name = racelist.item(i).innerText;
         fetch(`/races/${name}`)
           .then((response) => response.json())
-          .then((data) => console.log(data));
+          .then((data) => this.raceUpdate(data));
       }
       //racelist.item(i).innerText
+    }
+  }
+
+  raceUpdate(race) {
+    this.aboutRaceTarget.innerText = race.name;
+
+    //Racial Languages
+    //clear previous choices
+    this.removeAllChildNodes(this.raceLanguagesTarget);
+    //race label
+    let race_tag = document.createElement('p');
+    race_tag.append(`${race.name}:`);
+    this.raceLanguagesTarget.append(race_tag);
+    //fill list
+    race.languages.forEach((language) => {
+      let l_item = document.createElement('p');
+      l_item.classList.add('font-semibold');
+      l_item.append(language);
+      this.raceLanguagesTarget.append(l_item);
+    });
+
+    //Racial Features
+    //clear previous choices
+    this.removeAllChildNodes(this.raceFeaturesTarget);
+    //race label
+    this.raceFeaturesTarget.append(race_tag);
+    //fill list
+    race.racial_traits.forEach((feature) => {
+      let l_item = document.createElement('p');
+      l_item.classList.add('font-semibold');
+      l_item.append(feature);
+      this.raceFeaturesTarget.append(l_item);
+    });
+  }
+
+  //DOM Utility functions
+  removeAllChildNodes(parent) {
+    while (parent.firstChild) {
+      parent.removeChild(parent.firstChild);
     }
   }
 }
