@@ -56,7 +56,7 @@ DwarvenRace.subraces.create(
 DwarvenRace.subraces.create(
   name: 'Mountain Dwarves',
   asi: [2,0,0,0,0,0],
-  racial_traits: ['Dwarven Armor Training: Light and Medium'],
+  racial_traits: ['Dwarven Armor Training'],
   armor: ['Light','Medium'],
   extra_languages: 0,
   method: ''

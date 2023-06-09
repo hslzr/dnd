@@ -40,6 +40,7 @@ export default class extends Controller {
     'aboutBackground',
     'aboutPName',
     'aboutRace',
+    'aboutSubrace',
     'aboutAlignment',
     'aboutExperiencePoints',
     'substatAC',
@@ -159,6 +160,49 @@ export default class extends Controller {
 
     //Racial Tools
     this.putList(race, race.tools, this.raceToolsTarget);
+  }
+
+  subraceHandler(event) {
+    let subracelist = event.target.children; //the target is the dropdown div containing options
+    for (let i = 0; i < subracelist.length; i++) {
+      //racelist is an HTMLCollection
+      if (subracelist.item(i).selected) {
+        name = subracelist.item(i).innerText;
+        fetch(`/subraces/${name}`)
+          .then((response) => response.json())
+          .then((data) => this.subraceUpdate(data));
+      }
+    }
+  }
+
+  subraceUpdate(subrace) {
+    this.aboutSubraceTarget.innerText = subrace.name;
+
+    //Subrace Languages
+    this.putList(
+      subrace,
+      subrace.languages,
+      this.subraceLanguagesTarget
+    );
+
+    //Subrace Features
+    this.putList(
+      subrace,
+      subrace.racial_traits,
+      this.subraceFeaturesTarget
+    );
+
+    //Subrace Skills
+    this.putList(subrace, subrace.skills, this.subraceSkillsTarget);
+
+    //Subrace Weapons
+    this.putList(subrace, subrace.weapons, this.subraceWeaponsTarget);
+
+    //Subrace Armor
+    this.putList(subrace, subrace.armor, this.subraceArmorTarget);
+
+    //Subrace Tools
+    this.putList(subrace, subrace.tools, this.subraceToolsTarget);
   }
 
   //creates p tags for collection and appends list to target with label for category name

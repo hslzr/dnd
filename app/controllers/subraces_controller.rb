@@ -1,8 +1,8 @@
 class SubracesController < ApplicationController
-  before_action :set_subrace, only [ :show ]
+  before_action :set_subrace, only: [ :show ]
 
   def index
-    @subraces = Race.all
+    @subraces = Subrace.all
 
     respond_to do |format|
       format.json { render json: @subraces }
