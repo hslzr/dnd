@@ -3,8 +3,8 @@ class CreateBackgrounds < ActiveRecord::Migration[7.0]
     create_table :backgrounds do |t|
       t.string :name
       t.text :description
-      t.string :skill_prof, array: true, default: []
-      t.string :tool_prof, array: true, default: []
+      t.string :skills, array: true, default: []
+      t.string :tools, array: true, default: []
       t.string :languages, array: true, default: []
       t.string :equipment_choices, array: true, default: []
       t.string :equipment, array: true, default: []

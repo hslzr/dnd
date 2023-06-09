@@ -190,7 +190,7 @@ Barbarian.subclasses.create(
 Acolyte = Background.create(
   name: "Acolyte",
   description: 'You have spent your life in the service of a temple. You act as an intermediary between the realm of the holy and the mortal world.',
-  skill_prof: ['insight', 'religion'],
+  skills: ['insight', 'religion'],
   languages: [2],
   equipment: [
     'A holy symbol',

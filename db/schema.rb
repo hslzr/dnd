@@ -17,8 +17,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_09_030206) do
   create_table "backgrounds", force: :cascade do |t|
     t.string "name"
     t.text "description"
-    t.string "skill_prof", default: [], array: true
-    t.string "tool_prof", default: [], array: true
+    t.string "skills", default: [], array: true
+    t.string "tools", default: [], array: true
     t.string "languages", default: [], array: true
     t.string "equipment_choices", default: [], array: true
     t.string "equipment", default: [], array: true
@@ -32,8 +32,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_09_030206) do
     t.string "specialty_description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "weapon_prof", default: [], array: true
-    t.string "armor_prof", default: [], array: true
+    t.string "weapons", default: [], array: true
+    t.string "armor", default: [], array: true
   end
 
   create_table "characters", force: :cascade do |t|

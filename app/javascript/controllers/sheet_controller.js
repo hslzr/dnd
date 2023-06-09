@@ -190,15 +190,17 @@ export default class extends Controller {
 
   catUpdate(data, cat_type) {
     let languages, skills, weps, arm, tools;
+
+    //Handle category specific behaviors here
     switch (cat_type) {
       case 'race':
-        console.log('Detected Race');
+        console.log('Detected Race'); //debugging
         break;
       case 'subrace':
-        console.log('Detected Subrace');
+        console.log('Detected Subrace'); //debugging
         break;
       case 'player_class':
-        console.log('Detected Class');
+        console.log('Detected Class'); //debugging
         languages = this.classLanguagesTarget;
         skills = this.classSkillsTarget;
         weps = this.classWeaponsTarget;
@@ -208,33 +210,36 @@ export default class extends Controller {
         //skills are a choice for class
         break;
       case 'subclass':
-        console.log('Detected Subclass');
+        console.log('Detected Subclass'); //debugging
         break;
       case 'background':
-        console.log('Detected Background');
+        console.log('Detected Background'); //debugging
         break;
       default:
-        console.log('Default Case');
+        console.log('Default Case'); //debugging
         break;
     }
+
+    //not all categories have these so I'm defaulting to empty array
+    //which will make putList fizzle out and do nothing
+    let data_lang = data.languages || [];
+    let data_skills = data.skills || [];
+    let data_weps = data.weapons || [];
+    let data_arm = data.armor || [];
+    let data_tools = data.tools || [];
+
+    //we output the needed <p></p> tags to the target defined in the case above
+    //we pass in a category instance, collection within it, and output target
+    //if the collection is empty, the function returns without side-effects
+    this.putList(data, data_lang, languages);
+    this.putList(data, data_weps, weps);
+    this.putList(data, data_arm, arm);
+    this.putList(data, data_tools, tools);
+
     console.log('language');
     if (cat_type != 'player_class') {
-      //no languages in class, skipping skills due to choice available
-      this.putList(data, data.languages, languages);
-
-      console.log('skills');
       this.putList(data, data.skills, skills);
     }
-    console.log('weps');
-    this.putList(data, data.weapons, weps);
-
-    console.log('armor');
-    this.putList(data, data.armor, arm);
-
-    console.log('tools');
-    this.putList(data, data.tools, tools);
-
-    console.log('done');
   }
 
   subraceUpdate(subrace) {
