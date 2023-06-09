@@ -37,9 +37,9 @@ export default class extends Controller {
     'performanceMod',
     'persuasionMod',
     'aboutClass',
+    'aboutSubclass',
     'aboutLevel',
     'aboutBackground',
-    'aboutPName',
     'aboutRace',
     'aboutSubrace',
     'aboutAlignment',
@@ -186,10 +186,26 @@ export default class extends Controller {
 
       case 'subclass':
         console.log('Detected Subclass'); //debugging
+        languages = this.subclassLanguagesTarget;
+        skills = this.subclassSkillsTarget;
+        weps = this.subclassWeaponsTarget;
+        arm = this.subclassArmorTarget;
+        tools = this.subclassToolsTarget;
+
+        //setters
+        this.aboutSubclassTarget.innerText = data.name;
         break;
 
       case 'background':
         console.log('Detected Background'); //debugging
+        languages = this.backgroundLanguagesTarget;
+        skills = this.backgroundSkillsTarget;
+        weps = this.backgroundWeaponsTarget;
+        arm = this.backgroundArmorTarget;
+        tools = this.backgroundToolsTarget;
+
+        //setters
+        this.aboutBackgroundTarget.innerText = data.name;
         break;
 
       default:
@@ -219,6 +235,7 @@ export default class extends Controller {
     console.log('4');
 
     if (cat_type != 'player_class') {
+      //these are choices for a class
       this.putList(data, data.skills, skills);
     }
   }

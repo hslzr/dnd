@@ -11,8 +11,8 @@
         <%= select_tag :race, options_from_collection_for_select(@races, "id", "name", @race&.id), prompt: "- Race -", data: { action: "change->sheet#categoryHandler", "sheet-url-param": "/races/" } %>
         <%= select_tag :subrace, options_from_collection_for_select(@subraces, "id", "name", @subrace&.id), prompt: "- Subrace -", data: { action: "change->sheet#categoryHandler", "sheet-url-param": "/subraces/" } %>
         <%= select_tag :player_class, options_from_collection_for_select(@player_classes, "id", "name", @player_class&.id), prompt: "- Class -", data: { action: "change->sheet#categoryHandler", "sheet-url-param": "/player_classes/"} %>
-        <%= select_tag :subclass, options_from_collection_for_select(@subclasses, "id", "name", @subclass&.id), prompt: "- Subclass -" %>
-        <%= select_tag :background, options_from_collection_for_select(@backgrounds, "id", "name", @background&.id), prompt: "- Background -" %>
+        <%= select_tag :subclass, options_from_collection_for_select(@subclasses, "id", "name", @subclass&.id), prompt: "- Subclass -", data: { action: "change->sheet#categoryHandler", "sheet-url-param": "/subclasses/"} %>
+        <%= select_tag :background, options_from_collection_for_select(@backgrounds, "id", "name", @background&.id), prompt: "- Background -", data: { action: "change->sheet#categoryHandler", "sheet-url-param": "/backgrounds/"} %>
         <%= select_tag :level, options_for_select(@levels, @level), prompt: "- Level -", data: { "sheet-target": "charLevel"} %>
       <% end %>
     <% end %>
@@ -212,16 +212,16 @@
             <p class="text-xs mx-2">CLASS</p>
           </div>
           <div class="flex flex-col">
+            <p class="sheetcell" data-sheet-target="aboutSubclass"></p>
+            <p class="text-xs mx-2">SUBCLASS</p>
+          </div>
+          <div class="flex flex-col">
             <p class="sheetcell" data-sheet-target="aboutLevel"></p>
             <p class="text-xs mx-2">LEVEL</p>
           </div>
           <div class="flex flex-col">
             <p class="sheetcell" data-sheet-target="aboutBackground"></p>
             <p class="text-xs mx-2">BACKGROUND</p>
-          </div>
-          <div class="flex flex-col">
-            <p class="sheetcell" data-sheet-target="aboutPName"></p>
-            <p class="text-xs mx-2">PLAYER NAME</p>
           </div>
         </div>
         <div class="flex w-full justify-center gap-2">

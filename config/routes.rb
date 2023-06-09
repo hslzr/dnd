@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   resources :races, param: :name, only: [ :show ]
   resources :subraces, param: :name, only: [ :show ]
   resources :player_classes, param: :name, only: [ :show ]
+  resources :subclasses, param: :name, only: [ :show ]
+  resources :backgrounds, param: :name, onlu: [ :show ]
 
   devise_for :users
 
