@@ -1,5 +1,6 @@
 class PlayerClass < ApplicationRecord
   serialize :features, Hash
+  serialize :custom, Hash
 
   has_many :subclasses
   has_many :characters

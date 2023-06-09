@@ -153,7 +153,6 @@ export default class extends Controller {
         //setters
         this.aboutRaceTarget.innerText = data.name;
         this.substatSpeedTarget.innerText = data.speed;
-        this.putList(data, data.racial_traits, features);
         break;
 
       case 'subrace':
@@ -167,7 +166,6 @@ export default class extends Controller {
 
         //setters
         this.aboutSubraceTarget.innerText = data.name;
-        this.putList(data, data.racial_traits, features);
         break;
 
       case 'player_class':
@@ -191,6 +189,7 @@ export default class extends Controller {
         weps = this.subclassWeaponsTarget;
         arm = this.subclassArmorTarget;
         tools = this.subclassToolsTarget;
+        features = this.subclassFeaturesTarget;
 
         //setters
         this.aboutSubclassTarget.innerText = data.name;
@@ -203,6 +202,7 @@ export default class extends Controller {
         weps = this.backgroundWeaponsTarget;
         arm = this.backgroundArmorTarget;
         tools = this.backgroundToolsTarget;
+        features = this.backgroundFeaturesTarget;
 
         //setters
         this.aboutBackgroundTarget.innerText = data.name;
@@ -220,6 +220,7 @@ export default class extends Controller {
     let data_weps = data.weapons || [];
     let data_arm = data.armor || [];
     let data_tools = data.tools || [];
+    let data_features = data.features || [];
 
     //we output the needed <p></p> tags to the target defined in the case above
     //we pass in a category instance, collection within it, and output target
@@ -237,6 +238,8 @@ export default class extends Controller {
     if (cat_type != 'player_class') {
       //these are choices for a class
       this.putList(data, data.skills, skills);
+      if (cat_type != 'subclass')
+        this.putList(data, data_features, features);
     }
   }
 

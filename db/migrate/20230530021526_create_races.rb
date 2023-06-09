@@ -10,10 +10,12 @@ class CreateRaces < ActiveRecord::Migration[7.0]
       t.integer :extra_languages, default: 0
       t.string :weapons, array: true, default: []
       t.string :armor, array: true, default: []
+      t.string :tools, array: true, default: []
+      t.string :skills, array: true, default: []
       t.string :tool_choice, array: true, default: []
       t.string :size, default: 'medium'
       t.integer :speed, default: 15
-      t.string :racial_traits, array: true, default: []
+      t.string :features, array: true, default: []
 
       t.timestamps
     end

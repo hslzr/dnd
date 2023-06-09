@@ -2,6 +2,7 @@ class CreateCharacters < ActiveRecord::Migration[7.0]
   def change
     create_table :characters do |t|
       t.integer :race_id
+      t.integer :subrace_id
       t.integer :player_class_id
       t.integer :background_id
       t.integer :feat_id

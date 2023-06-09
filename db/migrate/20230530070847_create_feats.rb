@@ -4,7 +4,6 @@ class CreateFeats < ActiveRecord::Migration[7.0]
       t.string :name
       t.string :description
       t.string :features, array: true, default: []
-      t.string :method
 
       t.timestamps
     end

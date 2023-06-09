@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_09_030206) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_30_091143) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -18,26 +18,27 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_09_030206) do
     t.string "name"
     t.text "description"
     t.string "skills", default: [], array: true
+    t.string "weapons", default: [], array: true
+    t.string "armor", default: [], array: true
     t.string "tools", default: [], array: true
     t.string "languages", default: [], array: true
     t.string "equipment_choices", default: [], array: true
     t.string "equipment", default: [], array: true
-    t.integer "gold"
-    t.text "feature"
+    t.string "features", default: [], array: true
     t.string "traits", default: [], array: true
     t.string "ideals", default: [], array: true
     t.string "bonds", default: [], array: true
     t.string "flaws", default: [], array: true
     t.string "specialties", default: [], array: true
     t.string "specialty_description"
+    t.integer "gold"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "weapons", default: [], array: true
-    t.string "armor", default: [], array: true
   end
 
   create_table "characters", force: :cascade do |t|
     t.integer "race_id"
+    t.integer "subrace_id"
     t.integer "player_class_id"
     t.integer "background_id"
     t.integer "feat_id"
@@ -73,14 +74,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_09_030206) do
     t.string "bkgd_specialty"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "subrace_id"
   end
 
   create_table "feats", force: :cascade do |t|
     t.string "name"
     t.string "description"
-    t.text "features", default: "{}"
-    t.string "method"
+    t.string "features", default: [], array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -105,6 +104,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_09_030206) do
     t.integer "wealth_die", default: 2
     t.integer "wealth_mult", default: 10
     t.text "features", default: "{}"
+    t.text "custom", default: "{}"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -119,22 +119,25 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_09_030206) do
     t.integer "extra_languages", default: 0
     t.string "weapons", default: [], array: true
     t.string "armor", default: [], array: true
+    t.string "tools", default: [], array: true
+    t.string "skills", default: [], array: true
     t.string "tool_choice", default: [], array: true
     t.string "size", default: "medium"
     t.integer "speed", default: 15
-    t.string "racial_traits", default: [], array: true
+    t.string "features", default: [], array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "skills", default: [], array: true
-    t.string "tools", default: [], array: true
   end
 
   create_table "subclasses", force: :cascade do |t|
     t.integer "player_class_id"
     t.string "name"
     t.text "features", default: "{}"
-    t.text "custom"
-    t.string "method", default: ""
+    t.text "custom", default: "{}"
+    t.string "skills", default: [], array: true
+    t.string "weapons", default: [], array: true
+    t.string "armor", default: [], array: true
+    t.string "tools", default: [], array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -149,8 +152,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_09_030206) do
     t.string "armor", default: [], array: true
     t.string "tools", default: [], array: true
     t.string "skills", default: [], array: true
-    t.string "racial_traits", default: [], array: true
-    t.string "method"
+    t.string "features", default: [], array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

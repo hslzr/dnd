@@ -19,7 +19,8 @@ class CreatePlayerClasses < ActiveRecord::Migration[7.0]
       t.integer :spell_list, array: true, default: []
       t.integer :wealth_die, default: 2
       t.integer :wealth_mult, default: 10
-      t.string :features, array: true, default: []
+      t.text :features, default: "{}"
+      t.text :custom, default: "{}"
 
       t.timestamps
     end

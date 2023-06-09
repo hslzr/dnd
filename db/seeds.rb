@@ -35,7 +35,7 @@ DwarvenRace = Race.create(
     'Mason`s Tools',
   ],
   speed: 25,
-  racial_traits: [
+  features: [
     'Speed not reduced by heavy armor',
     'Darkvision',
     'Dwarven Resilience: Advantage on Poison saves and resistance to Poison damage.',
@@ -46,20 +46,18 @@ DwarvenRace = Race.create(
 DwarvenRace.subraces.create(
   name: 'Hill Dwarves',
   asi: [0,0,0,0,1,0],
-  racial_traits: [
+  features: [
         'Dwarven Toughness: Your level is added to your hit point maximum.',
       ],
   extra_languages: 0,
-  method: ''
 )
 
 DwarvenRace.subraces.create(
   name: 'Mountain Dwarves',
   asi: [2,0,0,0,0,0],
-  racial_traits: ['Dwarven Armor Training'],
+  features: ['Dwarven Armor Training'],
   armor: ['Light','Medium'],
   extra_languages: 0,
-  method: ''
 )
 
 SliverRace = Race.create(
@@ -71,7 +69,7 @@ SliverRace = Race.create(
   languages: ['Common', 'Infernal'],
   weapons: ['Spear'],
   speed: 35,
-  racial_traits: [
+  features: [
     'Spells affecting members of your party affect you as well.',
     'Darkvision',
     'Sliverskin: Resistance to Psychic damage.',
@@ -82,18 +80,16 @@ SliverRace = Race.create(
 SliverRace.subraces.create(
   name: 'Gemhide Slivers',
   asi: [0,0,0,1,1,0],
-  racial_traits: ['Mana Armor: Resistance to magic damage the first time it is taken each day.'],
+  features: ['Mana Armor: Resistance to magic damage the first time it is taken each day.'],
   skills: ['Arcana'],
   extra_languages: 0,
-  method: ''
 )
 
 SliverRace.subraces.create(
   name: 'Hive Slivers',
   asi: [0,0,1,0,0,0],
-  racial_traits: ['Clone: You may create a simulacrum of yourself once per long rest that lasts for 4 hours.'],
+  features: ['Clone: You may create a simulacrum of yourself once per long rest that lasts for 4 hours.'],
   extra_languages: 0,
-  method: ''
 )
 
 Barbarian = PlayerClass.create(
@@ -144,7 +140,8 @@ Barbarian = PlayerClass.create(
     17=>['Brutal Critical: You can roll three additional weapon damage die when determining the extra damage for a critical hit with a melee attack.'],
     18=>['Indomitable Might: If your total for a Strength check is less than your Strength score, you may use that score instead'],
     20=>['Primal Champion: Your STR and CON scores increase by 4, your maximum for those scores is now 24.'],
-  }
+  },
+  custom: {}
 )
 
 Barbarian.subclasses.create(
@@ -154,7 +151,8 @@ Barbarian.subclasses.create(
     6=> ['Mindless Rage: You can`t be charmed or frightened while raging. If you are charmed or frightened when you enter your rage, the effect is suspended for the duration of the rage.'],
     10=> ['Intimidating Presence: You can use your action to frighten someone with your menacing presence. Choose one creature you can see within 30 feet, if it can see or hear you it must succeed on a WIS save with DC of 8 plus your proficiency bonus plus your CHA modifier, or be frightened of you until the end of your next turn. On subsequent turns you can use your action to extend this effect another turn. The effect ends if the creature ends its turn out of line of sight or more than 60 feet away. If they successfully save, you can`t use this on them again for 24 hours.'],
     14=> ['Retaliation: When you take damage from a creature within 5 feet of you, you can use your reaction to make a melee weapon attack against that creature.']
-  }
+  },
+  custom: {}
 )
 
 Barbarian.subclasses.create(
@@ -234,19 +232,16 @@ Acolyte = Background.create(
     'I am suspicious of strangers and expect the worst of them.',
     'Once I pick a goal, I become obsessed with it to the detriment of everything else in my life.',
   ],
-  feature:
-    'Shelter of the Faithful: You command the respect of those who share your faith, and you can perform the religious ceremonies of your deity. You and your party can expect to receive free healing and care at a temple, shrine, or other established presence of your faith, though you must provide any material components needed for spells. Those who share your religion will support you at a modest lifestyle. You might have ties to a specific temple where you have a residence and the priests can be called upon for non-hazardous assistance near there.',
+  features:
+    ['Shelter of the Faithful: You command the respect of those who share your faith, and you can perform the religious ceremonies of your deity. You and your party can expect to receive free healing and care at a temple, shrine, or other established presence of your faith, though you must provide any material components needed for spells. Those who share your religion will support you at a modest lifestyle. You might have ties to a specific temple where you have a residence and the priests can be called upon for non-hazardous assistance near there.']
 )
 
 Feat_alert = Feat.create(
   name: 'Alert',
   description: 'Always on the lookout for danger, you won`t be fooled by just anyone.',
-  features: {
-    0 => [
+  features: [
       'You gain +5 to initiative.',
       'You can`t be surprised while you are conscious.',
       'Other creatures don`t gain advantage on attack rolls against you as a result of being unseen by you.'
     ]
-  },
-  method: ''
 )
