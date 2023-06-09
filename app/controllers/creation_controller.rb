@@ -13,6 +13,12 @@ class CreationController < ApplicationController
     @bonds = @background&.bonds || []
     @ideals = @background&.ideals || []
     @flaws = @background&.flaws || []
+
+    @levels = [];
+    for i in 1..20 do
+      @levels.push([i,i])
+    end
+
   end
 
   private
@@ -24,5 +30,6 @@ class CreationController < ApplicationController
       @player_class = PlayerClass.find_by(id: params[:player_class].presence)
       @subclass = Subclass.find_by(id: params[:subclass].presence)
       @background = Background.find_by(id: params[:background].presence)
+      @level = params[:level]
     end
 end

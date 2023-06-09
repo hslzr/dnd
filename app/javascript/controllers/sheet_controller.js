@@ -2,6 +2,7 @@ import { Controller } from '@hotwired/stimulus';
 
 export default class extends Controller {
   static targets = [
+    'charLevel',
     'charName',
     'profBonus',
     'passPerception',
@@ -195,10 +196,33 @@ export default class extends Controller {
     switch (cat_type) {
       case 'race':
         console.log('Detected Race'); //debugging
+        languages = this.raceLanguagesTarget;
+        skills = this.raceSkillsTarget;
+        weps = this.raceWeaponsTarget;
+        arm = this.raceArmorTarget;
+        tools = this.raceToolsTarget;
+        features = this.raceFeaturesTarget;
+
+        //setters
+        this.aboutRaceTarget.innerText = data.name;
+        this.substatSpeedTarget.innerText = data.speed;
+        this.putList(data, data.racial_traits, features);
         break;
+
       case 'subrace':
         console.log('Detected Subrace'); //debugging
+        languages = this.subraceLanguagesTarget;
+        skills = this.subraceSkillsTarget;
+        weps = this.subraceWeaponsTarget;
+        arm = this.subraceArmorTarget;
+        tools = this.subraceToolsTarget;
+        features = this.subraceFeaturesTarget;
+
+        //setters
+        this.aboutSubraceTarget.innerText = data.name;
+        this.putList(data, data.racial_traits, features);
         break;
+
       case 'player_class':
         console.log('Detected Class'); //debugging
         languages = this.classLanguagesTarget;
@@ -208,13 +232,19 @@ export default class extends Controller {
         tools = this.classToolsTarget;
         //features aren't an array so PutList breaks because it calls forEach on it
         //skills are a choice for class
+
+        //setters
+        this.aboutClassTarget.innerText = data.name;
         break;
+
       case 'subclass':
         console.log('Detected Subclass'); //debugging
         break;
+
       case 'background':
         console.log('Detected Background'); //debugging
         break;
+
       default:
         console.log('Default Case'); //debugging
         break;
@@ -231,12 +261,16 @@ export default class extends Controller {
     //we output the needed <p></p> tags to the target defined in the case above
     //we pass in a category instance, collection within it, and output target
     //if the collection is empty, the function returns without side-effects
+    console.log('0');
     this.putList(data, data_lang, languages);
+    console.log('1');
     this.putList(data, data_weps, weps);
+    console.log('2');
     this.putList(data, data_arm, arm);
+    console.log('3');
     this.putList(data, data_tools, tools);
+    console.log('4');
 
-    console.log('language');
     if (cat_type != 'player_class') {
       this.putList(data, data.skills, skills);
     }
@@ -244,7 +278,6 @@ export default class extends Controller {
 
   subraceUpdate(subrace) {
     this.aboutSubraceTarget.innerText = subrace.name;
-
     //Subrace Languages
     this.putList(
       subrace,
@@ -277,10 +310,9 @@ export default class extends Controller {
   //creates p tags for collection and appends list to target with label for category name
   //clears allChildfren of Target before appending so I use it in specific labeled targets only
   putList(category, collection, target) {
-    this.removeAllChildNodes(target);
-
-    //after removal of nodes so switching to something without a collection is OK
     if (collection.length == 0) return;
+
+    this.removeAllChildNodes(target);
 
     target.append(this.getPTag(category.name));
     collection.forEach((item) => {
@@ -297,6 +329,7 @@ export default class extends Controller {
     }
   }
 
+  //got some styling hiding out in here withe the font-medium
   getPTag(string) {
     let out = document.createElement('p');
     out.classList.add('font-medium');

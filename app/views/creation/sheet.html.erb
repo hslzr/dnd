@@ -5,6 +5,7 @@
     <%#
       We just use the turbo_frame for conditional form select population, the sheet is handled with JS
     %>
+
     <%= turbo_frame_tag "form" do %>
       <%= form_tag creation_sheet_path, method: :get, data: { controller: "dropdown", action: "change->dropdown#submit submit->sheet#update" } do %>
         <%= select_tag :race, options_from_collection_for_select(@races, "id", "name", @race&.id), prompt: "- Race -", data: { action: "change->sheet#raceHandler" } %>
@@ -12,6 +13,7 @@
         <%= select_tag :player_class, options_from_collection_for_select(@player_classes, "id", "name", @player_class&.id), prompt: "- Class -", data: { action: "change->sheet#categoryHandler", 'sheet-url-param': "/player_classes/"} %>
         <%= select_tag :subclass, options_from_collection_for_select(@subclasses, "id", "name", @subclass&.id), prompt: "- Subclass -" %>
         <%= select_tag :background, options_from_collection_for_select(@backgrounds, "id", "name", @background&.id), prompt: "- Background -" %>
+        <%= select_tag :level, options_for_select(@levels, @level), prompt: "- Level -", data: { "sheet-target": "charLevel"} %>
       <% end %>
     <% end %>
 
