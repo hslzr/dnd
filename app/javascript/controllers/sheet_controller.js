@@ -7,16 +7,20 @@ export default class extends Controller {
     'profBonus',
     'passPerception',
     'strBase',
+    'strMod',
     'strSavingThrowMod',
     'athleticsMod',
     'dexBase',
+    'dexMod',
     'dexSavingThrowMod',
     'acrobaticsMod',
     'sleightOfHandMod',
     'stealthMod',
     'conBase',
+    'conMod',
     'conSavingThrowMod',
     'intBase',
+    'intMod',
     'intSavingThrowMod',
     'arcanaMod',
     'historyMod',
@@ -24,6 +28,7 @@ export default class extends Controller {
     'natureMod',
     'religionMod',
     'wisBase',
+    'wisMod',
     'wisSavingThrowMod',
     'animalHandlingMod',
     'insightMod',
@@ -31,6 +36,7 @@ export default class extends Controller {
     'perceptionMod',
     'survivalMod',
     'chaBase',
+    'chaMod',
     'chaSavingThrowMod',
     'deceptionMod',
     'intimidationMod',
@@ -90,6 +96,7 @@ export default class extends Controller {
     'equipGP',
     'equipSP',
     'equipCP',
+    'equipArmor',
   ];
 
   connect() {
@@ -100,27 +107,31 @@ export default class extends Controller {
     this.choices.set('player_class', 'none');
     this.choices.set('subclass', 'none');
     this.choices.set('background', 'none');
-
-    this.level = 0;
+    this.choices.set('level', 0);
   }
 
-  update() {
+  updateChoices() {
     //we'll call this whenever there's a change in the top form to update the state object this.choices
     //iterator replaces forEach on Map objects
     let iterchoice = this.choices.entries();
 
-    //there are 5 choices to make
-    for (let i = 0; i < 5; i++) {
+    //there are 6 choices to make
+    for (let i = 0; i < 6; i++) {
       //we get the options for each form select in an HTMLCollection
       let label = iterchoice.next().value[0];
       let options = document.getElementById(label).children;
 
       //we have to use set and item to deal with the HTMLCollection
+      //we won't set anything that is still on the label '- Whatever -'
       for (let j = 0; j < options.length; j++) {
-        if (options.item(j).selected)
+        if (
+          options.item(j).selected &&
+          options.item(j).innerText.charAt(0) != '-'
+        )
           this.choices.set(label, options.item(j).innerText);
       }
     }
+    console.log(this.choices);
   }
 
   categoryHandler(event) {
@@ -143,6 +154,8 @@ export default class extends Controller {
     let languages, skills, weps, arm, tools, features;
 
     //Handle category specific behaviors here
+    //we set these first variables so we can add and remove the correct items whenever a form select changes
+    //the setters are just for things like Size or Spellcasting Stat that are unique to certain categories
     switch (cat_type) {
       case 'race':
         console.log('Detected Race'); //debugging
@@ -155,6 +168,7 @@ export default class extends Controller {
 
         //setters
         this.aboutRaceTarget.innerText = data.name;
+        this.sheet_race = data.name; //these are used by levelUpdate()
         this.substatSpeedTarget.innerText = data.speed;
         break;
 
@@ -169,6 +183,7 @@ export default class extends Controller {
 
         //setters
         this.aboutSubraceTarget.innerText = data.name;
+        this.sheet_subrace = data.name;
         break;
 
       case 'player_class':
@@ -184,6 +199,7 @@ export default class extends Controller {
 
         //setters
         this.aboutClassTarget.innerText = data.name;
+        this.sheet_class = data.name;
 
         if (data.spellcasting_ability) {
           this.castingAbilityTarget.innerText =
@@ -202,6 +218,7 @@ export default class extends Controller {
 
         //setters
         this.aboutSubclassTarget.innerText = data.name;
+        this.sheet_subclass = data.name;
         break;
 
       case 'background':
@@ -215,6 +232,7 @@ export default class extends Controller {
 
         //setters
         this.aboutBackgroundTarget.innerText = data.name;
+        this.sheet_background = data.name;
         break;
 
       default:
@@ -222,6 +240,30 @@ export default class extends Controller {
         break;
     }
 
+    this.populateCatAbilities(
+      data,
+      cat_type,
+      languages,
+      skills,
+      weps,
+      arm,
+      tools,
+      features
+    );
+
+    let checklist = this.choices?.values();
+  }
+
+  populateCatAbilities(
+    data,
+    cat_type,
+    languages,
+    skills,
+    weps,
+    arm,
+    tools,
+    features
+  ) {
     //not all categories have these so I'm defaulting to empty array
     //which will make putList fizzle out and do nothing
     let data_lang = data.languages || [];
@@ -232,28 +274,53 @@ export default class extends Controller {
     let data_features = data.features || [];
 
     //we output the needed <p></p> tags to the target defined in the case above
-    //we pass in a category instance, collection within it, and output target
-    //if the collection is empty, the function returns without side-effects
-    console.log('0');
     this.putList(data, data_lang, languages);
-    console.log('1');
     this.putList(data, data_weps, weps);
-    console.log('2');
     this.putList(data, data_arm, arm);
-    console.log('3');
     this.putList(data, data_tools, tools);
-    console.log('4');
 
     if (cat_type != 'player_class') {
       //these are choices for a class
-      this.putList(data, data.skills, skills);
+      this.putList(data, data_skills, skills);
       if (cat_type != 'subclass')
         this.putList(data, data_features, features);
     }
   }
 
-  //Statbuttons
+  //Level update triggers on the level form select and looks for cells it can calculate
+  levelUpdate(event) {
+    let level = event.target.value;
 
+    this.profBonusTarget.innerText = Math.ceil(level / 4) + 1;
+
+    this.aboutLevelTarget.innerText = level;
+
+    //conditionals for form asset assignment, order is probably important and this is prob wrong
+    if (this.str) {
+    }
+    if (this.sheet_race) {
+    }
+    if (this.sheet_subrace) {
+    }
+    if (this.sheet_class) {
+    }
+    if (this.sheet_subclass) {
+    }
+    if (this.sheet_background) {
+    }
+  }
+
+  //called on all Statbuttons
+  statModUpdate() {
+    this.strModTarget.innerText = this.calcMod(this.str);
+    this.dexModTarget.innerText = this.calcMod(this.dex);
+    this.conModTarget.innerText = this.calcMod(this.con);
+    this.intModTarget.innerText = this.calcMod(this.int);
+    this.wisModTarget.innerText = this.calcMod(this.wis);
+    this.chaModTarget.innerText = this.calcMod(this.cha);
+  }
+
+  //Statbuttons
   randomStats() {
     this.str = Math.floor(Math.random() * 20) + 1;
     this.strBaseTarget.innerText = this.str;
@@ -267,12 +334,16 @@ export default class extends Controller {
     this.chaBaseTarget.innerText = this.cha;
     this.wis = Math.floor(Math.random() * 20) + 1;
     this.wisBaseTarget.innerText = this.wis;
+
+    this.statModUpdate();
   }
 
   //Utility Methods//
 
   //creates p tags for collection and appends list to target with label for category name
-  //clears allChildfren of Target before appending so I use it in specific labeled targets only
+  //clears allChildfren of Target before appending so I use it in specific labele
+  //we pass in a category instance, collection within it, and output target
+  //if the collection is empty, the function returns without side-effects
   putList(category, collection, target) {
     if (collection.length == 0) return;
 
@@ -299,5 +370,10 @@ export default class extends Controller {
     out.classList.add('font-medium');
     out.append(string + ':');
     return out;
+  }
+
+  //calculate modifier and return a string '+3' or '-1'
+  calcMod(base) {
+    return Math.floor(base / 2) - 5;
   }
 }

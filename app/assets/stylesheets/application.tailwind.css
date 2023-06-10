@@ -49,7 +49,7 @@
   }
 
   .base-statbox {
-    @apply w-1/2 h-16 bg-blue-200 text-4xl font-black text-center py-[10%];
+    @apply w-1/2 h-16 bg-blue-200 text-4xl font-black text-center flex flex-col justify-center;
   }
 
   .prof-list {

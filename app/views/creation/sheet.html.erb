@@ -7,13 +7,13 @@
     %>
 
     <%= turbo_frame_tag "form" do %>
-      <%= form_tag creation_sheet_path, method: :get, data: { controller: "dropdown", action: "change->dropdown#submit submit->sheet#update" } do %>
+      <%= form_tag creation_sheet_path, method: :get, data: { controller: "dropdown", action: "change->dropdown#submit submit->sheet#updateChoices" } do %>
         <%= select_tag :race, options_from_collection_for_select(@races, "id", "name", @race&.id), prompt: "- Race -", data: { action: "change->sheet#categoryHandler", "sheet-url-param": "/races/" } %>
         <%= select_tag :subrace, options_from_collection_for_select(@subraces, "id", "name", @subrace&.id), prompt: "- Subrace -", data: { action: "change->sheet#categoryHandler", "sheet-url-param": "/subraces/" } %>
         <%= select_tag :player_class, options_from_collection_for_select(@player_classes, "id", "name", @player_class&.id), prompt: "- Class -", data: { action: "change->sheet#categoryHandler", "sheet-url-param": "/player_classes/"} %>
         <%= select_tag :subclass, options_from_collection_for_select(@subclasses, "id", "name", @subclass&.id), prompt: "- Subclass -", data: { action: "change->sheet#categoryHandler", "sheet-url-param": "/subclasses/"} %>
         <%= select_tag :background, options_from_collection_for_select(@backgrounds, "id", "name", @background&.id), prompt: "- Background -", data: { action: "change->sheet#categoryHandler", "sheet-url-param": "/backgrounds/"} %>
-        <%= select_tag :level, options_for_select(@levels, @level), prompt: "- Level -", data: { "sheet-target": "charLevel"} %>
+        <%= select_tag :level, options_for_select(@levels, @level), prompt: "- Level -", data: { "sheet-target": "charLevel", action: "change->sheet#levelUpdate" } %>
       <% end %>
     <% end %>
 
@@ -31,7 +31,10 @@
 
         <div class="flex align-center" id ="strblock">
           <div class="statframe">
-            <p class="base-statbox" data-sheet-target="strBase"></p>
+            <div class="base-statbox">
+               <div class="text-sm border border-black rounded-full" data-sheet-target="strBase"></div>
+               <div data-sheet-target="strMod"></div>
+            </div>
             <p>STRENGTH</p>
           </div>
           <div class="prof-list">
@@ -50,7 +53,10 @@
 
         <div class="flex align-center" id ="dexblock">
           <div class="statframe">
-            <p class="base-statbox" data-sheet-target="dexBase"></p>
+            <div class="base-statbox">
+               <div class="text-sm border border-black rounded-full" data-sheet-target="dexBase"></div>
+               <div data-sheet-target="dexMod"></div>
+            </div>
             <p>DEXTERITY</p>
           </div>
           <div class="prof-list">
@@ -79,7 +85,10 @@
 
         <div class="flex align-center" id ="conblock">
           <div class="statframe">
-            <p class="base-statbox" data-sheet-target="conBase"></p>
+            <div class="base-statbox">
+               <div class="text-sm border border-black rounded-full" data-sheet-target="conBase"></div>
+               <div data-sheet-target="conMod"></div>
+            </div>
             <p>CONSTITUTION</p>
           </div>
           <div class="prof-list">
@@ -93,7 +102,10 @@
 
         <div class="flex align-center" id ="intblock">
           <div class="statframe">
-            <p class="base-statbox" data-sheet-target="intBase"></p>
+            <div class="base-statbox">
+               <div class="text-sm border border-black rounded-full" data-sheet-target="intBase"></div>
+               <div data-sheet-target="intMod"></div>
+            </div>
             <p>INTELLIGENCE</p>
           </div>
           <div class="prof-list">
@@ -132,7 +144,10 @@
 
         <div class="flex align-center" id ="wisblock">
           <div class="statframe">
-            <p class="base-statbox" data-sheet-target="wisBase"></p>
+            <div class="base-statbox">
+               <div class="text-sm border border-black rounded-full" data-sheet-target="wisBase"></div>
+               <div data-sheet-target="wisMod"></div>
+            </div>
             <p>WISDOM</p>
           </div>
           <div class="prof-list">
@@ -171,7 +186,10 @@
 
         <div class="flex align-center" id ="chablock">
           <div class="statframe">
-            <p class="base-statbox" data-sheet-target="chaBase"></p>
+            <div class="base-statbox">
+               <div class="text-sm border border-black rounded-full" data-sheet-target="chaBase"></div>
+               <div data-sheet-target="chaMod"></div>
+            </div>
             <p>CHARISMA</p>
           </div>
           <div class="prof-list">
@@ -484,7 +502,7 @@
           </div>
         </div>
         <h4 class="font-bold">Weapons</h4>
-        <h4 class="font-bold">Armor</h4>
+        <h4 class="font-bold" data-sheet-target="equipArmor">Armor</h4>
         <h4 class="font-bold">Tools</h4>
         <h4 class="font-bold">Magical</h4>
         <h4 class="font-bold">Misc.</h4>
