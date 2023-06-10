@@ -100,6 +100,8 @@ export default class extends Controller {
     this.choices.set('player_class', 'none');
     this.choices.set('subclass', 'none');
     this.choices.set('background', 'none');
+
+    this.level = 0;
   }
 
   update() {
@@ -137,6 +139,7 @@ export default class extends Controller {
   }
 
   catUpdate(data, cat_type) {
+    //event.target.id is actually the :name param
     let languages, skills, weps, arm, tools, features;
 
     //Handle category specific behaviors here
@@ -175,11 +178,17 @@ export default class extends Controller {
         weps = this.classWeaponsTarget;
         arm = this.classArmorTarget;
         tools = this.classToolsTarget;
+        features = this.classFeaturesTarget;
         //features aren't an array so PutList breaks because it calls forEach on it
         //skills are a choice for class
 
         //setters
         this.aboutClassTarget.innerText = data.name;
+
+        if (data.spellcasting_ability) {
+          this.castingAbilityTarget.innerText =
+            data.spellcasting_ability;
+        }
         break;
 
       case 'subclass':
@@ -241,6 +250,23 @@ export default class extends Controller {
       if (cat_type != 'subclass')
         this.putList(data, data_features, features);
     }
+  }
+
+  //Statbuttons
+
+  randomStats() {
+    this.str = Math.floor(Math.random() * 20) + 1;
+    this.strBaseTarget.innerText = this.str;
+    this.con = Math.floor(Math.random() * 20) + 1;
+    this.conBaseTarget.innerText = this.con;
+    this.dex = Math.floor(Math.random() * 20) + 1;
+    this.dexBaseTarget.innerText = this.dex;
+    this.int = Math.floor(Math.random() * 20) + 1;
+    this.intBaseTarget.innerText = this.int;
+    this.cha = Math.floor(Math.random() * 20) + 1;
+    this.chaBaseTarget.innerText = this.cha;
+    this.wis = Math.floor(Math.random() * 20) + 1;
+    this.wisBaseTarget.innerText = this.wis;
   }
 
   //Utility Methods//
