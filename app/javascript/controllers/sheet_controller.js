@@ -11,13 +11,17 @@ export default class extends Controller {
     'strSavingThrowMod',
     'strSaveProf',
     'athleticsMod',
+    'athleticsProf',
     'dexBase',
     'dexMod',
     'dexSavingThrowMod',
     'dexSaveProf',
     'acrobaticsMod',
+    'acrobaticsProf',
     'sleightOfHandMod',
+    'sleightOfHandProf',
     'stealthMod',
+    'stealthProf',
     'conBase',
     'conMod',
     'conSavingThrowMod',
@@ -27,27 +31,41 @@ export default class extends Controller {
     'intSavingThrowMod',
     'intSaveProf',
     'arcanaMod',
+    'arcanaProf',
     'historyMod',
+    'historyProf',
     'investigationMod',
+    'investigationProf',
     'natureMod',
+    'natureProf',
     'religionMod',
+    'religionProf',
     'wisBase',
     'wisMod',
     'wisSavingThrowMod',
     'wisSaveProf',
     'animalHandlingMod',
+    'animalHandlingProf',
     'insightMod',
+    'insightProf',
     'medicineMod',
+    'medicineProf',
     'perceptionMod',
+    'perceptionProf',
     'survivalMod',
+    'survivalProf',
     'chaBase',
     'chaMod',
     'chaSavingThrowMod',
     'chaSaveProf',
     'deceptionMod',
+    'deceptionProf',
     'intimidationMod',
+    'intimidationProf',
     'performanceMod',
+    'performanceProf',
     'persuasionMod',
+    'persuasionProf',
     'aboutClass',
     'aboutSubclass',
     'aboutLevel',
@@ -226,6 +244,7 @@ export default class extends Controller {
         this.hit_die = data.hit_die;
         this.saving_throws = data.saving_throws;
 
+        //the seed stores saving throw proficiencies as indexes to this array
         let primary_proficiencies = [
           this.strSaveProfTarget,
           this.dexSaveProfTarget,
@@ -237,7 +256,7 @@ export default class extends Controller {
 
         for (let i = 0; i < this.saving_throws.length; i++) {
           let item = this.saving_throws[i];
-          primary_proficiencies[item].innerText = 'X';
+          primary_proficiencies[item].innerText = '+';
         }
 
         data.spellcasting_ability
@@ -345,7 +364,8 @@ export default class extends Controller {
     if (this.isChoicesFull() && this.str) {
       console.log('Choices is full');
 
-      this.populateSkillModifiers(); //tbw
+      //this.populateProficiencies(); //tbw
+      this.populateSkillModifiers(); //wip
 
       this.substatInitiativeTarget.innerText =
         this.dexModTarget.innerText;
@@ -399,6 +419,8 @@ export default class extends Controller {
   }
 
   populateSkillModifiers() {
+    //the class saving throws are stored as indexes to the bonus array so we go through
+    //all this to assign 6 values possible bonuses from a db model then output to 6 different targets
     let save_modifiers = [
       this.strSavingThrowModTarget,
       this.dexSavingThrowModTarget,
@@ -407,16 +429,136 @@ export default class extends Controller {
       this.wisSavingThrowModTarget,
       this.chaSavingThrowModTarget,
     ];
+    let prof_mod = this.proficiencyModifier();
 
     let bonuses = [0, 0, 0, 0, 0, 0];
     this.saving_throws.forEach((item) => {
-      bonuses[item] += this.proficiencyModifier();
+      bonuses[item] += prof_mod;
     });
     for (let i = 0; i < 6; i++) {
       save_modifiers[i].innerText =
         bonuses[i] + this.calcMod(this.stats[i]);
     }
+
+    //skill modifiers are easier if we have the ProfTargets filled when this is called
+    this.updateSkill(
+      this.str,
+      this.athleticsProfTarget,
+      this.athleticsModTarget,
+      prof_mod
+    );
+    this.updateSkill(
+      this.dex,
+      this.acrobaticsProfTarget,
+      this.acrobaticsModTarget,
+      prof_mod
+    );
+    this.updateSkill(
+      this.dex,
+      this.sleightOfHandProfTarget,
+      this.sleightOfHandModTarget,
+      prof_mod
+    );
+    this.updateSkill(
+      this.dex,
+      this.stealthProfTarget,
+      this.stealthModTarget,
+      prof_mod
+    );
+    this.updateSkill(
+      this.int,
+      this.arcanaProfTarget,
+      this.arcanaModTarget,
+      prof_mod
+    );
+    this.updateSkill(
+      this.int,
+      this.historyProfTarget,
+      this.historyModTarget,
+      prof_mod
+    );
+    this.updateSkill(
+      this.int,
+      this.investigationProfTarget,
+      this.investigationModTarget,
+      prof_mod
+    );
+    this.updateSkill(
+      this.int,
+      this.natureProfTarget,
+      this.natureModTarget,
+      prof_mod
+    );
+    this.updateSkill(
+      this.int,
+      this.religionProfTarget,
+      this.religionModTarget,
+      prof_mod
+    );
+    this.updateSkill(
+      this.wis,
+      this.animalHandlingProfTarget,
+      this.animalHandlingModTarget,
+      prof_mod
+    );
+    this.updateSkill(
+      this.wis,
+      this.insightProfTarget,
+      this.insightModTarget,
+      prof_mod
+    );
+    this.updateSkill(
+      this.wis,
+      this.medicineProfTarget,
+      this.medicineModTarget,
+      prof_mod
+    );
+    this.updateSkill(
+      this.wis,
+      this.perceptionProfTarget,
+      this.perceptionModTarget,
+      prof_mod
+    );
+    this.updateSkill(
+      this.wis,
+      this.survivalProfTarget,
+      this.survivalModTarget,
+      prof_mod
+    );
+    this.updateSkill(
+      this.cha,
+      this.deceptionProfTarget,
+      this.deceptionModTarget,
+      prof_mod
+    );
+    this.updateSkill(
+      this.cha,
+      this.intimidationProfTarget,
+      this.intimidationModTarget,
+      prof_mod
+    );
+    this.updateSkill(
+      this.cha,
+      this.performanceProfTarget,
+      this.performanceModTarget,
+      prof_mod
+    );
+    this.updateSkill(
+      this.cha,
+      this.persuasionProfTarget,
+      this.persuasionModTarget,
+      prof_mod
+    );
   }
+
+  updateSkill(base_stat, profTarget, modTarget, prof_mod) {
+    let bonus = this.calcMod(base_stat);
+    if (profTarget.innerText == '+') bonus += prof_mod;
+    if (profTarget.innerText == 'E') bonus += prof_mod * 2;
+    modTarget.innerText = bonus;
+  }
+
+  skillModifiers() {}
 
   customModifiers() {}
 
