@@ -111,12 +111,13 @@ export default class extends Controller {
   }
 
   updateChoices() {
+    console.log('updateChoices');
     //we'll call this whenever there's a change in the top form to update the state object this.choices
     //iterator replaces forEach on Map objects
     let iterchoice = this.choices.entries();
 
     //there are 6 choices to make
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < this.choices.size; i++) {
       //we get the options for each form select in an HTMLCollection
       let label = iterchoice.next().value[0];
       let options = document.getElementById(label).children;
@@ -131,25 +132,33 @@ export default class extends Controller {
           this.choices.set(label, options.item(j).innerText);
       }
     }
-    console.log(this.choices);
+
+    //console.log(this.choices);
   }
 
   categoryHandler(event) {
+    console.log('categoryHandler');
     let labels = event.params;
     let list = event.target.children;
+    this.updateChoices();
 
-    for (let i = 0; i < list.length; i++) {
-      //list is an HTMLCollection
-      if (list.item(i).selected) {
-        let name = list.item(i).innerText;
-        fetch(`${labels.url}${name}`)
-          .then((response) => response.json())
-          .then((data) => this.catUpdate(data, event.target.id));
+    if (event.target.id != 'level') {
+      for (let i = 0; i < list.length; i++) {
+        //list is an HTMLCollection
+        if (list.item(i).selected) {
+          let name = list.item(i).innerText;
+          fetch(`${labels.url}${name}`)
+            .then((response) => response.json())
+            .then((data) => this.catUpdate(data, event.target.id));
+        }
       }
+    } else {
+      this.catUpdate({}, event.target.id);
     }
   }
 
   catUpdate(data, cat_type) {
+    console.log('catUpdate');
     //event.target.id is actually the :name param
     let languages, skills, weps, arm, tools, features;
 
@@ -158,7 +167,6 @@ export default class extends Controller {
     //the setters are just for things like Size or Spellcasting Stat that are unique to certain categories
     switch (cat_type) {
       case 'race':
-        console.log('Detected Race'); //debugging
         languages = this.raceLanguagesTarget;
         skills = this.raceSkillsTarget;
         weps = this.raceWeaponsTarget;
@@ -173,7 +181,6 @@ export default class extends Controller {
         break;
 
       case 'subrace':
-        console.log('Detected Subrace'); //debugging
         languages = this.subraceLanguagesTarget;
         skills = this.subraceSkillsTarget;
         weps = this.subraceWeaponsTarget;
@@ -187,7 +194,6 @@ export default class extends Controller {
         break;
 
       case 'player_class':
-        console.log('Detected Class'); //debugging
         languages = this.classLanguagesTarget;
         skills = this.classSkillsTarget;
         weps = this.classWeaponsTarget;
@@ -208,7 +214,6 @@ export default class extends Controller {
         break;
 
       case 'subclass':
-        console.log('Detected Subclass'); //debugging
         languages = this.subclassLanguagesTarget;
         skills = this.subclassSkillsTarget;
         weps = this.subclassWeaponsTarget;
@@ -222,7 +227,6 @@ export default class extends Controller {
         break;
 
       case 'background':
-        console.log('Detected Background'); //debugging
         languages = this.backgroundLanguagesTarget;
         skills = this.backgroundSkillsTarget;
         weps = this.backgroundWeaponsTarget;
@@ -235,23 +239,51 @@ export default class extends Controller {
         this.sheet_background = data.name;
         break;
 
+      case 'level':
+        console.log('Detected Level');
+        this.level = event.target.value;
+
+        this.profBonusTarget.innerText =
+          Math.ceil(this.level / 4) + 1;
+
+        this.aboutLevelTarget.innerText = this.level;
+
+        //conditionals for form asset assignment, order is probably important and this is prob wrong
+        if (this.str) {
+        }
+        if (this.sheet_race) {
+        }
+        if (this.sheet_subrace) {
+        }
+        if (this.sheet_class) {
+        }
+        if (this.sheet_subclass) {
+        }
+        if (this.sheet_background) {
+        }
+        break;
+
       default:
         console.log('Default Case'); //debugging
         break;
     }
-
-    this.populateCatAbilities(
-      data,
-      cat_type,
-      languages,
-      skills,
-      weps,
-      arm,
-      tools,
-      features
-    );
-
-    let checklist = this.choices?.values();
+    if (cat_type != 'level') {
+      this.populateCatAbilities(
+        data,
+        cat_type,
+        languages,
+        skills,
+        weps,
+        arm,
+        tools,
+        features
+      );
+    }
+    //once the changed category has been updated on the sheet, we want to finish up if possible
+    //this runs if choices is entirely filled out
+    if (this.isChoicesFull()) {
+      console.log('Choices is full');
+    }
   }
 
   populateCatAbilities(
@@ -264,6 +296,7 @@ export default class extends Controller {
     tools,
     features
   ) {
+    console.log('populateCatAbilities');
     //not all categories have these so I'm defaulting to empty array
     //which will make putList fizzle out and do nothing
     let data_lang = data.languages || [];
@@ -284,29 +317,6 @@ export default class extends Controller {
       this.putList(data, data_skills, skills);
       if (cat_type != 'subclass')
         this.putList(data, data_features, features);
-    }
-  }
-
-  //Level update triggers on the level form select and looks for cells it can calculate
-  levelUpdate(event) {
-    let level = event.target.value;
-
-    this.profBonusTarget.innerText = Math.ceil(level / 4) + 1;
-
-    this.aboutLevelTarget.innerText = level;
-
-    //conditionals for form asset assignment, order is probably important and this is prob wrong
-    if (this.str) {
-    }
-    if (this.sheet_race) {
-    }
-    if (this.sheet_subrace) {
-    }
-    if (this.sheet_class) {
-    }
-    if (this.sheet_subclass) {
-    }
-    if (this.sheet_background) {
     }
   }
 
@@ -375,5 +385,28 @@ export default class extends Controller {
   //calculate modifier and return a string '+3' or '-1'
   calcMod(base) {
     return Math.floor(base / 2) - 5;
+  }
+
+  isChoicesFull() {
+    console.log('isChoicesFull');
+    this.logChoices();
+
+    let checklist = this.choices?.values();
+    for (let i = 0; i < this.choices.size; i++) {
+      let val = checklist.next().value;
+      if (val == 'none' || val == 0) {
+        console.log(val);
+        return false;
+      }
+    }
+    return true;
+  }
+
+  logChoices() {
+    console.log('logChoices');
+    let iter = this.choices.entries();
+    for (let i = 0; i < this.choices.size; i++) {
+      console.log(iter.next().value);
+    }
   }
 }
