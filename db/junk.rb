@@ -99,6 +99,4 @@ def feat
   features []
 end
 
-if (this.isChoicesFull() && this.str) {
-      this.catUpdate({}, 'level');
-    }
+

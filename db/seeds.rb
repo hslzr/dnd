@@ -98,8 +98,8 @@ Barbarian = PlayerClass.create(
   starting_hp: 12,
   primary_abilities: [0],
   saving_throws: [0,2],
-  armor: ['light', 'medium', 'shields'],
-  weapons: ['simple', 'martial'],
+  armor: ['Light', 'Medium', 'Shields'],
+  weapons: ['Simple', 'Martial'],
   skill_choices: [
     'Animal Handling',
     'Athletics',
@@ -188,7 +188,7 @@ Barbarian.subclasses.create(
 Acolyte = Background.create(
   name: "Acolyte",
   description: 'You have spent your life in the service of a temple. You act as an intermediary between the realm of the holy and the mortal world.',
-  skills: ['insight', 'religion'],
+  skills: ['Insight', 'Religion'],
   languages: [2],
   equipment: [
     'A holy symbol',

@@ -143,6 +143,35 @@ export default class extends Controller {
     this.cha;
     ///set on statModUpdate
     this.stats;
+    ///set on level update in catHandler
+    this.prof_mod;
+    ///set on class form select
+    this.spellcasting_ability;
+
+    //used for skill selection and updating
+    this.skills = new Map();
+    this.skills.set('Athletics', [
+      this.str,
+      this.athleticsModTarget,
+      this.athleticsProfTarget,
+    ]);
+    this.skills.set('Acrobatics', 'none');
+    this.skills.set('Sleight of Hand', 'none');
+    this.skills.set('Stealth', 'none');
+    this.skills.set('Arcana', 'none');
+    this.skills.set('History', 'none');
+    this.skills.set('Investigation', 'none');
+    this.skills.set('Nature', 'none');
+    this.skills.set('Religion', 'none');
+    this.skills.set('Animal Handling', 'none');
+    this.skills.set('Insight', 'none');
+    this.skills.set('Medicine', 'none');
+    this.skills.set('Perception', 'none');
+    this.skills.set('Survival', 'none');
+    this.skills.set('Deception', 'none');
+    this.skills.set('Intimidation', 'none');
+    this.skills.set('Performance', 'none');
+    this.skills.set('Persuasion', 'none');
   }
 
   updateChoices() {
@@ -259,39 +288,12 @@ export default class extends Controller {
           primary_proficiencies[item].innerText = '+';
         }
 
-        data.spellcasting_ability
-          ? (this.castingAbilityTarget.innerText =
-              data.spellcasting_ability)
-          : (this.castingAbilityTarget.innerText = 'none');
-
-        let spell_mod;
-        switch (data.spellcasting_ability) {
-          case 'STR':
-            spell_mod = this.calcMod(this.str);
-            break;
-          case 'DEX':
-            spell_mod = this.calcMod(this.dex);
-            break;
-          case 'CON':
-            spell_mod = this.calcMod(this.con);
-            break;
-          case 'INT':
-            spell_mod = this.calcMod(this.int);
-            break;
-          case 'WIS':
-            spell_mod = this.calcMod(this.wis);
-            break;
-          case 'CHA':
-            spell_mod = this.calcMod(this.cha);
-            break;
-          default:
-            spell_mod = 0;
-            break;
-        }
-        if (spell_mod != 0) {
-          let bonus = spell_mod + this.proficiencyModifier();
-          this.castingSaveDCTarget.innerText = bonus + 8;
-          this.castingAttackBonusTarget.innerText = bonus;
+        if (data.spellcasting_ability) {
+          this.spellcasting_ability = data.spellcasting_ability;
+          this.castingAbilityTarget.innerText =
+            this.spellcasting_ability;
+        } else {
+          this.castingAbilityTarget.innerText = 'none';
         }
         break;
 
@@ -319,15 +321,16 @@ export default class extends Controller {
         //setters
         this.aboutBackgroundTarget.innerText = data.name;
         this.sheet_background = data.name;
+        this.equipGPTarget.innerText = data.gold;
         break;
 
       case 'level':
         this.level = event.target.value;
 
-        this.profBonusTarget.innerText =
-          Math.ceil(this.level / 4) + 1;
-
         this.aboutLevelTarget.innerText = this.level;
+        this.prof_mod = Math.ceil(this.level / 4) + 1;
+
+        this.profBonusTarget.innerText = this.prof_mod;
 
       default:
         break;
@@ -347,28 +350,64 @@ export default class extends Controller {
     //once the changed category has been updated on the sheet, we want to finish up if possible
     //this runs if choices is entirely filled out
     if (this.isChoicesFull() && this.str) {
-      console.log('Choices is full');
-
-      //this.populateProficiencies(); //tbw
-      this.populateSkillModifiers(); //wip
-
-      this.substatInitiativeTarget.innerText =
-        this.dexModTarget.innerText;
-
-      if (!this.equipArmorTarget.hasChildNodes()) {
-        this.substatACTarget.innerText = 10 + this.calcMod(this.dex);
-      } else {
-        console.log('armor equipped');
-      }
-
-      this.trackingHitDiceTarget.innerText = `${this.level}d${this.hit_die}`;
-
-      //at end of base calculations we should apply custom methods brought in by categories
-      //e.g. the Barbarian Unarmored Defense
-      this.customModifiers();
+      this.finalPass();
     }
   }
 
+  finalPass() {
+    console.log('Choices is full');
+
+    //this.populateProficiencies(); //tbw
+    this.populateSkillModifiers(); //wip
+
+    this.substatInitiativeTarget.innerText =
+      this.dexModTarget.innerText;
+
+    if (!this.equipArmorTarget.hasChildNodes()) {
+      this.substatACTarget.innerText = 10 + this.calcMod(this.dex);
+    } else {
+      console.log('armor equipped');
+    }
+
+    this.trackingHitDiceTarget.innerText = `${this.level}d${this.hit_die}`;
+
+    //these spell stats rely on base stats and player_class
+    let spell_mod;
+    switch (this.spellcasting_ability) {
+      case 'STR':
+        spell_mod = this.calcMod(this.str);
+        break;
+      case 'DEX':
+        spell_mod = this.calcMod(this.dex);
+        break;
+      case 'CON':
+        spell_mod = this.calcMod(this.con);
+        break;
+      case 'INT':
+        spell_mod = this.calcMod(this.int);
+        break;
+      case 'WIS':
+        spell_mod = this.calcMod(this.wis);
+        break;
+      case 'CHA':
+        spell_mod = this.calcMod(this.cha);
+        break;
+      default:
+        spell_mod = 0;
+        break;
+    }
+    if (spell_mod != 0) {
+      let bonus = spell_mod + this.prof_mod;
+      this.castingSaveDCTarget.innerText = bonus + 8;
+      this.castingAttackBonusTarget.innerText = bonus;
+    }
+
+    //at end of base calculations we should apply custom methods brought in by categories
+    //e.g. the Barbarian Unarmored Defense
+    this.customModifiers(); //tbw
+  }
+
+  //called on any form change from catUpdate
   populateCatAbilities(
     data,
     cat_type,
@@ -403,6 +442,7 @@ export default class extends Controller {
     }
   }
 
+  //called when form and stats are full
   populateSkillModifiers() {
     //the class saving throws are stored as indexes to the bonus array so we go through
     //all this to assign 6 values possible bonuses from a db model then output to 6 different targets
@@ -414,11 +454,10 @@ export default class extends Controller {
       this.wisSavingThrowModTarget,
       this.chaSavingThrowModTarget,
     ];
-    let prof_mod = this.proficiencyModifier();
 
     let bonuses = [0, 0, 0, 0, 0, 0];
     this.saving_throws.forEach((item) => {
-      bonuses[item] += prof_mod;
+      bonuses[item] += this.prof_mod;
     });
     for (let i = 0; i < 6; i++) {
       save_modifiers[i].innerText =
@@ -430,109 +469,109 @@ export default class extends Controller {
       this.str,
       this.athleticsProfTarget,
       this.athleticsModTarget,
-      prof_mod
+      this.prof_mod
     );
     this.updateSkill(
       this.dex,
       this.acrobaticsProfTarget,
       this.acrobaticsModTarget,
-      prof_mod
+      this.prof_mod
     );
     this.updateSkill(
       this.dex,
       this.sleightOfHandProfTarget,
       this.sleightOfHandModTarget,
-      prof_mod
+      this.prof_mod
     );
     this.updateSkill(
       this.dex,
       this.stealthProfTarget,
       this.stealthModTarget,
-      prof_mod
+      this.prof_mod
     );
     this.updateSkill(
       this.int,
       this.arcanaProfTarget,
       this.arcanaModTarget,
-      prof_mod
+      this.prof_mod
     );
     this.updateSkill(
       this.int,
       this.historyProfTarget,
       this.historyModTarget,
-      prof_mod
+      this.prof_mod
     );
     this.updateSkill(
       this.int,
       this.investigationProfTarget,
       this.investigationModTarget,
-      prof_mod
+      this.prof_mod
     );
     this.updateSkill(
       this.int,
       this.natureProfTarget,
       this.natureModTarget,
-      prof_mod
+      this.prof_mod
     );
     this.updateSkill(
       this.int,
       this.religionProfTarget,
       this.religionModTarget,
-      prof_mod
+      this.prof_mod
     );
     this.updateSkill(
       this.wis,
       this.animalHandlingProfTarget,
       this.animalHandlingModTarget,
-      prof_mod
+      this.prof_mod
     );
     this.updateSkill(
       this.wis,
       this.insightProfTarget,
       this.insightModTarget,
-      prof_mod
+      this.prof_mod
     );
     this.updateSkill(
       this.wis,
       this.medicineProfTarget,
       this.medicineModTarget,
-      prof_mod
+      this.prof_mod
     );
     this.updateSkill(
       this.wis,
       this.perceptionProfTarget,
       this.perceptionModTarget,
-      prof_mod
+      this.prof_mod
     );
     this.updateSkill(
       this.wis,
       this.survivalProfTarget,
       this.survivalModTarget,
-      prof_mod
+      this.prof_mod
     );
     this.updateSkill(
       this.cha,
       this.deceptionProfTarget,
       this.deceptionModTarget,
-      prof_mod
+      this.prof_mod
     );
     this.updateSkill(
       this.cha,
       this.intimidationProfTarget,
       this.intimidationModTarget,
-      prof_mod
+      this.prof_mod
     );
     this.updateSkill(
       this.cha,
       this.performanceProfTarget,
       this.performanceModTarget,
-      prof_mod
+      this.prof_mod
     );
     this.updateSkill(
       this.cha,
       this.persuasionProfTarget,
       this.persuasionModTarget,
-      prof_mod
+      this.prof_mod
     );
   }
 
@@ -547,7 +586,7 @@ export default class extends Controller {
 
   customModifiers() {}
 
-  //called on all Statbuttons
+  //called on all Statbuttons, also calls catUpdate for a sheet recalculation
   statModUpdate() {
     this.strModTarget.innerText = this.modWithSign(
       this.calcMod(this.str)
@@ -577,7 +616,7 @@ export default class extends Controller {
       this.cha,
     ];
     if (this.isChoicesFull() && this.str) {
-      this.catUpdate({}, 'level');
+      this.finalPass();
     }
   }
 
