@@ -9,19 +9,23 @@ export default class extends Controller {
     'strBase',
     'strMod',
     'strSavingThrowMod',
+    'strSaveProf',
     'athleticsMod',
     'dexBase',
     'dexMod',
     'dexSavingThrowMod',
+    'dexSaveProf',
     'acrobaticsMod',
     'sleightOfHandMod',
     'stealthMod',
     'conBase',
     'conMod',
     'conSavingThrowMod',
+    'conSaveProf',
     'intBase',
     'intMod',
     'intSavingThrowMod',
+    'intSaveProf',
     'arcanaMod',
     'historyMod',
     'investigationMod',
@@ -30,6 +34,7 @@ export default class extends Controller {
     'wisBase',
     'wisMod',
     'wisSavingThrowMod',
+    'wisSaveProf',
     'animalHandlingMod',
     'insightMod',
     'medicineMod',
@@ -38,6 +43,7 @@ export default class extends Controller {
     'chaBase',
     'chaMod',
     'chaSavingThrowMod',
+    'chaSaveProf',
     'deceptionMod',
     'intimidationMod',
     'performanceMod',
@@ -108,6 +114,17 @@ export default class extends Controller {
     this.choices.set('subclass', 'none');
     this.choices.set('background', 'none');
     this.choices.set('level', 0);
+
+    //variables set later but available as noted
+    ///set on randomStats
+    this.str;
+    this.dex;
+    this.con;
+    this.int;
+    this.wis;
+    this.cha;
+    ///set on statModUpdate
+    this.stats;
   }
 
   updateChoices() {
@@ -206,10 +223,56 @@ export default class extends Controller {
         //setters
         this.aboutClassTarget.innerText = data.name;
         this.sheet_class = data.name;
+        this.hit_die = data.hit_die;
+        this.saving_throws = data.saving_throws;
 
-        if (data.spellcasting_ability) {
-          this.castingAbilityTarget.innerText =
-            data.spellcasting_ability;
+        let primary_proficiencies = [
+          this.strSaveProfTarget,
+          this.dexSaveProfTarget,
+          this.conSaveProfTarget,
+          this.intSaveProfTarget,
+          this.wisSaveProfTarget,
+          this.chaSaveProfTarget,
+        ];
+
+        for (let i = 0; i < this.saving_throws.length; i++) {
+          let item = this.saving_throws[i];
+          primary_proficiencies[item].innerText = 'X';
+        }
+
+        data.spellcasting_ability
+          ? (this.castingAbilityTarget.innerText =
+              data.spellcasting_ability)
+          : (this.castingAbilityTarget.innerText = 'none');
+
+        let spell_mod;
+        switch (data.spellcasting_ability) {
+          case 'STR':
+            spell_mod = this.calcMod(this.str);
+            break;
+          case 'DEX':
+            spell_mod = this.calcMod(this.dex);
+            break;
+          case 'CON':
+            spell_mod = this.calcMod(this.con);
+            break;
+          case 'INT':
+            spell_mod = this.calcMod(this.int);
+            break;
+          case 'WIS':
+            spell_mod = this.calcMod(this.wis);
+            break;
+          case 'CHA':
+            spell_mod = this.calcMod(this.cha);
+            break;
+          default:
+            spell_mod = 0;
+            break;
+        }
+        if (spell_mod != 0) {
+          let bonus = spell_mod + this.proficiencyModifier();
+          this.castingSaveDCTarget.innerText = bonus + 8;
+          this.castingAttackBonusTarget.innerText = bonus;
         }
         break;
 
@@ -279,8 +342,25 @@ export default class extends Controller {
     }
     //once the changed category has been updated on the sheet, we want to finish up if possible
     //this runs if choices is entirely filled out
-    if (this.isChoicesFull()) {
-      //console.log('Choices is full');
+    if (this.isChoicesFull() && this.str) {
+      console.log('Choices is full');
+
+      this.populateSkillModifiers(); //tbw
+
+      this.substatInitiativeTarget.innerText =
+        this.dexModTarget.innerText;
+
+      if (!this.equipArmorTarget.hasChildNodes()) {
+        this.substatACTarget.innerText = 10 + this.calcMod(this.dex);
+      } else {
+        console.log('armor equipped');
+      }
+
+      this.trackingHitDiceTarget.innerText = `${this.level}d${this.hit_die}`;
+
+      //at end of base calculations we should apply custom methods brought in by categories
+      //e.g. the Barbarian Unarmored Defense
+      this.customModifiers();
     }
   }
 
@@ -318,14 +398,64 @@ export default class extends Controller {
     }
   }
 
+  populateSkillModifiers() {
+    let save_modifiers = [
+      this.strSavingThrowModTarget,
+      this.dexSavingThrowModTarget,
+      this.conSavingThrowModTarget,
+      this.intSavingThrowModTarget,
+      this.wisSavingThrowModTarget,
+      this.chaSavingThrowModTarget,
+    ];
+
+    let bonuses = [0, 0, 0, 0, 0, 0];
+    this.saving_throws.forEach((item) => {
+      bonuses[item] += this.proficiencyModifier();
+    });
+    for (let i = 0; i < 6; i++) {
+      save_modifiers[i].innerText =
+        bonuses[i] + this.calcMod(this.stats[i]);
+    }
+  }
+
+  customModifiers() {}
+
   //called on all Statbuttons
   statModUpdate() {
-    this.strModTarget.innerText = this.calcMod(this.str);
-    this.dexModTarget.innerText = this.calcMod(this.dex);
-    this.conModTarget.innerText = this.calcMod(this.con);
-    this.intModTarget.innerText = this.calcMod(this.int);
-    this.wisModTarget.innerText = this.calcMod(this.wis);
-    this.chaModTarget.innerText = this.calcMod(this.cha);
+    this.strModTarget.innerText = this.modWithSign(
+      this.calcMod(this.str)
+    );
+    this.dexModTarget.innerText = this.modWithSign(
+      this.calcMod(this.dex)
+    );
+    this.conModTarget.innerText = this.modWithSign(
+      this.calcMod(this.con)
+    );
+    this.intModTarget.innerText = this.modWithSign(
+      this.calcMod(this.int)
+    );
+    this.wisModTarget.innerText = this.modWithSign(
+      this.calcMod(this.wis)
+    );
+    this.chaModTarget.innerText = this.modWithSign(
+      this.calcMod(this.cha)
+    );
+
+    this.stats = [
+      this.str,
+      this.dex,
+      this.con,
+      this.int,
+      this.wis,
+      this.cha,
+    ];
+  }
+
+  modWithSign(val) {
+    let sign;
+    if (val == 0) return '0';
+    if (val < 0) return `${val}`;
+    return `+${val}`;
   }
 
   //Statbuttons
@@ -348,11 +478,12 @@ export default class extends Controller {
 
   //Utility Methods//
 
-  //creates p tags for collection and appends list to target with label for category name
-  //clears allChildfren of Target before appending so I use it in specific labele
-  //we pass in a category instance, collection within it, and output target
-  //if the collection is empty, the function returns without side-effects
   putList(category, collection, target) {
+    //creates p tags for collection and appends list to target with label for category name
+    //clears allChildfren of Target before appending so I use it in specific labele
+    //we pass in a category instance, collection within it, and output target
+    //if the collection is empty, the function returns without side-effects
+
     if (collection.length == 0) return;
 
     this.removeAllChildNodes(target);
@@ -365,14 +496,13 @@ export default class extends Controller {
     });
   }
 
-  //DOM Utility functions
   removeAllChildNodes(parent) {
     while (parent.firstChild) {
       parent.removeChild(parent.firstChild);
     }
   }
 
-  //got some styling hiding out in here withe the font-medium
+  //got some styling hiding out in here with the the font-medium
   getPTag(string) {
     let out = document.createElement('p');
     out.classList.add('font-medium');
@@ -383,6 +513,10 @@ export default class extends Controller {
   //calculate modifier and return a string '+3' or '-1'
   calcMod(base) {
     return Math.floor(base / 2) - 5;
+  }
+
+  proficiencyModifier() {
+    return Math.ceil(this.level / 4) + 1;
   }
 
   isChoicesFull() {

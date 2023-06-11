@@ -96,8 +96,8 @@ Barbarian = PlayerClass.create(
   name: 'Barbarian',
   hit_die: 12,
   starting_hp: 12,
-  primary_abilities: [1],
-  saving_throws: [1,3],
+  primary_abilities: [0],
+  saving_throws: [0,2],
   armor: ['light', 'medium', 'shields'],
   weapons: ['simple', 'martial'],
   skill_choices: [
