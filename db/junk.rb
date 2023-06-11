@@ -98,3 +98,7 @@ def feat
   description
   features []
 end
+
+if (this.isChoicesFull() && this.str) {
+      this.catUpdate({}, 'level');
+    }

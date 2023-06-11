@@ -329,21 +329,6 @@ export default class extends Controller {
 
         this.aboutLevelTarget.innerText = this.level;
 
-        //conditionals for form asset assignment, order is probably important and this is prob wrong
-        if (this.str) {
-        }
-        if (this.sheet_race) {
-        }
-        if (this.sheet_subrace) {
-        }
-        if (this.sheet_class) {
-        }
-        if (this.sheet_subclass) {
-        }
-        if (this.sheet_background) {
-        }
-        break;
-
       default:
         break;
     }
@@ -591,6 +576,9 @@ export default class extends Controller {
       this.wis,
       this.cha,
     ];
+    if (this.isChoicesFull() && this.str) {
+      this.catUpdate({}, 'level');
+    }
   }
 
   modWithSign(val) {
