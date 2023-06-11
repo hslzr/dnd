@@ -150,28 +150,6 @@ export default class extends Controller {
 
     //used for skill selection and updating
     this.skills = new Map();
-    this.skills.set('Athletics', [
-      this.str,
-      this.athleticsModTarget,
-      this.athleticsProfTarget,
-    ]);
-    this.skills.set('Acrobatics', 'none');
-    this.skills.set('Sleight of Hand', 'none');
-    this.skills.set('Stealth', 'none');
-    this.skills.set('Arcana', 'none');
-    this.skills.set('History', 'none');
-    this.skills.set('Investigation', 'none');
-    this.skills.set('Nature', 'none');
-    this.skills.set('Religion', 'none');
-    this.skills.set('Animal Handling', 'none');
-    this.skills.set('Insight', 'none');
-    this.skills.set('Medicine', 'none');
-    this.skills.set('Perception', 'none');
-    this.skills.set('Survival', 'none');
-    this.skills.set('Deception', 'none');
-    this.skills.set('Intimidation', 'none');
-    this.skills.set('Performance', 'none');
-    this.skills.set('Persuasion', 'none');
   }
 
   updateChoices() {
@@ -358,6 +336,7 @@ export default class extends Controller {
     console.log('Choices is full');
 
     //this.populateProficiencies(); //tbw
+    this.setSkillMap();
     this.populateSkillModifiers(); //wip
 
     this.substatInitiativeTarget.innerText =
@@ -442,7 +421,119 @@ export default class extends Controller {
     }
   }
 
-  //called when form and stats are full
+  //called in finalPass
+  setSkillMap() {
+    this.skills.set('Athletics', [
+      this.str,
+      this.athleticsModTarget,
+      this.athleticsProfTarget,
+      '',
+    ]);
+    this.skills.set('Acrobatics', [
+      this.dex,
+      this.acrobaticsModTarget,
+      this.acrobaticsProfTarget,
+      '',
+    ]);
+    this.skills.set('Sleight of Hand', [
+      this.dex,
+      this.sleightOfHandModTarget,
+      this.sleightOfHandProfTarget,
+      '',
+    ]);
+    this.skills.set('Stealth', [
+      this.dex,
+      this.stealthModTarget,
+      this.stealthProfTarget,
+      '',
+    ]);
+    this.skills.set('Arcana', [
+      this.int,
+      this.arcanaModTarget,
+      this.arcanaProfTarget,
+      '',
+    ]);
+    this.skills.set('History', [
+      this.int,
+      this.historyModTarget,
+      this.historyProfTarget,
+      '',
+    ]);
+    this.skills.set('Investigation', [
+      this.int,
+      this.investigationModTarget,
+      this.investigationProfTarget,
+      '',
+    ]);
+    this.skills.set('Nature', [
+      this.int,
+      this.natureModTarget,
+      this.natureProfTarget,
+      '',
+    ]);
+    this.skills.set('Religion', [
+      this.int,
+      this.religionModTarget,
+      this.religionProfTarget,
+      '',
+    ]);
+    this.skills.set('Animal Handling', [
+      this.wis,
+      this.animalHandlingModTarget,
+      this.animalHandlingProfTarget,
+      '',
+    ]);
+    this.skills.set('Insight', [
+      this.wis,
+      this.insightModTarget,
+      this.insightProfTarget,
+      '',
+    ]);
+    this.skills.set('Medicine', [
+      this.wis,
+      this.medicineModTarget,
+      this.medicineProfTarget,
+      '',
+    ]);
+    this.skills.set('Perception', [
+      this.wis,
+      this.perceptionModTarget,
+      this.perceptionProfTarget,
+      '',
+    ]);
+    this.skills.set('Survival', [
+      this.wis,
+      this.survivalModTarget,
+      this.survivalProfTarget,
+      '',
+    ]);
+    this.skills.set('Deception', [
+      this.cha,
+      this.deceptionModTarget,
+      this.deceptionProfTarget,
+      '',
+    ]);
+    this.skills.set('Intimidation', [
+      this.cha,
+      this.intimidationModTarget,
+      this.intimidationProfTarget,
+      '',
+    ]);
+    this.skills.set('Performance', [
+      this.cha,
+      this.performanceModTarget,
+      this.performanceProfTarget,
+      '',
+    ]);
+    this.skills.set('Persuasion', [
+      this.cha,
+      this.persuasionModTarget,
+      this.persuasionProfTarget,
+      '',
+    ]);
+  }
+
+  //called in finalPass
   populateSkillModifiers() {
     //the class saving throws are stored as indexes to the bonus array so we go through
     //all this to assign 6 values possible bonuses from a db model then output to 6 different targets
@@ -464,7 +555,21 @@ export default class extends Controller {
         bonuses[i] + this.calcMod(this.stats[i]);
     }
 
-    //skill modifiers are easier if we have the ProfTargets filled when this is called
+    //loop through the skills Map iterator and call updateSkill
+    console.log('trying skills');
+    let skilliter = this.skills.values();
+    for (let i = 0; i < this.skills.size; i++) {
+      //console.log(skilliter.next());
+      let value = skilliter.next().value;
+      this.updateSkill(value[0], value[2], value[1], this.prof_mod);
+    }
+
+    /*
+    let iter = this.choices.entries();
+    for (let i = 0; i < this.choices.size; i++) {
+      console.log(iter.next().value);
+    }
+
     this.updateSkill(
       this.str,
       this.athleticsProfTarget,
@@ -573,6 +678,7 @@ export default class extends Controller {
       this.persuasionModTarget,
       this.prof_mod
     );
+    */
   }
 
   updateSkill(base_stat, profTarget, modTarget, prof_mod) {
@@ -682,10 +788,6 @@ export default class extends Controller {
   //calculate modifier and return a string '+3' or '-1'
   calcMod(base) {
     return Math.floor(base / 2) - 5;
-  }
-
-  proficiencyModifier() {
-    return Math.ceil(this.level / 4) + 1;
   }
 
   isChoicesFull() {
