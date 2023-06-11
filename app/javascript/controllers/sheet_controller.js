@@ -111,7 +111,7 @@ export default class extends Controller {
   }
 
   updateChoices() {
-    console.log('updateChoices');
+    //console.log('updateChoices');
     //we'll call this whenever there's a change in the top form to update the state object this.choices
     //iterator replaces forEach on Map objects
     let iterchoice = this.choices.entries();
@@ -137,7 +137,7 @@ export default class extends Controller {
   }
 
   categoryHandler(event) {
-    console.log('categoryHandler');
+    //console.log('categoryHandler');
     let labels = event.params;
     let list = event.target.children;
     this.updateChoices();
@@ -158,7 +158,7 @@ export default class extends Controller {
   }
 
   catUpdate(data, cat_type) {
-    console.log('catUpdate');
+    //console.log('catUpdate');
     //event.target.id is actually the :name param
     let languages, skills, weps, arm, tools, features;
 
@@ -240,7 +240,6 @@ export default class extends Controller {
         break;
 
       case 'level':
-        console.log('Detected Level');
         this.level = event.target.value;
 
         this.profBonusTarget.innerText =
@@ -264,7 +263,6 @@ export default class extends Controller {
         break;
 
       default:
-        console.log('Default Case'); //debugging
         break;
     }
     if (cat_type != 'level') {
@@ -282,7 +280,7 @@ export default class extends Controller {
     //once the changed category has been updated on the sheet, we want to finish up if possible
     //this runs if choices is entirely filled out
     if (this.isChoicesFull()) {
-      console.log('Choices is full');
+      //console.log('Choices is full');
     }
   }
 
@@ -296,7 +294,7 @@ export default class extends Controller {
     tools,
     features
   ) {
-    console.log('populateCatAbilities');
+    //console.log('populateCatAbilities');
     //not all categories have these so I'm defaulting to empty array
     //which will make putList fizzle out and do nothing
     let data_lang = data.languages || [];
@@ -388,14 +386,12 @@ export default class extends Controller {
   }
 
   isChoicesFull() {
-    console.log('isChoicesFull');
-    this.logChoices();
+    //console.log('isChoicesFull');
 
     let checklist = this.choices?.values();
     for (let i = 0; i < this.choices.size; i++) {
       let val = checklist.next().value;
       if (val == 'none' || val == 0) {
-        console.log(val);
         return false;
       }
     }
@@ -403,7 +399,7 @@ export default class extends Controller {
   }
 
   logChoices() {
-    console.log('logChoices');
+    //console.log('logChoices');
     let iter = this.choices.entries();
     for (let i = 0; i < this.choices.size; i++) {
       console.log(iter.next().value);
