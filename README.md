@@ -9,21 +9,45 @@
 The seed file is all-important
 
 # Working Notes
-handling levels will require two things
-  check for level data in catUpdate and make changes if possible
-  have a method just for the level form select that updates everything on the sheet
+sheet.hrml.erb => sheet_controller
+  turbo-frame form => dropdown#submit
+    select-box => sheet#categoryHandler
+    select-box => data-sheet-url-param
 
-have to look up the rules to figure out how to calculate some stats
+  dropdown#submit
+    this populates the instance variables server side for conditional select_box contents on turbo-frame submit
 
-have to do interactive selection for skills, tools, equipment, etc.
+  sheet#catHandler
+    -updates this.choices state object
+    -if select_box != label
+      catUpdate with category data(Race/Class/etc.)
+    -else
+      catUpdate with no data
 
-have to restyle the whole sheet
+  sheet#catUpdate(data, cat_type)
+    -set targets for feature/trait/skill assignment by category and update category specific information that doesn't rely on other select_boxes
 
-spell_lists and the spell chart will require a few big modals
+    -if cat_type != 'level'
+      populateCatAbilities(data, //targets from above)
+        -resets and populates these fields
 
-then filling in the seed file with everything in the PHB
+    -if choices is full and stats assigned
+      finalPass() //final sheet calculations assuming all user entered data is present
 
-then user profiles with Quivers of PCs
+  sheet#finalPass()
+    -setSkillMap()
+    -populateSkillModifiers()
+    -set a few substats and tracking stats
+    -customModifiers()
+      not written yet, this is for implementing class features that modify data
 
-then Playsheet, phone version of the sheet with interactivity like damage, rolling, encumbrance tracking, etc.
-just a handheld aid for at the table, maybe it's skinnable and highly accessible, internationalized?
+  sheet#populateCatAbilities(data, //targets)
+    takes fetched data and puts it to the sheet at the given targets with putList()
+
+  the rest are utility functions to manipulate the data and are fairly short. The only complicated thing is setSkillMap() which sets a bunch of targets for skill modifiers. This is called in finalPass, then we call setSKillModifiers which sets all the proficiency modifiers, the four lines using this.skills live here at the end
+
+
+
+
+
+

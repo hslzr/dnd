@@ -335,9 +335,8 @@ export default class extends Controller {
   finalPass() {
     console.log('Choices is full');
 
-    //this.populateProficiencies(); //tbw
     this.setSkillMap();
-    this.populateSkillModifiers(); //wip
+    this.populateSkillModifiers();
 
     this.substatInitiativeTarget.innerText =
       this.dexModTarget.innerText;
@@ -556,129 +555,11 @@ export default class extends Controller {
     }
 
     //loop through the skills Map iterator and call updateSkill
-    console.log('trying skills');
     let skilliter = this.skills.values();
     for (let i = 0; i < this.skills.size; i++) {
-      //console.log(skilliter.next());
       let value = skilliter.next().value;
       this.updateSkill(value[0], value[2], value[1], this.prof_mod);
     }
-
-    /*
-    let iter = this.choices.entries();
-    for (let i = 0; i < this.choices.size; i++) {
-      console.log(iter.next().value);
-    }
-
-    this.updateSkill(
-      this.str,
-      this.athleticsProfTarget,
-      this.athleticsModTarget,
-      this.prof_mod
-    );
-    this.updateSkill(
-      this.dex,
-      this.acrobaticsProfTarget,
-      this.acrobaticsModTarget,
-      this.prof_mod
-    );
-    this.updateSkill(
-      this.dex,
-      this.sleightOfHandProfTarget,
-      this.sleightOfHandModTarget,
-      this.prof_mod
-    );
-    this.updateSkill(
-      this.dex,
-      this.stealthProfTarget,
-      this.stealthModTarget,
-      this.prof_mod
-    );
-    this.updateSkill(
-      this.int,
-      this.arcanaProfTarget,
-      this.arcanaModTarget,
-      this.prof_mod
-    );
-    this.updateSkill(
-      this.int,
-      this.historyProfTarget,
-      this.historyModTarget,
-      this.prof_mod
-    );
-    this.updateSkill(
-      this.int,
-      this.investigationProfTarget,
-      this.investigationModTarget,
-      this.prof_mod
-    );
-    this.updateSkill(
-      this.int,
-      this.natureProfTarget,
-      this.natureModTarget,
-      this.prof_mod
-    );
-    this.updateSkill(
-      this.int,
-      this.religionProfTarget,
-      this.religionModTarget,
-      this.prof_mod
-    );
-    this.updateSkill(
-      this.wis,
-      this.animalHandlingProfTarget,
-      this.animalHandlingModTarget,
-      this.prof_mod
-    );
-    this.updateSkill(
-      this.wis,
-      this.insightProfTarget,
-      this.insightModTarget,
-      this.prof_mod
-    );
-    this.updateSkill(
-      this.wis,
-      this.medicineProfTarget,
-      this.medicineModTarget,
-      this.prof_mod
-    );
-    this.updateSkill(
-      this.wis,
-      this.perceptionProfTarget,
-      this.perceptionModTarget,
-      this.prof_mod
-    );
-    this.updateSkill(
-      this.wis,
-      this.survivalProfTarget,
-      this.survivalModTarget,
-      this.prof_mod
-    );
-    this.updateSkill(
-      this.cha,
-      this.deceptionProfTarget,
-      this.deceptionModTarget,
-      this.prof_mod
-    );
-    this.updateSkill(
-      this.cha,
-      this.intimidationProfTarget,
-      this.intimidationModTarget,
-      this.prof_mod
-    );
-    this.updateSkill(
-      this.cha,
-      this.performanceProfTarget,
-      this.performanceModTarget,
-      this.prof_mod
-    );
-    this.updateSkill(
-      this.cha,
-      this.persuasionProfTarget,
-      this.persuasionModTarget,
-      this.prof_mod
-    );
-    */
   }
 
   updateSkill(base_stat, profTarget, modTarget, prof_mod) {
