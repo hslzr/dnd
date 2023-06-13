@@ -168,6 +168,7 @@ export default class extends Controller {
     this.langButtonTarget.disabled = true;
   }
 
+  //----------------------------- Main Sheet Update Flow ---------------------------------//
   categoryHandler(event) {
     let labels = event.params;
     let list = event.target.children;
@@ -343,8 +344,6 @@ export default class extends Controller {
     }
   }
 
-  //called on category changes from catUpdate
-  //updats sheet and this.cat maps
   populateCatAbilities(
     data,
     cat_type,
@@ -441,14 +440,13 @@ export default class extends Controller {
     this.activateButtons();
 
     this.makeModalChoices();
-    //this.applyModalChoies();
 
     //at end of base calculations we should apply custom methods brought in by categories
     //e.g. the Barbarian Unarmored Defense
     this.customModifiers(); //tbw
   }
 
-  //called in finalPass
+  //----------------------------- Final Pass methods ---------------------------------//
   setSkillMap() {
     this.skills.set('Athletics', [
       this.str,
@@ -560,7 +558,6 @@ export default class extends Controller {
     ]);
   }
 
-  //called in finalPass
   populateSkillModifiers() {
     //the class saving throws are stored as indexes to the bonus array so we go through
     //all this to assign 6 values possible bonuses from a db model then output to 6 different targets
@@ -596,6 +593,8 @@ export default class extends Controller {
     if (profTarget.innerText == 'E') bonus += prof_mod * 2;
     modTarget.innerText = bonus;
   }
+
+  //----------------------------- Choice Modals ---------------------------------//
   makeModalChoices() {
     this.chooseLanguages();
     /* what choices are there?
@@ -699,15 +698,13 @@ export default class extends Controller {
     });
   }
 
-  customModifiers() {} //tbw
-
   activateButtons() {
     this.langButtonTarget.disabled = false;
     this.langButtonTarget.classList.remove(this.disabled_color);
     this.langButtonTarget.classList.add(this.active_color);
   }
 
-  //called on all Statbuttons, also calls catUpdate for a sheet recalculation
+  //----------------------------- Base Stat Methods ---------------------------------//
   statModUpdate() {
     this.strModTarget.innerText = this.modWithSign(
       this.calcMod(this.str)
@@ -741,14 +738,6 @@ export default class extends Controller {
     }
   }
 
-  modWithSign(val) {
-    let sign;
-    if (val == 0) return '0';
-    if (val < 0) return `${val}`;
-    return `+${val}`;
-  }
-
-  //Statbuttons
   randomStats() {
     this.str = Math.floor(Math.random() * 20) + 1;
     this.strBaseTarget.innerText = this.str;
@@ -766,7 +755,11 @@ export default class extends Controller {
     this.statModUpdate();
   }
 
-  //Utility Methods//
+  //----------------------------- Custom entry Handling ---------------------------------//
+
+  customModifiers() {} //tbw
+
+  //----------------------------- Utility Methods ---------------------------------//
 
   putList(category, collection, target) {
     //creates p tags for collection and appends list to target with label for category name
@@ -809,6 +802,13 @@ export default class extends Controller {
     }
   }
 
+  modWithSign(val) {
+    let sign;
+    if (val == 0) return '0';
+    if (val < 0) return `${val}`;
+    return `+${val}`;
+  }
+
   //got some styling hiding out in here with the the font-medium
   getPTag(string) {
     let out = document.createElement('p');
@@ -842,6 +842,7 @@ export default class extends Controller {
     console.log('logged map');
   }
 
+  //returns a Map { category_names, [] }
   blankCategoryMap() {
     let categories = new Map();
     categories.set('race', []);
@@ -853,7 +854,7 @@ export default class extends Controller {
     return categories;
   }
 
-  //Modals
+  //Modal display activation
   showLangDialog() {
     this.dialogLanguagesTarget.showModal();
   }
