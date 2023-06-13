@@ -96,7 +96,9 @@ export default class extends Controller {
     'subclassSkills',
     'backgroundSkills',
     'raceLanguages',
+    'raceExtraLanguages',
     'subraceLanguages',
+    'subraceExtraLanguages',
     'backgroundLanguages',
     'raceWeapons',
     'subraceWeapons',
@@ -121,6 +123,8 @@ export default class extends Controller {
     'equipSP',
     'equipCP',
     'equipArmor',
+    'dialogLanguages',
+    'languageModalList',
   ];
 
   connect() {
@@ -148,38 +152,17 @@ export default class extends Controller {
     ///set on class form select
     this.spellcasting_ability;
 
-    //used for skill selection and updating
-    this.skills = new Map();
-  }
-
-  updateChoices() {
-    //console.log('updateChoices');
-    //we'll call this whenever there's a change in the top form to update the state object this.choices
-    //iterator replaces forEach on Map objects
-    let iterchoice = this.choices.entries();
-
-    //there are 6 choices to make
-    for (let i = 0; i < this.choices.size; i++) {
-      //we get the options for each form select in an HTMLCollection
-      let label = iterchoice.next().value[0];
-      let options = document.getElementById(label).children;
-
-      //we have to use set and item to deal with the HTMLCollection
-      //we won't set anything that is still on the label '- Whatever -'
-      for (let j = 0; j < options.length; j++) {
-        if (
-          options.item(j).selected &&
-          options.item(j).innerText.charAt(0) != '-'
-        )
-          this.choices.set(label, options.item(j).innerText);
-      }
-    }
-
-    //console.log(this.choices);
+    //used for selection and updating
+    this.skills = new Map(); //initialized later in setSkillMap()
+    this.languages = this.blankCategoryMap();
+    this.extra_languages = this.blankCategoryMap();
+    this.tools = this.blankCategoryMap();
+    this.weapons = this.blankCategoryMap();
+    this.armor = this.blankCategoryMap();
+    this.features = this.blankCategoryMap();
   }
 
   categoryHandler(event) {
-    //console.log('categoryHandler');
     let labels = event.params;
     let list = event.target.children;
     this.updateChoices();
@@ -200,9 +183,8 @@ export default class extends Controller {
   }
 
   catUpdate(data, cat_type) {
-    //console.log('catUpdate');
     //event.target.id is actually the :name param
-    let languages, skills, weps, arm, tools, features;
+    let languages, extra_lang, skills, weps, arm, tools, features;
 
     //Handle category specific behaviors here
     //we set these first variables so we can add and remove the correct items whenever a form select changes
@@ -210,6 +192,7 @@ export default class extends Controller {
     switch (cat_type) {
       case 'race':
         languages = this.raceLanguagesTarget;
+        extra_lang = this.raceExtraLanguagesTarget;
         skills = this.raceSkillsTarget;
         weps = this.raceWeaponsTarget;
         arm = this.raceArmorTarget;
@@ -224,6 +207,7 @@ export default class extends Controller {
 
       case 'subrace':
         languages = this.subraceLanguagesTarget;
+        extra_lang = this.subraceExtraLanguagesTarget;
         skills = this.subraceSkillsTarget;
         weps = this.subraceWeaponsTarget;
         arm = this.subraceArmorTarget;
@@ -237,6 +221,7 @@ export default class extends Controller {
 
       case 'player_class':
         languages = this.classLanguagesTarget;
+        extra_lang = null;
         skills = this.classSkillsTarget;
         weps = this.classWeaponsTarget;
         arm = this.classArmorTarget;
@@ -277,6 +262,7 @@ export default class extends Controller {
 
       case 'subclass':
         languages = this.subclassLanguagesTarget;
+        extra_lang = null;
         skills = this.subclassSkillsTarget;
         weps = this.subclassWeaponsTarget;
         arm = this.subclassArmorTarget;
@@ -289,7 +275,8 @@ export default class extends Controller {
         break;
 
       case 'background':
-        languages = this.backgroundLanguagesTarget;
+        languages = null;
+        extra_lang = this.backgroundExtraLanguagesTarget;
         skills = this.backgroundSkillsTarget;
         weps = this.backgroundWeaponsTarget;
         arm = this.backgroundArmorTarget;
@@ -318,6 +305,7 @@ export default class extends Controller {
         data,
         cat_type,
         languages,
+        extra_lang,
         skills,
         weps,
         arm,
@@ -329,6 +317,74 @@ export default class extends Controller {
     //this runs if choices is entirely filled out
     if (this.isChoicesFull() && this.str) {
       this.finalPass();
+    }
+  }
+
+  updateChoices() {
+    //we'll call this whenever there's a change in the top form to update the state object this.choices
+    //iterator replaces forEach on Map objects
+    let iterchoice = this.choices.entries();
+
+    //there are 6 choices to make
+    for (let i = 0; i < this.choices.size; i++) {
+      //we get the options for each form select in an HTMLCollection
+      let label = iterchoice.next().value[0];
+      let options = document.getElementById(label).children;
+
+      //we have to use set and item to deal with the HTMLCollection
+      //we won't set anything that is still on the label '- Whatever -'
+      for (let j = 0; j < options.length; j++) {
+        if (
+          options.item(j).selected &&
+          options.item(j).innerText.charAt(0) != '-'
+        )
+          this.choices.set(label, options.item(j).innerText);
+      }
+    }
+  }
+
+  //called on category changes from catUpdate
+  //updats sheet and this.cat maps
+  populateCatAbilities(
+    data,
+    cat_type,
+    languages,
+    extra_lang,
+    skills,
+    weps,
+    arm,
+    tools,
+    features
+  ) {
+    //not all categories have these so I'm defaulting to empty array
+    //which will make putList fizzle out and do nothing
+    let data_lang = data.languages || [];
+    this.languages.set(cat_type, data_lang);
+    let data_extra_lang = data.extra_languages || [];
+    this.extra_languages.set(cat_type, data_extra_lang);
+    let data_skills = data.skills || [];
+
+    let data_weps = data.weapons || [];
+    this.weapons.set(cat_type, data_skills);
+    let data_arm = data.armor || [];
+    this.armor.set(cat_type, data_skills);
+    let data_tools = data.tools || [];
+    this.tools.set(cat_type, data_skills);
+    let data_features = data.features || [];
+    this.features.set(cat_type, data_skills);
+
+    //we output the needed <p></p> tags to the target defined in the case above
+    this.putList(data, data_lang, languages);
+    this.putList(data, data_extra_lang, extra_lang);
+    this.putList(data, data_weps, weps);
+    this.putList(data, data_arm, arm);
+    this.putList(data, data_tools, tools);
+
+    if (cat_type != 'player_class') {
+      //these are choices for a class
+      this.putList(data, data_skills, skills);
+      if (cat_type != 'subclass')
+        this.putList(data, data_features, features);
     }
   }
 
@@ -380,44 +436,15 @@ export default class extends Controller {
       this.castingAttackBonusTarget.innerText = bonus;
     }
 
+    //console.log('log languages in finalpass');
+    //this.logMap(this.languages);
+
+    this.makeModalChoices();
+    //this.applyModalChoies();
+
     //at end of base calculations we should apply custom methods brought in by categories
     //e.g. the Barbarian Unarmored Defense
     this.customModifiers(); //tbw
-  }
-
-  //called on any form change from catUpdate
-  populateCatAbilities(
-    data,
-    cat_type,
-    languages,
-    skills,
-    weps,
-    arm,
-    tools,
-    features
-  ) {
-    //console.log('populateCatAbilities');
-    //not all categories have these so I'm defaulting to empty array
-    //which will make putList fizzle out and do nothing
-    let data_lang = data.languages || [];
-    let data_skills = data.skills || [];
-    let data_weps = data.weapons || [];
-    let data_arm = data.armor || [];
-    let data_tools = data.tools || [];
-    let data_features = data.features || [];
-
-    //we output the needed <p></p> tags to the target defined in the case above
-    this.putList(data, data_lang, languages);
-    this.putList(data, data_weps, weps);
-    this.putList(data, data_arm, arm);
-    this.putList(data, data_tools, tools);
-
-    if (cat_type != 'player_class') {
-      //these are choices for a class
-      this.putList(data, data_skills, skills);
-      if (cat_type != 'subclass')
-        this.putList(data, data_features, features);
-    }
   }
 
   //called in finalPass
@@ -568,10 +595,99 @@ export default class extends Controller {
     if (profTarget.innerText == 'E') bonus += prof_mod * 2;
     modTarget.innerText = bonus;
   }
+  makeModalChoices() {
+    this.chooseLanguages();
+    /* what choices are there?
+      Race
+        tool_choice
 
-  skillModifiers() {}
+      Subrace
+        extra_languages
 
-  customModifiers() {}
+      Class
+        skill_choices
+          num_skills
+        equipment_choices
+
+      Subclass
+        custom choices = this might be tough to generalize
+
+      Background
+        TBIF
+        languages [int]
+    */
+  }
+
+  chooseLanguages() {
+    let allLanguages = [
+      'Common',
+      'Elvish',
+      'Dwarvish',
+      'Giant',
+      'Gnomish',
+      'Goblin',
+      'Halfling',
+      'Orc',
+      'Abyssal',
+      'Celestial',
+      'Draconic',
+      'Deep Speech',
+      'Infernal',
+      'Primordial',
+      'Sylvan',
+      'Tabaxi',
+      'Undercommon',
+    ];
+
+    var list = [];
+    this.raceLanguagesTarget.childNodes.forEach((node) => {
+      let text = node.innerText;
+      if (text.slice(-1) != ':') list.push(text); //this eliminates labels like Dwarf:
+    });
+    this.subraceLanguagesTarget.childNodes.forEach((node) => {
+      let text = node.innerText;
+      if (text.slice(-1) != ':') list.push(text);
+    });
+
+    let options = allLanguages.filter(
+      (lang) => list.indexOf(lang) === -1
+    );
+
+    let init = 0;
+    let temp;
+    let lang_iter = this.extra_languages?.values();
+    for (let i = 0; i < this.extra_languages.size; i++) {
+      temp = lang_iter.next().value;
+      if (typeof temp === 'string') init += parseInt(temp);
+    }
+
+    console.log(`Extras: ${init}`);
+
+    this.populateModal(this.languageModalListTarget, options, init); //this will populate the <ul> with checkboxes
+    //onsubmit we'll validate the number chosen, and put the chosen ones into their own div
+    //when backgrounds change we can empty that div and start over
+  }
+  submitLanguageChoices(event) {
+    event.target.parentNode.close();
+  }
+
+  populateModal(target, options, limit) {
+    options.forEach((option) => {
+      let container = document.createElement('div');
+      container.class = 'flex flex-col gap-2 p-2';
+
+      let check = document.createElement('input');
+      check.type = 'checkbox';
+      check.value = option;
+
+      container.append(check);
+      container.append(option);
+
+      target.appendChild(container);
+    });
+  }
+
+  customModifiers() {} //tbw
 
   //called on all Statbuttons, also calls catUpdate for a sheet recalculation
   statModUpdate() {
@@ -640,7 +756,7 @@ export default class extends Controller {
     //we pass in a category instance, collection within it, and output target
     //if the collection is empty, the function returns without side-effects
 
-    if (collection.length == 0) return;
+    if (collection.length == 0 || target == null) return;
 
     this.removeAllChildNodes(target);
 
@@ -672,8 +788,6 @@ export default class extends Controller {
   }
 
   isChoicesFull() {
-    //console.log('isChoicesFull');
-
     let checklist = this.choices?.values();
     for (let i = 0; i < this.choices.size; i++) {
       let val = checklist.next().value;
@@ -684,11 +798,28 @@ export default class extends Controller {
     return true;
   }
 
-  logChoices() {
-    //console.log('logChoices');
-    let iter = this.choices.entries();
-    for (let i = 0; i < this.choices.size; i++) {
+  logMap(mymap) {
+    console.log('logMap');
+    let iter = mymap.entries();
+    for (let i = 0; i < mymap.size; i++) {
       console.log(iter.next().value);
     }
+    console.log('logged map');
+  }
+
+  blankCategoryMap() {
+    let categories = new Map();
+    categories.set('race', []);
+    categories.set('subrace', []);
+    categories.set('player_class', []);
+    categories.set('subclass', []);
+    categories.set('background', []);
+    categories.set('feats', []);
+    return categories;
+  }
+
+  //Modals
+  showLangDialog() {
+    this.dialogLanguagesTarget.showModal();
   }
 }

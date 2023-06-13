@@ -189,7 +189,7 @@ Acolyte = Background.create(
   name: "Acolyte",
   description: 'You have spent your life in the service of a temple. You act as an intermediary between the realm of the holy and the mortal world.',
   skills: ['Insight', 'Religion'],
-  languages: [2],
+  extra_languages: 2,
   equipment: [
     'A holy symbol',
     'A prayer book',

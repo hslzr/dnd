@@ -21,7 +21,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_30_091143) do
     t.string "weapons", default: [], array: true
     t.string "armor", default: [], array: true
     t.string "tools", default: [], array: true
-    t.string "languages", default: [], array: true
+    t.string "extra_languages", default: "0"
     t.string "equipment_choices", default: [], array: true
     t.string "equipment", default: [], array: true
     t.string "features", default: [], array: true

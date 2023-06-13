@@ -7,7 +7,7 @@
     %>
 
     <%= turbo_frame_tag "form" do %>
-      <%= form_tag creation_sheet_path, method: :get, data: { controller: "dropdown", action: "change->dropdown#submit" } do %>
+      <%= form_tag creation_sheet_path, method: :get, data: { controller: "dropdown", action: "change->dropdown#submit", 'sheet-target': 'maindrop' } do %>
         <%= select_tag :race, options_from_collection_for_select(@races, "id", "name", @race&.id), prompt: "- Race -", data: { action: "change->sheet#categoryHandler", "sheet-url-param": "/races/" } %>
         <%= select_tag :subrace, options_from_collection_for_select(@subraces, "id", "name", @subrace&.id), prompt: "- Subrace -", data: { action: "change->sheet#categoryHandler", "sheet-url-param": "/subraces/" } %>
         <%= select_tag :player_class, options_from_collection_for_select(@player_classes, "id", "name", @player_class&.id), prompt: "- Class -", data: { action: "change->sheet#categoryHandler", "sheet-url-param": "/player_classes/"} %>
@@ -20,6 +20,7 @@
   </div>
   <div class="flex items-center justify-start gap-4 px-24 py-4" id="statbuttons">
     <button class="btn-primary" data-action="sheet#randomStats">Random Stats</button>
+    <button class="btn-primary" data-action="sheet#showLangDialog">Languages</button>
   </div>
   <section class="flex flex-col" id="sheet">
     <div class="flex">
@@ -348,6 +349,10 @@
             <div class="flex gap-2" data-sheet-target="raceLanguages"></div>
             <div class="flex gap-2" data-sheet-target="subraceLanguages"></div>
             <div class="flex gap-2" data-sheet-target="backgroundLanguages"></div>
+            <p class="font-black">Extra Languages</p>
+            <div class="flex gap-2" data-sheet-target="raceExtraLanguages"></div>
+            <div class="flex gap-2" data-sheet-target="subraceExtraLanguages"></div>
+            <div class="flex gap-2" data-sheet-target="backgroundExtraLanguages"></div>
             <p class="font-black">Weapons</p>
             <div class="flex gap-2" data-sheet-target="raceWeapons"></div>
             <div class="flex gap-2" data-sheet-target="subraceWeapons"></div>
@@ -509,6 +514,12 @@
         <h4 class="font-bold">Misc.</h4>
       </h4>
     </div>
-    </div>
+
+    <dialog class="border border-black rounded-md bg-gray-300" data-controller="modal"  data-sheet-target="dialogLanguages">
+      <p class="text-2xl font-bold">Languages</p>
+        <ul data-sheet-target="languageModalList"></ul>
+      <button class="btn-primary" data-action="sheet#submitLanguageChoices">X</button>
+    </dialog>
+
   </section>
 </div>
