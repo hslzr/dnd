@@ -47,7 +47,10 @@ sheet.hrml.erb => sheet_controller
   the rest are utility functions to manipulate the data and are fairly short. The only complicated thing is setSkillMap() which sets a bunch of targets for skill modifiers. This is called in finalPass, then we call setSKillModifiers which sets all the proficiency modifiers, the four lines using this.skills live here at the end
 
 
+Bugs:
+reset on selection of empty category, e.g. from Acolyte to - Background -
 
+extra languages for Acolyte not populating to sheet
 
 
 

@@ -2,6 +2,7 @@ import { Controller } from '@hotwired/stimulus';
 
 export default class extends Controller {
   static targets = [
+    'langButton',
     'charLevel',
     'charName',
     'profBonus',
@@ -96,9 +97,8 @@ export default class extends Controller {
     'subclassSkills',
     'backgroundSkills',
     'raceLanguages',
-    'raceExtraLanguages',
+    'extraLanguages',
     'subraceLanguages',
-    'subraceExtraLanguages',
     'backgroundLanguages',
     'raceWeapons',
     'subraceWeapons',
@@ -125,6 +125,7 @@ export default class extends Controller {
     'equipArmor',
     'dialogLanguages',
     'languageModalList',
+    'langLimit',
   ];
 
   connect() {
@@ -160,6 +161,11 @@ export default class extends Controller {
     this.weapons = this.blankCategoryMap();
     this.armor = this.blankCategoryMap();
     this.features = this.blankCategoryMap();
+
+    //button colors
+    this.disabled_color = 'bg-orange-300';
+    this.active_color = 'bg-blue-400';
+    this.langButtonTarget.disabled = true;
   }
 
   categoryHandler(event) {
@@ -192,7 +198,6 @@ export default class extends Controller {
     switch (cat_type) {
       case 'race':
         languages = this.raceLanguagesTarget;
-        extra_lang = this.raceExtraLanguagesTarget;
         skills = this.raceSkillsTarget;
         weps = this.raceWeaponsTarget;
         arm = this.raceArmorTarget;
@@ -207,7 +212,6 @@ export default class extends Controller {
 
       case 'subrace':
         languages = this.subraceLanguagesTarget;
-        extra_lang = this.subraceExtraLanguagesTarget;
         skills = this.subraceSkillsTarget;
         weps = this.subraceWeaponsTarget;
         arm = this.subraceArmorTarget;
@@ -221,7 +225,6 @@ export default class extends Controller {
 
       case 'player_class':
         languages = this.classLanguagesTarget;
-        extra_lang = null;
         skills = this.classSkillsTarget;
         weps = this.classWeaponsTarget;
         arm = this.classArmorTarget;
@@ -262,7 +265,6 @@ export default class extends Controller {
 
       case 'subclass':
         languages = this.subclassLanguagesTarget;
-        extra_lang = null;
         skills = this.subclassSkillsTarget;
         weps = this.subclassWeaponsTarget;
         arm = this.subclassArmorTarget;
@@ -276,7 +278,6 @@ export default class extends Controller {
 
       case 'background':
         languages = null;
-        extra_lang = this.backgroundExtraLanguagesTarget;
         skills = this.backgroundSkillsTarget;
         weps = this.backgroundWeaponsTarget;
         arm = this.backgroundArmorTarget;
@@ -305,7 +306,6 @@ export default class extends Controller {
         data,
         cat_type,
         languages,
-        extra_lang,
         skills,
         weps,
         arm,
@@ -349,7 +349,6 @@ export default class extends Controller {
     data,
     cat_type,
     languages,
-    extra_lang,
     skills,
     weps,
     arm,
@@ -362,6 +361,7 @@ export default class extends Controller {
     this.languages.set(cat_type, data_lang);
     let data_extra_lang = data.extra_languages || [];
     this.extra_languages.set(cat_type, data_extra_lang);
+
     let data_skills = data.skills || [];
 
     let data_weps = data.weapons || [];
@@ -375,7 +375,8 @@ export default class extends Controller {
 
     //we output the needed <p></p> tags to the target defined in the case above
     this.putList(data, data_lang, languages);
-    this.putList(data, data_extra_lang, extra_lang);
+    //extra languages populated after selecting from list
+    //note extra languages from a category in features
     this.putList(data, data_weps, weps);
     this.putList(data, data_arm, arm);
     this.putList(data, data_tools, tools);
@@ -436,8 +437,8 @@ export default class extends Controller {
       this.castingAttackBonusTarget.innerText = bonus;
     }
 
-    //console.log('log languages in finalpass');
-    //this.logMap(this.languages);
+    //activate buttons
+    this.activateButtons();
 
     this.makeModalChoices();
     //this.applyModalChoies();
@@ -661,13 +662,24 @@ export default class extends Controller {
       if (typeof temp === 'string') init += parseInt(temp);
     }
 
-    console.log(`Extras: ${init}`);
+    this.langLimitTarget.innerText = `Choose ${init}`;
 
     this.populateModal(this.languageModalListTarget, options, init); //this will populate the <ul> with checkboxes
     //onsubmit we'll validate the number chosen, and put the chosen ones into their own div
     //when backgrounds change we can empty that div and start over
   }
+
   submitLanguageChoices(event) {
+    this.removeAllChildNodes(this.extraLanguagesTarget);
+
+    let chosen = [];
+    this.languageModalListTarget.childNodes.forEach((node) => {
+      if (node.firstChild.checked) {
+        chosen.push(node.firstChild.value);
+      }
+    });
+    this.putModalChecksToSheet(chosen, this.extraLanguagesTarget);
+
     event.target.parentNode.close();
   }
 
@@ -688,6 +700,12 @@ export default class extends Controller {
   }
 
   customModifiers() {} //tbw
+
+  activateButtons() {
+    this.langButtonTarget.disabled = false;
+    this.langButtonTarget.classList.remove(this.disabled_color);
+    this.langButtonTarget.classList.add(this.active_color);
+  }
 
   //called on all Statbuttons, also calls catUpdate for a sheet recalculation
   statModUpdate() {
@@ -761,6 +779,23 @@ export default class extends Controller {
     this.removeAllChildNodes(target);
 
     target.append(this.getPTag(category.name));
+    collection.forEach((item) => {
+      let l_item = document.createElement('p');
+      l_item.append(item);
+      target.append(l_item);
+    });
+  }
+
+  putModalChecksToSheet(collection, target) {
+    //creates p tags for collection and appends list to target with label for category name
+    //clears allChildfren of Target before appending so I use it in specific labele
+    //we pass in a category instance, collection within it, and output target
+    //if the collection is empty, the function returns without side-effects
+
+    if (collection.length == 0 || target == null) return;
+
+    this.removeAllChildNodes(target);
+
     collection.forEach((item) => {
       let l_item = document.createElement('p');
       l_item.append(item);
