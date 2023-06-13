@@ -48,9 +48,4 @@ sheet.hrml.erb => sheet_controller
 
 
 Bugs:
-reset on selection of empty category, e.g. from Acolyte to - Background -
-
-extra languages for Acolyte not populating to sheet
-
-
-
+need to handle reset on selection of empty category, e.g. from Acolyte to - Background -

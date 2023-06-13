@@ -663,13 +663,14 @@ export default class extends Controller {
 
     this.langLimitTarget.innerText = `Choose ${init}`;
 
-    this.populateModal(this.languageModalListTarget, options, init); //this will populate the <ul> with checkboxes
+    this.populateModal(this.languageModalListTarget, options); //this will populate the <ul> with checkboxes
     //onsubmit we'll validate the number chosen, and put the chosen ones into their own div
     //when backgrounds change we can empty that div and start over
   }
 
   submitLanguageChoices(event) {
     this.removeAllChildNodes(this.extraLanguagesTarget);
+    //we clear the output here, all we have to do is limit the number of boxes you can check
 
     let chosen = [];
     this.languageModalListTarget.childNodes.forEach((node) => {
@@ -677,12 +678,16 @@ export default class extends Controller {
         chosen.push(node.firstChild.value);
       }
     });
-    this.putModalChecksToSheet(chosen, this.extraLanguagesTarget);
-
-    event.target.parentNode.close();
+    if (
+      chosen.length ==
+      parseInt(this.langLimitTarget.innerText.slice(-1))
+    ) {
+      this.putModalChecksToSheet(chosen, this.extraLanguagesTarget);
+      event.target.parentNode.close();
+    }
   }
 
-  populateModal(target, options, limit) {
+  populateModal(target, options) {
     options.forEach((option) => {
       let container = document.createElement('div');
       container.class = 'flex flex-col gap-2 p-2';
