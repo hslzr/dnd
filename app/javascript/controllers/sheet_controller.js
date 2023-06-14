@@ -2,7 +2,9 @@ import { Controller } from '@hotwired/stimulus';
 
 export default class extends Controller {
   static targets = [
+    //in order of appearance
     'langButton',
+    'classSkillsButton',
     'charLevel',
     'charName',
     'profBonus',
@@ -96,6 +98,7 @@ export default class extends Controller {
     'classSkills',
     'subclassSkills',
     'backgroundSkills',
+    'featSkills',
     'raceLanguages',
     'extraLanguages',
     'subraceLanguages',
@@ -126,6 +129,9 @@ export default class extends Controller {
     'dialogLanguages',
     'languageModalList',
     'langLimit',
+    'dialogClassSkills',
+    'classSkillsModalList',
+    'classSkillsLimit',
   ];
 
   connect() {
@@ -161,11 +167,16 @@ export default class extends Controller {
     this.weapons = this.blankCategoryMap();
     this.armor = this.blankCategoryMap();
     this.features = this.blankCategoryMap();
+    this.classSkillChoices; //set in catUpdate
+    this.numClassSkillChoices; //set in catUpdate
 
     //button colors
     this.disabled_color = 'bg-orange-300';
     this.active_color = 'bg-blue-400';
+
+    //locking modals until their content is able to be populated
     this.langButtonTarget.disabled = true;
+    this.classSkillsButtonTarget.disabled = true;
   }
 
   //----------------------------- Main Sheet Update Flow ---------------------------------//
@@ -250,11 +261,17 @@ export default class extends Controller {
           this.chaSaveProfTarget,
         ];
 
+        //this.saving_throws has indexes of primary_proficiences whose text we set to '+'
         for (let i = 0; i < this.saving_throws.length; i++) {
           let item = this.saving_throws[i];
           primary_proficiencies[item].innerText = '+';
         }
 
+        //class skill options for modal
+        this.classSkillChoices = data.skill_choices;
+        this.numClassSkillChoices = data.num_skills;
+
+        //spell statboxes
         if (data.spellcasting_ability) {
           this.spellcasting_ability = data.spellcasting_ability;
           this.castingAbilityTarget.innerText =
@@ -389,8 +406,6 @@ export default class extends Controller {
   }
 
   finalPass() {
-    console.log('Choices is full');
-
     this.setSkillMap();
     this.populateSkillModifiers();
 
@@ -597,6 +612,7 @@ export default class extends Controller {
   //----------------------------- Choice Modals ---------------------------------//
   makeModalChoices() {
     this.chooseLanguages();
+    this.chooseClassSkills();
     /* what choices are there?
       Race
         tool_choice
@@ -655,7 +671,7 @@ export default class extends Controller {
 
     let init = 0;
     let temp;
-    let lang_iter = this.extra_languages?.values();
+    let lang_iter = this.extra_languages.values();
     for (let i = 0; i < this.extra_languages.size; i++) {
       temp = lang_iter.next().value;
       if (typeof temp === 'string') init += parseInt(temp);
@@ -663,7 +679,7 @@ export default class extends Controller {
 
     this.langLimitTarget.innerText = `Choose ${init}`;
 
-    this.populateModal(this.languageModalListTarget, options); //this will populate the <ul> with checkboxes
+    this.populateListModal(this.languageModalListTarget, options); //this will populate the <ul> with checkboxes
     //onsubmit we'll validate the number chosen, and put the chosen ones into their own div
     //when backgrounds change we can empty that div and start over
   }
@@ -687,7 +703,60 @@ export default class extends Controller {
     }
   }
 
-  populateModal(target, options) {
+  chooseClassSkills() {
+    //this.classSkillChoices is our all_languages equivalent
+    //the only filtering we will do is cosmetic
+    //show skills already defaulted in gray but allow selection for now
+
+    let skillSources = [
+      this.raceSkillsTarget,
+      this.subraceSkillsTarget,
+      this.classSkillsTarget,
+      this.subclassSkillsTarget,
+      this.backgroundSkillsTarget,
+      this.featSkillsTarget,
+    ];
+
+    let taken_skills = [];
+
+    skillSources.forEach((target) => {
+      target.childNodes.forEach((node) => {
+        let text = node.innerText;
+        if (text.slice(-1) != ':') taken_skills.push(text);
+      });
+    });
+
+    this.classSkillsLimitTarget.innerText = `Choose ${this.numClassSkillChoices}`;
+
+    this.populateListModal(
+      this.classSkillsModalListTarget,
+      this.classSkillChoices
+    );
+  }
+
+  submitClassSkillsChoices(event) {
+    this.removeAllChildNodes(this.classSkillsTarget);
+    let classname = this.choices.get('player_class');
+    let chosen = [];
+    this.classSkillsModalListTarget.childNodes.forEach((node) => {
+      if (node.firstChild.checked) {
+        chosen.push(node.firstChild.value);
+      }
+    });
+    if (
+      chosen.length ==
+      parseInt(this.classSkillsLimitTarget.innerText.slice(-1))
+    ) {
+      this.putModalChecksToSheet(
+        chosen,
+        this.classSkillsTarget,
+        classname
+      );
+      event.target.parentNode.close();
+    }
+  }
+
+  populateListModal(target, options) {
     options.forEach((option) => {
       let container = document.createElement('div');
       container.class = 'flex flex-col gap-2 p-2';
@@ -703,10 +772,18 @@ export default class extends Controller {
     });
   }
 
+  //add new choice buttons to the target list to activate them in finalPass
   activateButtons() {
-    this.langButtonTarget.disabled = false;
-    this.langButtonTarget.classList.remove(this.disabled_color);
-    this.langButtonTarget.classList.add(this.active_color);
+    let buttons = [
+      this.langButtonTarget,
+      this.classSkillsButtonTarget,
+    ];
+
+    buttons.forEach((button) => {
+      button.disabled = false;
+      button.classList.remove(this.disabled_color);
+      button.classList.add(this.active_color);
+    });
   }
 
   //----------------------------- Base Stat Methods ---------------------------------//
@@ -776,7 +853,7 @@ export default class extends Controller {
 
     this.removeAllChildNodes(target);
 
-    target.append(this.getPTag(category.name));
+    target.append(this.getPTag(category.name, 'font-bold'));
     collection.forEach((item) => {
       let l_item = document.createElement('p');
       l_item.append(item);
@@ -784,7 +861,7 @@ export default class extends Controller {
     });
   }
 
-  putModalChecksToSheet(collection, target) {
+  putModalChecksToSheet(collection, target, name = '') {
     //creates p tags for collection and appends list to target with label for category name
     //clears allChildfren of Target before appending so I use it in specific labele
     //we pass in a category instance, collection within it, and output target
@@ -793,6 +870,13 @@ export default class extends Controller {
     if (collection.length == 0 || target == null) return;
 
     this.removeAllChildNodes(target);
+
+    if (name != '') {
+      let tag = document.createElement('p');
+      tag.classList.add('font-bold');
+      tag.append(`${name}: `);
+      target.append(tag);
+    }
 
     collection.forEach((item) => {
       let l_item = document.createElement('p');
@@ -815,9 +899,9 @@ export default class extends Controller {
   }
 
   //got some styling hiding out in here with the the font-medium
-  getPTag(string) {
+  getPTag(string, font_weight = 'font-medium') {
     let out = document.createElement('p');
-    out.classList.add('font-medium');
+    out.classList.add(font_weight);
     out.append(string + ':');
     return out;
   }
@@ -862,5 +946,9 @@ export default class extends Controller {
   //Modal display activation
   showLangDialog() {
     this.dialogLanguagesTarget.showModal();
+  }
+
+  showClassSkillsDialog() {
+    this.dialogClassSkillsTarget.showModal();
   }
 }

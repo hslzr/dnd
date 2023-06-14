@@ -57,11 +57,11 @@
   }
 
   .modifier-box {
-    @apply border-2 border-blue-400 w-8 h-6;
+    @apply border-2 border-blue-400 w-8 h-6 text-center;
   }
 
   .proficiency-box {
-    @apply border-2 border-blue-400 rounded-full w-4 h-4 mr-2;
+    @apply border-2 border-blue-400 rounded-full w-4 h-4 mr-2 text-center;
   }
 
   .tracking-box {
