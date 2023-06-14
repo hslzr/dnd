@@ -601,6 +601,7 @@ export default class extends Controller {
   }
 
   updateAllProficiencies() {
+    //based on innerText of ProfTarget
     let skilliter = this.skills.values();
     for (let i = 0; i < this.skills.size; i++) {
       let value = skilliter.next().value;
@@ -630,6 +631,15 @@ export default class extends Controller {
           assigned_skills.push(node.innerText);
       });
     });
+
+    //set proftarget innerText which will get picked up by updateAllProficiencies
+    let iter = this.skills.entries();
+    for (let i = 0; i < this.skills.size; i++) {
+      let entry = iter.next().value;
+      if (assigned_skills.includes(entry[0]))
+        entry[1][2].innerText = '+';
+      else entry[1][2].innerText = '';
+    }
 
     console.log(assigned_skills);
 
