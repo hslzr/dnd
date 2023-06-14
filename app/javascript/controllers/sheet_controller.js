@@ -458,6 +458,7 @@ export default class extends Controller {
 
     this.makeModalChoices();
 
+    this.resetProficiencies(); //wip
     //at end of base calculations we should apply custom methods brought in by categories
     //e.g. the Barbarian Unarmored Defense
     this.customModifiers(); //tbw
@@ -596,19 +597,43 @@ export default class extends Controller {
         bonuses[i] + this.calcMod(this.stats[i]);
     }
 
-    //loop through the skills Map iterator and call updateSkill
+    this.updateAllProficiencies();
+  }
+
+  updateAllProficiencies() {
     let skilliter = this.skills.values();
     for (let i = 0; i < this.skills.size; i++) {
       let value = skilliter.next().value;
-      this.updateSkill(value[0], value[2], value[1], this.prof_mod);
+      let bonus = this.calcMod(value[0]);
+      if (value[2].innerText == '+') bonus += this.prof_mod;
+      if (value[2].innerText == 'E') bonus += this.prof_mod * 2;
+      value[1].innerText = bonus;
     }
   }
 
-  updateSkill(base_stat, profTarget, modTarget, prof_mod) {
-    let bonus = this.calcMod(base_stat);
-    if (profTarget.innerText == '+') bonus += prof_mod;
-    if (profTarget.innerText == 'E') bonus += prof_mod * 2;
-    modTarget.innerText = bonus;
+  resetProficiencies() {
+    let sources = [
+      this.raceSkillsTarget,
+      this.subraceSkillsTarget,
+      this.classSkillsTarget,
+      this.subclassSkillsTarget,
+      this.backgroundSkillsTarget,
+      this.featSkillsTarget,
+    ];
+
+    let assigned_skills = [];
+
+    sources.forEach((source) => {
+      source.childNodes.forEach((node) => {
+        let text = node.innerText;
+        if (!assigned_skills.includes(text) && text.slice(-1) != ':')
+          assigned_skills.push(node.innerText);
+      });
+    });
+
+    console.log(assigned_skills);
+
+    this.updateAllProficiencies();
   }
 
   //----------------------------- Choice Modals ---------------------------------//
@@ -760,6 +785,7 @@ export default class extends Controller {
       );
       event.target.parentNode.close();
     }
+    this.resetProficiencies();
   }
 
   populateListModal(target, options) {
