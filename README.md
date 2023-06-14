@@ -49,3 +49,11 @@ sheet.hrml.erb => sheet_controller
 
 Bugs:
 need to handle reset on selection of empty category, e.g. from Acolyte to - Background -
+
+//
+I have to track everything in JS and on the sheet, so in some places I use the sheet instead of 
+an instance variable in the controller. I should pick one and stick with it, and it should 
+probably be several larger Maps in JS rather than relying on the DOM
+
+THe largest code burdens are on modals for language and proficiency choices
+on proficiencies I'm using innerText as bools essentially and that can't be right

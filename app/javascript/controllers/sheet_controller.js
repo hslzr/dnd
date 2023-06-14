@@ -146,6 +146,7 @@ export default class extends Controller {
 
     //variables set later but available as noted
     ///set on randomStats
+
     this.str;
     this.dex;
     this.con;
@@ -153,6 +154,7 @@ export default class extends Controller {
     this.wis;
     this.cha;
     ///set on statModUpdate
+    //doesn't this duplicate the above's functionality?
     this.stats;
     ///set on level update in catHandler
     this.prof_mod;
@@ -160,7 +162,8 @@ export default class extends Controller {
     this.spellcasting_ability;
 
     //used for selection and updating
-    this.skills = new Map(); //initialized later in setSkillMap()
+    this.skills = new Map(); //initialized later in setSkillMap(), a collection of targets
+    //i feel like I could save a lot of effort if I used these better
     this.languages = this.blankCategoryMap();
     this.extra_languages = this.blankCategoryMap();
     this.tools = this.blankCategoryMap();
