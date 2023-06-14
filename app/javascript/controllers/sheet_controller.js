@@ -409,6 +409,8 @@ export default class extends Controller {
     this.setSkillMap();
     this.populateSkillModifiers();
 
+    this.passPerceptionTarget.innerText = this.calcMod(this.wis) + 10;
+
     this.substatInitiativeTarget.innerText =
       this.dexModTarget.innerText;
 
@@ -655,6 +657,8 @@ export default class extends Controller {
       'Undercommon',
     ];
 
+    this.removeAllChildNodes(this.languageModalListTarget);
+
     var list = [];
     this.raceLanguagesTarget.childNodes.forEach((node) => {
       let text = node.innerText;
@@ -716,6 +720,8 @@ export default class extends Controller {
       this.backgroundSkillsTarget,
       this.featSkillsTarget,
     ];
+
+    this.removeAllChildNodes(this.classSkillsModalListTarget);
 
     let taken_skills = [];
 
@@ -906,7 +912,7 @@ export default class extends Controller {
     return out;
   }
 
-  //calculate modifier and return a string '+3' or '-1'
+  //calculate modifier
   calcMod(base) {
     return Math.floor(base / 2) - 5;
   }
