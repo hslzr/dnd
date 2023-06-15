@@ -185,6 +185,7 @@ export default class extends Controller {
     this.subraceASI;
     this.raceASICount; //set in finalPass -> classFeatureHandler, modifies stats at milestone levels
     this.subraceASICount;
+    this.nosubchoice = false;
 
     this.classFeatureList; //set in catUpdate called in finalPass -> classFeatureHandler
     this.subclassFeatureList; //set in catUpdate called in finalPass -> classFeatureHandler
@@ -474,6 +475,14 @@ export default class extends Controller {
     //activate buttons
     this.activateButtons();
 
+    if (this.nosubchoice) {
+      let button = this.subclassButtonTarget;
+
+      button.disabled = true;
+      button.classList.remove(this.active_color);
+      button.classList.add(this.disabled_color);
+    }
+
     this.makeModalChoices();
 
     this.resetProficiencies();
@@ -653,13 +662,13 @@ export default class extends Controller {
     if (choices) {
       this.chooseSubclassFeatures(marray);
     } else {
+      console.log(marray);
       marray.forEach((entry) => {
         if (parseInt(entry[0]) <= this.level) {
-          entry[1].forEach((feature) => {
-            subclassFeatures.push(feature);
-          });
+          subclassFeatures.push(entry[1]);
         }
       });
+      this.nosubchoice = true;
     }
 
     this.putClassFeatures(
@@ -724,6 +733,7 @@ export default class extends Controller {
     this.chooseLanguages();
     this.chooseClassSkills();
     this.chooseTools();
+    //subclass modal activated on detection of a choice in Subclass.features
   }
 
   chooseLanguages() {
@@ -842,6 +852,29 @@ export default class extends Controller {
     );
   }
 
+  submitClassSkillsChoices(event) {
+    this.removeAllChildNodes(this.classSkillsTarget);
+
+    let chosen = [];
+    this.classSkillsModalListTarget.childNodes.forEach((node) => {
+      if (node.firstChild.checked) {
+        chosen.push(node.firstChild.value);
+      }
+    });
+    if (
+      chosen.length ==
+      parseInt(this.classSkillsLimitTarget.innerText.slice(-1))
+    ) {
+      this.putModalChecksToSheet(
+        chosen,
+        this.classSkillsTarget,
+        this.choices.get('player_class')
+      );
+      event.target.parentNode.close();
+    }
+    this.resetProficiencies();
+  }
+
   chooseSubclassFeatures(features) {
     this.removeAllChildNodes(this.subclassFeaturesModalListTarget);
 
@@ -917,29 +950,6 @@ export default class extends Controller {
       );
       event.target.parentNode.close();
     }
-  }
-
-  submitClassSkillsChoices(event) {
-    this.removeAllChildNodes(this.classSkillsTarget);
-
-    let chosen = [];
-    this.classSkillsModalListTarget.childNodes.forEach((node) => {
-      if (node.firstChild.checked) {
-        chosen.push(node.firstChild.value);
-      }
-    });
-    if (
-      chosen.length ==
-      parseInt(this.classSkillsLimitTarget.innerText.slice(-1))
-    ) {
-      this.putModalChecksToSheet(
-        chosen,
-        this.classSkillsTarget,
-        this.choices.get('player_class')
-      );
-      event.target.parentNode.close();
-    }
-    this.resetProficiencies();
   }
 
   populateListModal(target, options) {
