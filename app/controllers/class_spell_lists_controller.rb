@@ -1,5 +1,5 @@
 class ClassSpellListsController < ApplicationController
-  before_action :set_background, only: [ :show ]
+  before_action :set_class_spell_list, only: [ :show ]
 
   def index
     @class_spell_lists = ClassSpellList.all

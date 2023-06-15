@@ -304,9 +304,11 @@ export default class extends Controller {
         }
 
         //spell list fetching
-        fetch(`/class_spell_lists/${name}`)
-          .then((response) => response.json())
-          .then((data) => (this.spellList = data));
+        if (data.spellcasting_ability != 0) {
+          fetch(`/class_spell_lists/${data.name}`)
+            .then((response) => response.json())
+            .then((data) => (this.spellList = data));
+        }
         break;
 
       case 'subclass':

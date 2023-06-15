@@ -396,7 +396,7 @@ Feat_alert = Feat.create(
 )
 
 
-=begin
+
 Junk_spell = Spell.create(
   name: 'Junk Missile',
   level: 0,
@@ -417,11 +417,10 @@ Junk_spell = Spell.create(
 )
 
 Junk_wizard = ClassSpellList.create(
-  name: 'Junk Wizard'
+  name: 'Ranger'
 )
 
 ClassSpellListsSpells.create(
   class_spell_list_id: Junk_wizard.id,
   spell_id: 1
 )
-=end
