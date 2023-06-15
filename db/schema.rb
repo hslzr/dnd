@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_30_091143) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_15_035812) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -76,6 +76,19 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_30_091143) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "class_spell_lists", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "class_spell_lists_spells", id: false, force: :cascade do |t|
+    t.integer "class_spell_list_id"
+    t.integer "spell_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "feats", force: :cascade do |t|
     t.string "name"
     t.string "description"
@@ -125,6 +138,21 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_30_091143) do
     t.string "size", default: "medium"
     t.integer "speed", default: 15
     t.string "features", default: [], array: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "spells", force: :cascade do |t|
+    t.string "name"
+    t.integer "level"
+    t.text "description"
+    t.string "cast_time"
+    t.string "range"
+    t.string "components"
+    t.string "duration"
+    t.string "attack", default: "false"
+    t.text "atk_dmg", default: "{}"
+    t.string "dmg_type", default: "none"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

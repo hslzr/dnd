@@ -770,9 +770,11 @@ export default class extends Controller {
 
     this.removeAllChildNodes(this.toolsModalListTarget);
 
-    if (this.raceToolChoices.size > 0)
+    if (this.raceToolChoices.length > 0) {
       this.toolsLimitTarget.innerText = `Choose 1`;
-    else this.toolsLimitTarget.innerText = 'No Tools';
+    } else {
+      this.toolsLimitTarget.innerText = 'No Tools';
+    }
 
     this.populateListModal(
       this.toolsModalListTarget,

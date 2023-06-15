@@ -14,6 +14,9 @@ Subclass.destroy_all
 Background.destroy_all
 Feat.destroy_all
 Character.destroy_all
+Spell.destroy_all
+ClassSpellList.destroy_all
+ClassSpellListsSpells.destroy_all
 
 User.create(
   email: "net@map.com",
@@ -245,4 +248,33 @@ Feat_alert = Feat.create(
       'You can`t be surprised while you are conscious.',
       'Other creatures don`t gain advantage on attack rolls against you as a result of being unseen by you.'
     ]
+)
+
+
+Junk_spell = Spell.create(
+  name: 'Junk Missile',
+  level: 0,
+  description: 'You fling a magical wad of junk at blinding speed.',
+  cast_time: 'Instantaneous',
+  range: '30 feet',
+  components: 'Verbal',
+  duration: '',
+  attack: 'true',
+  atk_dmg: {
+    1=>'1d6',
+    6=>'2d6',
+    12=>'3d6',
+    16=>'4d6',
+  },
+  dmg_type: 'Arcane',
+  id: 1
+)
+
+Junk_wizard = ClassSpellList.create(
+  name: 'Junk Wizard'
+)
+
+ClassSpellListsSpells.create(
+  class_spell_list_id: Junk_wizard.id,
+  spell_id: 1
 )
