@@ -6,6 +6,7 @@ export default class extends Controller {
     'langButton',
     'classSkillsButton',
     'toolsButton',
+    'subclassButton',
     'charLevel',
     'charName',
     'profBonus',
@@ -136,6 +137,9 @@ export default class extends Controller {
     'dialogTools',
     'toolsModalList',
     'toolsLimit',
+    'dialogSubclassFeatures',
+    'subclassFeaturesModalList',
+    'subclassFeaturesLimit',
   ];
 
   connect() {
@@ -423,6 +427,7 @@ export default class extends Controller {
     this.populateSkillModifiers();
 
     this.classFeatureHandler(); //we depend on level to show correct class features so we have to do this in finalPass
+    this.subclassFeatureHandler();
 
     this.passPerceptionTarget.innerText = this.calcMod(this.wis) + 10;
 
@@ -617,17 +622,12 @@ export default class extends Controller {
 
   classFeatureHandler() {
     let classFeatures = [];
-    let subclassFeatures = [];
 
     //flatten the portions of the feature array up to the level of the player and save in above arrays
-    let list = this.classFeatureList;
-
     let marray = Object.entries(this.classFeatureList);
-    console.log(marray);
 
     marray.forEach((entry) => {
       if (parseInt(entry[0]) <= this.level) {
-        console.log(`${entry[0]} <= ${this.level}`);
         entry[1].forEach((feature) => {
           classFeatures.push(feature);
         });
@@ -639,6 +639,34 @@ export default class extends Controller {
       classFeatures,
       this.classFeaturesTarget
     );
+  }
+
+  subclassFeatureHandler() {
+    let subclassFeatures = [];
+    let choices = false;
+
+    let marray = Object.entries(this.subclassFeatureList);
+    marray.forEach((item) => {
+      if (item[1] == 'choose') choices = true;
+    });
+
+    if (choices) {
+      this.chooseSubclassFeatures(marray);
+    } else {
+      marray.forEach((entry) => {
+        if (parseInt(entry[0]) <= this.level) {
+          entry[1].forEach((feature) => {
+            subclassFeatures.push(feature);
+          });
+        }
+      });
+
+      this.putClassFeatures(
+        this.choices.get('subclass'),
+        subclassFeatures,
+        this.subclassFeaturesTarget
+      );
+    }
   }
 
   updateAllProficiencies() {
@@ -770,15 +798,6 @@ export default class extends Controller {
   }
 
   chooseTools() {
-    let toolSources = [
-      this.raceToolsTarget,
-      this.subraceToolsTarget,
-      this.classToolsTarget,
-      this.subclassToolsTarget,
-      this.backgroundToolsTarget,
-      this.featToolsTarget,
-    ];
-
     this.removeAllChildNodes(this.toolsModalListTarget);
 
     if (this.raceToolChoices.length > 0) {
@@ -813,31 +832,7 @@ export default class extends Controller {
   }
 
   chooseClassSkills() {
-    //this.classSkillChoices is our all_languages equivalent
-    //the only filtering we will do is cosmetic
-    //show skills already defaulted in gray but allow selection for now
-
-    let skillSources = [
-      this.raceSkillsTarget,
-      this.subraceSkillsTarget,
-      this.classSkillsTarget,
-      this.subclassSkillsTarget,
-      this.backgroundSkillsTarget,
-      this.featSkillsTarget,
-    ];
-
     this.removeAllChildNodes(this.classSkillsModalListTarget);
-
-    /*
-    let taken_skills = [];
-
-    skillSources.forEach((target) => {
-      target.childNodes.forEach((node) => {
-        let text = node.innerText;
-        if (text.slice(-1) != ':') taken_skills.push(text);
-      });
-    });
-    */
 
     this.classSkillsLimitTarget.innerText = `Choose ${this.numClassSkillChoices}`;
 
@@ -845,6 +840,45 @@ export default class extends Controller {
       this.classSkillsModalListTarget,
       this.classSkillChoices
     );
+  }
+
+  chooseSubclassFeatures(features) {
+    this.removeAllChildNodes(this.subclassFeaturesModalListTarget);
+
+    this.subclassFeaturesLimitTarget.innerText = 'Choose 1 of Each';
+
+    console.log(features);
+
+    features.forEach((item) => {
+      if (item[0] != 'method') {
+        if (parseInt(item[0]) <= this.level) {
+          this.populateSubclassFeatureModal(item);
+        }
+      }
+    });
+  }
+
+  populateSubclassFeatureModal(feature) {
+    let frame = document.createElement('div');
+    //foreach element of feature[1] put a radio button
+    frame.class = 'flex flex-col gap-2 p-2';
+
+    let title = document.createElement('h4');
+    title.classList.add('text-center', 'font-bold', 'text-xl');
+    title.innerText = `Level ${feature[0]}`;
+    frame.append(title);
+    feature[1].forEach((item) => {
+      let container = document.createElement('div');
+      container.class = 'flex gap-2 p-2';
+      let check = document.createElement('input');
+      check.type = 'checkbox';
+      check.value = item;
+      container.append(check);
+      container.append(item);
+      frame.append(container);
+    });
+    this.subclassFeaturesModalListTarget.append(frame);
+    console.log('tried subclass');
   }
 
   submitClassSkillsChoices(event) {
@@ -892,6 +926,7 @@ export default class extends Controller {
       this.langButtonTarget,
       this.classSkillsButtonTarget,
       this.toolsButtonTarget,
+      this.subclassButtonTarget,
     ];
 
     buttons.forEach((button) => {
@@ -912,6 +947,10 @@ export default class extends Controller {
 
   showToolsDialog() {
     this.dialogToolsTarget.showModal();
+  }
+
+  showSubclassFeaturesDialog() {
+    this.dialogSubclassFeaturesTarget.showModal();
   }
 
   putModalChecksToSheet(collection, target, name = '') {

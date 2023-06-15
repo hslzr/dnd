@@ -23,6 +23,7 @@
     <button class="px-8 py-2 rounded-lg bg-orange-300 border-b-2 border-r-2" data-action="sheet#showLangDialog" data-sheet-target="langButton">Extra Languages</button>
     <button class="px-8 py-2 rounded-lg bg-orange-300 border-b-2 border-r-2" data-action="sheet#showClassSkillsDialog" data-sheet-target="classSkillsButton">Class Skills</button>
     <button class="px-8 py-2 rounded-lg bg-orange-300 border-b-2 border-r-2" data-action="sheet#showToolsDialog" data-sheet-target="toolsButton">Racial Tools</button>
+    <button class="px-8 py-2 rounded-lg bg-orange-300 border-b-2 border-r-2" data-action="sheet#showSubclassFeaturesDialog" data-sheet-target="subclassButton">Subclass Features</button>
   </div>
   <section class="flex flex-col" id="sheet">
     <div class="flex">
@@ -533,6 +534,12 @@
         <ul data-sheet-target="toolsModalList"></ul>
       <p class="font-black text-sm" data-sheet-target="toolsLimit"></p>
       <button class="px-8 py-2 rounded-lg bg-blue-400 border-b-2 border-r-2" data-action="sheet#submitToolsChoices">Submit</button>
+    </dialog>
+    <dialog class="border border-black rounded-md bg-gray-300" data-controller="modal"  data-sheet-target="dialogSubclassFeatures">
+      <p class="text-2xl font-bold">Subclass Features</p>
+        <ul data-sheet-target="subclassFeaturesModalList"></ul>
+      <p class="font-black text-sm" data-sheet-target="subclassFeaturesLimit"></p>
+      <button class="px-8 py-2 rounded-lg bg-blue-400 border-b-2 border-r-2" data-action="sheet#submitSubclassFeaturesChoices">Submit</button>
     </dialog>
 
   </section>
