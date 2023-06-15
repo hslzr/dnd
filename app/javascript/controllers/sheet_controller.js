@@ -177,6 +177,14 @@ export default class extends Controller {
     this.classSkillChoices; //set in catUpdate
     this.numClassSkillChoices; //set in catUpdate
     this.raceToolChoices; //set in catUpdate
+    this.raceASI; //set in catUpdate, used to modify stats
+    this.subraceASI;
+    this.raceASICount; //set in finalPass -> classFeatureHandler, modifies stats at milestone levels
+    this.subraceASICount;
+
+    this.classFeatureList; //set in catUpdate called in finalPass -> classFeatureHandler
+    this.subclassFeatureList; //set in catUpdate called in finalPass -> classFeatureHandler
+    this.level; // set in catUpdate
 
     //button colors
     this.disabled_color = 'bg-orange-300';
@@ -229,6 +237,7 @@ export default class extends Controller {
         this.sheet_race = data.name; //these are used by levelUpdate()
         this.substatSpeedTarget.innerText = data.speed;
         this.raceToolChoices = data.tool_choice;
+        this.raceASI = data.asi;
         break;
 
       case 'subrace':
@@ -242,6 +251,7 @@ export default class extends Controller {
         //setters
         this.aboutSubraceTarget.innerText = data.name;
         this.sheet_subrace = data.name;
+        this.subraceASI = data.asi;
         break;
 
       case 'player_class':
@@ -259,6 +269,7 @@ export default class extends Controller {
         this.sheet_class = data.name;
         this.hit_die = data.hit_die;
         this.saving_throws = data.saving_throws;
+        this.classFeatureList = data.features;
 
         //the seed stores saving throw proficiencies as indexes to this array
         let primary_proficiencies = [
@@ -301,6 +312,7 @@ export default class extends Controller {
         //setters
         this.aboutSubclassTarget.innerText = data.name;
         this.sheet_subclass = data.name;
+        this.subclassFeatureList = data.features;
         break;
 
       case 'background':
@@ -380,10 +392,8 @@ export default class extends Controller {
     let data_features = data.features || [];
     this.features.set(cat_type, data_features);
 
-    //we output the needed <p></p> tags to the target defined in the case above
+    //we output the needed <p></p> tags to the given target
     this.putList(data, data_lang, languages);
-    //extra languages populated after selecting from list
-    //note extra languages from a category in features
     this.putList(data, data_weps, weps);
     this.putList(data, data_arm, arm);
     this.putList(data, data_tools, tools);
@@ -401,6 +411,8 @@ export default class extends Controller {
     this.setSkillMap();
     this.populateSkillModifiers();
 
+    this.classFeatureHandler(); //we depend on level to show correct class features so we have to do this in finalPass
+
     this.passPerceptionTarget.innerText = this.calcMod(this.wis) + 10;
 
     this.substatInitiativeTarget.innerText =
@@ -408,8 +420,6 @@ export default class extends Controller {
 
     if (!this.equipArmorTarget.hasChildNodes()) {
       this.substatACTarget.innerText = 10 + this.calcMod(this.dex);
-    } else {
-      console.log('armor equipped');
     }
 
     this.trackingHitDiceTarget.innerText = `${this.level}d${this.hit_die}`;
@@ -592,6 +602,38 @@ export default class extends Controller {
     this.updateAllProficiencies();
   }
 
+  classFeatureHandler() {
+    let classFeatures = [];
+    let subclassFeatures = [];
+
+    //flatten the portions of the feature arrays up to the level of the player and save in above arrays
+    let list = this.classFeatureList;
+    let slist = this.subclassFeatureList;
+    for (let i = 1; i <= this.level; i++) {
+      if (list[i]) {
+        list[i].forEach((item) => {
+          classFeatures.push(item);
+        });
+      }
+      if (slist[i]) {
+        slist[i].forEach((item) => {
+          subclassFeatures.push(item);
+        });
+      }
+    }
+
+    this.putClassFeatures(
+      this.choices.get('player_class'),
+      classFeatures,
+      this.classFeaturesTarget
+    );
+    this.putClassFeatures(
+      this.choices.get('subclass'),
+      subclassFeatures,
+      this.subclassFeaturesTarget
+    );
+  }
+
   updateAllProficiencies() {
     //based on innerText of ProfTarget
     let skilliter = this.skills.values();
@@ -633,7 +675,7 @@ export default class extends Controller {
       else entry[1][2].innerText = '';
     }
 
-    console.log(assigned_skills);
+    //console.log(assigned_skills);
 
     this.updateAllProficiencies();
   }
@@ -846,6 +888,43 @@ export default class extends Controller {
     });
   }
 
+  //Modal display activation
+  showLangDialog() {
+    this.dialogLanguagesTarget.showModal();
+  }
+
+  showClassSkillsDialog() {
+    this.dialogClassSkillsTarget.showModal();
+  }
+
+  showToolsDialog() {
+    this.dialogToolsTarget.showModal();
+  }
+
+  putModalChecksToSheet(collection, target, name = '') {
+    //creates p tags for collection and appends list to target with label for category name
+    //clears allChildfren of Target before appending so I use it in specific labele
+    //we pass in a category instance, collection within it, and output target
+    //if the collection is empty, the function returns without side-effects
+
+    if (collection.length == 0 || target == null) return;
+
+    this.removeAllChildNodes(target);
+
+    if (name != '') {
+      let tag = document.createElement('p');
+      tag.classList.add('font-bold');
+      tag.append(`${name}: `);
+      target.append(tag);
+    }
+
+    collection.forEach((item) => {
+      let l_item = document.createElement('p');
+      l_item.append(item);
+      target.append(l_item);
+    });
+  }
+
   //----------------------------- Base Stat Methods ---------------------------------//
   statModUpdate() {
     this.strModTarget.innerText = this.modWithSign(
@@ -943,23 +1022,11 @@ export default class extends Controller {
     });
   }
 
-  putModalChecksToSheet(collection, target, name = '') {
-    //creates p tags for collection and appends list to target with label for category name
-    //clears allChildfren of Target before appending so I use it in specific labele
-    //we pass in a category instance, collection within it, and output target
-    //if the collection is empty, the function returns without side-effects
-
-    if (collection.length == 0 || target == null) return;
-
+  putClassFeatures(name, collection, target) {
+    //modified from above
     this.removeAllChildNodes(target);
 
-    if (name != '') {
-      let tag = document.createElement('p');
-      tag.classList.add('font-bold');
-      tag.append(`${name}: `);
-      target.append(tag);
-    }
-
+    target.append(this.getPTag(name, 'font-bold'));
     collection.forEach((item) => {
       let l_item = document.createElement('p');
       l_item.append(item);
@@ -971,13 +1038,6 @@ export default class extends Controller {
     while (parent.firstChild) {
       parent.removeChild(parent.firstChild);
     }
-  }
-
-  modWithSign(val) {
-    let sign;
-    if (val == 0) return '0';
-    if (val < 0) return `${val}`;
-    return `+${val}`;
   }
 
   //got some styling hiding out in here with the the font-medium
@@ -993,6 +1053,13 @@ export default class extends Controller {
     return Math.floor(base / 2) - 5;
   }
 
+  modWithSign(val) {
+    let sign;
+    if (val == 0) return '0';
+    if (val < 0) return `${val}`;
+    return `+${val}`;
+  }
+
   isChoicesFull() {
     let checklist = this.choices?.values();
     for (let i = 0; i < this.choices.size; i++) {
@@ -1002,15 +1069,6 @@ export default class extends Controller {
       }
     }
     return true;
-  }
-
-  logMap(mymap) {
-    console.log('logMap');
-    let iter = mymap.entries();
-    for (let i = 0; i < mymap.size; i++) {
-      console.log(iter.next().value);
-    }
-    console.log('logged map');
   }
 
   //returns a Map { category_names, [] }
@@ -1025,16 +1083,13 @@ export default class extends Controller {
     return categories;
   }
 
-  //Modal display activation
-  showLangDialog() {
-    this.dialogLanguagesTarget.showModal();
-  }
-
-  showClassSkillsDialog() {
-    this.dialogClassSkillsTarget.showModal();
-  }
-
-  showToolsDialog() {
-    this.dialogToolsTarget.showModal();
+  //----------------------------- Debugging Methods ---------------------------------//
+  logMap(mymap) {
+    console.log('logMap');
+    let iter = mymap.entries();
+    for (let i = 0; i < mymap.size; i++) {
+      console.log(iter.next().value);
+    }
+    console.log('logged map');
   }
 }
