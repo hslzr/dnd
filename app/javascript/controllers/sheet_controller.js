@@ -660,13 +660,13 @@ export default class extends Controller {
           });
         }
       });
-
-      this.putClassFeatures(
-        this.choices.get('subclass'),
-        subclassFeatures,
-        this.subclassFeaturesTarget
-      );
     }
+
+    this.putClassFeatures(
+      this.choices.get('subclass'),
+      subclassFeatures,
+      this.subclassFeaturesTarget
+    );
   }
 
   updateAllProficiencies() {
@@ -873,6 +873,7 @@ export default class extends Controller {
       let check = document.createElement('input');
       check.type = 'checkbox';
       check.value = item;
+      check.id = feature[0]; //for validation on submit
       container.append(check);
       container.append(item);
       frame.append(container);
@@ -881,9 +882,46 @@ export default class extends Controller {
     console.log('tried subclass');
   }
 
+  submitSubclassFeaturesChoices(event) {
+    this.removeAllChildNodes(this.subclassFeaturesTarget);
+
+    let chosen = [];
+    this.subclassFeaturesModalListTarget.childNodes.forEach(
+      (node) => {
+        node.childNodes.forEach((subnode) => {
+          let item = subnode.firstChild;
+          if (item.type == 'checkbox' && item.checked) {
+            chosen.push([item.id, item.value]);
+          }
+        });
+      }
+    );
+
+    let check = [];
+    let output = [];
+    let validated = true;
+    chosen.forEach((choice) => {
+      if (check.includes(choice[0])) {
+        validated = false;
+      } else {
+        check.push(choice[0]);
+        output.push(choice[1]);
+      }
+    });
+
+    if (validated) {
+      this.putModalChecksToSheet(
+        output,
+        this.subclassFeaturesTarget,
+        this.choices.get('subclass')
+      );
+      event.target.parentNode.close();
+    }
+  }
+
   submitClassSkillsChoices(event) {
     this.removeAllChildNodes(this.classSkillsTarget);
-    let classname = this.choices.get('player_class');
+
     let chosen = [];
     this.classSkillsModalListTarget.childNodes.forEach((node) => {
       if (node.firstChild.checked) {
@@ -897,7 +935,7 @@ export default class extends Controller {
       this.putModalChecksToSheet(
         chosen,
         this.classSkillsTarget,
-        classname
+        this.choices.get('player_class')
       );
       event.target.parentNode.close();
     }
