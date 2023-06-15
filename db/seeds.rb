@@ -90,6 +90,7 @@ SliverRace.subraces.create(
   asi: [0,0,1,0,0,0],
   features: ['Clone: You may create a simulacrum of yourself once per long rest that lasts for 4 hours.'],
   extra_languages: 0,
+  tools: ['Jeweler\'s Tols'],
 )
 
 Barbarian = PlayerClass.create(

@@ -5,6 +5,7 @@ export default class extends Controller {
     //in order of appearance
     'langButton',
     'classSkillsButton',
+    'toolsButton',
     'charLevel',
     'charName',
     'profBonus',
@@ -132,6 +133,9 @@ export default class extends Controller {
     'dialogClassSkills',
     'classSkillsModalList',
     'classSkillsLimit',
+    'dialogTools',
+    'toolsModalList',
+    'toolsLimit',
   ];
 
   connect() {
@@ -172,6 +176,7 @@ export default class extends Controller {
     this.features = this.blankCategoryMap();
     this.classSkillChoices; //set in catUpdate
     this.numClassSkillChoices; //set in catUpdate
+    this.raceToolChoices; //set in catUpdate
 
     //button colors
     this.disabled_color = 'bg-orange-300';
@@ -223,6 +228,7 @@ export default class extends Controller {
         this.aboutRaceTarget.innerText = data.name;
         this.sheet_race = data.name; //these are used by levelUpdate()
         this.substatSpeedTarget.innerText = data.speed;
+        this.raceToolChoices = data.tool_choice;
         break;
 
       case 'subrace':
@@ -341,29 +347,6 @@ export default class extends Controller {
     }
   }
 
-  updateChoices() {
-    //we'll call this whenever there's a change in the top form to update the state object this.choices
-    //iterator replaces forEach on Map objects
-    let iterchoice = this.choices.entries();
-
-    //there are 6 choices to make
-    for (let i = 0; i < this.choices.size; i++) {
-      //we get the options for each form select in an HTMLCollection
-      let label = iterchoice.next().value[0];
-      let options = document.getElementById(label).children;
-
-      //we have to use set and item to deal with the HTMLCollection
-      //we won't set anything that is still on the label '- Whatever -'
-      for (let j = 0; j < options.length; j++) {
-        if (
-          options.item(j).selected &&
-          options.item(j).innerText.charAt(0) != '-'
-        )
-          this.choices.set(label, options.item(j).innerText);
-      }
-    }
-  }
-
   populateCatAbilities(
     data,
     cat_type,
@@ -384,13 +367,18 @@ export default class extends Controller {
     let data_skills = data.skills || [];
 
     let data_weps = data.weapons || [];
-    this.weapons.set(cat_type, data_skills);
+    this.weapons.set(cat_type, data_weps);
     let data_arm = data.armor || [];
-    this.armor.set(cat_type, data_skills);
+    this.armor.set(cat_type, data_arm);
+
     let data_tools = data.tools || [];
-    this.tools.set(cat_type, data_skills);
+    if (cat_type != 'race') {
+      //races only have the racial choice for now
+      this.tools.set(cat_type, data_tools);
+    }
+
     let data_features = data.features || [];
-    this.features.set(cat_type, data_skills);
+    this.features.set(cat_type, data_features);
 
     //we output the needed <p></p> tags to the target defined in the case above
     this.putList(data, data_lang, languages);
@@ -402,6 +390,7 @@ export default class extends Controller {
 
     if (cat_type != 'player_class') {
       //these are choices for a class
+      //this filter may not be relevant anymore as of branch->refactor
       this.putList(data, data_skills, skills);
       if (cat_type != 'subclass')
         this.putList(data, data_features, features);
@@ -461,7 +450,7 @@ export default class extends Controller {
 
     this.makeModalChoices();
 
-    this.resetProficiencies(); //wip
+    this.resetProficiencies();
     //at end of base calculations we should apply custom methods brought in by categories
     //e.g. the Barbarian Unarmored Defense
     this.customModifiers(); //tbw
@@ -577,7 +566,7 @@ export default class extends Controller {
       this.persuasionProfTarget,
       '',
     ]);
-  }
+  } //utility but depends on stats being assigned
 
   populateSkillModifiers() {
     //the class saving throws are stored as indexes to the bonus array so we go through
@@ -653,25 +642,7 @@ export default class extends Controller {
   makeModalChoices() {
     this.chooseLanguages();
     this.chooseClassSkills();
-    /* what choices are there?
-      Race
-        tool_choice
-
-      Subrace
-        extra_languages
-
-      Class
-        skill_choices
-          num_skills
-        equipment_choices
-
-      Subclass
-        custom choices = this might be tough to generalize
-
-      Background
-        TBIF
-        languages [int]
-    */
+    this.chooseTools();
   }
 
   chooseLanguages() {
@@ -745,6 +716,47 @@ export default class extends Controller {
     }
   }
 
+  chooseTools() {
+    let toolSources = [
+      this.raceToolsTarget,
+      this.subraceToolsTarget,
+      this.classToolsTarget,
+      this.subclassToolsTarget,
+      this.backgroundToolsTarget,
+      this.featToolsTarget,
+    ];
+
+    this.removeAllChildNodes(this.toolsModalListTarget);
+
+    if (this.raceToolChoices.size > 0)
+      this.toolsLimitTarget.innerText = `Choose 1`;
+    else this.toolsLimitTarget.innerText = 'No Tools';
+
+    this.populateListModal(
+      this.toolsModalListTarget,
+      this.raceToolChoices
+    );
+  }
+
+  submitToolsChoices() {
+    this.removeAllChildNodes(this.raceToolsTarget);
+    let racename = this.choices.get('race');
+    let chosen = [];
+    this.toolsModalListTarget.childNodes.forEach((node) => {
+      if (node.firstChild.checked) {
+        chosen.push(node.firstChild.value);
+      }
+    });
+    if (chosen.length == 1) {
+      this.putModalChecksToSheet(
+        chosen,
+        this.raceToolsTarget,
+        racename
+      );
+      event.target.parentNode.close();
+    }
+  }
+
   chooseClassSkills() {
     //this.classSkillChoices is our all_languages equivalent
     //the only filtering we will do is cosmetic
@@ -761,6 +773,7 @@ export default class extends Controller {
 
     this.removeAllChildNodes(this.classSkillsModalListTarget);
 
+    /*
     let taken_skills = [];
 
     skillSources.forEach((target) => {
@@ -769,6 +782,7 @@ export default class extends Controller {
         if (text.slice(-1) != ':') taken_skills.push(text);
       });
     });
+    */
 
     this.classSkillsLimitTarget.innerText = `Choose ${this.numClassSkillChoices}`;
 
@@ -822,6 +836,7 @@ export default class extends Controller {
     let buttons = [
       this.langButtonTarget,
       this.classSkillsButtonTarget,
+      this.toolsButtonTarget,
     ];
 
     buttons.forEach((button) => {
@@ -887,6 +902,28 @@ export default class extends Controller {
   customModifiers() {} //tbw
 
   //----------------------------- Utility Methods ---------------------------------//
+  updateChoices() {
+    //we'll call this whenever there's a change in the top form to update the state object this.choices
+    //iterator replaces forEach on Map objects
+    let iterchoice = this.choices.entries();
+
+    //there are 6 choices to make
+    for (let i = 0; i < this.choices.size; i++) {
+      //we get the options for each form select in an HTMLCollection
+      let label = iterchoice.next().value[0];
+      let options = document.getElementById(label).children;
+
+      //we have to use set and item to deal with the HTMLCollection
+      //we won't set anything that is still on the label '- Whatever -'
+      for (let j = 0; j < options.length; j++) {
+        if (
+          options.item(j).selected &&
+          options.item(j).innerText.charAt(0) != '-'
+        )
+          this.choices.set(label, options.item(j).innerText);
+      }
+    }
+  }
 
   putList(category, collection, target) {
     //creates p tags for collection and appends list to target with label for category name
@@ -995,5 +1032,9 @@ export default class extends Controller {
 
   showClassSkillsDialog() {
     this.dialogClassSkillsTarget.showModal();
+  }
+
+  showToolsDialog() {
+    this.dialogToolsTarget.showModal();
   }
 }
