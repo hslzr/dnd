@@ -111,9 +111,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_15_035812) do
     t.string "equipment_choices", default: [], array: true
     t.string "equipment", default: [], array: true
     t.integer "spellcasting_ability", default: 0
-    t.integer "num_cantrips", default: 0
-    t.integer "num_spells", default: 0
-    t.integer "spell_list", default: [], array: true
+    t.integer "spell_table", default: [], array: true
     t.integer "wealth_die", default: 2
     t.integer "wealth_mult", default: 10
     t.text "features", default: "{}"
@@ -166,6 +164,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_15_035812) do
     t.string "weapons", default: [], array: true
     t.string "armor", default: [], array: true
     t.string "tools", default: [], array: true
+    t.string "description", default: ""
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

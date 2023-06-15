@@ -193,6 +193,9 @@ export default class extends Controller {
     //locking modals until their content is able to be populated
     this.langButtonTarget.disabled = true;
     this.classSkillsButtonTarget.disabled = true;
+
+    //spells
+    this.spellList; //we'll try setting this to a correct collection of spells with a new fetch in catUpdate
   }
 
   //----------------------------- Main Sheet Update Flow ---------------------------------//
@@ -299,6 +302,11 @@ export default class extends Controller {
         } else {
           this.castingAbilityTarget.innerText = 'none';
         }
+
+        //spell list fetching
+        fetch(`/class_spell_lists/${name}`)
+          .then((response) => response.json())
+          .then((data) => (this.spellList = data));
         break;
 
       case 'subclass':
@@ -406,6 +414,8 @@ export default class extends Controller {
         this.putList(data, data_features, features);
     }
   }
+
+  setSpellList(name) {}
 
   finalPass() {
     this.setSkillMap();
