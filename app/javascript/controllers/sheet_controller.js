@@ -410,7 +410,6 @@ export default class extends Controller {
 
     if (cat_type != 'player_class') {
       //these are choices for a class
-      //this filter may not be relevant anymore as of branch->refactor
       this.putList(data, data_skills, skills);
       if (cat_type != 'subclass')
         this.putList(data, data_features, features);
@@ -473,6 +472,8 @@ export default class extends Controller {
     this.makeModalChoices();
 
     this.resetProficiencies();
+
+    this.resetSpellInformation();
     //at end of base calculations we should apply custom methods brought in by categories
     //e.g. the Barbarian Unarmored Defense
     this.customModifiers(); //tbw
@@ -618,31 +619,25 @@ export default class extends Controller {
     let classFeatures = [];
     let subclassFeatures = [];
 
-    //flatten the portions of the feature arrays up to the level of the player and save in above arrays
+    //flatten the portions of the feature array up to the level of the player and save in above arrays
     let list = this.classFeatureList;
-    let slist = this.subclassFeatureList;
-    for (let i = 1; i <= this.level; i++) {
-      if (list[i]) {
-        list[i].forEach((item) => {
-          classFeatures.push(item);
+
+    let marray = Object.entries(this.classFeatureList);
+    console.log(marray);
+
+    marray.forEach((entry) => {
+      if (parseInt(entry[0]) <= this.level) {
+        console.log(`${entry[0]} <= ${this.level}`);
+        entry[1].forEach((feature) => {
+          classFeatures.push(feature);
         });
       }
-      if (slist[i]) {
-        slist[i].forEach((item) => {
-          subclassFeatures.push(item);
-        });
-      }
-    }
+    });
 
     this.putClassFeatures(
       this.choices.get('player_class'),
       classFeatures,
       this.classFeaturesTarget
-    );
-    this.putClassFeatures(
-      this.choices.get('subclass'),
-      subclassFeatures,
-      this.subclassFeaturesTarget
     );
   }
 
@@ -690,6 +685,10 @@ export default class extends Controller {
     //console.log(assigned_skills);
 
     this.updateAllProficiencies();
+  }
+
+  resetSpellInformation() {
+    //this.spellList
   }
 
   //----------------------------- Choice Modals ---------------------------------//
