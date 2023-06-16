@@ -303,16 +303,22 @@ export default class extends Controller {
         this.numClassSkillChoices = data.num_skills;
 
         //spell statboxes
-        if (data.spellcasting_ability) {
-          this.spellcasting_ability = data.spellcasting_ability;
-          this.castingAbilityTarget.innerText =
-            this.spellcasting_ability;
-        } else {
-          this.castingAbilityTarget.innerText = 'none';
-        }
+        this.spellcasting_ability = data.spellcasting_ability;
+        let statnames = [
+          'None',
+          'Strangth',
+          'Dexterity',
+          'Constitution',
+          'Intelligence',
+          'Wisdom',
+          'Charisma',
+        ];
+        this.castingAbilityTarget.innerText =
+          statnames[this.spellcasting_ability];
 
-        //spell list fetching
         if (data.spellcasting_ability != 0) {
+          //spell list fetching
+
           fetch(`/class_spell_lists/${data.name}`)
             .then((response) => response.json())
             .then((data) => (this.spellList = data));
@@ -446,36 +452,16 @@ export default class extends Controller {
     this.trackingHitDiceTarget.innerText = `${this.level}d${this.hit_die}`;
 
     //these spell stats rely on base stats and player_class
-    let spell_mod;
-    switch (this.spellcasting_ability) {
-      case 'STR':
-        spell_mod = this.calcMod(this.str);
-        break;
-      case 'DEX':
-        spell_mod = this.calcMod(this.dex);
-        break;
-      case 'CON':
-        spell_mod = this.calcMod(this.con);
-        break;
-      case 'INT':
-        spell_mod = this.calcMod(this.int);
-        break;
-      case 'WIS':
-        spell_mod = this.calcMod(this.wis);
-        break;
-      case 'CHA':
-        spell_mod = this.calcMod(this.cha);
-        break;
-      default:
-        spell_mod = 0;
-        break;
-    }
-    if (spell_mod != 0) {
-      let bonus = spell_mod + this.prof_mod;
-      this.castingSaveDCTarget.innerText = bonus + 8;
-      this.castingAttackBonusTarget.innerText = bonus;
-    }
 
+    //spell save DC
+    let spell_mod = this.calcMod(
+      this.stats[this.spellcasting_ability - 1]
+    );
+    this.castingSaveDCTarget.innerText =
+      spell_mod + this.prof_mod + 8;
+
+    this.castingAttackBonusTarget.innerText =
+      spell_mod + this.prof_mod;
     //activate buttons
     this.activateButtons();
 

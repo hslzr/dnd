@@ -205,7 +205,7 @@ Ranger = PlayerClass.create(
     "Dungeoneer's Pack | Explorer's Pack"
   ],
   equipment: ['Longbow','Quiver of Arrows'],
-  spellcasting_ability: 4,
+  spellcasting_ability: 5,
   spell_table: [
     [0,0,0,0,0,0,0,0,0,0,0],
     [2,0,2,0,0,0,0,0,0,0,0],
