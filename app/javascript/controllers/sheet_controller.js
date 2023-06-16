@@ -94,6 +94,7 @@ export default class extends Controller {
     'subraceFeatures',
     'classFeatures',
     'subclassFeatures',
+    'subclassFeaturesChoices',
     'backgroundFeatures',
     'raceSkills',
     'subraceSkills',
@@ -104,6 +105,8 @@ export default class extends Controller {
     'raceLanguages',
     'extraLanguages',
     'subraceLanguages',
+    'classLanguages',
+    'subclassLanguages',
     'backgroundLanguages',
     'raceWeapons',
     'subraceWeapons',
@@ -292,7 +295,7 @@ export default class extends Controller {
         //this.saving_throws has indexes of primary_proficiences whose text we set to '+'
         for (let i = 0; i < this.saving_throws.length; i++) {
           let item = this.saving_throws[i];
-          primary_proficiencies[item].innerText = '+';
+          primary_proficiencies[item].classList.add('bg-black');
         }
 
         //class skill options for modal
@@ -327,11 +330,12 @@ export default class extends Controller {
         //setters
         this.aboutSubclassTarget.innerText = data.name;
         this.sheet_subclass = data.name;
-        this.subclassFeatureList = data.features;
+        this.subclassFeatureList = data.features; //default features
+        this.subclassFeatureChoices = data.custom; //modal choices
         break;
 
       case 'background':
-        languages = null;
+        languages = null; //handled by a modal, null fizzles putClassFeatures
         skills = this.backgroundSkillsTarget;
         weps = this.backgroundWeaponsTarget;
         arm = this.backgroundArmorTarget;
@@ -385,7 +389,7 @@ export default class extends Controller {
     features
   ) {
     //not all categories have these so I'm defaulting to empty array
-    //which will make putList fizzle out and do nothing
+    //which will make putClassFeatures fizzle out and do nothing
     let data_lang = data.languages || [];
     this.languages.set(cat_type, data_lang);
     let data_extra_lang = data.extra_languages || [];
@@ -408,16 +412,16 @@ export default class extends Controller {
     this.features.set(cat_type, data_features);
 
     //we output the needed <p></p> tags to the given target
-    this.putList(data, data_lang, languages);
-    this.putList(data, data_weps, weps);
-    this.putList(data, data_arm, arm);
-    this.putList(data, data_tools, tools);
+    this.putClassFeatures(data.name, data_lang, languages);
+    this.putClassFeatures(data.name, data_weps, weps);
+    this.putClassFeatures(data.name, data_arm, arm);
+    this.putClassFeatures(data.name, data_tools, tools);
 
     if (cat_type != 'player_class') {
       //these are choices for a class
-      this.putList(data, data_skills, skills);
+      this.putClassFeatures(data.name, data_skills, skills);
       if (cat_type != 'subclass')
-        this.putList(data, data_features, features);
+        this.putClassFeatures(data.name, data_features, features);
     }
   }
 
@@ -481,6 +485,7 @@ export default class extends Controller {
       button.disabled = true;
       button.classList.remove(this.active_color);
       button.classList.add(this.disabled_color);
+      e;
     }
 
     this.makeModalChoices();
@@ -652,24 +657,22 @@ export default class extends Controller {
 
   subclassFeatureHandler() {
     let subclassFeatures = [];
-    let choices = false;
+    this.nosubchoice = true;
 
-    let marray = Object.entries(this.subclassFeatureList);
-    marray.forEach((item) => {
-      if (item[1] == 'choose') choices = true;
-    });
-
-    if (choices) {
-      this.chooseSubclassFeatures(marray);
-    } else {
-      console.log(marray);
-      marray.forEach((entry) => {
-        if (parseInt(entry[0]) <= this.level) {
-          subclassFeatures.push(entry[1]);
-        }
-      });
-      this.nosubchoice = true;
+    if (this.subclassFeatureChoices != {}) {
+      this.chooseSubclassFeatures(
+        Object.entries(this.subclassFeatureChoices)
+      );
+      this.nosubchoice = false;
     }
+
+    Object.entries(this.subclassFeatureList).forEach((entry) => {
+      if (parseInt(entry[0]) <= this.level) {
+        entry[1].forEach((entry) => {
+          subclassFeatures.push(entry);
+        });
+      }
+    });
 
     this.putClassFeatures(
       this.choices.get('subclass'),
@@ -684,8 +687,10 @@ export default class extends Controller {
     for (let i = 0; i < this.skills.size; i++) {
       let value = skilliter.next().value;
       let bonus = this.calcMod(value[0]);
-      if (value[2].innerText == '+') bonus += this.prof_mod;
-      if (value[2].innerText == 'E') bonus += this.prof_mod * 2;
+      if (Array.from(value[2].classList).includes('bg-black'))
+        bonus += this.prof_mod;
+      if (Array.from(value[2].classList).includes('bg-white'))
+        bonus += this.prof_mod * 2;
       value[1].innerText = bonus;
     }
   }
@@ -715,8 +720,8 @@ export default class extends Controller {
     for (let i = 0; i < this.skills.size; i++) {
       let entry = iter.next().value;
       if (assigned_skills.includes(entry[0]))
-        entry[1][2].innerText = '+';
-      else entry[1][2].innerText = '';
+        entry[1][2].classList.add('bg-black');
+      else entry[1][2].classList.remove('bg-black');
     }
 
     //console.log(assigned_skills);
@@ -880,13 +885,9 @@ export default class extends Controller {
 
     this.subclassFeaturesLimitTarget.innerText = 'Choose 1 of Each';
 
-    console.log(features);
-
     features.forEach((item) => {
-      if (item[0] != 'method') {
-        if (parseInt(item[0]) <= this.level) {
-          this.populateSubclassFeatureModal(item);
-        }
+      if (parseInt(item[0]) <= this.level) {
+        this.populateSubclassFeatureModal(item);
       }
     });
   }
@@ -912,12 +913,9 @@ export default class extends Controller {
       frame.append(container);
     });
     this.subclassFeaturesModalListTarget.append(frame);
-    console.log('tried subclass');
   }
 
   submitSubclassFeaturesChoices(event) {
-    this.removeAllChildNodes(this.subclassFeaturesTarget);
-
     let chosen = [];
     this.subclassFeaturesModalListTarget.childNodes.forEach(
       (node) => {
@@ -945,7 +943,7 @@ export default class extends Controller {
     if (validated) {
       this.putModalChecksToSheet(
         output,
-        this.subclassFeaturesTarget,
+        this.subclassFeaturesChoicesTarget,
         this.choices.get('subclass')
       );
       event.target.parentNode.close();
@@ -1104,33 +1102,36 @@ export default class extends Controller {
     }
   }
 
-  putList(category, collection, target) {
+  putClassFeatures(name, collection, target) {
     //creates p tags for collection and appends list to target with label for category name
     //clears allChildfren of Target before appending so I use it in specific labele
     //we pass in a category instance, collection within it, and output target
     //if the collection is empty, the function returns without side-effects
 
     if (collection.length == 0 || target == null) return;
-
-    this.removeAllChildNodes(target);
-
-    target.append(this.getPTag(category.name, 'font-bold'));
-    collection.forEach((item) => {
-      let l_item = document.createElement('p');
-      l_item.append(item);
-      target.append(l_item);
-    });
-  }
-
-  putClassFeatures(name, collection, target) {
     //modified from above
     this.removeAllChildNodes(target);
 
-    target.append(this.getPTag(name, 'font-bold'));
+    target.append(this.getPTag(name, 'font-black'));
     collection.forEach((item) => {
-      let l_item = document.createElement('p');
-      l_item.append(item);
-      target.append(l_item);
+      //bold the feature label if it exists
+      if (item.includes(':')) {
+        let split = item.split(':');
+
+        let l_item = document.createElement('p');
+        let title = document.createElement('p');
+        title.classList.add('font-semibold');
+
+        title.append(split[0] + ':');
+        l_item.append(split[1]);
+        target.append(title);
+        target.append(l_item);
+      } else {
+        let l_item = document.createElement('p');
+
+        l_item.append(item);
+        target.append(l_item);
+      }
     });
   }
 
@@ -1140,10 +1141,9 @@ export default class extends Controller {
     }
   }
 
-  //got some styling hiding out in here with the the font-medium
-  getPTag(string, font_weight = 'font-medium') {
+  getPTag(string, weight) {
     let out = document.createElement('p');
-    out.classList.add(font_weight);
+    out.classList.add(weight);
     out.append(string + ':');
     return out;
   }
