@@ -37,27 +37,27 @@
   }
 
   .sheetcell {
-    @apply px-2 text-center bg-blue-200 border-2 border-black min-w-[1.6rem] min-h-[1.6rem];
-  }
-
-  .sheetcalc {
-    @apply px-2 text-center bg-green-200 border-2 border-black min-w-[1.6rem] min-h-[1.6rem];
+    @apply px-2 text-center bg-blue-200 border-2 border-black min-w-[1.6rem] min-h-[1.6rem] rounded-lg;
   }
 
   .statframe {
-    @apply flex flex-col gap-2 border-4 border-black py-2 mx-2 text-xs font-black items-center w-1/3;
+    @apply flex flex-col gap-2 border-4 border-black py-2 mx-2 text-xs font-black items-center w-1/3 rounded-xl;
   }
 
   .base-statbox {
-    @apply w-1/2 h-16 bg-blue-200 text-4xl font-black text-center flex flex-col justify-center;
+    @apply w-1/2 h-16 bg-gray-100 text-4xl font-black text-center flex flex-col justify-center rounded-lg;
   }
 
   .prof-list {
-    @apply flex flex-col w-1/2 p-1 justify-center border-2 border-black;
+    @apply flex flex-col w-1/2 p-1 justify-center border-2 border-black gap-2 rounded-xl;
+  }
+
+  .prof-row {
+    @apply flex items-center justify-between bg-gray-100 rounded-lg;
   }
 
   .modifier-box {
-    @apply border-2 border-blue-400 w-8 h-6 text-center;
+    @apply border-2 border-blue-400 w-8 h-6 text-center rounded-md;
   }
 
   .proficiency-box {
