@@ -458,8 +458,6 @@ export default class extends Controller {
     }
   }
 
-  setSpellList(name) {}
-
   finalPass() {
     this.setSkillMap();
     this.populateSkillModifiers();
@@ -495,7 +493,6 @@ export default class extends Controller {
 
     this.resetProficiencies();
 
-    this.resetSpellInformation();
     //at end of base calculations we should apply custom methods brought in by categories
     //e.g. the Barbarian Unarmored Defense
     this.customModifiers(); //tbw
@@ -767,10 +764,6 @@ export default class extends Controller {
     }
   }
 
-  resetSpellInformation() {
-    //this.spellList
-  }
-
   //----------------------------- Choice Modals ---------------------------------//
   makeModalChoices() {
     this.chooseLanguages();
@@ -989,6 +982,7 @@ export default class extends Controller {
     }
   }
 
+  //----------------- Spell Modal ------------------//
   chooseSpells() {
     let max_spell_level = 0;
     this.spell_table[this.level - 1].forEach((entry) => {
@@ -1097,6 +1091,7 @@ export default class extends Controller {
     target.append(frame);
   }
 
+  //----------------- Modal Utilities ------------------//
   populateListModal(target, options) {
     options.forEach((option) => {
       let container = document.createElement('div');
@@ -1140,19 +1135,15 @@ export default class extends Controller {
   showLangDialog() {
     this.dialogLanguagesTarget.showModal();
   }
-
   showClassSkillsDialog() {
     this.dialogClassSkillsTarget.showModal();
   }
-
   showToolsDialog() {
     this.dialogToolsTarget.showModal();
   }
-
   showSubclassFeaturesDialog() {
     this.dialogSubclassFeaturesTarget.showModal();
   }
-
   showSpellsDialog() {
     this.dialogSpellsTarget.showModal();
   }
