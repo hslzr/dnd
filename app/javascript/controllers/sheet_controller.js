@@ -1024,7 +1024,8 @@ export default class extends Controller {
           container.class = 'flex gap-2 p-2';
           let check = document.createElement('input');
           check.type = 'checkbox';
-          check.value = item.id; //for validation on submit
+          check.value = item.level;
+          check.id = item.id; //for validation on submit
           container.append(check);
           container.append(item.name);
           frame.append(container);
@@ -1034,7 +1035,67 @@ export default class extends Controller {
     }
   }
 
-  submitSpellsChoices(event) {}
+  submitSpellsChoices(event) {
+    let chosen = [];
+    this.spellsModalListTarget.childNodes.forEach((frame) => {
+      frame.childNodes.forEach((container) => {
+        if (container.firstChild.checked) {
+          chosen.push([
+            container.firstChild.id, //db id
+            container.firstChild.value, //spell level
+          ]);
+        }
+      });
+    });
+    if (
+      chosen.length <
+      this.spell_table[this.level - 1][0] +
+        this.spell_table[this.level - 1][1]
+    ) {
+      this.putSpellsToSheet(chosen);
+      event.target.parentNode.close();
+    }
+  }
+
+  //spells is an array of arrays [spell.id, spell.level]
+  putSpellsToSheet(spells) {
+    let targets = [
+      this.spellsTaken0Target,
+      this.spellsTaken1Target,
+      this.spellsTaken2Target,
+      this.spellsTaken3Target,
+      this.spellsTaken4Target,
+      this.spellsTaken5Target,
+      this.spellsTaken6Target,
+      this.spellsTaken7Target,
+      this.spellsTaken8Target,
+      this.spellsTaken9Target,
+    ];
+
+    spells.forEach((taken) => {
+      this.spellList.forEach((spell) => {
+        if (spell.id == taken[0])
+          this.putSingleSpellTaken(spell, targets[spell.level]);
+      });
+    });
+  }
+
+  putSingleSpellTaken(spell, target) {
+    let frame = document.createElement('div');
+    frame.class = 'flex flex-col gap-1 bg-gray-100 rounded-lg p-2';
+    let title = document.createElement('h4');
+    title.class = 'font-bold text-xl';
+    title.innerText = spell.name;
+    frame.append(title);
+    frame.append(spell.description);
+
+    let dmg_out;
+    Object.entries(spell.atk_dmg).forEach((level) => {
+      if (parseInt(level[0]) <= this.level) dmg_out = level[1];
+    });
+    frame.append(`Attack Damage: ${dmg_out}`);
+    target.append(frame);
+  }
 
   populateListModal(target, options) {
     options.forEach((option) => {

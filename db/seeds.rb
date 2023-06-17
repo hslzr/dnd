@@ -406,10 +406,10 @@ Spell.create(
   duration: '',
   attack: 'true',
   atk_dmg: {
-    1=>'1d6',
-    6=>'2d6',
-    12=>'3d6',
-    16=>'4d6',
+    1=> '2d4',
+    6=> '3d4',
+    12=> '4d4',
+    16=> '5d4',
   },
   dmg_type: 'Cold',
   id: 1
@@ -425,10 +425,10 @@ Spell.create(
   duration: '',
   attack: 'true',
   atk_dmg: {
-    1=>'1d6',
-    6=>'2d6',
-    12=>'3d6',
-    16=>'4d6',
+    1=> '1d6',
+    6=> '2d6',
+    12=> '3d6',
+    16=> '4d6',
   },
   dmg_type: 'Trash',
   id: 2
@@ -444,10 +444,10 @@ Spell.create(
   duration: '',
   attack: 'true',
   atk_dmg: {
-    1=>'2d8',
-    6=>'3d8',
-    12=>'4d8',
-    16=>'5d8',
+    1=> '2d8',
+    6=> '3d8',
+    12=> '4d8',
+    16=> '5d8',
   },
   dmg_type: 'Wind',
   id: 3
@@ -463,10 +463,10 @@ Spell.create(
   duration: '2 rounds',
   attack: 'true',
   atk_dmg: {
-    1=>'2d10 + 4',
-    6=>'3d10 + 8',
-    12=>'4d10 + 12',
-    16=>'5d10 + 16',
+    1=> '2d10 + 4',
+    6=> '3d10 + 8',
+    12=> '4d10 + 12',
+    16=> '5d10 + 16',
   },
   dmg_type: 'Electric',
   id: 4
