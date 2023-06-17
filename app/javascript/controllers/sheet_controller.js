@@ -169,6 +169,13 @@ export default class extends Controller {
     'spellsTaken7',
     'spellsTaken8',
     'spellsTaken9',
+    'tbifTraits',
+    'tbifBonds',
+    'tbifIdeals',
+    'tbifFlaws',
+    'tbifModalList',
+    'dialogTBIF',
+    'tbifButton',
   ];
 
   connect() {
@@ -379,6 +386,12 @@ export default class extends Controller {
         this.aboutBackgroundTarget.innerText = data.name;
         this.sheet_background = data.name;
         this.equipGPTarget.innerText = data.gold;
+
+        //tbif
+        this.traits = data.traits;
+        this.bonds = data.bonds;
+        this.ideals = data.ideals;
+        this.flaws = data.flaws;
         break;
 
       case 'level':
@@ -483,11 +496,12 @@ export default class extends Controller {
       this.deactivateButton(this.subclassButtonTarget);
     }
 
+    //running these on a non-spellcasting class breaks stuff
     if (this.spellcasting_ability == 0) {
       this.deactivateButton(this.spellsButtonTarget);
+    } else {
+      this.setSpellInformation();
     }
-
-    this.setSpellInformation();
 
     this.makeModalChoices();
 
@@ -695,40 +709,6 @@ export default class extends Controller {
     }
   }
 
-  resetProficiencies() {
-    let sources = [
-      this.raceSkillsTarget,
-      this.subraceSkillsTarget,
-      this.classSkillsTarget,
-      this.subclassSkillsTarget,
-      this.backgroundSkillsTarget,
-      this.featSkillsTarget,
-    ];
-
-    let assigned_skills = [];
-
-    sources.forEach((source) => {
-      source.childNodes.forEach((node) => {
-        let text = node.innerText;
-        if (!assigned_skills.includes(text) && text.slice(-1) != ':')
-          assigned_skills.push(node.innerText);
-      });
-    });
-
-    //set proftarget innerText which will get picked up by updateAllProficiencies
-    let iter = this.skills.entries();
-    for (let i = 0; i < this.skills.size; i++) {
-      let entry = iter.next().value;
-      if (assigned_skills.includes(entry[0]))
-        entry[1][2].classList.add('bg-black');
-      else entry[1][2].classList.remove('bg-black');
-    }
-
-    //console.log(assigned_skills);
-
-    this.updateAllProficiencies();
-  }
-
   setSpellInformation() {
     let spell_mod = this.calcMod(
       this.stats[this.spellcasting_ability - 1]
@@ -764,14 +744,50 @@ export default class extends Controller {
     }
   }
 
-  //----------------------------- Choice Modals ---------------------------------//
   makeModalChoices() {
     this.chooseLanguages();
     this.chooseClassSkills();
     this.chooseTools();
     //subclass modal activated on detection of a choice in Subclass.features
     if (this.spellList) this.chooseSpells();
+    this.chooseTBIF();
   }
+
+  resetProficiencies() {
+    let sources = [
+      this.raceSkillsTarget,
+      this.subraceSkillsTarget,
+      this.classSkillsTarget,
+      this.subclassSkillsTarget,
+      this.backgroundSkillsTarget,
+      this.featSkillsTarget,
+    ];
+
+    let assigned_skills = [];
+
+    sources.forEach((source) => {
+      source.childNodes.forEach((node) => {
+        let text = node.innerText;
+        if (!assigned_skills.includes(text) && text.slice(-1) != ':')
+          assigned_skills.push(node.innerText);
+      });
+    });
+
+    //set proftarget innerText which will get picked up by updateAllProficiencies
+    let iter = this.skills.entries();
+    for (let i = 0; i < this.skills.size; i++) {
+      let entry = iter.next().value;
+      if (assigned_skills.includes(entry[0]))
+        entry[1][2].classList.add('bg-black');
+      else entry[1][2].classList.remove('bg-black');
+    }
+
+    //console.log(assigned_skills);
+
+    this.updateAllProficiencies();
+  }
+
+  //----------------------------- Choice Modals ---------------------------------//
 
   chooseLanguages() {
     let allLanguages = [
@@ -930,7 +946,7 @@ export default class extends Controller {
     frame.class = 'flex flex-col gap-2 p-2';
 
     let title = document.createElement('h4');
-    title.classList.add('text-center', 'font-bold', 'text-xl');
+    title.class = 'text-center font-bold text-xl';
     title.innerText = `Level ${feature[0]}`;
     frame.append(title);
     feature[1].forEach((item) => {
@@ -982,6 +998,102 @@ export default class extends Controller {
     }
   }
 
+  chooseTBIF() {
+    this.removeAllChildNodes(this.tbifModalListTarget);
+
+    let kinds = [
+      [this.traits, 'Traits'],
+      [this.bonds, 'Bonds'],
+      [this.ideals, 'Ideals'],
+      [this.flaws, 'Flaws'],
+    ];
+
+    kinds.forEach((kind) => {
+      let list = kind[0];
+      let frame = document.createElement('div');
+      frame.class = 'flex flex-col gap-2 p-2';
+
+      let title = document.createElement('h4');
+      title.class = 'text-center font-bold text-xl';
+      title.innerText = kind[1];
+
+      frame.append(title);
+      //each with index over this.****
+      for (let i = 0; i < list.length; i++) {
+        let item = list[i];
+
+        let container = document.createElement('div');
+        container.class = 'flex gap-2 p-2';
+        let check = document.createElement('input');
+        check.type = 'checkbox';
+        check.value = kind[1];
+        check.id = i; //for validation on submit
+        container.append(check);
+        container.append(item);
+        frame.append(container);
+      }
+      this.tbifModalListTarget.append(frame);
+    });
+  }
+
+  submitTBIF(event) {
+    let targets = [
+      this.tbifTraitsTarget,
+      this.tbifBondsTarget,
+      this.tbifIdealsTarget,
+      this.tbifFlawsTarget,
+    ];
+    let chosen = [];
+    this.tbifModalListTarget.childNodes.forEach((node) => {
+      node.childNodes.forEach((subnode) => {
+        let item = subnode.firstChild;
+        if (item.type == 'checkbox' && item.checked) {
+          chosen.push([item.value, item.id]);
+        }
+      });
+    });
+    let check = [];
+    let output = [];
+    let validated = true;
+    console.log(chosen);
+    chosen.forEach((choice) => {
+      if (check.includes(choice[0])) {
+        validated = false;
+      } else {
+        check.push(choice[0]);
+        output.push(choice[1]);
+      }
+    });
+
+    if (validated) {
+      this.putTraitsToSheet(output);
+      event.target.parentNode.close();
+    }
+  }
+
+  putTraitsToSheet(indexes) {
+    //loop over targets and put this.***[index] to this.***Target
+    //the order will always be the same due to sheet structure
+    let targets = [
+      [this.tbifTraitsTarget, this.traits],
+      [this.tbifBondsTarget, this.bonds],
+      [this.tbifIdealsTarget, this.ideals],
+      [this.tbifFlawsTarget, this.flaws],
+    ];
+
+    targets.forEach((target) => {
+      this.removeAllChildNodes(target[0]);
+    });
+
+    let i = 0;
+    indexes.forEach((index) => {
+      let tag = document.createElement('p');
+      tag.class = 'text-center';
+      tag.innerText = targets[i][1][index]; //this.***[index] is the text we want
+      targets[i][0].append(tag);
+      i++;
+    });
+  }
   //----------------- Spell Modal ------------------//
   chooseSpells() {
     let max_spell_level = 0;
@@ -1116,6 +1228,7 @@ export default class extends Controller {
       this.toolsButtonTarget,
       this.subclassButtonTarget,
       this.spellsButtonTarget,
+      this.tbifButtonTarget,
     ];
 
     buttons.forEach((button) => {
@@ -1146,6 +1259,9 @@ export default class extends Controller {
   }
   showSpellsDialog() {
     this.dialogSpellsTarget.showModal();
+  }
+  showTBIFDialog() {
+    this.dialogTBIFTarget.showModal();
   }
 
   putModalChecksToSheet(collection, target, name = '') {

@@ -520,17 +520,22 @@
         </div>
       </div>
       <div class="flex flex-col text-center" id="tbif">
+        <button class="px-8 py-2 rounded-lg bg-orange-300 border-b-2 border-r-2" data-action="sheet#showTBIFDialog" data-sheet-target="tbifButton">Personality</button>
         <div class="tracking-box">
           <h4 class="font-bold font-sm">Personality Traits</h4>
+          <div class="p-2 bg-gray-100 rounded-lg text-center" data-sheet-target="tbifTraits"></div>
         </div>
         <div class="tracking-box">
           <h4 class="font-bold font-sm">Bonds</h4>
+          <div class="p-2 bg-gray-100 rounded-lg text-center" data-sheet-target="tbifBonds"></div>
         </div>
         <div class="tracking-box">
           <h4 class="font-bold font-sm">Ideals</h4>
+          <div class="p-2 bg-gray-100 rounded-lg text-center" data-sheet-target="tbifIdeals"></div>
         </div>
         <div class="tracking-box">
           <h4 class="font-bold font-sm">Flaws</h4>
+          <div class="p-2 bg-gray-100 rounded-lg text-center" data-sheet-target="tbifFlaws"></div>
         </div>
       </div>
       <div class="flex flex-col" id="equipment">
@@ -559,35 +564,40 @@
 
     <dialog class="border border-black rounded-md bg-gray-300" data-controller="modal"  data-sheet-target="dialogLanguages">
       <p class="text-2xl font-bold">Languages</p>
-        <ul data-sheet-target="languageModalList"></ul>
+        <div data-sheet-target="languageModalList"></div>
       <p class="font-black text-sm" data-sheet-target="langLimit"></p>
       <button class="px-8 py-2 rounded-lg bg-blue-400 border-b-2 border-r-2" data-action="sheet#submitLanguageChoices">Submit</button>
     </dialog>
     <dialog class="border border-black rounded-md bg-gray-300" data-controller="modal"  data-sheet-target="dialogClassSkills">
       <p class="text-2xl font-bold">Class Skills</p>
-        <ul data-sheet-target="classSkillsModalList"></ul>
+        <div data-sheet-target="classSkillsModalList"></div>
       <p class="font-black text-sm" data-sheet-target="classSkillsLimit"></p>
       <button class="px-8 py-2 rounded-lg bg-blue-400 border-b-2 border-r-2" data-action="sheet#submitClassSkillsChoices">Submit</button>
     </dialog>
     <dialog class="border border-black rounded-md bg-gray-300" data-controller="modal"  data-sheet-target="dialogTools">
       <p class="text-2xl font-bold">Racial Tools</p>
-        <ul data-sheet-target="toolsModalList"></ul>
+        <div data-sheet-target="toolsModalList"></div>
       <p class="font-black text-sm" data-sheet-target="toolsLimit"></p>
       <button class="px-8 py-2 rounded-lg bg-blue-400 border-b-2 border-r-2" data-action="sheet#submitToolsChoices">Submit</button>
     </dialog>
     <dialog class="border border-black rounded-md bg-gray-300" data-controller="modal"  data-sheet-target="dialogSubclassFeatures">
       <p class="text-2xl font-bold">Subclass Features</p>
-        <ul data-sheet-target="subclassFeaturesModalList"></ul>
+        <div data-sheet-target="subclassFeaturesModalList"></div>
       <p class="font-black text-sm" data-sheet-target="subclassFeaturesLimit"></p>
       <button class="px-8 py-2 rounded-lg bg-blue-400 border-b-2 border-r-2" data-action="sheet#submitSubclassFeaturesChoices">Submit</button>
     </dialog>
     <dialog class="border border-black rounded-md bg-gray-300" data-controller="modal"  data-sheet-target="dialogSpells">
       <p class="text-2xl font-bold">Spells</p>
-        <ul data-sheet-target="spellsModalList"></ul>
+        <div data-sheet-target="spellsModalList"></div>
       <p class="font-black text-sm" data-sheet-target="spellsLimit"></p>
       <p class="font-black text-sm" data-sheet-target="cantripLimit"></p>
       <button class="px-8 py-2 rounded-lg bg-blue-400 border-b-2 border-r-2" data-action="sheet#submitSpellsChoices">Submit</button>
     </dialog>
-
+    <dialog class="border border-black rounded-md bg-gray-300" data-controller="modal"  data-sheet-target="dialogTBIF">
+      <p class="text-2xl font-bold">Traits</p>
+        <div data-sheet-target="tbifModalList"></div>
+      <p class="font-black text-sm">Choose 1 of each</p>
+      <button class="px-8 py-2 rounded-lg bg-blue-400 border-b-2 border-r-2" data-action="sheet#submitTBIF">Submit</button>
+    </dialog>
   </section>
 </div>
