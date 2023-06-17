@@ -248,11 +248,7 @@ Ranger = PlayerClass.create(
       You may choose an additional favoured terrain At 5th, 10th & 15th level."
     ],
     2=>[
-      "Fighting Styles: You adopt a particular fighting style as your specialty. If you choose another fighting style later on, you can't take a Fighting Style more than once.
-      Archery: You gain a +2 bonus to attack rolls you make with ranged weapons.
-      Defense: While you are wearing armor, you gain a +1 bonus to AC.
-      Dueling: When you are wielding a melee weapon in one hand and no other weapons, you gain a +2 bonus to damage rolls with that weapon.
-      Two-Weapon Fighting: When you engage in two-weapon fighting, you can add your ability modifier to the damage of the second attack.",
+      "Fighting Styles: You adopt a particular fighting style as your specialty. If you choose another fighting style later on, you can't take a Fighting Style more than once.",
       "Spellcasting: You have learned to use the magical essence of nature to cast spells."
     ],
     3=>[
@@ -285,7 +281,14 @@ Ranger = PlayerClass.create(
       "Foe Slayer: You become an unparalleled hunter of your enemies. Once on each of your turns, you can add your Wisdom modifier to the attack roll or the damage roll of an attack you make against one of your favored enemies. You can choose to use this feature before or after the roll, but before any effects of the roll are applied."
     ]
   },
-  custom: {}
+  custom: {
+    2=>[
+      "Archery: You gain a +2 bonus to attack rolls you make with ranged weapons.",
+      "Defense: While you are wearing armor, you gain a +1 bonus to AC.",
+      "Dueling: When you are wielding a melee weapon in one hand and no other weapons, you gain a +2 bonus to damage rolls with that weapon.",
+      "Two-Weapon Fighting: When you engage in two-weapon fighting, you can add your ability modifier to the damage of the second attack.",
+    ]
+  }
 )
 
 Ranger.subclasses.create(
@@ -393,9 +396,28 @@ Feat_alert = Feat.create(
 
 
 
-Junk_spell = Spell.create(
+Spell.create(
+  name: 'Ice Missile',
+  level: 1,
+  description: 'You lob a magical spear of ice.',
+  cast_time: 'Instantaneous',
+  range: '30 feet',
+  components: 'Verbal, Somatic',
+  duration: '',
+  attack: 'true',
+  atk_dmg: {
+    1=>'1d6',
+    6=>'2d6',
+    12=>'3d6',
+    16=>'4d6',
+  },
+  dmg_type: 'Cold',
+  id: 1
+)
+
+Spell.create(
   name: 'Junk Missile',
-  level: 0,
+  level: 1,
   description: 'You fling a magical wad of junk at blinding speed.',
   cast_time: 'Instantaneous',
   range: '30 feet',
@@ -408,8 +430,46 @@ Junk_spell = Spell.create(
     12=>'3d6',
     16=>'4d6',
   },
-  dmg_type: 'Arcane',
-  id: 1
+  dmg_type: 'Trash',
+  id: 2
+)
+
+Spell.create(
+  name: 'Shockwave',
+  level: 2,
+  description: 'A blast of sonic energy radiates from you, deafening and shocking all around you.',
+  cast_time: 'Instantaneous',
+  range: '15 feet',
+  components: 'Verbal',
+  duration: '',
+  attack: 'true',
+  atk_dmg: {
+    1=>'2d8',
+    6=>'3d8',
+    12=>'4d8',
+    16=>'5d8',
+  },
+  dmg_type: 'Wind',
+  id: 3
+)
+
+Spell.create(
+  name: 'Lightning Bolt',
+  level: 3,
+  description: 'A bolt of lightning smites your enemy',
+  cast_time: 'Instantaneous',
+  range: '45 feet',
+  components: 'Somatic, Material',
+  duration: '2 rounds',
+  attack: 'true',
+  atk_dmg: {
+    1=>'2d10 + 4',
+    6=>'3d10 + 8',
+    12=>'4d10 + 12',
+    16=>'5d10 + 16',
+  },
+  dmg_type: 'Electric',
+  id: 4
 )
 
 Junk_wizard = ClassSpellList.create(
@@ -419,4 +479,16 @@ Junk_wizard = ClassSpellList.create(
 ClassSpellListsSpells.create(
   class_spell_list_id: Junk_wizard.id,
   spell_id: 1
+)
+ClassSpellListsSpells.create(
+  class_spell_list_id: Junk_wizard.id,
+  spell_id: 2
+)
+ClassSpellListsSpells.create(
+  class_spell_list_id: Junk_wizard.id,
+  spell_id: 3
+)
+ClassSpellListsSpells.create(
+  class_spell_list_id: Junk_wizard.id,
+  spell_id: 4
 )

@@ -398,17 +398,24 @@
           <p class="sheetcell" data-sheet-target="castingCantripLimit"></p>
           <p class="text-xs mx-2">CANTRIPS</p>
         </div>
+        <button class="px-8 py-2 rounded-lg bg-orange-300 border-b-2 border-r-2" data-action="sheet#showSpellsDialog" data-sheet-target="spellsButton">Choose Spells</button>
       </div>
       <div class="flex flex-col text-center" id="spells">
         <h2 class="tracking-box">Spells</h2>
          <div class="flex flex-col" id="cantrips">
           <div class="flex justify-around">
-            <h4 class="font-bold text-sm">Cantrip</h4>
+             <div class="flex flex-col gap-1">
+              <h4 class="font-bold text-sm">Cantrips</h4>
+              <div class="flex flex-col gap-1" data-sheet-target="spellsTaken0"></div>
+            </div>
           </div>
         </div>
         <div class="flex flex-col" id="spell1">
           <div class="flex justify-around">
-            <h4 class="font-bold text-sm">1</h4>
+            <div class="flex flex-col gap-1">
+              <h4 class="font-bold text-sm">Level 1 Spells</h4>
+              <div class="flex flex-col gap-1" data-sheet-target="spellsTaken1"></div>
+            </div>
             <div class="tracking-box">
               <p data-sheet-target="spellSlots1">0</p>
               <p>Spell Slots</p>
@@ -417,7 +424,10 @@
         </div>
         <div class="flex flex-col" id="spell2">
           <div class="flex justify-around">
-            <h4 class="font-bold text-sm">2</h4>
+            <div class="flex flex-col gap-1">
+              <h4 class="font-bold text-sm">Level 2 Spells</h4>
+              <div class="flex flex-col gap-1" data-sheet-target="spellsTaken2"></div>
+            </div>
             <div class="tracking-box">
               <p data-sheet-target="spellSlots2">0</p>
               <p>Spell Slots</p>
@@ -426,7 +436,10 @@
         </div>
         <div class="flex flex-col" id="spell3">
           <div class="flex justify-around">
-            <h4 class="font-bold text-sm">3</h4>
+            <div class="flex flex-col gap-1">
+              <h4 class="font-bold text-sm">Level 3 Spells</h4>
+              <div class="flex flex-col gap-1" data-sheet-target="spellsTaken3"></div>
+            </div>
             <div class="tracking-box">
               <p data-sheet-target="spellSlots3">0</p>
               <p>Spell Slots</p>
@@ -435,7 +448,10 @@
         </div>
         <div class="flex flex-col" id="spell4">
           <div class="flex justify-around">
-            <h4 class="font-bold text-sm">4</h4>
+            <div class="flex flex-col gap-1">
+              <h4 class="font-bold text-sm">Level 4 Spells</h4>
+              <div class="flex flex-col gap-1" data-sheet-target="spellsTaken4"></div>
+            </div>
             <div class="tracking-box">
               <p data-sheet-target="spellSlots4">0</p>
               <p>Spell Slots</p>
@@ -444,7 +460,10 @@
         </div>
         <div class="flex flex-col" id="spell5">
           <div class="flex justify-around">
-            <h4 class="font-bold text-sm">5</h4>
+            <div class="flex flex-col gap-1">
+              <h4 class="font-bold text-sm">Level 5 Spells</h4>
+              <div class="flex flex-col gap-1" data-sheet-target="spellsTaken5"></div>
+            </div>
             <div class="tracking-box">
               <p data-sheet-target="spellSlots5">0</p>
               <p>Spell Slots</p>
@@ -453,7 +472,10 @@
         </div>
         <div class="flex flex-col" id="spell6">
           <div class="flex justify-around">
-            <h4 class="font-bold text-sm">6</h4>
+            <div class="flex flex-col gap-1">
+              <h4 class="font-bold text-sm">Level 6 Spells</h4>
+              <div class="flex flex-col gap-1" data-sheet-target="spellsTaken6"></div>
+            </div>
             <div class="tracking-box">
               <p data-sheet-target="spellSlots6">0</p>
               <p>Spell Slots</p>
@@ -462,7 +484,10 @@
         </div>
         <div class="flex flex-col" id="spell7">
           <div class="flex justify-around">
-            <h4 class="font-bold text-sm">7</h4>
+            <div class="flex flex-col gap-1">
+              <h4 class="font-bold text-sm">Level 7 Spells</h4>
+              <div class="flex flex-col gap-1" data-sheet-target="spellsTaken7"></div>
+            </div>
             <div class="tracking-box">
               <p data-sheet-target="spellSlots7">0</p>
               <p>Spell Slots</p>
@@ -471,7 +496,10 @@
         </div>
         <div class="flex flex-col" id="spell8">
           <div class="flex justify-around">
-            <h4 class="font-bold text-sm">8</h4>
+            <div class="flex flex-col gap-1">
+              <h4 class="font-bold text-sm">Level 8 Spells</h4>
+              <div class="flex flex-col gap-1" data-sheet-target="spellsTaken8"></div>
+            </div>
             <div class="tracking-box">
               <p data-sheet-target="spellSlots8">0</p>
               <p>Spell Slots</p>
@@ -480,7 +508,10 @@
         </div>
         <div class="flex flex-col" id="spell9">
           <div class="flex justify-around">
-            <h4 class="font-bold text-sm">9</h4>
+            <div class="flex flex-col gap-1">
+              <h4 class="font-bold text-sm">Level 9 Spells</h4>
+              <div class="flex flex-col gap-1" data-sheet-target="spellsTaken9"></div>
+            </div>
             <div class="tracking-box">
               <p data-sheet-target="spellSlots9">0</p>
               <p>Spell Slots</p>
@@ -549,6 +580,13 @@
         <ul data-sheet-target="subclassFeaturesModalList"></ul>
       <p class="font-black text-sm" data-sheet-target="subclassFeaturesLimit"></p>
       <button class="px-8 py-2 rounded-lg bg-blue-400 border-b-2 border-r-2" data-action="sheet#submitSubclassFeaturesChoices">Submit</button>
+    </dialog>
+    <dialog class="border border-black rounded-md bg-gray-300" data-controller="modal"  data-sheet-target="dialogSpells">
+      <p class="text-2xl font-bold">Spells</p>
+        <ul data-sheet-target="spellsModalList"></ul>
+      <p class="font-black text-sm" data-sheet-target="spellsLimit"></p>
+      <p class="font-black text-sm" data-sheet-target="cantripLimit"></p>
+      <button class="px-8 py-2 rounded-lg bg-blue-400 border-b-2 border-r-2" data-action="sheet#submitSpellsChoices">Submit</button>
     </dialog>
 
   </section>

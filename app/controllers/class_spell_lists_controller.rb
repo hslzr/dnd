@@ -9,7 +9,7 @@ class ClassSpellListsController < ApplicationController
     end
   end
 
-  def show
+  def show #returns all the spells reference in the named join table
     respond_to do |format|
       format.json { render json: @class_spell_list }
     end

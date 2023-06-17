@@ -129,6 +129,7 @@ export default class extends Controller {
     'castingAttackBonus',
     'castingSpellLimit',
     'castingCantripLimit',
+    'spellsButton',
     'equipGP',
     'equipSP',
     'equipCP',
@@ -145,6 +146,10 @@ export default class extends Controller {
     'dialogSubclassFeatures',
     'subclassFeaturesModalList',
     'subclassFeaturesLimit',
+    'dialogSpells',
+    'spellsModaList',
+    'spellsLimit',
+    'cantripLimit',
     'spellSlots1',
     'spellSlots2',
     'spellSlots3',
@@ -154,6 +159,16 @@ export default class extends Controller {
     'spellSlots7',
     'spellSlots8',
     'spellSlots9',
+    'spellsTaken0',
+    'spellsTaken1',
+    'spellsTaken2',
+    'spellsTaken3',
+    'spellsTaken4',
+    'spellsTaken5',
+    'spellsTaken6',
+    'spellsTaken7',
+    'spellsTaken8',
+    'spellsTaken9',
   ];
 
   connect() {
@@ -214,7 +229,7 @@ export default class extends Controller {
     this.classSkillsButtonTarget.disabled = true;
 
     //spells
-    this.spellList; //we'll try setting this to a correct collection of spells with a new fetch in catUpdate
+    this.spellList = false; //we'll try setting this to a correct collection of spells with a new fetch in catUpdate
   }
 
   //----------------------------- Main Sheet Update Flow ---------------------------------//
@@ -300,6 +315,9 @@ export default class extends Controller {
           this.wisSaveProfTarget,
           this.chaSaveProfTarget,
         ];
+        primary_proficiencies.forEach((target) => {
+          target.classList.remove('bg-black');
+        });
 
         //this.saving_throws has indexes of primary_proficiences whose text we set to '+'
         for (let i = 0; i < this.saving_throws.length; i++) {
@@ -464,11 +482,11 @@ export default class extends Controller {
     this.activateButtons();
 
     if (this.nosubchoice) {
-      let button = this.subclassButtonTarget;
+      this.deactivateButton(this.subclassButtonTarget);
+    }
 
-      button.disabled = true;
-      button.classList.remove(this.active_color);
-      button.classList.add(this.disabled_color);
+    if (this.spellcasting_ability == 0) {
+      this.deactivateButton(this.spellsButtonTarget);
     }
 
     this.setSpellInformation();
@@ -597,7 +615,7 @@ export default class extends Controller {
 
   populateSkillModifiers() {
     //the class saving throws are stored as indexes to the bonus array so we go through
-    //all this to assign 6 values possible bonuses from a db model then output to 6 different targets
+    //all this to assign 6 values possible bonuses from this.saving_throws then output to 6 different targets
     let save_modifiers = [
       this.strSavingThrowModTarget,
       this.dexSavingThrowModTarget,
@@ -759,6 +777,7 @@ export default class extends Controller {
     this.chooseClassSkills();
     this.chooseTools();
     //subclass modal activated on detection of a choice in Subclass.features
+    if (this.spellList) this.chooseSpells();
   }
 
   chooseLanguages() {
@@ -970,6 +989,49 @@ export default class extends Controller {
     }
   }
 
+  chooseSpells() {
+    let max_spell_level = 0;
+    this.spell_table[this.level - 1].forEach((entry) => {
+      if (entry > 0) max_spell_level++;
+    });
+    let num_spells = this.spell_table[this.level - 1][0];
+    let num_cantrips = this.spell_table[this.level - 1][1];
+
+    this.spellsLimitTarget.innerText = `Choose ${num_spells} spells.`;
+    this.cantripLimitTarget.innerText = `Choose ${num_cantrips} cantrips.`;
+
+    //populate the modal with headings and spells, with checkboxes
+    this.populateSpellModal(max_spell_level);
+  }
+
+  populateSpellModal(max_level) {
+    for (let i = 0; i <= max_level; i++) {
+      let frame = document.createElement('div');
+      //foreach element of feature[1] put a radio button
+      frame.class = 'flex flex-col gap-2 p-2';
+
+      let title = document.createElement('h4');
+      title.classList.add('text-center', 'font-bold', 'text-xl');
+      title.innerText = ``;
+      frame.append(title);
+      this.spellList.forEach((item) => {
+        if (item.level == i) {
+          let container = document.createElement('div');
+          container.class = 'flex gap-2 p-2';
+          let check = document.createElement('input');
+          check.type = 'checkbox';
+          check.value = item.id; //for validation on submit
+          container.append(check);
+          container.append(item);
+          frame.append(container);
+        }
+      });
+      this.spellsModalListTarget.append(frame);
+    }
+  }
+
+  submitSpellsChoices(event) {}
+
   populateListModal(target, options) {
     options.forEach((option) => {
       let container = document.createElement('div');
@@ -993,6 +1055,7 @@ export default class extends Controller {
       this.classSkillsButtonTarget,
       this.toolsButtonTarget,
       this.subclassButtonTarget,
+      this.spellsButtonTarget,
     ];
 
     buttons.forEach((button) => {
@@ -1000,6 +1063,12 @@ export default class extends Controller {
       button.classList.remove(this.disabled_color);
       button.classList.add(this.active_color);
     });
+  }
+
+  deactivateButton(target) {
+    target.disabled = true;
+    target.classList.remove(this.active_color);
+    target.classList.add(this.disabled_color);
   }
 
   //Modal display activation
@@ -1017,6 +1086,10 @@ export default class extends Controller {
 
   showSubclassFeaturesDialog() {
     this.dialogSubclassFeaturesTarget.showModal();
+  }
+
+  showSpellsDialog() {
+    this.dialogSpellsTarget.showModal();
   }
 
   putModalChecksToSheet(collection, target, name = '') {
