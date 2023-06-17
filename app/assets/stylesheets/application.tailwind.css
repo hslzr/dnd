@@ -69,6 +69,6 @@
   }
 
   .spell-box {
-    @apply flex flex-col gap-1 w-[80vw];
+    @apply flex flex-col gap-1 w-[80vw] mb-4;
   }
 }
