@@ -147,7 +147,7 @@ export default class extends Controller {
     'subclassFeaturesModalList',
     'subclassFeaturesLimit',
     'dialogSpells',
-    'spellsModaList',
+    'spellsModalList',
     'spellsLimit',
     'cantripLimit',
     'spellSlots1',
@@ -1012,7 +1012,11 @@ export default class extends Controller {
 
       let title = document.createElement('h4');
       title.classList.add('text-center', 'font-bold', 'text-xl');
-      title.innerText = ``;
+      if (i == 0) {
+        title.innerText = 'Cantrips';
+      } else {
+        title.innerText = `Level ${i}`;
+      }
       frame.append(title);
       this.spellList.forEach((item) => {
         if (item.level == i) {
@@ -1022,7 +1026,7 @@ export default class extends Controller {
           check.type = 'checkbox';
           check.value = item.id; //for validation on submit
           container.append(check);
-          container.append(item);
+          container.append(item.name);
           frame.append(container);
         }
       });
