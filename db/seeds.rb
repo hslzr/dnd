@@ -197,7 +197,7 @@ Ranger = PlayerClass.create(
   armor: ['Light','Medium','Shields'],
   weapons: ['Simple','Martial'],
   tools: [],
-  skill_choices: ['Animal Handling','Athletics','Insight,','Investigation','Nature','Perception','Stealth','Survival'],
+  skill_choices: ['Animal Handling','Athletics','Insight','Investigation','Nature','Perception','Stealth','Survival'],
   num_skills: 3,
   equipment_choices: [
     "Scale Mail | Leather Armor",
