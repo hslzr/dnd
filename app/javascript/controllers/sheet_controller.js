@@ -127,6 +127,8 @@ export default class extends Controller {
     'castingAbility',
     'castingSaveDC',
     'castingAttackBonus',
+    'castingSpellLimit',
+    'castingCantripLimit',
     'equipGP',
     'equipSP',
     'equipCP',
@@ -143,6 +145,15 @@ export default class extends Controller {
     'dialogSubclassFeatures',
     'subclassFeaturesModalList',
     'subclassFeaturesLimit',
+    'spellSlots1',
+    'spellSlots2',
+    'spellSlots3',
+    'spellSlots4',
+    'spellSlots5',
+    'spellSlots6',
+    'spellSlots7',
+    'spellSlots8',
+    'spellSlots9',
   ];
 
   connect() {
@@ -272,15 +283,13 @@ export default class extends Controller {
         arm = this.classArmorTarget;
         tools = this.classToolsTarget;
         features = this.classFeaturesTarget;
-        //features aren't an array so PutList breaks because it calls forEach on it
-        //skills are a choice for class
 
-        //setters
         this.aboutClassTarget.innerText = data.name;
         this.sheet_class = data.name;
         this.hit_die = data.hit_die;
         this.saving_throws = data.saving_throws;
         this.classFeatureList = data.features;
+        this.spell_table = data.spell_table;
 
         //the seed stores saving throw proficiencies as indexes to this array
         let primary_proficiencies = [
@@ -451,17 +460,6 @@ export default class extends Controller {
 
     this.trackingHitDiceTarget.innerText = `${this.level}d${this.hit_die}`;
 
-    //these spell stats rely on base stats and player_class
-
-    //spell save DC
-    let spell_mod = this.calcMod(
-      this.stats[this.spellcasting_ability - 1]
-    );
-    this.castingSaveDCTarget.innerText =
-      spell_mod + this.prof_mod + 8;
-
-    this.castingAttackBonusTarget.innerText =
-      spell_mod + this.prof_mod;
     //activate buttons
     this.activateButtons();
 
@@ -471,8 +469,9 @@ export default class extends Controller {
       button.disabled = true;
       button.classList.remove(this.active_color);
       button.classList.add(this.disabled_color);
-      e;
     }
+
+    this.setSpellInformation();
 
     this.makeModalChoices();
 
@@ -713,6 +712,41 @@ export default class extends Controller {
     //console.log(assigned_skills);
 
     this.updateAllProficiencies();
+  }
+
+  setSpellInformation() {
+    let spell_mod = this.calcMod(
+      this.stats[this.spellcasting_ability - 1]
+    );
+    this.castingSaveDCTarget.innerText =
+      spell_mod + this.prof_mod + 8;
+
+    this.castingAttackBonusTarget.innerText =
+      spell_mod + this.prof_mod;
+
+    this.castingSpellLimitTarget.innerText =
+      this.spell_table[this.level - 1][0];
+
+    this.castingCantripLimitTarget.innerText =
+      this.spell_table[this.level - 1][1];
+
+    let slot_targets = [
+      this.spellSlots1Target,
+      this.spellSlots2Target,
+      this.spellSlots3Target,
+      this.spellSlots4Target,
+      this.spellSlots5Target,
+      this.spellSlots6Target,
+      this.spellSlots7Target,
+      this.spellSlots8Target,
+      this.spellSlots9Target,
+    ];
+
+    for (let i = 0; i < 9; i++) {
+      slot_targets[i].innerText =
+        this.spell_table[this.level - 1][i + 2];
+      //using i+2 because the first two indexes are spells known and cantrips known
+    }
   }
 
   resetSpellInformation() {
