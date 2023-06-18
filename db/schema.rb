@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_18_081651) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_18_194224) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -119,6 +119,27 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_18_081651) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "gearpacks", force: :cascade do |t|
+    t.string "name"
+    t.integer "cost_cp", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "gearpacks_items", id: false, force: :cascade do |t|
+    t.integer "equipment_id"
+    t.integer "gearpack_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "gearpacks_tools", id: false, force: :cascade do |t|
+    t.integer "gearpack_id"
+    t.integer "tool_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "player_classes", force: :cascade do |t|
     t.string "name"
     t.integer "hit_die"
@@ -201,6 +222,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_18_081651) do
     t.string "tools", default: [], array: true
     t.string "skills", default: [], array: true
     t.string "features", default: [], array: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "tools", force: :cascade do |t|
+    t.string "name"
+    t.string "tool_type", default: "artisan"
+    t.integer "cost_cp", default: 0
+    t.integer "weight", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

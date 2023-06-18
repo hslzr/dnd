@@ -20,6 +20,10 @@ ClassSpellListsSpells.destroy_all
 Armor.destroy_all
 Weapon.destroy_all
 Equipment.destroy_all
+Tool.destroy_all
+Gearpack.destroy_all
+EquipmentGearpacks.destroy_all
+GearpacksTools.destroy_all
 
 User.create(
   email: "net@map.com",
@@ -1544,4 +1548,209 @@ Equipment.create(
   name: "Whetstone",
   weight: 1,
   cost_gp: 1,
+)
+
+Tool.create(
+  name: "Alchemist's Supplies",
+  cost_cp: 5000,
+  weight: 8,
+)
+Tool.create(
+  name: "Brewer's Supplies",
+  cost_cp: 2000,
+  weight: 9,
+)
+Tool.create(
+  name: "Calligrapher's Supplies",
+  cost_cp: 1000,
+  weight: 5,
+)
+Tool.create(
+  name: "Carpenter's Tools",
+  cost_cp: 800,
+  weight: 6,
+)
+Tool.create(
+  name: "Cartographer's Tools",
+  cost_cp: 1500,
+  weight: 6,
+)
+Tool.create(
+  name: "Cobbler's Tools",
+  cost_cp: 500,
+  weight: 5,
+)
+Tool.create(
+  name: "Cook's Utensils",
+  cost_cp: 100,
+  weight: 8,
+)
+Tool.create(
+  name: "Glassblower's Tools",
+  cost_cp: 3000,
+  weight: 5,
+)
+Tool.create(
+  name: "Jeweler's Tools",
+  cost_cp: 2500,
+  weight: 2,
+)
+Tool.create(
+  name: "Leatherworker's Tools",
+  cost_cp: 500,
+  weight: 5,
+)
+Tool.create(
+  name: "Mason's Tools",
+  cost_cp: 1000,
+  weight: 8,
+)
+Tool.create(
+  name: "Painter's Supplies",
+  cost_cp: 1000,
+  weight: 5,
+)
+Tool.create(
+  name: "Potter's Tools",
+  cost_cp: 1000,
+  weight: 3,
+)
+Tool.create(
+  name: "Smith's Tools",
+  cost_cp: 2000,
+  weight: 8,
+)
+Tool.create(
+  name: "Tinker's Tools",
+  cost_cp: 5000,
+  weight: 10,
+)
+Tool.create(
+  name: "Weaver's Tools",
+  cost_cp: 100,
+  weight: 5,
+)
+Tool.create(
+  name: "Woodcarver's Tools",
+  cost_cp: 100,
+  weight: 5,
+)
+
+Tool.create(
+  name: "Disguise Kit",
+  tool_type: 'generic',
+  cost_cp: 2500,
+  weight: 3,
+)
+Tool.create(
+  name: "Forgery Kit",
+  tool_type: 'generic',
+  cost_cp: 1500,
+  weight: 5,
+)
+Tool.create(
+  name: "Herbalism Kit",
+  tool_type: 'generic',
+  cost_cp: 500,
+  weight: 3,
+)
+Tool.create(
+  name: "Navigator's Tools",
+  tool_type: 'generic',
+  cost_cp: 2500,
+  weight: 2,
+)
+Tool.create(
+  name: "Poisoner's Kit",
+  tool_type: 'generic',
+  cost_cp: 5000,
+  weight: 2,
+)
+Tool.create(
+  name: "Thieves' Tools",
+  tool_type: 'generic',
+  cost_cp: 2500,
+  weight: 1,
+)
+Tool.create(
+  name: "Dice Set",
+  tool_type: 'gaming',
+  cost_cp: 10,
+)
+Tool.create(
+  name: "Dragonchess Set",
+  tool_type: 'gaming',
+  cost_cp: 100,
+  weight: 1,
+)
+Tool.create(
+  name: "Playing Cards",
+  tool_type: 'gaming',
+  cost_cp: 50,
+)
+Tool.create(
+  name: "Three-Dragon Ante Set",
+  tool_type: 'gaming',
+  cost_cp: 100,
+)
+
+Tool.create(
+  name: "Bagpipes",
+  tool_type: 'instrument',
+  cost_cp: 3000,
+  weight: 6,
+)
+Tool.create(
+  name: "Drum",
+  tool_type: 'instrument',
+  cost_cp: 600,
+  weight: 3,
+)
+Tool.create(
+  name: "Dulcimer",
+  tool_type: 'instrument',
+  cost_cp: 2500,
+  weight: 10,
+)
+Tool.create(
+  name: "Flute",
+  tool_type: 'instrument',
+  cost_cp: 200,
+  weight: 1,
+)
+Tool.create(
+  name: "Lute",
+  tool_type: 'instrument',
+  cost_cp: 3500,
+  weight: 2,
+)
+Tool.create(
+  name: "Lyre",
+  tool_type: 'instrument',
+  cost_cp: 3000,
+  weight: 2,
+)
+Tool.create(
+  name: "Horn",
+  tool_type: 'instrument',
+  cost_cp: 300,
+  weight: 2,
+)
+Tool.create(
+  name: "Pan Flute",
+  tool_type: 'instrument',
+  cost_cp: 1200,
+  weight: 2,
+)
+Tool.create(
+  name: "Shawm",
+  tool_type: 'instrument',
+  cost_cp: 200,
+  weight: 1,
+)
+Tool.create(
+  name: "Viol",
+  tool_type: 'instrument',
+  cost_cp: 3000,
+  weight: 1,
 )
