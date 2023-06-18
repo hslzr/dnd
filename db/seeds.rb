@@ -22,8 +22,8 @@ Weapon.destroy_all
 Equipment.destroy_all
 Tool.destroy_all
 Gearpack.destroy_all
-EquipmentGearpacks.destroy_all
-GearpacksTools.destroy_all
+EquipmentGearpack.destroy_all
+GearpacksTool.destroy_all
 
 User.create(
   email: "net@map.com",
@@ -1051,13 +1051,13 @@ Equipment.create(
   cost_gp: 1000,
 )
 
-Equipment.create(
+Backpack = Equipment.create(
   name: "Backpack",
   weight: 5,
   cost_gp: 200,
 )
 
-Equipment.create(
+BallBearings = Equipment.create(
   name: "Ball bearings",
   count: 1000,
   weight: 2,
@@ -1082,7 +1082,7 @@ Equipment.create(
   cost_gp: 100,
 )
 
-Equipment.create(
+Bell = Equipment.create(
   name: "Bell",
   cost_gp: 100,
 )
@@ -1124,7 +1124,7 @@ Equipment.create(
   cost_gp: 100,
 )
 
-Equipment.create(
+Candle = Equipment.create(
   name: "Candle",
   cost_gp: 1,
 )
@@ -1194,7 +1194,7 @@ Equipment.create(
   cost_gp: 250,
 )
 
-Equipment.create(
+Crowbar = Equipment.create(
   name: "Crowbar",
   weight: 5,
   cost_gp: 200,
@@ -1239,7 +1239,7 @@ Equipment.create(
   cost_gp: 200,
 )
 
-Equipment.create(
+Hammer = Equipment.create(
   name: "Hammer",
   weight: 3,
   cost_gp: 100,
@@ -1314,19 +1314,19 @@ Equipment.create(
   cost_gp: 10,
 )
 
-Equipment.create(
+Lamp = Equipment.create(
   name: "Lamp",
   weight: 1,
   cost_gp: 50,
 )
 
-Equipment.create(
+BullseyeLantern = Equipment.create(
   name: "Bullseye Lantern",
   weight: 2,
   cost_gp: 1000,
 )
 
-Equipment.create(
+HoodedLantern = Equipment.create(
   name: "Hooded Lantern",
   weight: 2,
   cost_gp: 500,
@@ -1361,7 +1361,7 @@ Equipment.create(
   cost_gp: 500,
 )
 
-Equipment.create(
+OilFlask = Equipment.create(
   name: "Oil (flask)",
   weight: 1,
   cost_gp: 10,
@@ -1388,7 +1388,7 @@ Equipment.create(
   cost_gp: 200,
 )
 
-Equipment.create(
+Piton = Equipment.create(
   name: "Piton",
   cost_gp: 5,
 )
@@ -1434,7 +1434,7 @@ Equipment.create(
   cost_gp: 400,
 )
 
-Equipment.create(
+Rations = Equipment.create(
   name: "Rations (1 day)",
   weight: 2,
   cost_gp: 50,
@@ -1446,13 +1446,13 @@ Equipment.create(
   cost_gp: 100,
 )
 
-Equipment.create(
+HempRope = Equipment.create(
   name: "Rope, hempen (50 feet)",
   weight: 10,
   cost_gp: 100,
 )
 
-Equipment.create(
+SilkRope = Equipment.create(
   name: "Rope, silk (50 feet)",
   weight: 5,
   cost_gp: 1000,
@@ -1515,13 +1515,18 @@ Equipment.create(
   cost_gp: 100000,
 )
 
+String10ft = Equipment.create(
+  name: "String, 10 feet",
+  cost_gp: 20,
+)
+
 Equipment.create(
   name: "Tent, two-person",
   weight: 20,
   cost_gp: 200,
 )
 
-Equipment.create(
+Tinderbox = Equipment.create(
   name: "Tinderbox",
   weight: 1,
   cost_gp: 50,
@@ -1538,7 +1543,7 @@ Equipment.create(
   cost_gp: 100,
 )
 
-Equipment.create(
+Waterskin = Equipment.create(
   name: "Waterskin",
   weight: 1,
   cost_gp: 1,
@@ -1753,4 +1758,100 @@ Tool.create(
   tool_type: 'instrument',
   cost_cp: 3000,
   weight: 1,
+)
+Gearpack.create(
+  name: "Burglar's Pack",
+  cost_cp: 1600,
+  id: 1,
+)
+Gearpack.create(
+  name: "Diplomat's Pack",
+  cost_cp: 3900,
+  id: 2,
+)
+Gearpack.create(
+  name: "Dungeoneer's Pack",
+  cost_cp: 1200,
+  id: 3,
+)
+Gearpack.create(
+  name: "Entertainer's Pack",
+  cost_cp: 4000,
+  id: 4,
+)
+Gearpack.create(
+  name: "Explorer's Pack",
+  cost_cp: 1000,
+  id: 5,
+)
+Gearpack.create(
+  name: "Priest's Pack",
+  cost_cp: 1900,
+  id: 6,
+)
+Gearpack.create(
+  name: "Scholar's Pack",
+  cost_cp: 4000,
+  id: 7,
+)
+#Burglar's Pack
+EquipmentGearpack.create(
+  equipment_id: Backpack.id,
+  gearpack_id: 1,
+)
+EquipmentGearpack.create(
+  equipment_id: BallBearings.id,
+  gearpack_id: 1,
+)
+EquipmentGearpack.create(
+  equipment_id: String10ft.id,
+  gearpack_id: 1,
+)
+EquipmentGearpack.create(
+  equipment_id: Bell.id,
+  gearpack_id: 1,
+)
+EquipmentGearpack.create(
+  equipment_id: Candle.id,
+  gearpack_id: 1,
+  count: 5,
+)
+EquipmentGearpack.create(
+  equipment_id: Crowbar.id,
+  gearpack_id: 1,
+)
+EquipmentGearpack.create(
+  equipment_id: Hammer.id,
+  gearpack_id: 1,
+)
+EquipmentGearpack.create(
+  equipment_id: Piton.id,
+  gearpack_id: 1,
+  count: 10,
+)
+EquipmentGearpack.create(
+  equipment_id: HoodedLantern.id,
+  gearpack_id: 1,
+)
+EquipmentGearpack.create(
+  equipment_id: OilFlask.id,
+  gearpack_id: 1,
+  count: 2,
+)
+EquipmentGearpack.create(
+  equipment_id: Rations.id,
+  gearpack_id: 1,
+  count: 5,
+)
+EquipmentGearpack.create(
+  equipment_id: Tinderbox.id,
+  gearpack_id: 1,
+)
+EquipmentGearpack.create(
+  equipment_id: Waterskin.id,
+  gearpack_id: 1,
+)
+EquipmentGearpack.create(
+  equipment_id: HempRope.id,
+  gearpack_id: 1,
 )
