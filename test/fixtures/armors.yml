@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  type: 
+  ac_base: 1
+  str_req: 1
+  stealth_disadvantage: 1
+  weight: 1
+  cost_gp: 1
+  name: MyString
+  description: MyString
+
+two:
+  type: 
+  ac_base: 1
+  str_req: 1
+  stealth_disadvantage: 1
+  weight: 1
+  cost_gp: 1
+  name: MyString
+  description: MyString

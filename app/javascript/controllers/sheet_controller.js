@@ -312,7 +312,7 @@ export default class extends Controller {
         this.saving_throws = data.saving_throws;
         this.classFeatureList = data.features;
         this.spell_table = data.spell_table;
-
+        this.class_equip_choices = data.equipment_choices;
         //the seed stores saving throw proficiencies as indexes to this array
         let primary_proficiencies = [
           this.strSaveProfTarget,
@@ -386,6 +386,7 @@ export default class extends Controller {
         this.aboutBackgroundTarget.innerText = data.name;
         this.sheet_background = data.name;
         this.equipGPTarget.innerText = data.gold;
+        this.bg_equip_choices = data.equipment_choices;
 
         //tbif
         this.traits = data.traits;
@@ -787,8 +788,14 @@ export default class extends Controller {
     this.updateAllProficiencies();
   }
 
-  //----------------------------- Choice Modals ---------------------------------//
+  customModifiers() {
+    console.log('finalPass complete');
+    console.log(this.class_equip_choices);
+    console.log(this.bg_equip_choices);
+  }
 
+  //----------------------------- Choice Modals ---------------------------------//
+  //----------------- Languages Modal ------------------//
   chooseLanguages() {
     let allLanguages = [
       'Common',
@@ -859,7 +866,7 @@ export default class extends Controller {
       event.target.parentNode.close();
     }
   }
-
+  //----------------- Tools Modal ------------------//
   chooseTools() {
     this.removeAllChildNodes(this.toolsModalListTarget);
 
@@ -893,7 +900,7 @@ export default class extends Controller {
       event.target.parentNode.close();
     }
   }
-
+  //----------------- Class Modal ------------------//
   chooseClassSkills() {
     this.removeAllChildNodes(this.classSkillsModalListTarget);
 
@@ -927,7 +934,7 @@ export default class extends Controller {
     }
     this.resetProficiencies();
   }
-
+  //----------------- Subclass Modal ------------------//
   chooseSubclassFeatures(features) {
     this.removeAllChildNodes(this.subclassFeaturesModalListTarget);
 
@@ -997,7 +1004,7 @@ export default class extends Controller {
       event.target.parentNode.close();
     }
   }
-
+  //----------------- TBIF Modal ------------------//
   chooseTBIF() {
     this.removeAllChildNodes(this.tbifModalListTarget);
 
@@ -1202,7 +1209,15 @@ export default class extends Controller {
     frame.append(`Attack Damage: ${dmg_out}`);
     target.append(frame);
   }
+  //-----------------Equipment Modal ------------------//
 
+  chooseEquipment() {}
+
+  populateEquipmentModal() {}
+
+  submitEquipmentChoices(event) {}
+
+  putEquipmentToSheet() {}
   //----------------- Modal Utilities ------------------//
   populateListModal(target, options) {
     options.forEach((option) => {
@@ -1338,10 +1353,6 @@ export default class extends Controller {
 
     this.statModUpdate();
   }
-
-  //----------------------------- Custom entry Handling ---------------------------------//
-
-  customModifiers() {} //tbw
 
   //----------------------------- Utility Methods ---------------------------------//
   updateChoices() {

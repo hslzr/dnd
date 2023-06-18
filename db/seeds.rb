@@ -114,11 +114,19 @@ Barbarian = PlayerClass.create(
     'Survival',
   ],
   num_skills: 2,
-  equipment_choices: [
-    'Greataxe | any_martial',
-    '2 Handaxes | any_simple',
-  ],
-  equipment: ['4 Javelins', 'Explorer`s Pack'],
+  equipment_choices: { #testing this format
+    'choices'=>[
+      {
+        'strings'=>['Greataxe'],
+        'codes'=>['martial_weapon'],
+      },
+      {
+        'strings'=>['2 Handaxes'],
+        'codes'=>['simple_weapon'],
+      }
+    ],
+    'default'=>['4 Javelins', 'Explorer`s Pack'],
+  },
   wealth_die: 2,
   features: {
     1=>[
@@ -199,12 +207,23 @@ Ranger = PlayerClass.create(
   tools: [],
   skill_choices: ['Animal Handling','Athletics','Insight','Investigation','Nature','Perception','Stealth','Survival'],
   num_skills: 3,
-  equipment_choices: [
-    "Scale Mail | Leather Armor",
-    "Two Shortswords | Two Simple Melee Weapons",
-    "Dungeoneer's Pack | Explorer's Pack"
-  ],
-  equipment: ['Longbow','Quiver of Arrows'],
+  equipment_choices: {
+    'choices'=>[
+      {
+        'strings'=>['Scale Mail','Leather Armor'],
+        'codes'=>[],
+      },
+      {
+        'strings'=>['2 Shortswords'],
+        'codes'=>['two_simple_weapons'],
+      },
+      {
+        'strings'=>['Dungeoneer\'s Pack','Explorer\'s Pack'],
+        'codes'=>[],
+      }
+    ],
+    'default'=>['Longbow','Quiver of Arrows'],
+  },
   spellcasting_ability: 5,
   spell_table: [
     [0,0,0,0,0,0,0,0,0,0,0],
@@ -338,13 +357,16 @@ Acolyte = Background.create(
   description: 'You have spent your life in the service of a temple. You act as an intermediary between the realm of the holy and the mortal world.',
   skills: ['Insight', 'Religion'],
   extra_languages: 2,
-  equipment: [
-    'A holy symbol',
-    'A prayer book',
-    '5 sticks of incense',
-    'vestments',
-    'common clothes'
-  ],
+  equipment_choices: {
+    'choices'=>[],
+    'default'=>[
+      'A holy symbol',
+      'A prayer book',
+      '5 sticks of incense',
+      'vestments',
+      'common clothes'
+    ],
+  },
   gold: 15,
   traits: [
     'I idolize a particular hero of my faith, and constantly refer to that person`s deeds and example.',
@@ -491,4 +513,458 @@ ClassSpellListsSpells.create(
 ClassSpellListsSpells.create(
   class_spell_list_id: Junk_wizard.id,
   spell_id: 4
+)
+
+Armor.create(
+  stealth_disadvantage: 1,
+  weight: 8,
+  cost_gp: 5,
+  name: 'Padded Armor',
+)
+
+Armor.create(
+  weight: 10,
+  cost_gp: 10,
+  name: 'Leather'
+)
+
+Armor.create(
+  ac_base: 12,
+  weight: 13,
+  cost_gp: 45,
+  name: 'Studded Leather',
+)
+
+Armor.create(
+  arm_type: 'Medium',
+  ac_base: 12,
+  weight: 12,
+  cost_gp: 10,
+  name: 'Hide Armor'
+)
+
+Armor.create(
+  arm_type: 'Medium',
+  ac_base: 13,
+  weight: 20,
+  cost_gp: 50,
+  name: 'Chain Shirt'
+)
+
+Armor.create(
+  arm_type: 'Medium',
+  ac_base: 14,
+  stealth_disadvantage: 1,
+  weight: 45,
+  cost_gp: 50,
+  name: 'Scale Mail'
+)
+
+Armor.create(
+  arm_type: 'Medium',
+  ac_base: 14,
+  weight: 20,
+  cost_gp: 400,
+  name: 'Breastplate'
+)
+
+Armor.create(
+  arm_type: 'Medium',
+  ac_base: 15,
+  stealth_disadvantage: 1,
+  weight: 40,
+  cost_gp: 750,
+  name: 'Half Plate'
+)
+
+Armor.create(
+  arm_type: 'Heavy',
+  ac_base: 14,
+  stealth_disadvantage: 1,
+  weight: 40,
+  cost_gp: 30,
+  name: 'Ring Mail'
+)
+
+Armor.create(
+  arm_type: 'Heavy',
+  ac_base: 16,
+  stealth_disadvantage: 1,
+  weight: 55,
+  cost_gp: 75,
+  str_req: 13,
+  name: 'Chain Mail'
+)
+
+Armor.create(
+  arm_type: 'Heavy',
+  ac_base: 17,
+  stealth_disadvantage: 1,
+  weight: 60,
+  cost_gp: 200,
+  str_req: 15,
+  name: 'Splint Armor'
+)
+
+Armor.create(
+  arm_type: 'Heavy',
+  ac_base: 18,
+  stealth_disadvantage: 1,
+  weight: 65,
+  cost_gp: 1500,
+  str_req: 15,
+  name: 'Full Plate Steel'
+)
+
+Armor.create(
+  arm_type: 'Shield',
+  ac_base: 2,
+  weight: 6,
+  cost_gp: 10,
+  name: 'Round Shield'
+)
+
+Weapon.create(
+  properties: ['Light'],
+  weight: 2,
+  cost_gp: 1,
+  name: 'Club'
+)
+
+Weapon.create(
+  dmg_type: 'piercing',
+  properties: ['Finesse','Light','Thrown: 20/60'],
+  weight: 1,
+  cost_gp: 2,
+  name: 'Dagger',
+)
+
+Weapon.create(
+  hit_die: '1d8',
+  properties: ['Two-handed'],
+  weight: 10,
+  cost_gp: 20,
+  name: 'Greatclub',
+)
+
+Weapon.create(
+  hit_die: '1d6',
+  dmg_type: 'slashing',
+  properties: ['Light','Thrown: 20/60'],
+  weight: 2,
+  cost_gp: 500,
+  name: 'Handaxe',
+)
+
+Weapon.create(
+  hit_die: '1d6',
+  dmg_type: 'piercing',
+  properties: ['Thrown: 30/120'],
+  weight: 2,
+  cost_gp: 50,
+  name: 'Javelin',
+)
+
+Weapon.create(
+  properties: ['Light','Thrown: 20/60'],
+  weight: 2,
+  cost_gp: 200,
+  name: 'Light Hammer',
+)
+
+Weapon.create(
+  hit_die: '1d6',
+  weight: 4,
+  cost_gp: 500,
+  name: 'Mace',
+)
+
+Weapon.create(
+  hit_die: '1d6',
+  properties: ['Versatile: 1d8'],
+  weight: 4,
+  cost_gp: 20,
+  name: 'Quarterstaff',
+)
+
+Weapon.create(
+  dmg_type: 'slashing',
+  properties: ['Light'],
+  weight: 2,
+  cost_gp: 100,
+  name: 'Sickle',
+)
+
+Weapon.create(
+  hit_die: '1d6',
+  dmg_type: 'piercing',
+  properties: ['Thrown: 20/60','Versatile: 1d8'],
+  weight: 3,
+  cost_gp: 100,
+  name: 'Spear',
+)
+
+Weapon.create(
+  ranged: 1,
+  hit_die: '1d8',
+  dmg_type: 'piercing',
+  properties: ['Ammunition: 80/320','Loading','Two-handed'],
+  weight: 5,
+  cost_gp: 2500,
+  name: 'Light Crossbow',
+)
+
+Weapon.create(
+  ranged: 1,
+  dmg_type: 'piercing',
+  properties: ['Finesse','Thrown: 20/60'],
+  weight: 1,
+  cost_gp: 5,
+  name: 'Dart',
+)
+
+Weapon.create(
+  ranged: 1,
+  hit_die: '1d6',
+  dmg_type: 'piercing',
+  properties: ['Ammunition: 80/320','Two-handed'],
+  weight: 2,
+  cost_gp: 2500,
+  name: 'Shortbow',
+)
+
+Weapon.create(
+  ranged: 1,
+  properties: ['Ammunition: 30/120'],
+  weight: 0,
+  cost_gp: 10,
+  name: 'Sling',
+)
+
+Weapon.create(
+  wep_type: 'martial',
+  hit_die: '1d8',
+  dmg_type: 'slashing',
+  properties: ['Versatile: 1d10'],
+  weight: 4,
+  cost_gp: 1000,
+  name: 'Battleaxe',
+)
+
+Weapon.create(
+  wep_type: 'martial',
+  hit_die: '1d8',
+  weight: 2,
+  cost_gp: 1000,
+  name: 'Flail',
+)
+
+Weapon.create(
+  wep_type: 'martial',
+  hit_die: '1d10',
+  dmg_type: 'slashing',
+  properties: ['Heavy','Reach','Two-handed'],
+  weight: 6,
+  cost_gp: 2000,
+  name: 'Glaive',
+)
+
+Weapon.create(
+  wep_type: 'martial',
+  hit_die: '1d12',
+  dmg_type: 'slashing',
+  properties: ['Heavy','Two-handed'],
+  weight: 7,
+  cost_gp: 3000,
+  name: 'Greataxe',
+)
+
+Weapon.create(
+  wep_type: 'martial',
+  hit_die: '2d6',
+  dmg_type: 'slashing',
+  properties: ['Heavy','Two-handed'],
+  weight: 6,
+  cost_gp: 5000,
+  name: 'Greatsword',
+)
+
+Weapon.create(
+  wep_type: 'martial',
+  hit_die: '1d10',
+  dmg_type: 'slashing',
+  properties: ['Heavy','Reach','Two-handed'],
+  weight: 6,
+  cost_gp: 2000,
+  name: 'Halberd',
+)
+
+Weapon.create(
+  wep_type: 'martial',
+  hit_die: '1d12',
+  dmg_type: 'piercing',
+  properties: ['Reach','Special'],
+  weight: 6,
+  cost_gp: 1000,
+  name: 'Lance',
+)
+
+Weapon.create(
+  wep_type: 'martial',
+  hit_die: '1d8',
+  dmg_type: 'slashing',
+  properties: ['Versatile: 1d10'],
+  weight: 3,
+  cost_gp: 1500,
+  name: 'Longsword',
+)
+
+Weapon.create(
+  wep_type: 'martial',
+  hit_die: '2d6',
+  properties: ['Heavy','Two-handed'],
+  weight: 10,
+  cost_gp: 1000,
+  name: 'Maul',
+)
+
+Weapon.create(
+  wep_type: 'martial',
+  hit_die: '1d8',
+  dmg_type: 'piercing',
+  weight: 4,
+  cost_gp: 1500,
+  name: 'Morningstar',
+)
+
+Weapon.create(
+  wep_type: 'martial',
+  hit_die: '1d10',
+  dmg_type: 'piercing',
+  properties: ['Heavy','Reach','Two-handed'],
+  weight: 18,
+  cost_gp: 500,
+  name: 'Pike',
+)
+
+Weapon.create(
+  wep_type: 'martial',
+  hit_die: '1d8',
+  dmg_type: 'piercing',
+  properties: ['Finesse'],
+  weight: 2,
+  cost_gp: 2500,
+  name: 'Rapier',
+)
+
+Weapon.create(
+  wep_type: 'martial',
+  hit_die: '1d6',
+  dmg_type: 'slashing',
+  properties: ['Finesse','Light'],
+  weight: 3,
+  cost_gp: 2500,
+  name: 'Scimitar',
+)
+
+Weapon.create(
+  wep_type: 'martial',
+  hit_die: '1d6',
+  dmg_type: 'piercing',
+  properties: ['Finesse','Light'],
+  weight: 2,
+  cost_gp: 1000,
+  name: 'Shortsword',
+)
+
+Weapon.create(
+  wep_type: 'martial',
+  hit_die: '1d6',
+  dmg_type: 'piercing',
+  properties: ['Thrown: 20/60','Versatile: 1d8'],
+  weight: 4,
+  cost_gp: 500,
+  name: 'Trident',
+)
+
+Weapon.create(
+  wep_type: 'martial',
+  hit_die: '1d8',
+  dmg_type: 'piercing',
+  weight: 2,
+  cost_gp: 500,
+  name: 'War pick',
+)
+
+Weapon.create(
+  wep_type: 'martial',
+  hit_die: '1d8',
+  properties: ['Versatile: 1d10'],
+  weight: 2,
+  cost_gp: 1500,
+  name: 'Warhammer',
+)
+
+Weapon.create(
+  wep_type: 'martial',
+  dmg_type: 'slashing',
+  properties: ['Finesse','Reach'],
+  weight: 3,
+  cost_gp: 200,
+  name: 'Whip',
+)
+
+Weapon.create(
+  wep_type: 'martial',
+  ranged: 1,
+  hit_die: '1',
+  dmg_type: 'piercing',
+  properties: ['Ammunition: 25/100','Loading'],
+  weight: 1,
+  cost_gp: 1000,
+  name: 'Blowgun',
+)
+
+Weapon.create(
+  wep_type: 'martial',
+  ranged: 1,
+  hit_die: '1d6',
+  dmg_type: 'piercing',
+  properties: ['Ammunition: 30/120','Light','Loading'],
+  weight: 3,
+  cost_gp: 7500,
+  name: 'Hand Crossbow',
+)
+
+Weapon.create(
+  wep_type: 'martial',
+  ranged: 1,
+  hit_die: '1d10',
+  dmg_type: 'piercing',
+  properties: ['Ammunition: 100/400','Heavy','Loading','Two-handed'],
+  weight: 18,
+  cost_gp: 5000,
+  name: 'Heavy Crossbow',
+)
+
+Weapon.create(
+  wep_type: 'martial',
+  ranged: 1,
+  hit_die: '1d8',
+  dmg_type: 'piercing',
+  properties: ['Ammunition: 150/600','Heavy','Two-handed'],
+  weight: 2,
+  cost_gp: 5000,
+  name: 'Longbow',
+)
+
+Weapon.create(
+  wep_type: 'martial',
+  ranged: 1,
+  hit_die: '',
+  dmg_type: '',
+  properties: ['Special','Thrown: 5/15'],
+  weight: 3,
+  cost_gp: 100,
+  name: 'Net',
 )

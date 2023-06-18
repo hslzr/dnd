@@ -10,9 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_15_035812) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_18_081651) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "armors", force: :cascade do |t|
+    t.string "arm_type", default: "Light"
+    t.integer "ac_base", default: 11
+    t.integer "str_req", default: 0
+    t.integer "stealth_disadvantage", default: 0
+    t.integer "weight", default: 0
+    t.integer "cost_gp", default: 0
+    t.string "name", default: ""
+    t.string "description", default: ""
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "backgrounds", force: :cascade do |t|
     t.string "name"
@@ -22,8 +35,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_15_035812) do
     t.string "armor", default: [], array: true
     t.string "tools", default: [], array: true
     t.string "extra_languages", default: "0"
-    t.string "equipment_choices", default: [], array: true
-    t.string "equipment", default: [], array: true
+    t.text "equipment_choices", default: "{}"
     t.string "features", default: [], array: true
     t.string "traits", default: [], array: true
     t.string "ideals", default: [], array: true
@@ -89,6 +101,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_15_035812) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "equipment", force: :cascade do |t|
+    t.string "name", default: ""
+    t.string "description", default: ""
+    t.integer "count", default: 1
+    t.integer "weight", default: 0
+    t.integer "cost_gp", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "feats", force: :cascade do |t|
     t.string "name"
     t.string "description"
@@ -108,8 +130,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_15_035812) do
     t.string "tools", default: [], array: true
     t.string "skill_choices", default: [], array: true
     t.integer "num_skills", default: 0
-    t.string "equipment_choices", default: [], array: true
-    t.string "equipment", default: [], array: true
+    t.text "equipment_choices", default: "{}"
     t.integer "spellcasting_ability", default: 0
     t.integer "spell_table", default: [], array: true
     t.integer "wealth_die", default: 2
@@ -194,6 +215,20 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_15_035812) do
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  create_table "weapons", force: :cascade do |t|
+    t.string "wep_type", default: "simple"
+    t.integer "ranged", default: 0
+    t.string "hit_die", default: "1d4"
+    t.string "dmg_type", default: "bludgeoning"
+    t.string "properties", default: [], array: true
+    t.integer "weight", default: 0
+    t.integer "cost_gp", default: 0
+    t.string "name", default: ""
+    t.string "description", default: ""
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end

@@ -99,4 +99,48 @@ def feat
   features []
 end
 
+item = {
+  'codes'=>[x,y,z];
+  'strings'=>[a,b,c];
+}
 
+writing in the seed should be easy
+
+equipment_choices: {
+  choices=> [
+    {
+      'codes'=>['shield'],
+      'strings'=>['Longsword'],
+    },
+    {
+      'codes'=>[],
+      'strings'=>['Explorer\'s Pack', 'Dungeoneer\'s Pack'],
+    },
+    {
+      'codes'=>['martial_weapon','simple_weapon'],
+      'strings'=>[],
+    },
+  ],
+  standard=> ['2 Handaxes','Arcane Focus']
+}
+
+codes = [
+  'shield',
+  'armor',
+  'martial_weapon',
+  'simple_weapon'
+]
+
+next I'll want an equipment shop so putting items in the database might be
+the best way to go about things long-term, i want to be able to add items later in
+the seed
+
+Item model {
+  name: string
+  type: string
+  subtype: string
+  description: string
+  atk_die: string
+  ac_bonus: integer
+  cost: integer //in copper pieces
+}
