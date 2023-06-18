@@ -17,6 +17,9 @@ Character.destroy_all
 Spell.destroy_all
 ClassSpellList.destroy_all
 ClassSpellListsSpells.destroy_all
+Armor.destroy_all
+Weapon.destroy_all
+Equipment.destroy_all
 
 User.create(
   email: "net@map.com",
@@ -967,4 +970,578 @@ Weapon.create(
   weight: 3,
   cost_gp: 100,
   name: 'Net',
+)
+
+Equipment.create(
+  name: 'Abacus',
+  weight: 2,
+  cost_gp: 200,
+)
+
+Equipment.create(
+  name: 'Acid (vial)',
+  weight: 1,
+  cost_gp: 2500,
+)
+
+Equipment.create(
+  name: "Alchemist's Fire (flask)",
+  weight: 1,
+  cost_gp: 5000,
+)
+
+Equipment.create(
+  name: "Arrows",
+  count: 20,
+  weight: 1,
+  cost_gp: 100,
+)
+
+Equipment.create(
+  name: "Blowgun Needles",
+  count: 50,
+  weight: 1,
+  cost_gp: 100,
+)
+
+Equipment.create(
+  name: "Crossbow Bolts",
+  count: 20,
+  weight: 2,
+  cost_gp: 100,
+)
+
+Equipment.create(
+  name: "Sling Bullets",
+  count: 20,
+  weight: 2,
+  cost_gp: 4,
+)
+
+Equipment.create(
+  name: "Antitoxin (vial)",
+  cost_gp: 5000,
+)
+
+Equipment.create(
+  name: "Arcane Crystal",
+  weight: 1,
+  cost_gp: 1000,
+)
+
+Equipment.create(
+  name: "Arcane Orb",
+  weight: 3,
+  cost_gp: 2000,
+)
+
+Equipment.create(
+  name: "Arcane Rod",
+  weight: 4,
+  cost_gp: 500,
+)
+
+Equipment.create(
+  name: "Arcane Wand",
+  weight: 1,
+  cost_gp: 1000,
+)
+
+Equipment.create(
+  name: "Backpack",
+  weight: 5,
+  cost_gp: 200,
+)
+
+Equipment.create(
+  name: "Ball bearings",
+  count: 1000,
+  weight: 2,
+  cost_gp: 100,
+)
+
+Equipment.create(
+  name: "Barrel",
+  weight: 70,
+  cost_gp: 200,
+)
+
+Equipment.create(
+  name: "Basket",
+  weight: 2,
+  cost_gp: 40,
+)
+
+Equipment.create(
+  name: "Bedroll",
+  weight: 7,
+  cost_gp: 100,
+)
+
+Equipment.create(
+  name: "Bell",
+  cost_gp: 100,
+)
+
+Equipment.create(
+  name: "Blanket",
+  weight: 3,
+  cost_gp: 50,
+)
+
+Equipment.create(
+  name: "Block and Tackle",
+  weight: 5,
+  cost_gp: 100,
+)
+
+Equipment.create(
+  name: "Book",
+  weight: 5,
+  cost_gp: 2500,
+)
+
+Equipment.create(
+  name: "Bottle",
+  weight: 2,
+  cost_gp: 200,
+)
+
+Equipment.create(
+  name: "Bucket",
+  weight: 2,
+  cost_gp: 5,
+)
+
+Equipment.create(
+  name: "Caltrops",
+  count: 20,
+  weight: 2,
+  cost_gp: 100,
+)
+
+Equipment.create(
+  name: "Candle",
+  cost_gp: 1,
+)
+
+Equipment.create(
+  name: "Case, crossbow bolts",
+  weight: 1,
+  cost_gp: 100,
+)
+
+Equipment.create(
+  name: "Case, map or scroll",
+  weight: 1,
+  cost_gp: 100,
+)
+
+Equipment.create(
+  name: "Chain, 10ft",
+  weight: 10,
+  cost_gp: 500,
+)
+
+Equipment.create(
+  name: "Chalk, 1 piece",
+  cost_gp: 1,
+)
+
+Equipment.create(
+  name: "Chest",
+  weight: 25,
+  cost_gp: 500,
+)
+
+Equipment.create(
+  name: "Climber's Kit",
+  weight: 12,
+  cost_gp: 2500,
+)
+
+Equipment.create(
+  name: "Clothes, common",
+  weight: 3,
+  cost_gp: 50,
+)
+
+Equipment.create(
+  name: "Clothes, costume",
+  weight: 4,
+  cost_gp: 500,
+)
+
+Equipment.create(
+  name: "Clothes, fine",
+  weight: 6,
+  cost_gp: 1500,
+)
+
+Equipment.create(
+  name: "Clothes, traveler's",
+  weight: 4,
+  cost_gp: 200,
+)
+
+Equipment.create(
+  name: "Component Pouch",
+  weight: 2,
+  cost_gp: 250,
+)
+
+Equipment.create(
+  name: "Crowbar",
+  weight: 5,
+  cost_gp: 200,
+)
+
+Equipment.create(
+  name: "Sprig of Mistletoe",
+  cost_gp: 100,
+)
+
+Equipment.create(
+  name: "Totem",
+  cost_gp: 100,
+)
+
+Equipment.create(
+  name: "Wooden Staff",
+  weight: 4,
+  cost_gp: 500,
+)
+
+Equipment.create(
+  name: "Yew Wand",
+  weight: 1,
+  cost_gp: 1000,
+)
+
+Equipment.create(
+  name: "Fishing Tackle",
+  weight: 4,
+  cost_gp: 100,
+)
+Equipment.create(
+  name: "Flask",
+  weight: 1,
+  cost_gp: 2,
+)
+
+Equipment.create(
+  name: "Grappling Hook",
+  weight: 4,
+  cost_gp: 200,
+)
+
+Equipment.create(
+  name: "Hammer",
+  weight: 3,
+  cost_gp: 100,
+)
+
+Equipment.create(
+  name: "Hammer, sledge",
+  weight: 10,
+  cost_gp: 200,
+)
+
+Equipment.create(
+  name: "Healer's Kit",
+  weight: 3,
+  cost_gp: 500,
+)
+
+Equipment.create(
+  name: "Holy Amulet",
+  weight: 1,
+  cost_gp: 500,
+)
+
+Equipment.create(
+  name: "Holy Emblem",
+  cost_gp: 500,
+)
+
+Equipment.create(
+  name: "Holy Reliquary",
+  weight: 2,
+  cost_gp: 500,
+)
+
+Equipment.create(
+  name: "Holy Water (flask)",
+  weight: 1,
+  cost_gp: 2500,
+)
+
+Equipment.create(
+  name: "Hourglass",
+  weight: 1,
+  cost_gp: 2500,
+)
+
+Equipment.create(
+  name: "Hunting Trap",
+  weight: 25,
+  cost_gp: 500,
+)
+
+Equipment.create(
+  name: "Ink, 1 ounce bottle",
+  cost_gp: 1000,
+)
+
+Equipment.create(
+  name: "Ink Pen",
+  cost_gp: 2,
+)
+
+Equipment.create(
+  name: "Jug or pitcher",
+  weight: 4,
+  cost_gp: 2,
+)
+
+Equipment.create(
+  name: "Ladder (10 foot)",
+  weight: 25,
+  cost_gp: 10,
+)
+
+Equipment.create(
+  name: "Lamp",
+  weight: 1,
+  cost_gp: 50,
+)
+
+Equipment.create(
+  name: "Bullseye Lantern",
+  weight: 2,
+  cost_gp: 1000,
+)
+
+Equipment.create(
+  name: "Hooded Lantern",
+  weight: 2,
+  cost_gp: 500,
+)
+
+Equipment.create(
+  name: "Lock",
+  weight: 1,
+  cost_gp: 1000,
+)
+
+Equipment.create(
+  name: "Magnifying Glass",
+  cost_gp: 10000,
+)
+
+Equipment.create(
+  name: "Manacles",
+  weight: 6,
+  cost_gp: 200,
+)
+
+Equipment.create(
+  name: "Mess Kit",
+  weight: 1,
+  cost_gp: 20,
+)
+
+Equipment.create(
+  name: "Mirror, steel",
+  weight: 1,
+  cost_gp: 500,
+)
+
+Equipment.create(
+  name: "Oil (flask)",
+  weight: 1,
+  cost_gp: 10,
+)
+
+Equipment.create(
+  name: "Paper (one sheet)",
+  cost_gp: 20,
+)
+
+Equipment.create(
+  name: "Parchment (one sheet)",
+  cost_gp: 10,
+)
+
+Equipment.create(
+  name: "Perfume (vial)",
+  cost_gp: 500,
+)
+
+Equipment.create(
+  name: "Miner's Pick",
+  weight: 10,
+  cost_gp: 200,
+)
+
+Equipment.create(
+  name: "Piton",
+  cost_gp: 5,
+)
+
+Equipment.create(
+  name: "Poison, basic (vial)",
+  cost_gp: 10000,
+)
+
+Equipment.create(
+  name: "Pole, 10 foot",
+  weight: 7,
+  cost_gp: 5,
+)
+
+Equipment.create(
+  name: "Pot, iron",
+  weight: 10,
+  cost_gp: 200,
+)
+
+Equipment.create(
+  name: "Potion of Healing",
+  weight: 1,
+  cost_gp: 5000,
+)
+
+Equipment.create(
+  name: "Pouch",
+  weight: 1,
+  cost_gp: 50,
+)
+
+Equipment.create(
+  name: "Quiver",
+  weight: 1,
+  cost_gp: 100,
+)
+
+Equipment.create(
+  name: "Ram, portable",
+  weight: 35,
+  cost_gp: 400,
+)
+
+Equipment.create(
+  name: "Rations (1 day)",
+  weight: 2,
+  cost_gp: 50,
+)
+
+Equipment.create(
+  name: "Robes",
+  weight: 4,
+  cost_gp: 100,
+)
+
+Equipment.create(
+  name: "Rope, hempen (50 feet)",
+  weight: 10,
+  cost_gp: 100,
+)
+
+Equipment.create(
+  name: "Rope, silk (50 feet)",
+  weight: 5,
+  cost_gp: 1000,
+)
+
+Equipment.create(
+  name: "Sack",
+  weight: 1,
+  cost_gp: 1,
+)
+
+Equipment.create(
+  name: "Scale, merchant's",
+  weight: 3,
+  cost_gp: 500,
+)
+
+Equipment.create(
+  name: "Sealing Wax",
+  cost_gp: 50,
+)
+
+Equipment.create(
+  name: "Shovel",
+  weight: 5,
+  cost_gp: 200,
+)
+
+Equipment.create(
+  name: "Signal Whistle",
+  cost_gp: 5,
+)
+
+Equipment.create(
+  name: "Signet Ring",
+  cost_gp: 500,
+)
+
+Equipment.create(
+  name: "Soap",
+  cost_gp: 2,
+)
+
+Equipment.create(
+  name: "Spellbook",
+  weight: 3,
+  cost_gp: 5000,
+)
+
+Equipment.create(
+  name: "Spikes, iron",
+  count: 10,
+  weight: 5,
+  cost_gp: 100,
+)
+
+Equipment.create(
+  name: "Spyglass",
+  weight: 1,
+  cost_gp: 100000,
+)
+
+Equipment.create(
+  name: "Tent, two-person",
+  weight: 20,
+  cost_gp: 200,
+)
+
+Equipment.create(
+  name: "Tinderbox",
+  weight: 1,
+  cost_gp: 50,
+)
+
+Equipment.create(
+  name: "Torch",
+  weight: 1,
+  cost_gp: 1,
+)
+
+Equipment.create(
+  name: "Vial",
+  cost_gp: 100,
+)
+
+Equipment.create(
+  name: "Waterskin",
+  weight: 1,
+  cost_gp: 1,
+)
+
+Equipment.create(
+  name: "Whetstone",
+  weight: 1,
+  cost_gp: 1,
 )
