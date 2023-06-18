@@ -111,6 +111,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_18_194224) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "equipment_gearpacks", id: false, force: :cascade do |t|
+    t.integer "equipment_id"
+    t.integer "gearpack_id"
+    t.integer "count", default: 1
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "feats", force: :cascade do |t|
     t.string "name"
     t.string "description"
@@ -126,16 +134,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_18_194224) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "gearpacks_items", id: false, force: :cascade do |t|
-    t.integer "equipment_id"
-    t.integer "gearpack_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "gearpacks_tools", id: false, force: :cascade do |t|
     t.integer "gearpack_id"
     t.integer "tool_id"
+    t.integer "count", default: 1
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
