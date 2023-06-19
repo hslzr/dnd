@@ -1242,7 +1242,7 @@ export default class extends Controller {
     choices.forEach((choice_set) => {
       let frame = document.createElement('div');
       frame.class =
-        'flex flex-col justify-center p-2 gap-1 bg-gray-200';
+        'flex flex-col items-center justify-center p-2 gap-1 bg-gray-200';
       let label = document.createElement('h4');
       label.class = 'font-bold text-lg';
       label.innerText = choice_set[1];
@@ -1258,7 +1258,7 @@ export default class extends Controller {
           let values = code.split('#');
           let choice_check = document.createElement('div');
           choice_check.className =
-            'flex flex-col gap-2 bg-gray-500 p-2 items-center justify-center';
+            'flex flex-col gap-2 bg-gray-3 p-4 items-center justify-center';
           let labels = document.createElement('div');
           labels.className = 'flex gap-2 items-center justify-around';
           for (let i = 0; i < parseInt(values[1]); i++) {
@@ -1281,7 +1281,13 @@ export default class extends Controller {
           choice_check.append(checkbox);
           index++;
           container.append(choice_check);
+
+          let p = document.createElement('p');
+          p.className = 'text-lg font-black';
+          p.innerText = 'or';
+          container.append(p);
         });
+        container.removeChild(container.lastChild); //get rid of last 'or'
         frame.append(container);
       });
       this.equipmentModalListTarget.append(frame);
