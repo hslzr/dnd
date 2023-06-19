@@ -123,8 +123,8 @@ Barbarian = PlayerClass.create(
   num_skills: 2,
   equipment_choices: { #testing this format
     'choices'=>[
-      ['martial_1','Greataxe_1'],
-      ['simple_1','Handaxe_2'],
+      ['martial#1','Greataxe#1'],
+      ['simple#1','Handaxe#2'],
     ],
     'default'=>['Javelin_4', "Explorer's_Pack_gearpack"],
   },
@@ -210,11 +210,11 @@ Ranger = PlayerClass.create(
   num_skills: 3,
   equipment_choices: {
     'choices'=>[
-      ['Scale_Mail_1','Leather_Armor_1'],
-      ['Shortsword_2','simple_2'],
-      ["Dungeoneer's_Pack_gearpack","Explorer's_Pack_gearpack"],
+      ['Scale Mail#1','Leather Armor#1'],
+      ['Shortsword#2','simple#2'],
+      ["Dungeoneer's Pack#gearpack","Explorer's Pack#gearpack"],
     ],
-    'default'=>['Longbow_1','Quiver_1','Arrows_1'],
+    'default'=>['Longbow#1','Quiver#1','Arrows#1'],
   },
   spellcasting_ability: 5,
   spell_table: [
@@ -352,11 +352,11 @@ Acolyte = Background.create(
   equipment_choices: {
     'choices'=>[],
     'default'=>[
-      'Holy_Emblem_1',
-      'Prayer_Book_1',
-      'Incense_5',
-      'Clothes,_sacred_vestments_1',
-      'Clothes,_common_1'
+      'Holy Emblem#1',
+      'Prayer Book#1',
+      'Incense#5',
+      'Clothes, sacred vestments#1',
+      'Clothes, common#1'
     ],
   },
   gold: 15,

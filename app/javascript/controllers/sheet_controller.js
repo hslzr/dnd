@@ -1222,8 +1222,8 @@ export default class extends Controller {
     */
 
     let choices = [
-      this.class_equip_choices['choices'],
-      this.bg_equip_choices['choices'],
+      [this.class_equip_choices['choices'], 'Class'],
+      [this.bg_equip_choices['choices'], 'Background'],
     ];
 
     this.populateEquipmentModal(choices);
@@ -1233,12 +1233,44 @@ export default class extends Controller {
   populateEquipmentModal(choices) {
     this.removeAllChildNodes(this.equipmentModalListTarget);
     //fill the list modal with the needed selection boxes
+    console.log('choices');
     console.log(choices);
 
+    choices.forEach((choice_set) => {
+      let frame = document.createElement('div');
+      frame.class =
+        'flex flex-col justify-start p-2 gap-1 bg-gray-200';
+      let label = document.createElement('h4');
+      label.class = 'font-bold text-lg';
+      label.innerText = choice_set[1];
+      frame.append(label);
+
+      choice_set[0].forEach((choice) => {
+        let num = choice.length;
+        choice.forEach((code) => {
+          let values = code.split('#');
+          switch (values[0]) {
+            case 'simple':
+              this.appendWeaponSelectToTarget('simple', frame);
+              break;
+            case 'martial':
+              this.appendWeaponSelectToTarget('martial', frame);
+              break;
+            default:
+              this.appendItemToTarget(values[0], frame);
+              break;
+          }
+        });
+      });
+      this.equipmentModalListTarget.append(frame);
+    });
+    console.log('ran populate routine');
+    /*
     this.appendWeaponSelectToTarget(
       'simple',
       this.equipmentModalListTarget
     );
+    */
   }
 
   submitEquipmentChoices(event) {
@@ -1280,6 +1312,12 @@ export default class extends Controller {
         });
         target.append(selector);
       });
+  }
+
+  appendItemToTarget(item, target) {
+    let el = document.createElement('p');
+    el.innerText = item;
+    target.append(el);
   }
 
   checkData(data) {
