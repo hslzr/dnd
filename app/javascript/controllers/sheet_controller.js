@@ -1247,20 +1247,26 @@ export default class extends Controller {
 
       choice_set[0].forEach((choice) => {
         let num = choice.length;
+        let container = document.createElement('div');
+        container.className =
+          'flex flex-row w-[50vw] gap-4 p-4 border border-blue-200 rounded-lg justify-around';
         choice.forEach((code) => {
           let values = code.split('#');
-          switch (values[0]) {
-            case 'simple':
-              this.appendWeaponSelectToTarget('simple', frame);
-              break;
-            case 'martial':
-              this.appendWeaponSelectToTarget('martial', frame);
-              break;
-            default:
-              this.appendItemToTarget(values[0], frame);
-              break;
+          for (let i = 0; i < parseInt(values[1]); i++) {
+            switch (values[0]) {
+              case 'simple':
+                this.appendWeaponSelectToTarget('simple', container);
+                break;
+              case 'martial':
+                this.appendWeaponSelectToTarget('martial', container);
+                break;
+              default:
+                this.appendItemToTarget(values[0], container);
+                break;
+            }
           }
         });
+        frame.append(container);
       });
       this.equipmentModalListTarget.append(frame);
     });
