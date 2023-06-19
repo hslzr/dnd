@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   resources :subclasses, param: :name, only: [ :show ]
   resources :backgrounds, param: :name, only: [ :show ]
   resources :class_spell_lists, param: :name, only: [ :show ]
+  resources :weapons, param: :wep_type, only: [ :show ]
   devise_for :users
 
   root 'home#index'

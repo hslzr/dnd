@@ -176,6 +176,9 @@ export default class extends Controller {
     'tbifModalList',
     'dialogTBIF',
     'tbifButton',
+    'equipmentModalList',
+    'dialogEquipment',
+    'equipmentButton',
   ];
 
   connect() {
@@ -752,6 +755,7 @@ export default class extends Controller {
     //subclass modal activated on detection of a choice in Subclass.features
     if (this.spellList) this.chooseSpells();
     this.chooseTBIF();
+    this.chooseEquipment();
   }
 
   resetProficiencies() {
@@ -790,8 +794,6 @@ export default class extends Controller {
 
   customModifiers() {
     console.log('finalPass complete');
-    console.log(this.class_equip_choices);
-    console.log(this.bg_equip_choices);
   }
 
   //----------------------------- Choice Modals ---------------------------------//
@@ -1211,13 +1213,79 @@ export default class extends Controller {
   }
   //-----------------Equipment Modal ------------------//
 
-  chooseEquipment() {}
+  chooseEquipment() {
+    /*
+      pick the equipment to populate to the list modal
+      class options
 
-  populateEquipmentModal() {}
+      background options
+    */
 
-  submitEquipmentChoices(event) {}
+    let choices = [
+      this.class_equip_choices['choices'],
+      this.bg_equip_choices['choices'],
+    ];
 
-  putEquipmentToSheet() {}
+    this.populateEquipmentModal(choices);
+    //this.populateEquipmentModal(choice);
+  }
+
+  populateEquipmentModal(choices) {
+    this.removeAllChildNodes(this.equipmentModalListTarget);
+    //fill the list modal with the needed selection boxes
+    console.log(choices);
+
+    this.appendWeaponSelectToTarget(
+      'simple',
+      this.equipmentModalListTarget
+    );
+  }
+
+  submitEquipmentChoices(event) {
+    //read selections and save information
+    console.log(this.equipmentModalListTarget.children);
+
+    /*
+    get a selected box innerText
+    let box = select input
+    box.childNodes.forEach(x => { if(x.value == box.value) return x.innerText; } );
+    */
+  }
+
+  putEquipmentToSheet() {
+    //output selections to character sheet
+  }
+
+  appendWeaponSelectToTarget(wep_type, target) {
+    let selector = document.createElement('select');
+    selector.id = 'testing';
+    selector.class = 'rounded-md';
+    let plate = document.createElement('option');
+    let plate_title =
+      wep_type.charAt(0).toUpperCase() +
+      wep_type.slice(1) +
+      ' Weapon';
+    plate.innerText = `- ${plate_title} -`;
+    selector.append(plate);
+
+    fetch(`/weapons/${wep_type}`)
+      .then((response) => response.json())
+      .then((data) => {
+        this.checkData(data);
+        data.forEach((item) => {
+          let option = document.createElement('option');
+          option.value = item['id'];
+          option.innerText = item['name'];
+          selector.append(option);
+        });
+        target.append(selector);
+      });
+  }
+
+  checkData(data) {
+    console.log(data);
+  }
+
   //----------------- Modal Utilities ------------------//
   populateListModal(target, options) {
     options.forEach((option) => {
@@ -1244,6 +1312,7 @@ export default class extends Controller {
       this.subclassButtonTarget,
       this.spellsButtonTarget,
       this.tbifButtonTarget,
+      this.equipmentButtonTarget,
     ];
 
     buttons.forEach((button) => {
@@ -1277,6 +1346,9 @@ export default class extends Controller {
   }
   showTBIFDialog() {
     this.dialogTBIFTarget.showModal();
+  }
+  showEquipmentDialog() {
+    this.dialogEquipmentTarget.showModal();
   }
 
   putModalChecksToSheet(collection, target, name = '') {

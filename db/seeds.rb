@@ -123,16 +123,10 @@ Barbarian = PlayerClass.create(
   num_skills: 2,
   equipment_choices: { #testing this format
     'choices'=>[
-      {
-        'strings'=>['Greataxe'],
-        'codes'=>['martial_weapon'],
-      },
-      {
-        'strings'=>['2 Handaxes'],
-        'codes'=>['simple_weapon'],
-      }
+      ['martial_1','Greataxe_1'],
+      ['simple_1','Handaxe_2'],
     ],
-    'default'=>['4 Javelins', 'Explorer`s Pack'],
+    'default'=>['Javelin_4', "Explorer's_Pack_gearpack"],
   },
   wealth_die: 2,
   features: {
@@ -216,20 +210,11 @@ Ranger = PlayerClass.create(
   num_skills: 3,
   equipment_choices: {
     'choices'=>[
-      {
-        'strings'=>['Scale Mail','Leather Armor'],
-        'codes'=>[],
-      },
-      {
-        'strings'=>['2 Shortswords'],
-        'codes'=>['two_simple_weapons'],
-      },
-      {
-        'strings'=>['Dungeoneer\'s Pack','Explorer\'s Pack'],
-        'codes'=>[],
-      }
+      ['Scale_Mail_1','Leather_Armor_1'],
+      ['Shortsword_2','simple_2'],
+      ["Dungeoneer's_Pack_gearpack","Explorer's_Pack_gearpack"],
     ],
-    'default'=>['Longbow','Quiver of Arrows'],
+    'default'=>['Longbow_1','Quiver_1','Arrows_1'],
   },
   spellcasting_ability: 5,
   spell_table: [
@@ -367,11 +352,11 @@ Acolyte = Background.create(
   equipment_choices: {
     'choices'=>[],
     'default'=>[
-      'A holy symbol',
-      'A prayer book',
-      '5 sticks of incense',
-      'vestments',
-      'common clothes'
+      'Holy_Emblem_1',
+      'Prayer_Book_1',
+      'Incense_5',
+      'Clothes,_sacred_vestments_1',
+      'Clothes,_common_1'
     ],
   },
   gold: 15,
@@ -1183,6 +1168,12 @@ Equipment.create(
 )
 
 Equipment.create(
+  name: "Clothes, sacred vestments",
+  weight: 8,
+  cost_gp: 2000,
+)
+
+Equipment.create(
   name: "Clothes, traveler's",
   weight: 4,
   cost_gp: 200,
@@ -1281,6 +1272,12 @@ Equipment.create(
 )
 
 Equipment.create(
+  name: "Prayer Book",
+  weight: 1,
+  cost_gp: 50
+)
+
+Equipment.create(
   name: "Hourglass",
   weight: 1,
   cost_gp: 2500,
@@ -1290,6 +1287,11 @@ Equipment.create(
   name: "Hunting Trap",
   weight: 25,
   cost_gp: 500,
+)
+
+Equipment.create(
+  name: "Incense",
+  cost_gp: 20,
 )
 
 Equipment.create(
