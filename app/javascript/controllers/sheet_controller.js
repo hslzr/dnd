@@ -1221,10 +1221,13 @@ export default class extends Controller {
       background options
     */
 
-    let choices = [
-      [this.class_equip_choices['choices'], 'Class'],
-      [this.bg_equip_choices['choices'], 'Background'],
-    ];
+    let choices = [];
+
+    if (this.class_equip_choices['choices'].length > 0)
+      choices.push([this.class_equip_choices['choices'], 'Class']);
+
+    if (this.bg_equip_choices['choices'].length > 0)
+      choices.push([this.bg_equip_choices['choices'], 'Background']);
 
     this.populateEquipmentModal(choices);
     //this.populateEquipmentModal(choice);
@@ -1239,7 +1242,7 @@ export default class extends Controller {
     choices.forEach((choice_set) => {
       let frame = document.createElement('div');
       frame.class =
-        'flex flex-col justify-start p-2 gap-1 bg-gray-200';
+        'flex flex-col justify-center p-2 gap-1 bg-gray-200';
       let label = document.createElement('h4');
       label.class = 'font-bold text-lg';
       label.innerText = choice_set[1];
@@ -1249,22 +1252,35 @@ export default class extends Controller {
         let num = choice.length;
         let container = document.createElement('div');
         container.className =
-          'flex flex-row w-[50vw] gap-4 p-4 border border-blue-200 rounded-lg justify-around';
+          'flex flex-row items-center gap-4 p-4 border border-blue-200 rounded-lg justify-center';
+        let index = 0;
         choice.forEach((code) => {
           let values = code.split('#');
+          let choice_check = document.createElement('div');
+          choice_check.className =
+            'flex flex-col gap-2 bg-gray-500 p-2 items-center justify-center';
+          let labels = document.createElement('div');
+          labels.className = 'flex gap-2 items-center justify-around';
           for (let i = 0; i < parseInt(values[1]); i++) {
             switch (values[0]) {
               case 'simple':
-                this.appendWeaponSelectToTarget('simple', container);
+                this.appendWeaponSelectToTarget('simple', labels);
                 break;
               case 'martial':
-                this.appendWeaponSelectToTarget('martial', container);
+                this.appendWeaponSelectToTarget('martial', labels);
                 break;
               default:
-                this.appendItemToTarget(values[0], container);
+                this.appendItemToTarget(values[0], labels);
                 break;
             }
           }
+          choice_check.append(labels);
+          let checkbox = document.createElement('input');
+          checkbox.type = 'checkbox';
+          checkbox.value = index;
+          choice_check.append(checkbox);
+          index++;
+          container.append(choice_check);
         });
         frame.append(container);
       });
