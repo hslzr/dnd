@@ -485,6 +485,7 @@ export default class extends Controller {
 
     this.classFeatureHandler(); //we depend on level to show correct class features so we have to do this in finalPass
     this.subclassFeatureHandler();
+    this.asiAdjustment();
 
     this.passPerceptionTarget.innerText = this.calcMod(this.wis) + 10;
 
@@ -661,7 +662,7 @@ export default class extends Controller {
 
     //flatten the portions of the feature array up to the level of the player and save in above arrays
     let marray = Object.entries(this.classFeatureList);
-
+    console.log(marray);
     marray.forEach((entry) => {
       if (parseInt(entry[0]) <= this.level) {
         entry[1].forEach((feature) => {
@@ -701,6 +702,67 @@ export default class extends Controller {
       subclassFeatures,
       this.subclassFeaturesTarget
     );
+  }
+
+  asiAdjustment() {
+    let index = 0;
+    for (let item of this.raceASI) {
+      switch (index) {
+        case 0:
+          this.str += this.raceASI[index];
+          index++;
+          break;
+        case 1:
+          this.dex += this.raceASI[index];
+          index++;
+          break;
+        case 2:
+          this.con += this.raceASI[index];
+          index++;
+          break;
+        case 3:
+          this.int += this.raceASI[index];
+          index++;
+          break;
+        case 4:
+          this.wis += this.raceASI[index];
+          index++;
+          break;
+        case 5:
+          this.cha += this.raceASI[index];
+          index++;
+          break;
+      }
+    }
+    index = 0;
+    for (let item of this.subraceASI) {
+      switch (index) {
+        case 0:
+          this.str += this.subraceASI[index];
+          index++;
+          break;
+        case 1:
+          this.dex += this.subraceASI[index];
+          index++;
+          break;
+        case 2:
+          this.con += this.subraceASI[index];
+          index++;
+          break;
+        case 3:
+          this.int += this.subraceASI[index];
+          index++;
+          break;
+        case 4:
+          this.wis += this.subraceASI[index];
+          index++;
+          break;
+        case 5:
+          this.cha += this.subraceASI[index];
+          index++;
+          break;
+      }
+    }
   }
 
   updateAllProficiencies() {
@@ -1006,6 +1068,13 @@ export default class extends Controller {
       event.target.parentNode.close();
     }
   }
+  //------------------ Level Up ASI Choices ------------//
+  countAsiFeatures() {}
+
+  populateASIModal(count) {}
+
+  submitASIChoices(event) {}
+
   //----------------- TBIF Modal ------------------//
   chooseTBIF() {
     this.removeAllChildNodes(this.tbifModalListTarget);

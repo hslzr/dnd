@@ -139,18 +139,18 @@ Barbarian = PlayerClass.create(
       'Danger Sense: Advantage on DEX saves against effects you can see. You can`t do this if you are blinded, deafened, or incapacitated.'
     ],
     3=>['Primal Path: Choose a path that shapes the nature of your rage.'],
-    4=>['ASI'],
+    4=>["Ability Score Increase:"],
     5=>['Extra Attack: You may attack twice whenever you take the Attack actin on your turn.',
        'Fast Movement: Your speed increases by 10 feet while you aren`t wearing heavy armor'
       ],
     7=>['Feral Instinct: You have advantage on initiative rolls. If you are surprised at the beginning of combat and aren`t incapacitated, you can act normall on your first turn, but only if you enter your rage before doiug anything else.'],
-    8=>['ASI'],
+    8=>["Ability Score Increase:"],
     9=>['Brutal Critical: You can roll one additional weapon damage die when determining the extra damage for a critical hit with a melee attack.'],
     11=>['Relentless Rage: If you drop to 0 hit points while raging and don`t die outright, you can make a DC 10 CON save to drop to 1 hit point instead. The DC increases by 5 each time until you finish a short or long rest.'],
-    12=>['ASI'],
+    12=>["Ability Score Increase:"],
     13=>['Brutal Critical: You can roll two additional weapon damage die when determining the extra damage for a critical hit with a melee attack.'],
     15=>['Persistent Rage: Your rage is so fierce that it ends early only if you fall unconscious or if you choose to end it.'],
-    16=>['ASI'],
+    16=>["Ability Score Increase:"],
     17=>['Brutal Critical: You can roll three additional weapon damage die when determining the extra damage for a critical hit with a melee attack.'],
     18=>['Indomitable Might: If your total for a Strength check is less than your Strength score, you may use that score instead'],
     20=>['Primal Champion: Your STR and CON scores increase by 4, your maximum for those scores is now 24.'],
@@ -268,12 +268,13 @@ Ranger = PlayerClass.create(
       For one minute per level of the spell slot you expend, you can sense whether the following types of creatures are present within 1 mile of you (or within up to 6 miles if you are in your favored terrain): aberrations, celestials, dragons, elementals, fey, fiends, and undead. This feature doesn't reveal the creatures' location or number."
     ],
     4=>[
-      "ASI"
+      "Ability Score Increase:"
     ],
     5=>[
       "Extra Attack: You can attack twice whenever you take the Attack action on your turn."
     ],
     8=>[
+      "Ability Score Increase:",
       "Land's Stride: Moving through nonmagical difficult terrain coss you no extra movement. You can also pass through nonmagical plants without being slowed by them and without taking damage from them if they have thorns, spines, or a similar hazard.
       In addition, you have advantage on saving throws against plants that are magically created or manipulated to impede movement."
     ],
@@ -281,12 +282,21 @@ Ranger = PlayerClass.create(
       "Hide in Plain Sight: You can spend 1 minute creating camouflage for yourself. You must have access to fresh mud, dirt, plants, soot, and other naturally occurring materials with which to create your camouflage.
       Once you are camouflaged in this way, you can try to hide by pressing yourself up against a solid surface, such as a tree or wall, that is at least as tall and wide as you are. You gain a +10 bonus to Dexterity(Stealth) checks as long as you remain there without moving or taking actions. Once you move or take an action or a reaction, you must camouflage yourself again to gain this benefit."
     ],
+    12=>[
+      "Ability Score Increase:"
+    ],
     14=>[
       "Vanish: You can use the Hide action as a bonus action on your turn. Also, you can't be tracked by nonmagical means, unless you choose to leave a trail."
+    ],
+    16=>[
+      "Ability Score Increase:"
     ],
     18=>[
       "Feral Sense: You gain preternatural senses that help you fight creatures you can't see. When you attack a creature you can't see, your inability to see it doesn't impose disadvantage on your attack rolls against it.
       You are also aware of the location of any invisible creature within 30 feet of you, provided that the creature isn't hidden from you and you aren't blinded or deafened."
+    ],
+    19=>[
+      "Ability Score Increase:"
     ],
     20=>[
       "Foe Slayer: You become an unparalleled hunter of your enemies. Once on each of your turns, you can add your Wisdom modifier to the attack roll or the damage roll of an attack you make against one of your favored enemies. You can choose to use this feature before or after the roll, but before any effects of the roll are applied."
