@@ -483,13 +483,15 @@ export default class extends Controller {
     }
   }
 
-  finalPass() {
+  finalPass(code = 0) {
     this.setSkillMap();
     this.populateSkillModifiers();
 
-    this.classFeatureHandler(); //we depend on level to show correct class features so we have to do this in finalPass
-    this.subclassFeatureHandler();
-    this.asiAdjustment();
+    if (code == 0) {
+      this.classFeatureHandler(); //we depend on level to show correct class features so we have to do this in finalPass
+      this.subclassFeatureHandler();
+      this.asiAdjustment();
+    }
 
     this.passPerceptionTarget.innerText = this.calcMod(this.wis) + 10;
 
@@ -502,21 +504,22 @@ export default class extends Controller {
 
     this.trackingHitDiceTarget.innerText = `${this.level}d${this.hit_die}`;
 
-    //activate buttons
-    this.activateButtons();
+    if (code == 0) {
+      this.activateButtons();
 
-    if (this.nosubchoice) {
-      this.deactivateButton(this.subclassButtonTarget);
+      if (this.nosubchoice) {
+        this.deactivateButton(this.subclassButtonTarget);
+      }
+
+      //running these on a non-spellcasting class breaks stuff
+      if (this.spellcasting_ability == 0) {
+        this.deactivateButton(this.spellsButtonTarget);
+      } else {
+        this.setSpellInformation();
+      }
+
+      this.makeModalChoices();
     }
-
-    //running these on a non-spellcasting class breaks stuff
-    if (this.spellcasting_ability == 0) {
-      this.deactivateButton(this.spellsButtonTarget);
-    } else {
-      this.setSpellInformation();
-    }
-
-    this.makeModalChoices();
 
     this.resetProficiencies();
 
@@ -666,7 +669,7 @@ export default class extends Controller {
 
     //flatten the portions of the feature array up to the level of the player and save in above arrays
     let marray = Object.entries(this.classFeatureList);
-    console.log(marray);
+
     marray.forEach((entry) => {
       if (parseInt(entry[0]) <= this.level) {
         entry[1].forEach((feature) => {
@@ -1075,20 +1078,19 @@ export default class extends Controller {
   }
   //------------------ Level Up ASI Choices ------------//
   chooseASI() {
-    console.log(this.classFeatureList);
     let feature_nodes = this.classFeaturesTarget.children;
     let asi_nodes = Array.from(feature_nodes).filter(
       (node) => node.innerText == 'Ability Score Increase:'
     );
-    console.log(asi_nodes); //working
 
-    this.populateASIModal(asi_nodes);
+    this.populateASIModal(asi_nodes.length);
   }
 
-  populateASIModal(nodes) {
-    console.log('tried');
+  populateASIModal(length) {
+    this.removeAllChildNodes(this.asiModalListTarget);
+
     let list = ['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA'];
-    for (let node of nodes) {
+    for (let i = 0; i < length; i++) {
       let container = this.getTag('div', 'asi-box');
       let choose_one = this.getTag('div', 'choice-box');
       let choose_two = this.getTag('div', 'choice-box');
@@ -1122,6 +1124,14 @@ export default class extends Controller {
       choose_two.append(select_two);
       choose_two.append(select_two_b);
 
+      let checkbox = this.getTag('input', '');
+      checkbox.type = 'checkbox';
+      choose_one.append(checkbox);
+
+      let checkbox2 = this.getTag('input', '');
+      checkbox2.type = 'checkbox';
+      choose_two.prepend(checkbox2);
+
       container.append(choose_one);
       container.append(this.getTag('p', 'font-black font-lg', 'or'));
       container.append(choose_two);
@@ -1129,7 +1139,54 @@ export default class extends Controller {
     }
   }
 
-  submitASIChoices(event) {}
+  submitASIChoices(event) {
+    let choices = [];
+    for (let row of this.asiModalListTarget.children) {
+      let count = 0;
+      let chosen = [];
+      for (let item of row.children) {
+        if (item.firstChild.tagName == 'SELECT') {
+          if (item.lastChild.checked) {
+            chosen = [item.firstChild.value];
+            count++;
+          }
+        } else {
+          if (item.firstChild.checked) {
+            chosen = [item.children[1].value, item.children[2].value];
+            count++;
+          }
+        }
+      }
+      if (count != 1) return;
+      choices.push(chosen);
+    }
+
+    this.putASIToSheet(choices);
+    event.target.parentNode.close();
+  }
+
+  putASIToSheet(choices) {
+    let feature_nodes = this.classFeaturesTarget.children;
+    let asi_nodes = Array.from(feature_nodes).filter(
+      (node) => node.innerText == 'Ability Score Increase:'
+    );
+    console.log(this.str);
+    let index = 0;
+    for (let choice of choices) {
+      if (choice.length == 1) {
+        this.increaseStat(choice[0], 2);
+      } else {
+        this.increaseStat(choice[0]);
+        this.increaseStat(choice[1]);
+      }
+      choice.forEach((stat) => {
+        asi_nodes[index].append(this.expandStatName(stat));
+      });
+      index++;
+    }
+    this.updateStats();
+    this.finalPass(1);
+  }
 
   //----------------- TBIF Modal ------------------//
   chooseTBIF() {
@@ -1661,6 +1718,16 @@ export default class extends Controller {
     this.statModUpdate();
   }
 
+  updateStats() {
+    this.strBaseTarget.innerText = this.str;
+    this.conBaseTarget.innerText = this.con;
+    this.dexBaseTarget.innerText = this.dex;
+    this.intBaseTarget.innerText = this.int;
+    this.chaBaseTarget.innerText = this.cha;
+    this.wisBaseTarget.innerText = this.wis;
+    this.statModUpdate();
+  }
+
   //----------------------------- Utility Methods ---------------------------------//
   updateChoices() {
     //we'll call this whenever there's a change in the top form to update the state object this.choices
@@ -1754,6 +1821,51 @@ export default class extends Controller {
     return `+${val}`;
   }
 
+  expandStatName(stat) {
+    switch (stat) {
+      case 'STR':
+        return 'Strength';
+      case 'CON':
+        return 'Constitution';
+      case 'DEX':
+        return 'Dexterity';
+      case 'INT':
+        return 'Intelligence';
+      case 'WIS':
+        return 'Wisdom';
+      case 'CHA':
+        return 'Charisma';
+      default:
+        return 'NaS';
+    }
+  }
+
+  increaseStat(stat, val = 1) {
+    switch (stat) {
+      case 'STR':
+        this.str += val;
+        break;
+      case 'CON':
+        this.con += val;
+        break;
+      case 'DEX':
+        this.dex += val;
+        break;
+      case 'INT':
+        this.int += val;
+        break;
+      case 'WIS':
+        this.wis += val;
+        break;
+      case 'CHA':
+        this.cha += val;
+        break;
+      default:
+        return 'NaS';
+    }
+    return;
+  }
+
   isChoicesFull() {
     let checklist = this.choices?.values();
     for (let i = 0; i < this.choices.size; i++) {
@@ -1775,15 +1887,5 @@ export default class extends Controller {
     categories.set('background', []);
     categories.set('feats', []);
     return categories;
-  }
-
-  //----------------------------- Debugging Methods ---------------------------------//
-  logMap(mymap) {
-    console.log('logMap');
-    let iter = mymap.entries();
-    for (let i = 0; i < mymap.size; i++) {
-      console.log(iter.next().value);
-    }
-    console.log('logged map');
   }
 }
