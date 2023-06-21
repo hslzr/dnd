@@ -18,12 +18,13 @@
     <% end %>
 
   </div>
-  <div class="flex flex-col md:flex-row items-center justify-start gap-4 px-24 py-4" id="statbuttons">
-    <button class="px-8 py-2 rounded-lg bg-blue-400 border-b-2 border-r-2" data-action="sheet#randomStats">Random Stats</button>
-    <button class="px-8 py-2 rounded-lg bg-orange-300 border-b-2 border-r-2" data-action="sheet#showLangDialog" data-sheet-target="langButton">Extra Languages</button>
-    <button class="px-8 py-2 rounded-lg bg-orange-300 border-b-2 border-r-2" data-action="sheet#showClassSkillsDialog" data-sheet-target="classSkillsButton">Class Skills</button>
-    <button class="px-8 py-2 rounded-lg bg-orange-300 border-b-2 border-r-2" data-action="sheet#showToolsDialog" data-sheet-target="toolsButton">Racial Tools</button>
-    <button class="px-8 py-2 rounded-lg bg-orange-300 border-b-2 border-r-2" data-action="sheet#showSubclassFeaturesDialog" data-sheet-target="subclassButton">Subclass Features</button>
+  <div class="flex flex-col md:flex-row items-center justify-start gap-4 p-4" id="statbuttons">
+    <button class="px-4 py-2 rounded-lg bg-blue-400 border-b-2 border-r-2" data-action="sheet#randomStats">Random Stats</button>
+    <button class="px-4 py-2 rounded-lg bg-orange-300 border-b-2 border-r-2" data-action="sheet#showLangDialog" data-sheet-target="langButton">Extra Languages</button>
+    <button class="px-4 py-2 rounded-lg bg-orange-300 border-b-2 border-r-2" data-action="sheet#showClassSkillsDialog" data-sheet-target="classSkillsButton">Class Skills</button>
+    <button class="px-4 py-2 rounded-lg bg-orange-300 border-b-2 border-r-2" data-action="sheet#showToolsDialog" data-sheet-target="toolsButton">Racial Tools</button>
+    <button class="px-4 py-2 rounded-lg bg-orange-300 border-b-2 border-r-2" data-action="sheet#showSubclassFeaturesDialog" data-sheet-target="subclassButton">Subclass Features</button>
+    <button class="px-4 py-2 rounded-lg bg-orange-300 border-b-2 border-r-2" data-action="sheet#showASIDialog" data-sheet-target="asiButton">Ability Score Increase</button>
   </div>
   <section class="flex flex-col" id="sheet">
     <div class="flex">
@@ -587,6 +588,12 @@
         <div data-sheet-target="subclassFeaturesModalList"></div>
       <p class="font-black text-sm" data-sheet-target="subclassFeaturesLimit"></p>
       <button class="px-8 py-2 rounded-lg bg-blue-400 border-b-2 border-r-2" data-action="sheet#submitSubclassFeaturesChoices">Submit</button>
+    </dialog>
+    <dialog class="border border-black rounded-md bg-gray-300" data-controller="modal"  data-sheet-target="dialogASI">
+      <p class="text-2xl font-bold">Ability Score Increases</p>
+        <div data-sheet-target="asiModalList"></div>
+      <p class="font-black text-sm" data-sheet-target="asiLimit"></p>
+      <button class="px-8 py-2 rounded-lg bg-blue-400 border-b-2 border-r-2" data-action="sheet#submitASIChoices">Submit</button>
     </dialog>
     <dialog class="border border-black rounded-md bg-gray-300" data-controller="modal"  data-sheet-target="dialogSpells">
       <p class="text-2xl font-bold">Spells</p>

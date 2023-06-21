@@ -147,6 +147,10 @@ export default class extends Controller {
     'dialogSubclassFeatures',
     'subclassFeaturesModalList',
     'subclassFeaturesLimit',
+    'dialogASI',
+    'asiModalList',
+    'asiLimit',
+    'asiButton',
     'dialogSpells',
     'spellsModalList',
     'spellsLimit',
@@ -822,6 +826,7 @@ export default class extends Controller {
     if (this.spellList) this.chooseSpells();
     this.chooseTBIF();
     this.chooseEquipment();
+    this.chooseASI();
   }
 
   resetProficiencies() {
@@ -1069,9 +1074,60 @@ export default class extends Controller {
     }
   }
   //------------------ Level Up ASI Choices ------------//
-  countAsiFeatures() {}
+  chooseASI() {
+    console.log(this.classFeatureList);
+    let feature_nodes = this.classFeaturesTarget.children;
+    let asi_nodes = Array.from(feature_nodes).filter(
+      (node) => node.innerText == 'Ability Score Increase:'
+    );
+    console.log(asi_nodes); //working
 
-  populateASIModal(count) {}
+    this.populateASIModal(asi_nodes);
+  }
+
+  populateASIModal(nodes) {
+    console.log('tried');
+    let list = ['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA'];
+    for (let node of nodes) {
+      let container = this.getTag('div', 'asi-box');
+      let choose_one = this.getTag('div', 'choice-box');
+      let choose_two = this.getTag('div', 'choice-box');
+
+      let select_one = this.getTag('select', 'rounded-sm');
+      select_one.append(
+        this.getTag('option', 'font-semibold', '+2 to stat')
+      );
+      for (let stat of list) {
+        let option = this.getTag('option', 'font-semibold', stat);
+        option.value = stat;
+        select_one.append(option);
+      }
+      choose_one.append(select_one);
+
+      let select_two = this.getTag('select', 'rounded-sm');
+      let select_two_b = this.getTag('select', 'rounded-sm');
+      select_two.append(
+        this.getTag('option', 'font-semibold', '+1 to stat')
+      );
+      select_two_b.append(
+        this.getTag('option', 'font-semibold', '+1 to stat')
+      );
+      for (let stat of list) {
+        let option = this.getTag('option', 'font-semibold', stat);
+        option.value = stat;
+        let option2 = this.getTag('option', 'font-semibold', stat);
+        select_two.append(option);
+        select_two_b.append(option2);
+      }
+      choose_two.append(select_two);
+      choose_two.append(select_two_b);
+
+      container.append(choose_one);
+      container.append(this.getTag('p', 'font-black font-lg', 'or'));
+      container.append(choose_two);
+      this.asiModalListTarget.append(container);
+    }
+  }
 
   submitASIChoices(event) {}
 
@@ -1488,6 +1544,7 @@ export default class extends Controller {
       this.spellsButtonTarget,
       this.tbifButtonTarget,
       this.equipmentButtonTarget,
+      this.asiButtonTarget,
     ];
 
     buttons.forEach((button) => {
@@ -1524,6 +1581,9 @@ export default class extends Controller {
   }
   showEquipmentDialog() {
     this.dialogEquipmentTarget.showModal();
+  }
+  showASIDialog() {
+    this.dialogASITarget.showModal();
   }
 
   putModalChecksToSheet(collection, target, name = '') {
