@@ -602,7 +602,15 @@
     </dialog>
     <dialog class="border border-black rounded-md bg-gray-300" data-controller="modal"  data-sheet-target="dialogEquipment">
       <p class="text-2xl font-bold">Starting Equipment</p>
-        <div data-sheet-target="equipmentModalList"></div>
+        <div data-sheet-target="equipmentModalList">
+          <div class="flex flex-col gap-4 items-center">
+            <div class="flex flex-col items-center justify-center p-2 gap-1 bg-gray-200" data-sheet-target="equipmentClassStart">
+              <h4 class="font-bold text-lg">Class</h4>
+            </div>
+            <div class="flex flex-col items-center justify-center p-2 gap-1 bg-gray-200" data-sheet-target="equipmentBGStart">
+            <h4 class="font-bold text-lg">Background</h4></div>
+          </div>
+        </div>
       <p class="font-black text-sm">Choose 1 from each</p>
       <button class="px-8 py-2 rounded-lg bg-blue-400 border-b-2 border-r-2" data-action="sheet#submitEquipmentChoices">Submit</button>
     </dialog>

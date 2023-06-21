@@ -1,5 +1,6 @@
 import { Controller } from '@hotwired/stimulus';
 
+//all options come from the db, new db additions should just work
 export default class extends Controller {
   static targets = [
     //in order of appearance
@@ -178,6 +179,8 @@ export default class extends Controller {
     'tbifButton',
     'equipmentModalList',
     'dialogEquipment',
+    'equipmentClassStart',
+    'equipmentBGStart',
     'equipmentButton',
   ];
 
@@ -787,8 +790,6 @@ export default class extends Controller {
       else entry[1][2].classList.remove('bg-black');
     }
 
-    //console.log(assigned_skills);
-
     this.updateAllProficiencies();
   }
 
@@ -1064,7 +1065,7 @@ export default class extends Controller {
     let check = [];
     let output = [];
     let validated = true;
-    console.log(chosen);
+
     chosen.forEach((choice) => {
       if (check.includes(choice[0])) {
         validated = false;
@@ -1214,97 +1215,102 @@ export default class extends Controller {
   //-----------------Equipment Modal ------------------//
 
   chooseEquipment() {
-    /*
-      pick the equipment to populate to the list modal
-      class options
-
-      background options
-    */
-
-    let choices = [];
-
+    let class_choices = false;
+    let bg_choices = false;
     if (this.class_equip_choices['choices'].length > 0)
-      choices.push([this.class_equip_choices['choices'], 'Class']);
+      class_choices = this.class_equip_choices['choices'];
 
     if (this.bg_equip_choices['choices'].length > 0)
-      choices.push([this.bg_equip_choices['choices'], 'Background']);
+      bg_choices = (this.bg_equip_choices['choices'], 'Background');
 
-    this.populateEquipmentModal(choices);
-    //this.populateEquipmentModal(choice);
+    if (class_choices) {
+      this.populateEquipmentModal(
+        class_choices,
+        this.equipmentClassStartTarget,
+        'Class'
+      );
+    } else {
+      this.equipmentClassStartTarget.append(
+        this.getTag(
+          'p',
+          'font-semibold text-lg',
+          'No choices for this class.'
+        )
+      );
+    }
+    if (bg_choices) {
+      this.populateEquipmentModal(
+        bg_choices,
+        this.equipmentBGStartTarget,
+        'Background'
+      );
+    } else {
+      this.equipmentBGStartTarget.append(
+        this.getTag(
+          'p',
+          'font-semibold text-lg',
+          'No choices for this background.'
+        )
+      );
+    }
   }
 
-  populateEquipmentModal(choices) {
-    this.removeAllChildNodes(this.equipmentModalListTarget);
-    //fill the list modal with the needed selection boxes
-    console.log('choices');
-    console.log(choices);
+  populateEquipmentModal(choices, target, title) {
+    this.removeAllChildNodes(target);
 
-    choices.forEach((choice_set) => {
-      let frame = document.createElement('div');
-      frame.class =
-        'flex flex-col items-center justify-center p-2 gap-1 bg-gray-200';
-      let label = document.createElement('h4');
-      label.class = 'font-bold text-lg';
-      label.innerText = choice_set[1];
-      frame.append(label);
+    choices.forEach((choice) => {
+      let number_of_choices = choice.length;
+      let container = this.getTag(
+        'div',
+        'flex flex-row items-center gap-4 p-4 border border-blue-200 rounded-lg justify-center'
+      );
 
-      choice_set[0].forEach((choice) => {
-        let num = choice.length;
-        let container = document.createElement('div');
-        container.className =
-          'flex flex-row items-center gap-4 p-4 border border-blue-200 rounded-lg justify-center';
-        let index = 0;
-        choice.forEach((code) => {
-          let values = code.split('#');
-          let choice_check = document.createElement('div');
-          choice_check.className =
-            'flex flex-col gap-2 bg-gray-3 p-4 items-center justify-center';
-          let labels = document.createElement('div');
-          labels.className = 'flex gap-2 items-center justify-around';
-          for (let i = 0; i < parseInt(values[1]); i++) {
-            switch (values[0]) {
-              case 'simple':
-                this.appendWeaponSelectToTarget('simple', labels);
-                break;
-              case 'martial':
-                this.appendWeaponSelectToTarget('martial', labels);
-                break;
-              default:
-                this.appendItemToTarget(values[0], labels);
-                break;
-            }
+      choice.forEach((code) => {
+        let values = code.split('#');
+        let choice_box = this.getTag(
+          'div',
+          'flex flex-col gap-2 bg-gray-300 p-4 items-center justify-center'
+        );
+        container.append(choice_box);
+
+        let choice_labels = this.getTag(
+          'div',
+          'flex gap-4 items-center justify-center'
+        );
+        choice_box.append(choice_labels);
+
+        for (let i = 0; i < parseInt(values[1]); i++) {
+          switch (values[0]) {
+            case 'simple':
+              this.appendWeaponSelectToTarget(
+                'simple',
+                choice_labels
+              );
+              break;
+            case 'martial':
+              this.appendWeaponSelectToTarget(
+                'martial',
+                choice_labels
+              );
+              break;
+            default:
+              choice_labels.append(
+                this.getTag('p', 'p-1', values[0])
+              );
+              break;
           }
-          choice_check.append(labels);
-          let checkbox = document.createElement('input');
-          checkbox.type = 'checkbox';
-          checkbox.value = index;
-          choice_check.append(checkbox);
-          index++;
-          container.append(choice_check);
-
-          let p = document.createElement('p');
-          p.className = 'text-lg font-black';
-          p.innerText = 'or';
-          container.append(p);
-        });
-        container.removeChild(container.lastChild); //get rid of last 'or'
-        frame.append(container);
+        }
+        container.append(
+          this.getTag('p', 'text-lg font-black', 'or')
+        );
       });
-      this.equipmentModalListTarget.append(frame);
+      container.removeChild(container.lastChild); //get rid of last 'or'
+      target.append(container);
     });
-    console.log('ran populate routine');
-    /*
-    this.appendWeaponSelectToTarget(
-      'simple',
-      this.equipmentModalListTarget
-    );
-    */
   }
 
   submitEquipmentChoices(event) {
     //read selections and save information
-    console.log(this.equipmentModalListTarget.children);
-
     /*
     get a selected box innerText
     let box = select input
@@ -1316,6 +1322,7 @@ export default class extends Controller {
     //output selections to character sheet
   }
 
+  //working select.value will be wep.id
   appendWeaponSelectToTarget(wep_type, target) {
     let selector = document.createElement('select');
     selector.id = 'testing';
@@ -1331,7 +1338,6 @@ export default class extends Controller {
     fetch(`/weapons/${wep_type}`)
       .then((response) => response.json())
       .then((data) => {
-        this.checkData(data);
         data.forEach((item) => {
           let option = document.createElement('option');
           option.value = item['id'];
@@ -1340,16 +1346,6 @@ export default class extends Controller {
         });
         target.append(selector);
       });
-  }
-
-  appendItemToTarget(item, target) {
-    let el = document.createElement('p');
-    el.innerText = item;
-    target.append(el);
-  }
-
-  checkData(data) {
-    console.log(data);
   }
 
   //----------------- Modal Utilities ------------------//
@@ -1555,11 +1551,22 @@ export default class extends Controller {
     }
   }
 
-  getPTag(string, weight) {
+  getPTag(string, classname = 'font-medium') {
     let out = document.createElement('p');
-    out.classList.add(weight);
-    out.append(string + ':');
+    out.className = classname;
+    out.append(string + ': ');
     return out;
+  }
+
+  getTag(string, classname, content) {
+    let out = document.createElement(string);
+    out.className = classname;
+    if (content) out.append(content);
+    return out;
+  }
+
+  appendItemToTarget(item, target) {
+    target.append(this.getPTag(item));
   }
 
   //calculate modifier
