@@ -212,7 +212,7 @@ Ranger = PlayerClass.create(
     'choices'=>[
       ['Scale Mail#1','Leather Armor#1'],
       ['Shortsword#2','simple#2'],
-      ["Dungeoneer's Pack#gearpack","Explorer's Pack#gearpack"],
+      ["Dungeoneer's Pack#1","Explorer's Pack#1"],
     ],
     'default'=>['Longbow#1','Quiver#1','Arrows#1'],
   },

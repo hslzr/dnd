@@ -18,7 +18,7 @@
     <% end %>
 
   </div>
-  <div class="flex items-center justify-start gap-4 px-24 py-4" id="statbuttons">
+  <div class="flex flex-col md:flex-row items-center justify-start gap-4 px-24 py-4" id="statbuttons">
     <button class="px-8 py-2 rounded-lg bg-blue-400 border-b-2 border-r-2" data-action="sheet#randomStats">Random Stats</button>
     <button class="px-8 py-2 rounded-lg bg-orange-300 border-b-2 border-r-2" data-action="sheet#showLangDialog" data-sheet-target="langButton">Extra Languages</button>
     <button class="px-8 py-2 rounded-lg bg-orange-300 border-b-2 border-r-2" data-action="sheet#showClassSkillsDialog" data-sheet-target="classSkillsButton">Class Skills</button>
@@ -554,6 +554,7 @@
           </div>
         </div>
         <button class="px-8 py-2 rounded-lg bg-orange-300 border-b-2 border-r-2" data-action="sheet#showEquipmentDialog" data-sheet-target="equipmentButton">Starting Equipment</button></button>
+        <h4 class="font-bold" data-sheet-target="startingEquipment">Starting Equipment</div>
         <h4 class="font-bold">Weapons</h4>
         <h4 class="font-bold">Armor</h4>
         <div class="flex gap-2 items-center" data-sheet-target="equipArmor"></div>
@@ -604,11 +605,10 @@
       <p class="text-2xl font-bold">Starting Equipment</p>
         <div data-sheet-target="equipmentModalList">
           <div class="flex flex-col gap-4 items-center">
-            <div class="flex flex-col items-center justify-center p-2 gap-1 bg-gray-200" data-sheet-target="equipmentClassStart">
-              <h4 class="font-bold text-lg">Class</h4>
+            <div class="flex flex-col items-center justify-center gap-2 bg-gray-200 rounded-lg" data-sheet-target="equipmentClassStart">
             </div>
-            <div class="flex flex-col items-center justify-center p-2 gap-1 bg-gray-200" data-sheet-target="equipmentBGStart">
-            <h4 class="font-bold text-lg">Background</h4></div>
+            <div class="flex flex-col items-center justify-center gap-2 bg-gray-200 rounded-lg" data-sheet-target="equipmentBGStart">
+            </div>
           </div>
         </div>
       <p class="font-black text-sm">Choose 1 from each</p>

@@ -182,6 +182,7 @@ export default class extends Controller {
     'equipmentClassStart',
     'equipmentBGStart',
     'equipmentButton',
+    'startingEquipment',
   ];
 
   connect() {
@@ -793,9 +794,7 @@ export default class extends Controller {
     this.updateAllProficiencies();
   }
 
-  customModifiers() {
-    console.log('finalPass complete');
-  }
+  customModifiers() {}
 
   //----------------------------- Choice Modals ---------------------------------//
   //----------------- Languages Modal ------------------//
@@ -1233,7 +1232,7 @@ export default class extends Controller {
       this.equipmentClassStartTarget.append(
         this.getTag(
           'p',
-          'font-semibold text-lg',
+          'font-semibold p-4',
           'No choices for this class.'
         )
       );
@@ -1248,7 +1247,7 @@ export default class extends Controller {
       this.equipmentBGStartTarget.append(
         this.getTag(
           'p',
-          'font-semibold text-lg',
+          'font-semibold p-4',
           'No choices for this background.'
         )
       );
@@ -1260,17 +1259,11 @@ export default class extends Controller {
 
     choices.forEach((choice) => {
       let number_of_choices = choice.length;
-      let container = this.getTag(
-        'div',
-        'flex flex-row items-center gap-4 p-4 border border-blue-200 rounded-lg justify-center'
-      );
+      let container = this.getTag('div', 'equipment-row');
 
       choice.forEach((code) => {
         let values = code.split('#');
-        let choice_box = this.getTag(
-          'div',
-          'flex flex-col gap-2 bg-gray-300 p-4 items-center justify-center'
-        );
+        let choice_box = this.getTag('div', 'choice-box');
         container.append(choice_box);
 
         let choice_labels = this.getTag(
@@ -1300,6 +1293,10 @@ export default class extends Controller {
               break;
           }
         }
+        let checkbox = this.getTag('input', '');
+        checkbox.type = 'checkbox';
+        choice_box.prepend(checkbox);
+
         container.append(
           this.getTag('p', 'text-lg font-black', 'or')
         );
@@ -1310,23 +1307,42 @@ export default class extends Controller {
   }
 
   submitEquipmentChoices(event) {
-    //read selections and save information
-    /*
-    get a selected box innerText
-    let box = select input
-    box.childNodes.forEach(x => { if(x.value == box.value) return x.innerText; } );
-    */
+    let rows = document.querySelectorAll('.equipment-row');
+    let validated = true;
+    let output = [];
+    rows.forEach((row) => {
+      let check = this.validateEquipmentRow(row);
+      if (check) {
+        check.forEach((item) => {
+          output.push(item);
+        });
+      } else {
+        validated = false;
+      }
+    });
+    if (validated) {
+      this.putEquipmentToSheet(output);
+      event.target.parentNode.close();
+    }
   }
 
-  putEquipmentToSheet() {
+  putEquipmentToSheet(equipment) {
     //output selections to character sheet
+    this.removeAllChildNodes(this.startingEquipmentTarget);
+    equipment.forEach((item) => {
+      this.startingEquipmentTarget.append(
+        this.getTag('p', 'font-medium', item)
+      );
+    });
   }
+
+  // equipment utilities //
 
   //working select.value will be wep.id
   appendWeaponSelectToTarget(wep_type, target) {
     let selector = document.createElement('select');
     selector.id = 'testing';
-    selector.class = 'rounded-md';
+    selector.className = 'rounded-md';
     let plate = document.createElement('option');
     let plate_title =
       wep_type.charAt(0).toUpperCase() +
@@ -1340,12 +1356,40 @@ export default class extends Controller {
       .then((data) => {
         data.forEach((item) => {
           let option = document.createElement('option');
-          option.value = item['id'];
+          option.value = item['name'];
           option.innerText = item['name'];
           selector.append(option);
         });
         target.append(selector);
       });
+  }
+
+  validateEquipmentRow(row) {
+    let row_output;
+
+    let count = 0;
+
+    for (let choice_box of row.children) {
+      if (choice_box.firstChild.checked) {
+        count++;
+        row_output = choice_box.lastChild;
+      }
+    }
+    if (count != 1) {
+      return false;
+    }
+
+    let validated_output = [];
+    for (let item of row_output.children) {
+      if (item.tagName == 'SELECT') {
+        let text = item.value;
+        validated_output.push(text);
+      } else {
+        validated_output.push(item.innerText);
+      }
+    }
+
+    return validated_output;
   }
 
   //----------------- Modal Utilities ------------------//
