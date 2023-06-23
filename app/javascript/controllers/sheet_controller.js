@@ -202,15 +202,11 @@ export default class extends Controller {
     //variables set later but available as noted
     ///set on randomStats
 
-    this.str;
-    this.dex;
-    this.con;
-    this.int;
-    this.wis;
-    this.cha;
-    ///set on statModUpdate
-    //doesn't this duplicate the above's functionality?
-    this.stats;
+    //0 is our flag value because it isnt possible in dnd
+    this.stats = [0, 0, 0, 0, 0, 0];
+    //store initial stats here, modify and collate in this.stats
+    this.base_stats = [0, 0, 0, 0, 0, 0];
+
     ///set on level update in catHandler
     this.prof_mod;
     ///set on class form select
@@ -228,8 +224,8 @@ export default class extends Controller {
     this.classSkillChoices; //set in catUpdate
     this.numClassSkillChoices; //set in catUpdate
     this.raceToolChoices; //set in catUpdate
-    this.raceASI; //set in catUpdate, used to modify stats
-    this.subraceASI;
+    this.raceASI = 0; //set in catUpdate, used to modify stats
+    this.subraceASI = 0;
     this.raceASICount; //set in finalPass -> classFeatureHandler, modifies stats at milestone levels
     this.subraceASICount;
     this.nosubchoice = false;
@@ -429,9 +425,15 @@ export default class extends Controller {
         features
       );
     }
+    if (this.raceASI != 0 && this.subraceASI != 0) {
+      this.calculateStats();
+      this.updateStats();
+      this.statModUpdate();
+    }
+
     //once the changed category has been updated on the sheet, we want to finish up if possible
     //this runs if choices is entirely filled out
-    if (this.isChoicesFull() && this.str) {
+    if (this.isChoicesFull() && this.stats[0] != 0) {
       this.finalPass();
     }
   }
@@ -490,16 +492,21 @@ export default class extends Controller {
     if (code == 0) {
       this.classFeatureHandler(); //we depend on level to show correct class features so we have to do this in finalPass
       this.subclassFeatureHandler();
-      this.asiAdjustment();
     }
+    //recalculate stats
+    this.calculateStats();
+    this.updateStats();
+    this.statModUpdate(1);
 
-    this.passPerceptionTarget.innerText = this.calcMod(this.wis) + 10;
+    this.passPerceptionTarget.innerText =
+      this.calcMod(this.stats[4]) + 10;
 
     this.substatInitiativeTarget.innerText =
       this.dexModTarget.innerText;
 
     if (!this.equipArmorTarget.hasChildNodes()) {
-      this.substatACTarget.innerText = 10 + this.calcMod(this.dex);
+      this.substatACTarget.innerText =
+        10 + this.calcMod(this.stats[1]);
     }
 
     this.trackingHitDiceTarget.innerText = `${this.level}d${this.hit_die}`;
@@ -531,109 +538,109 @@ export default class extends Controller {
   //----------------------------- Final Pass methods ---------------------------------//
   setSkillMap() {
     this.skills.set('Athletics', [
-      this.str,
+      this.stats[0],
       this.athleticsModTarget,
       this.athleticsProfTarget,
       '',
     ]);
     this.skills.set('Acrobatics', [
-      this.dex,
+      this.stats[1],
       this.acrobaticsModTarget,
       this.acrobaticsProfTarget,
       '',
     ]);
     this.skills.set('Sleight of Hand', [
-      this.dex,
+      this.stats[1],
       this.sleightOfHandModTarget,
       this.sleightOfHandProfTarget,
       '',
     ]);
     this.skills.set('Stealth', [
-      this.dex,
+      this.stats[1],
       this.stealthModTarget,
       this.stealthProfTarget,
       '',
     ]);
     this.skills.set('Arcana', [
-      this.int,
+      this.stats[3],
       this.arcanaModTarget,
       this.arcanaProfTarget,
       '',
     ]);
     this.skills.set('History', [
-      this.int,
+      this.stats[3],
       this.historyModTarget,
       this.historyProfTarget,
       '',
     ]);
     this.skills.set('Investigation', [
-      this.int,
+      this.stats[3],
       this.investigationModTarget,
       this.investigationProfTarget,
       '',
     ]);
     this.skills.set('Nature', [
-      this.int,
+      this.stats[3],
       this.natureModTarget,
       this.natureProfTarget,
       '',
     ]);
     this.skills.set('Religion', [
-      this.int,
+      this.stats[3],
       this.religionModTarget,
       this.religionProfTarget,
       '',
     ]);
     this.skills.set('Animal Handling', [
-      this.wis,
+      this.stats[4],
       this.animalHandlingModTarget,
       this.animalHandlingProfTarget,
       '',
     ]);
     this.skills.set('Insight', [
-      this.wis,
+      this.stats[4],
       this.insightModTarget,
       this.insightProfTarget,
       '',
     ]);
     this.skills.set('Medicine', [
-      this.wis,
+      this.stats[4],
       this.medicineModTarget,
       this.medicineProfTarget,
       '',
     ]);
     this.skills.set('Perception', [
-      this.wis,
+      this.stats[4],
       this.perceptionModTarget,
       this.perceptionProfTarget,
       '',
     ]);
     this.skills.set('Survival', [
-      this.wis,
+      this.stats[4],
       this.survivalModTarget,
       this.survivalProfTarget,
       '',
     ]);
     this.skills.set('Deception', [
-      this.cha,
+      this.stats[5],
       this.deceptionModTarget,
       this.deceptionProfTarget,
       '',
     ]);
     this.skills.set('Intimidation', [
-      this.cha,
+      this.stats[5],
       this.intimidationModTarget,
       this.intimidationProfTarget,
       '',
     ]);
     this.skills.set('Performance', [
-      this.cha,
+      this.stats[5],
       this.performanceModTarget,
       this.performanceProfTarget,
       '',
     ]);
     this.skills.set('Persuasion', [
-      this.cha,
+      this.stats[5],
       this.persuasionModTarget,
       this.persuasionProfTarget,
       '',
@@ -709,67 +716,6 @@ export default class extends Controller {
       subclassFeatures,
       this.subclassFeaturesTarget
     );
-  }
-
-  asiAdjustment() {
-    let index = 0;
-    for (let item of this.raceASI) {
-      switch (index) {
-        case 0:
-          this.str += this.raceASI[index];
-          index++;
-          break;
-        case 1:
-          this.dex += this.raceASI[index];
-          index++;
-          break;
-        case 2:
-          this.con += this.raceASI[index];
-          index++;
-          break;
-        case 3:
-          this.int += this.raceASI[index];
-          index++;
-          break;
-        case 4:
-          this.wis += this.raceASI[index];
-          index++;
-          break;
-        case 5:
-          this.cha += this.raceASI[index];
-          index++;
-          break;
-      }
-    }
-    index = 0;
-    for (let item of this.subraceASI) {
-      switch (index) {
-        case 0:
-          this.str += this.subraceASI[index];
-          index++;
-          break;
-        case 1:
-          this.dex += this.subraceASI[index];
-          index++;
-          break;
-        case 2:
-          this.con += this.subraceASI[index];
-          index++;
-          break;
-        case 3:
-          this.int += this.subraceASI[index];
-          index++;
-          break;
-        case 4:
-          this.wis += this.subraceASI[index];
-          index++;
-          break;
-        case 5:
-          this.cha += this.subraceASI[index];
-          index++;
-          break;
-      }
-    }
   }
 
   updateAllProficiencies() {
@@ -1170,7 +1116,6 @@ export default class extends Controller {
     let asi_nodes = Array.from(feature_nodes).filter(
       (node) => node.innerText == 'Ability Score Increase:'
     );
-    console.log(this.str);
     let index = 0;
     for (let choice of choices) {
       if (choice.length == 1) {
@@ -1668,64 +1613,64 @@ export default class extends Controller {
   }
 
   //----------------------------- Base Stat Methods ---------------------------------//
-  statModUpdate() {
+  statModUpdate(runFinal = 0) {
     this.strModTarget.innerText = this.modWithSign(
-      this.calcMod(this.str)
+      this.calcMod(this.stats[0])
     );
     this.dexModTarget.innerText = this.modWithSign(
-      this.calcMod(this.dex)
+      this.calcMod(this.stats[1])
     );
     this.conModTarget.innerText = this.modWithSign(
-      this.calcMod(this.con)
+      this.calcMod(this.stats[2])
     );
     this.intModTarget.innerText = this.modWithSign(
-      this.calcMod(this.int)
+      this.calcMod(this.stats[3])
     );
     this.wisModTarget.innerText = this.modWithSign(
-      this.calcMod(this.wis)
+      this.calcMod(this.stats[4])
     );
     this.chaModTarget.innerText = this.modWithSign(
-      this.calcMod(this.cha)
+      this.calcMod(this.stats[5])
     );
 
-    this.stats = [
-      this.str,
-      this.dex,
-      this.con,
-      this.int,
-      this.wis,
-      this.cha,
-    ];
-    if (this.isChoicesFull() && this.str) {
+    if (this.isChoicesFull() && this.stats[0] != 0 && runFinal == 0) {
       this.finalPass();
     }
   }
 
+  //call stat modifications here
   randomStats() {
-    this.str = Math.floor(Math.random() * 20) + 1;
-    this.strBaseTarget.innerText = this.str;
-    this.con = Math.floor(Math.random() * 20) + 1;
-    this.conBaseTarget.innerText = this.con;
-    this.dex = Math.floor(Math.random() * 20) + 1;
-    this.dexBaseTarget.innerText = this.dex;
-    this.int = Math.floor(Math.random() * 20) + 1;
-    this.intBaseTarget.innerText = this.int;
-    this.cha = Math.floor(Math.random() * 20) + 1;
-    this.chaBaseTarget.innerText = this.cha;
-    this.wis = Math.floor(Math.random() * 20) + 1;
-    this.wisBaseTarget.innerText = this.wis;
+    for (let i = 0; i < 6; i++) {
+      let rand = Math.floor(Math.random() * 20) + 1;
+      this.base_stats[i] = rand;
+      this.stats[i] = this.base_stats[i];
+    }
+
+    if (this.raceASI != 0 && this.subraceASI != 0)
+      this.calculateStats();
+
+    this.updateStats();
 
     this.statModUpdate();
   }
 
+  calculateStats() {
+    let index = 0;
+    for (let item of this.stats) {
+      this.stats[index] =
+        this.base_stats[index] +
+        this.raceASI[index] +
+        this.subraceASI[index];
+      index++;
+    }
+  }
   updateStats() {
-    this.strBaseTarget.innerText = this.str;
-    this.conBaseTarget.innerText = this.con;
-    this.dexBaseTarget.innerText = this.dex;
-    this.intBaseTarget.innerText = this.int;
-    this.chaBaseTarget.innerText = this.cha;
-    this.wisBaseTarget.innerText = this.wis;
-    this.statModUpdate();
+    this.strBaseTarget.innerText = this.stats[0];
+    this.conBaseTarget.innerText = this.stats[2];
+    this.dexBaseTarget.innerText = this.stats[1];
+    this.intBaseTarget.innerText = this.stats[3];
+    this.chaBaseTarget.innerText = this.stats[5];
+    this.wisBaseTarget.innerText = this.stats[4];
   }
 
   //----------------------------- Utility Methods ---------------------------------//
@@ -1843,22 +1788,22 @@ export default class extends Controller {
   increaseStat(stat, val = 1) {
     switch (stat) {
       case 'STR':
-        this.str += val;
+        this.stats[0] += val;
         break;
       case 'CON':
-        this.con += val;
+        this.stats[2] += val;
         break;
       case 'DEX':
-        this.dex += val;
+        this.stats[1] += val;
         break;
       case 'INT':
-        this.int += val;
+        this.stats[3] += val;
         break;
       case 'WIS':
-        this.wis += val;
+        this.stats[4] += val;
         break;
       case 'CHA':
-        this.cha += val;
+        this.stats[5] += val;
         break;
       default:
         return 'NaS';
