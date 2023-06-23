@@ -124,6 +124,8 @@ export default class extends Controller {
     'classTools',
     'subclassTools',
     'backgroundTools',
+    'racialASIBonus',
+    'subraceASIBonus',
     'castingClass',
     'castingAbility',
     'castingSaveDC',
@@ -289,6 +291,10 @@ export default class extends Controller {
         this.substatSpeedTarget.innerText = data.speed;
         this.raceToolChoices = data.tool_choice;
         this.raceASI = data.asi;
+
+        this.removeAllChildNodes(this.racialASIBonusTarget);
+        this.racialASIBonusTarget.append(this.getPTag(data.name));
+        this.putRacialASI(this.raceASI, this.racialASIBonusTarget);
         break;
 
       case 'subrace':
@@ -303,6 +309,13 @@ export default class extends Controller {
         this.aboutSubraceTarget.innerText = data.name;
         this.sheet_subrace = data.name;
         this.subraceASI = data.asi;
+
+        this.removeAllChildNodes(this.subraceASIBonusTarget);
+        this.subraceASIBonusTarget.append(this.getPTag(data.name));
+        this.putRacialASI(
+          this.subraceASI,
+          this.subraceASIBonusTarget
+        );
         break;
 
       case 'player_class':
@@ -533,6 +546,24 @@ export default class extends Controller {
     //at end of base calculations we should apply custom methods brought in by categories
     //e.g. the Barbarian Unarmored Defense
     this.customModifiers(); //tbw
+  }
+
+  putRacialASI(list, target) {
+    let stats = [
+      'Strength',
+      'Dexterity',
+      'Constitution',
+      'Intelligence',
+      'Wisdom',
+      'Charisma',
+    ];
+    for (let i = 0; i < 6; i++) {
+      if (list[i] > 0) {
+        target.append(
+          this.getTag('p', '', `+${list[i]} ${stats[i]}`)
+        );
+      }
+    }
   }
 
   //----------------------------- Final Pass methods ---------------------------------//
