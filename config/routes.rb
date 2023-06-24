@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'labels/index'
   resources :characters
   resources :races, param: :name, only: [ :show ]
   resources :subraces, param: :name, only: [ :show ]

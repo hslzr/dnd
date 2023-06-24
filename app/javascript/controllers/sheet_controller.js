@@ -1492,6 +1492,12 @@ export default class extends Controller {
         this.getTag('p', 'font-medium', item)
       );
     });
+
+    fetch(`/labels/index`)
+      .then((response) => response.json())
+      .then((data) => {
+        console.table(data);
+      });
   }
 
   // equipment utilities //
