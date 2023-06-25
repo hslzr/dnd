@@ -136,7 +136,10 @@ export default class extends Controller {
     'equipGP',
     'equipSP',
     'equipCP',
+    'equipWeapons',
     'equipArmor',
+    'equipTools',
+    'equipEquipment',
     'dialogLanguages',
     'languageModalList',
     'langLimit',
@@ -507,7 +510,8 @@ export default class extends Controller {
       this.subclassFeatureHandler();
     }
     //recalculate stats
-    this.calculateStats();
+    if (code != 2) this.calculateStats();
+
     this.updateStats();
     this.statModUpdate(1);
 
@@ -1149,6 +1153,8 @@ export default class extends Controller {
     );
     let index = 0;
     for (let choice of choices) {
+      console.log('choice: ', index);
+      console.log(choice);
       if (choice.length == 1) {
         this.increaseStat(choice[0], 2);
       } else {
@@ -1161,7 +1167,7 @@ export default class extends Controller {
       index++;
     }
     this.updateStats();
-    this.finalPass(1);
+    this.finalPass(2);
   }
 
   //----------------- TBIF Modal ------------------//
@@ -1487,17 +1493,34 @@ export default class extends Controller {
   putEquipmentToSheet(equipment) {
     //output selections to character sheet
     this.removeAllChildNodes(this.startingEquipmentTarget);
-    equipment.forEach((item) => {
-      this.startingEquipmentTarget.append(
-        this.getTag('p', 'font-medium', item)
-      );
-    });
 
     fetch(`/labels/index`)
       .then((response) => response.json())
       .then((data) => {
-        console.table(data);
+        this.targetEquipmentNodes(equipment, data);
       });
+  }
+
+  targetEquipmentNodes(equipment, data) {
+    equipment.forEach((item) => {
+      if (data.weapons.includes(item)) {
+        this.equipWeaponsTarget.append(
+          this.getTag('p', 'font-medium', item)
+        );
+      } else if (data.armor.includes(item)) {
+        this.equipArmorTarget.append(
+          this.getTag('p', 'font-medium', item)
+        );
+      } else if (data[tools].includes(item)) {
+        this.equipToolsTarget.append(
+          this.getTag('p', 'font-medium', item)
+        );
+      } else {
+        this.equipEquipmentTarget.append(
+          this.getTag('p', 'font-medium', item)
+        );
+      }
+    });
   }
 
   // equipment utilities //
@@ -1703,8 +1726,8 @@ export default class extends Controller {
   }
   updateStats() {
     this.strBaseTarget.innerText = this.stats[0];
-    this.conBaseTarget.innerText = this.stats[2];
     this.dexBaseTarget.innerText = this.stats[1];
+    this.conBaseTarget.innerText = this.stats[2];
     this.intBaseTarget.innerText = this.stats[3];
     this.chaBaseTarget.innerText = this.stats[5];
     this.wisBaseTarget.innerText = this.stats[4];
