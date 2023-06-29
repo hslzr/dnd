@@ -1158,8 +1158,6 @@ export default class extends Controller {
     );
     let index = 0;
     for (let choice of choices) {
-      console.log('choice: ', index);
-      console.log(choice);
       if (choice.length == 1) {
         this.increaseStat(choice[0], 2);
       } else {
@@ -1511,7 +1509,6 @@ export default class extends Controller {
     fetch(`/labels/weapons`)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         let unique = [...new Set(equipment)];
 
         for (let item of unique) {
