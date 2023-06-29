@@ -2,7 +2,7 @@ class WeaponsController < ApplicationController
   before_action :set_weapon, only: [ :show ]
 
   def index
-    @weapons = Weapon.all
+    @weapons = [1,2,3,4,5]
 
     respond_to do |format|
       format.json { render json: @weapons}

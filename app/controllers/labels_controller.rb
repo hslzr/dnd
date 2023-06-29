@@ -12,4 +12,11 @@ class LabelsController < ApplicationController
       format.json { render json: @names}
     end
   end
+
+  def weapons
+    @names = Weapon.all
+    respond_to do |format|
+      format.json { render json: @names}
+    end
+  end
 end

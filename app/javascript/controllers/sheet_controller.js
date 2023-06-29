@@ -192,6 +192,9 @@ export default class extends Controller {
     'equipmentBGStart',
     'equipmentButton',
     'startingEquipment',
+    'attackNames',
+    'attackBonuses',
+    'attackDamages',
   ];
 
   connect() {
@@ -1493,12 +1496,22 @@ export default class extends Controller {
   putEquipmentToSheet(equipment) {
     //output selections to character sheet
     this.removeAllChildNodes(this.startingEquipmentTarget);
+    this.removeAllChildNodes(this.attackNamesTarget);
+    this.removeAllChildNodes(this.attackBonusesTarget);
+    this.removeAllChildNodes(this.attackDamagesTarget);
 
     fetch(`/labels/index`)
       .then((response) => response.json())
       .then((data) => {
         this.targetEquipmentNodes(equipment, data);
       });
+
+    fetch(`/labels/weapons`)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+      });
+    
   }
 
   targetEquipmentNodes(equipment, data) {
@@ -1511,7 +1524,7 @@ export default class extends Controller {
         this.equipArmorTarget.append(
           this.getTag('p', 'font-medium', item)
         );
-      } else if (data[tools].includes(item)) {
+      } else if (data.tools.includes(item)) {
         this.equipToolsTarget.append(
           this.getTag('p', 'font-medium', item)
         );
