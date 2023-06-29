@@ -195,6 +195,7 @@ export default class extends Controller {
     'attackNames',
     'attackBonuses',
     'attackDamages',
+    'attackProps',
   ];
 
   connect() {
@@ -1510,6 +1511,15 @@ export default class extends Controller {
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
+        let unique = [...new Set(equipment)];
+
+        for(let item of unique) {
+          for(let weapon of data) {
+            if (weapon.name == item) {
+              this.populateAttack(weapon.name, weapon.hit_die, weapon.dmg_type, weapon.properties, weapon.wep_type);
+            }
+          }
+        }
       });
     
   }
@@ -1534,6 +1544,12 @@ export default class extends Controller {
         );
       }
     });
+  }
+
+  populateAttack(weapon, die, dmg_type, properties, weapon_class) {
+    this.attackNamesTarget.append(this.getTag('p','sheetcell w-full', weapon));
+    this.attackDamagesTarget.append(this.getTag('p','sheetcell w-full', `${die} ${dmg_type}`));
+    this.attackPropsTarget.append(this.getTag('p','sheetcell w-full', properties));
   }
 
   // equipment utilities //
