@@ -196,6 +196,7 @@ export default class extends Controller {
     'attackBonuses',
     'attackDamages',
     'attackProps',
+    'attackList',
   ];
 
   connect() {
@@ -1547,10 +1548,36 @@ export default class extends Controller {
   }
 
   populateAttack(weapon, die, dmg_type, properties, weapon_class) {
-    this.attackNamesTarget.append(this.getTag('p','sheetcell w-full', weapon));
-    this.attackDamagesTarget.append(this.getTag('p','sheetcell w-full', `${die} ${dmg_type}`));
-    this.attackPropsTarget.append(this.getTag('p','sheetcell w-full', properties));
-  }
+    let name = this.getTag('p','sheetcell w-1/4', weapon);
+    let damage = this.getTag('p','sheetcell w-1/4', `${die} ${dmg_type}`);
+    let props = this.getTag('p','sheetcell w-1/3', properties);
+
+    //bonus needs to check proficiencies since they could come from anywhere
+    let sourcelist = [ 
+      this.raceWeaponsTarget,
+      this.subraceWeaponsTarget,
+      this.classWeaponsTarget,
+      this.subclassWeaponsTarget,
+      this.backgroundWeaponsTarget
+    ];
+
+    let proficiencies = [];
+    for(let section of sourcelist) {
+      let items = section.children;
+      for(let item of items) {
+          let checker = item.innerText;
+          if(checker.charAt(-1) != ':') proficiencies.push(checker);
+        }
+      }
+    }
+    let unique = [...new Set(proficiencies)];
+    console.log(unique);
+
+    let row = this.getTag('div', 'flex p-2 w-full');
+    row.append(name);
+    row.append(damage);
+    row.append(props);
+  }// working here
 
   // equipment utilities //
 
