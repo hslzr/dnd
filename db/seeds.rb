@@ -139,7 +139,7 @@ Barbarian = PlayerClass.create(
       'Danger Sense: Advantage on DEX saves against effects you can see. You can`t do this if you are blinded, deafened, or incapacitated.'
     ],
     3=>['Primal Path: Choose a path that shapes the nature of your rage.'],
-    4=>[  ity Score Increase:"],
+    4=>["Abiliity Score Increase:"],
     5=>['Extra Attack: You may attack twice whenever you take the Attack actin on your turn.',
        'Fast Movement: Your speed increases by 10 feet while you aren`t wearing heavy armor'
       ],

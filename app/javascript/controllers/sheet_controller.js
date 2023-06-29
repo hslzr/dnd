@@ -1514,15 +1514,21 @@ export default class extends Controller {
         console.log(data);
         let unique = [...new Set(equipment)];
 
-        for(let item of unique) {
-          for(let weapon of data) {
+        for (let item of unique) {
+          for (let weapon of data) {
             if (weapon.name == item) {
-              this.populateAttack(weapon.name, weapon.hit_die, weapon.dmg_type, weapon.properties, weapon.wep_type);
+              this.populateAttack(
+                weapon.name,
+                weapon.hit_die,
+                weapon.dmg_type,
+                weapon.properties,
+                weapon.wep_type,
+                weapon.ranged
+              );
             }
           }
         }
       });
-    
   }
 
   targetEquipmentNodes(equipment, data) {
@@ -1547,37 +1553,70 @@ export default class extends Controller {
     });
   }
 
-  populateAttack(weapon, die, dmg_type, properties, weapon_class) {
-    let name = this.getTag('p','sheetcell w-1/4', weapon);
-    let damage = this.getTag('p','sheetcell w-1/4', `${die} ${dmg_type}`);
-    let props = this.getTag('p','sheetcell w-1/3', properties);
+  populateAttack(
+    weapon,
+    die,
+    dmg_type,
+    properties,
+    weapon_class,
+    ranged
+  ) {
+    let name = this.getTag('p', 'sheetcell w-1/4', weapon);
+    let damage = this.getTag(
+      'p',
+      'sheetcell w-1/4',
+      `${die} ${dmg_type}`
+    );
+    let props = this.getTag('p', 'sheetcell w-1/3', properties);
 
-    //bonus needs to check proficiencies since they could come from anywhere
-    let sourcelist = [ 
+    //all this is to figure out the attack bonus for each weapon
+    //based on proficiency and the weapon type, finesse is handled by using the highest bonus
+    let sourcelist = [
       this.raceWeaponsTarget,
       this.subraceWeaponsTarget,
       this.classWeaponsTarget,
       this.subclassWeaponsTarget,
-      this.backgroundWeaponsTarget
+      this.backgroundWeaponsTarget,
     ];
 
     let proficiencies = [];
-    for(let section of sourcelist) {
+    for (let section of sourcelist) {
       let items = section.children;
-      for(let item of items) {
-          let checker = item.innerText;
-          if(checker.charAt(-1) != ':') proficiencies.push(checker);
-        }
+      for (let item of items) {
+        let checker = item.innerText;
+        if (checker.slice(-1) != ':') proficiencies.push(checker);
       }
     }
     let unique = [...new Set(proficiencies)];
-    console.log(unique);
+    let bonus = 0;
+
+    //add proficiency
+    if (
+      unique.includes(name) ||
+      unique.includes(this.capitalize(weapon_class))
+    )
+      bonus += this.prof_mod;
+
+    //then, if finesse we have to choose the highest bonus of dex/str for the weapon
+    let str_bonus = this.calcMod(this.stats[0]);
+    let dex_bonus = this.calcMod(this.stats[1]);
+
+    if (properties.includes('Finesse')) {
+      bonus += Math.max(str_bonus, dex_bonus);
+    } else {
+      //otherwise we depend on the ranged bool to determine which bonus to use
+      ranged == 1 ? (bonus += dex_bonus) : (bonus += str_bonus);
+    }
+
+    let atk_bonus = this.getTag('p', 'sheetcell w-1/4', bonus);
 
     let row = this.getTag('div', 'flex p-2 w-full');
     row.append(name);
+    row.append(atk_bonus);
     row.append(damage);
     row.append(props);
-  }// working here
+    this.attackListTarget.append(row);
+  }
 
   // equipment utilities //
 
@@ -1948,5 +1987,10 @@ export default class extends Controller {
     categories.set('background', []);
     categories.set('feats', []);
     return categories;
+  }
+
+  capitalize(string) {
+    let first = string.charAt(0).toUpperCase();
+    return first + string.slice(1);
   }
 }
