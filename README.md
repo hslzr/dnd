@@ -6,7 +6,12 @@
 
 * Tailwind CSS
 
-The seed file is all-important
+The seed file is one big copyright violation, this is not for profit or public use.
 
-# Bugs to fix
-Switching from a spellcasting class to a non-spellcasting class causes a fault and doesn't clear the spellstats
+# Functions needed
+Working on the seed and subraces are adding these things I can't handle yet
+ - speed modifier
+ - Cantrip or spells added,
+    specifically or chosen from a spell list,
+    with a specific spellcasting stat
+ - Extra languages on subrace not working properly I think

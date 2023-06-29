@@ -104,6 +104,55 @@ SliverRace.subraces.create(
   tools: ['Jeweler\'s Tols'],
 )
 
+ElvenRace = Race.create(
+  name: 'Elf',
+  asi: [0,2,0,0,0,0],
+  age_limit: 750,
+  heightlow: "5'",
+  heighthigh: "6'10''",
+  languages: ['Common', 'Elvish'],
+  speed: 30,
+  features: [
+    'Darkvision',
+    'Keen Senses: You have proficiency in Perception.',
+    'Fey Ancestry: You have advantage on saving throws against being charmed, and can\'t be put to sleep magically.',
+    'Trance: Elves don\'t need to sleep. Instead they meditate deeply for 4 hours a day.',
+    ],
+  skills: ['Perception'],
+)
+
+ElvenRace.subraces.create(
+  name: 'High Elf',
+  asi: [0,0,0,1,0,0],
+  features: [
+    'Elven Weapon Training: You have proficiency with the longsword, shortsword, shortbow, and longbow.',
+    'Cantrip: You know one cantrip of uyour choice from the wizard spell list. Intelligence is your spellcasting stat for it.',
+    'Extra Language: You can speak read, and write one extra language.',
+  ],
+  extra_languages: 1,
+)
+
+ElvenRace.subraces.create(
+  name: 'Wood Elf',
+  asi: [0,0,0,0,1,0],
+  features: [
+    'Elven Weapon Training: You have proficiency with the longsword, shortsword, shortbow, and longbow',
+    'Fleet of Foot: Your base walking speed increases to 35 feet.',
+    'Mask of the Wild: You can attempt to hide even when you are onluy lightly obscured.',
+  ]
+)
+
+ElvenRace.subraces.create(
+  name: 'Drow',
+  asi: [0,0,0,0,0,1],
+  features: [
+    'Superior Darkvision: Your darkvision has a radius of 120 feet.',
+    'Sunlight Sensitivity: You have disadvantage on attack rolls and on Wisdom(Perception) checks that rely on sight when you, the target of your attack, or whatever you are trying to perceive is in direct sunlight.',
+    'Drow Magic: You know the dancing lights cantrip. When yuo reach 3rd level you can cast faerie fire once per long rest. At 5th level you can cast darkness once per long rest. Charisma is your spellcasting ability for these spells.',
+    'Drow Weapon Training: You have proficiency with rapiers, shortswords, and hand crossbows.',
+  ]
+)
+
 Barbarian = PlayerClass.create(
   name: 'Barbarian',
   hit_die: 12,
