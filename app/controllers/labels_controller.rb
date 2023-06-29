@@ -16,7 +16,14 @@ class LabelsController < ApplicationController
   def weapons
     @names = Weapon.all
     respond_to do |format|
-      format.json { render json: @names}
+      format.json { render json: @names }
+    end
+  end
+
+  def armor
+    @names = Armor.all
+    respond_to do |format|
+      format.json { render json: @names }
     end
   end
 end

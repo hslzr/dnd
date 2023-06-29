@@ -126,7 +126,6 @@ export default class extends Controller {
     'backgroundTools',
     'racialASIBonus',
     'subraceASIBonus',
-    'castingClass',
     'castingAbility',
     'castingSaveDC',
     'castingAttackBonus',
@@ -251,6 +250,9 @@ export default class extends Controller {
     //locking modals until their content is able to be populated
     this.langButtonTarget.disabled = true;
     this.classSkillsButtonTarget.disabled = true;
+
+    //equipped armor list, we have to add shields to equipped armor if both present and a 1 handed weapon is in inventory
+    this.equipped_armor = [];
 
     //spells
     this.spellList = false; //we'll try setting this to a correct collection of spells with a new fetch in catUpdate
@@ -384,6 +386,33 @@ export default class extends Controller {
           fetch(`/class_spell_lists/${data.name}`)
             .then((response) => response.json())
             .then((data) => (this.spellList = data));
+        } else {
+          this.spellList = false;
+          //i reset the fields here in case it's been switched from another class
+          this.castingAbilityTarget.innerText = '';
+          this.castingSaveDCTarget.innerText = '';
+          this.castingAttackBonusTarget.innerText = '';
+          this.castingSpellLimitTarget.innerText = '';
+          this.castingCantripLimitTarget.innerText = '';
+          this.removeAllChildNodes(this.spellsTaken0Target);
+          this.removeAllChildNodes(this.spellsTaken1Target);
+          this.removeAllChildNodes(this.spellsTaken2Target);
+          this.removeAllChildNodes(this.spellsTaken3Target);
+          this.removeAllChildNodes(this.spellsTaken4Target);
+          this.removeAllChildNodes(this.spellsTaken5Target);
+          this.removeAllChildNodes(this.spellsTaken6Target);
+          this.removeAllChildNodes(this.spellsTaken7Target);
+          this.removeAllChildNodes(this.spellsTaken8Target);
+          this.removeAllChildNodes(this.spellsTaken9Target);
+          this.spellSlots1Target.innerText = 0;
+          this.spellSlots2Target.innerText = 0;
+          this.spellSlots3Target.innerText = 0;
+          this.spellSlots4Target.innerText = 0;
+          this.spellSlots5Target.innerText = 0;
+          this.spellSlots6Target.innerText = 0;
+          this.spellSlots7Target.innerText = 0;
+          this.spellSlots8Target.innerText = 0;
+          this.spellSlots9Target.innerText = 0;
         }
         break;
 
@@ -1287,6 +1316,8 @@ export default class extends Controller {
   }
 
   populateSpellModal(max_level) {
+    //clear it first of the old sheet if we are switching
+    this.removeAllChildNodes(this.spellsModalListTarget);
     for (let i = 0; i <= max_level; i++) {
       let frame = document.createElement('div');
       //foreach element of feature[1] put a radio button
@@ -1381,6 +1412,8 @@ export default class extends Controller {
   //-----------------Equipment Modal ------------------//
 
   chooseEquipment() {
+    this.removeAllChildNodes(this.equipmentClassStartTarget);
+    this.removeAllChildNodes(this.equipmentBGStartTarget);
     let class_choices = false;
     let bg_choices = false;
     if (this.class_equip_choices['choices'].length > 0)
@@ -1500,6 +1533,9 @@ export default class extends Controller {
     this.removeAllChildNodes(this.attackBonusesTarget);
     this.removeAllChildNodes(this.attackDamagesTarget);
 
+    //reset equipped armor so we can recalculate AC correctly
+    this.equipped_armor = [];
+
     fetch(`/labels/index`)
       .then((response) => response.json())
       .then((data) => {
@@ -1528,6 +1564,8 @@ export default class extends Controller {
       });
   }
 
+  //puts equipment under the correct target and adds armor to this.equipped_armor
+  //I calculate AC here because I'm not sure of a better place in the lifecycle for it
   targetEquipmentNodes(equipment, data) {
     equipment.forEach((item) => {
       if (data.weapons.includes(item)) {
@@ -1538,6 +1576,8 @@ export default class extends Controller {
         this.equipArmorTarget.append(
           this.getTag('p', 'font-medium', item)
         );
+        //for AC calculation
+        this.equipped_armor.push(item);
       } else if (data.tools.includes(item)) {
         this.equipToolsTarget.append(
           this.getTag('p', 'font-medium', item)
@@ -1548,8 +1588,64 @@ export default class extends Controller {
         );
       }
     });
+
+    if (this.equipped_armor.length > 0) {
+      fetch(`/labels/armor`)
+        .then((response) => response.json())
+        .then((data) => {
+          this.updateEquipmentAC(data);
+        });
+    } else {
+      //unarmored defense for barb and monk
+      if (this.choices.get('player_class') == 'Barbarian') {
+        this.substatACTarget.innerText =
+          10 +
+          this.calcMod(this.stats[1]) +
+          this.calcMod(this.stats[2]);
+      }
+      if (this.choices.get('player_class') == 'Monk') {
+        this.substatACTarget.innerText =
+          10 +
+          this.calcMod(this.stats[1]) +
+          this.calcMod(this.stats[4]);
+      }
+    }
   }
 
+  updateEquipmentAC(armor) {
+    let armor_class = 0;
+    //get rid of duplicates in case they get in there somehow, later seed additions could do it
+    this.equipped_armor = [...new Set(this.equipped_armor)];
+    for (let item of this.equipped_armor) {
+      if (item == 'Shield') {
+        armor_class += 2;
+      } else {
+        for (let piece of armor) {
+          //if we get a match, make sure we meet the strength requirement before adding the ac bonus
+          if (item == piece.name && piece.str_req <= this.stats[0]) {
+            armor_class += piece.base_ac;
+            //armor type limits the dexterity bonus available
+            switch (piece.arm_type) {
+              case 'Light':
+                armor_class += this.calcMod(this.stats[1]);
+                break;
+              case 'Medium':
+                armor_class += Math.min(
+                  this.calcMod(this.stats[1]),
+                  2
+                );
+                break;
+              default:
+                break;
+            }
+          }
+        }
+      }
+    }
+    this.substatACTarget.innerText = armor_class;
+  }
+
+  //puts a single row to the attackList targt for each unique weapon in starting equipment
   populateAttack(
     weapon,
     die,
@@ -1617,7 +1713,7 @@ export default class extends Controller {
 
   // equipment utilities //
 
-  //working select.value will be wep.id
+  //select boxes based on weapon types, simple/martial, for starting equipment
   appendWeaponSelectToTarget(wep_type, target) {
     let selector = document.createElement('select');
     selector.id = 'testing';
@@ -1643,6 +1739,7 @@ export default class extends Controller {
       });
   }
 
+  //ensure only a single option is selected for one row
   validateEquipmentRow(row) {
     let row_output;
 
