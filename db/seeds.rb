@@ -153,6 +153,131 @@ ElvenRace.subraces.create(
   ]
 )
 
+HalflingRace = Race.create(
+  name: 'Halfling',
+  asi: [0,2,0,0,0,0],
+  age_limit: 250,
+  heightlow: "3'",
+  heighthigh: "4'",
+  languages: ['Common', 'Halfling'],
+  speed: 25,
+  features: [
+    'Lucky: When you roll a 1 on a d20 for an attack, ability check, or save, you can reroll the die and must use the new roll.',
+    'Brave: You have advantage on saving throws against being frightened.',
+    'Halfling Nimbleness: You can move through the space of any creature that is of a size larger than yours.',
+  ],
+)
+
+HalflingRace.subraces.create(
+  name: 'Lightfoot',
+  asi: [0,0,0,0,0,1],
+  features: [
+    'Naturally Stealthy: You can attempt to hide even when you are only obscured by a creature one size larger than you.',
+  ]
+)
+
+HalflingRace.subraces.create(
+  name: 'Stout',
+  asi: [0,0,1,0,0,0],
+  features: [
+    'Stout Resilience: You have advantage on saving throws against poison, and you have resistance against poison damage.',
+  ]
+)
+
+HumanRace = Race.create(
+  name: 'Human',
+  asi: [1,1,1,1,1,1],
+  age_limit: 90,
+  heightlow: "5'",
+  heighthigh: "6'6''",
+  languages: ['Common'],
+  extra_languages: 1,
+  speed: 30,
+)
+
+DragonbornRace = Race.create(
+  name: 'Dragonborn',
+  asi: [2,0,0,0,0,1],
+  age_limit: 80,
+  heightlow: "6'",
+  heighthigh: "7'",
+  languages: ['Common, Draconic'],
+  speed: 30,
+  features: [
+    'Draconic Ancestry: You have a draconic ancestry that determines your breath weapon.',
+    'Breath Weapon: You can use your action to exhale destructive energy. Each creature in the area must make a saving throw determined by your breath weapon with DC equal to 8 + your CON modifier + your proficiency bonus. A creature takes 2d6 damage on a fail and half on a success. The damage increases to 3d6 at 6th level, 4d6 at 11th level and 5d6 at 16th level. You can\'t use it more than once per short rest.',
+    'Damage Resistance: You have resistance to the damage type associated with your draconic ancestry.',
+  ],
+)
+
+GnomeRace = Race.create(
+  name: 'Gnome',
+  asi: [0,0,0,2,0,0],
+  age_limit: 500,
+  heightlow: "3'",
+  heighthigh: "4'",
+  languages: ['Common, Gnomish'],
+  speed: 25,
+  features: [
+    'Darkvision: You can see in dim light within 60 feet of you as if it were brightly lit, and in darkness as if it were dim light, but you can\'t discern color.',
+    'Gnome Cunning: You have advantage on all Intelligence, Wisdom, and Charisma saving throws against magic.',
+  ],
+)
+
+GnomeRace.subraces.create(
+  name: 'Forest Gnome',
+  asi: [0,1,0,0,0,0],
+  features: [
+    'Illusionist: You know the minor illusion cantrip and cast it with Intelligence.',
+    'Speak with Small Beasts: Through sounds and gestures you can communicate simple ideas with small or smaller beasts.',
+  ],
+)
+
+GnomeRace.subraces.create(
+  name: 'Rock Gnome',
+  asi: [0,0,1,0,0,0],
+  features: [
+    'Artificer\'s Lore: Whenever you make an Intelligence(History) check related to magic items, alchemical objects, or technological devices, you can add twice your proficiency bonus, instead of any proficiency bonus you would normally apply.',
+    'Tinker: You have proficiency with Tinker\'s Tools. Using these tools, you can spend 1 hour and 10gp worth of materials to construct a Tiny clockwork device which ceases to function after 24 hours unless you spend 1 hour repairing it.',
+  ],
+)
+
+HalfElfRace = Race.create(
+  name: 'Half Elf',
+  asi: [0,0,0,0,0,2],
+  age_limit: 200,
+  heightlow: "5'",
+  heighthigh: "6'",
+  languages: ['Common, Elvish'],
+  extra_languages: 1,
+  speed: 30,
+  features: [
+    'Adaptable: Choose two ability scores to increase by one.',
+    'Darkvision: You can see in dim light within 60 feet of you as if it were brightly lit, and in darkness as if it were dim light, but you can\'t discern color.',
+    'Fey Ancestry: You have advantage on saving throws against being charmed, and magic can\'t put you to sleep.',
+    'Skill Versatility: You gain proficiency in two skills of your choice.',
+  ],
+)
+
+HalfOrcRace = Race.create(
+  name: 'Half Orc',
+  asi: [2,0,1,0,0,0],
+  age_limit: 80,
+  heightlow: "5'",
+  heighthigh: "7'",
+  languages: ['Common, Orc'],
+  speed: 30,
+  skills: ['Intimidation'],
+  features: [
+    'Darkvision: You can see in dim light within 60 feet of you as if it were brightly lit, and in darkness as if it were dim light, but you can\'t discern color.',
+    'Menacing: You have proficiency in Intimidation.',
+    'Relentless Endurance: When you are reduced to 0 hit points but not killed outright, you can drop to 1 hit point instead once per long rest.',
+    'Savage Attacks: When you score a critical hit with a melee weapon attack, you can roll one of the weapon\'s damage dice one additional time and add it to the extra damage.',
+  ],
+)
+
+
+
 Barbarian = PlayerClass.create(
   name: 'Barbarian',
   hit_die: 12,
