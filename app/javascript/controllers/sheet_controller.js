@@ -305,6 +305,16 @@ export default class extends Controller {
         this.removeAllChildNodes(this.racialASIBonusTarget);
         this.racialASIBonusTarget.append(this.getPTag(data.name));
         this.putRacialASI(this.raceASI, this.racialASIBonusTarget);
+
+        //we have to handle races with no subrace by assigning the blank subrace here
+        if (data.sub_count == 0) {
+          this.aboutSubraceTarget.innerText = '';
+          this.sheet_subrace = 'None';
+          this.subraceASI = [0, 0, 0, 0, 0, 0];
+
+          this.removeAllChildNodes(this.subraceASIBonusTarget);
+          this.choices.set('subrace', 'None');
+        }
         break;
 
       case 'subrace':
@@ -484,7 +494,11 @@ export default class extends Controller {
 
     //once the changed category has been updated on the sheet, we want to finish up if possible
     //this runs if choices is entirely filled out
-    if (this.isChoicesFull() && this.stats[0] != 0) {
+
+    if (
+      this.isChoicesFull() &&
+      this.stats.reduce((x, y) => x + y, 0) > 6
+    ) {
       this.finalPass();
     }
   }
@@ -563,7 +577,7 @@ export default class extends Controller {
 
     this.trackingHitDiceTarget.innerText = `${this.level}d${this.hit_die}`;
 
-    if (code == 0) {
+    if (code == 0 && this.stats.reduce((x, y) => x + y, 0) > 6) {
       this.activateButtons();
 
       if (this.nosubchoice) {
@@ -603,6 +617,11 @@ export default class extends Controller {
         );
       }
     }
+  }
+
+  handleBlankSubrace(data) {
+    console.log('subrace check');
+    console.log(data);
   }
 
   //----------------------------- Final Pass methods ---------------------------------//
@@ -941,9 +960,10 @@ export default class extends Controller {
     //we clear the output here, all we have to do is limit the number of boxes you can check
 
     let chosen = [];
+    //the checkboxes are wrapped in a span for alignment
     this.languageModalListTarget.childNodes.forEach((node) => {
-      if (node.firstChild.checked) {
-        chosen.push(node.firstChild.value);
+      if (node.firstChild.firstChild.checked) {
+        chosen.push(node.firstChild.firstChild.value);
       }
     });
     if (
@@ -974,9 +994,10 @@ export default class extends Controller {
     this.removeAllChildNodes(this.raceToolsTarget);
     let racename = this.choices.get('race');
     let chosen = [];
+    //the checkboxes are wrapped in a span for alignment
     this.toolsModalListTarget.childNodes.forEach((node) => {
-      if (node.firstChild.checked) {
-        chosen.push(node.firstChild.value);
+      if (node.firstChild.firstChild.checked) {
+        chosen.push(node.firstChild.firstChild.value);
       }
     });
     if (chosen.length == 1) {
@@ -1004,9 +1025,10 @@ export default class extends Controller {
     this.removeAllChildNodes(this.classSkillsTarget);
 
     let chosen = [];
+    //the checkboxes are wrapped in a span for alignment
     this.classSkillsModalListTarget.childNodes.forEach((node) => {
-      if (node.firstChild.checked) {
-        chosen.push(node.firstChild.value);
+      if (node.firstChild.firstChild.checked) {
+        chosen.push(node.firstChild.firstChild.value);
       }
     });
     if (
@@ -1038,7 +1060,6 @@ export default class extends Controller {
     });
   }
 
-  //Adding HTML: add Turbo?
   populateOptionalFeatureModal(feature, target) {
     let frame = this.getTag('div', 'flex flex-col gap-2 p-2');
     let title = this.getTag(
@@ -1766,12 +1787,17 @@ export default class extends Controller {
   //----------------- Modal Utilities ------------------//
   populateListModal(target, options) {
     options.forEach((option) => {
-      let container = this.getTag('div', 'flex flex-col gap-2 p-2');
+      let container = this.getTag(
+        'div',
+        'flex gap-2 align-center border border-white'
+      );
+      let align_span = this.getTag('span', '');
       let check = document.createElement('input');
       check.type = 'checkbox';
       check.value = option;
 
-      container.append(check);
+      align_span.append(check);
+      container.append(align_span);
       container.append(option);
 
       target.appendChild(container);

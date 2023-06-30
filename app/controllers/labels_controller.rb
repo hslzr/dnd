@@ -26,4 +26,13 @@ class LabelsController < ApplicationController
       format.json { render json: @names }
     end
   end
+
+  def subs
+    @race = Race.find_by(name: params[:name])
+    @count = @race.subraces.count
+
+    respond_to do |format|
+      format.json { render json: @count }
+    end
+  end
 end

@@ -16,6 +16,7 @@ class CreateRaces < ActiveRecord::Migration[7.0]
       t.string :size, default: 'medium'
       t.integer :speed, default: 15
       t.string :features, array: true, default: []
+      t.integer :sub_count, default: 0
 
       t.timestamps
     end

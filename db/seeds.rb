@@ -31,6 +31,12 @@ User.create(
   password_confirmation: "netmap"
 )
 
+#if no subrace we need to apply a defuault one with no modifiers
+BlankSubrace = Subrace.create(
+  name: 'None',
+  extra_languages: 0
+)
+
 DwarvenRace = Race.create(
   name: 'Dwarf',
   asi: [0,0,2,0,0,0],
@@ -50,7 +56,8 @@ DwarvenRace = Race.create(
     'Darkvision',
     'Dwarven Resilience: Advantage on Poison saves and resistance to Poison damage.',
     'Stonecunning: Whenever you make an Intelligence (History) check related to the origin of stonework, you are considered proficient in the History skill and add double your proficiency bonus to the check, instead of your normal proficiency bonus.',
-  ]
+  ],
+  sub_count: 2,
 )
 
 DwarvenRace.subraces.create(
@@ -85,7 +92,8 @@ SliverRace = Race.create(
     'Darkvision',
     'Sliverskin: Resistance to Psychic damage.',
     'Hive Wisdom: You have advantage on Wisdom(Perception) checks underground.',
-  ]
+  ],
+  sub_count: 2,
 )
 
 SliverRace.subraces.create(
@@ -119,6 +127,7 @@ ElvenRace = Race.create(
     'Trance: Elves don\'t need to sleep. Instead they meditate deeply for 4 hours a day.',
     ],
   skills: ['Perception'],
+  sub_count: 3,
 )
 
 ElvenRace.subraces.create(
@@ -166,6 +175,7 @@ HalflingRace = Race.create(
     'Brave: You have advantage on saving throws against being frightened.',
     'Halfling Nimbleness: You can move through the space of any creature that is of a size larger than yours.',
   ],
+  sub_count: 2,
 )
 
 HalflingRace.subraces.create(
@@ -222,6 +232,7 @@ GnomeRace = Race.create(
     'Darkvision: You can see in dim light within 60 feet of you as if it were brightly lit, and in darkness as if it were dim light, but you can\'t discern color.',
     'Gnome Cunning: You have advantage on all Intelligence, Wisdom, and Charisma saving throws against magic.',
   ],
+  sub_count: 2,
 )
 
 GnomeRace.subraces.create(
@@ -276,6 +287,21 @@ HalfOrcRace = Race.create(
   ],
 )
 
+TieflingRace = Race.create(
+  name: 'Tiefling',
+  asi: [0,0,0,1,0,2],
+  age_limit: 100,
+  heightlow: "5'",
+  heighthigh: "6'6''",
+  languages: ['Common, Infernal'],
+  speed: 30,
+  skills: ['Intimidation'],
+  features: [
+    'Darkvision: You can see in dim light within 60 feet of you as if it were brightly lit, and in darkness as if it were dim light, but you can\'t discern color.',
+    'Hellish Resistance: You have resistance to fire damage.',
+    'Infernal Legacy: You know the thaumaturgy cantrip. At 3rd level, you can cast hellish rebuke as a 2nd level spell once per long rest. At 5th level you can cast darkness once per long rest. Charisma is your spellcasting ability for these spells.',
+  ],
+)
 
 
 Barbarian = PlayerClass.create(

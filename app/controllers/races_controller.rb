@@ -15,6 +15,13 @@ class RacesController < ApplicationController
     end
   end
 
+  def subs
+    @subs = Race.find_by(name: params[:name]).subraces.count
+    respond_to do |format|
+      format.json { render json: @subs }
+    end
+  end
+
   private
   def set_race
     @race = Race.find_by(name: params[:name])
