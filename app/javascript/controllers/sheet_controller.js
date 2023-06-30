@@ -94,6 +94,7 @@ export default class extends Controller {
     'raceFeatures',
     'subraceFeatures',
     'classFeatures',
+    'classFeaturesChoices',
     'subclassFeatures',
     'subclassFeaturesChoices',
     'backgroundFeatures',
@@ -145,6 +146,10 @@ export default class extends Controller {
     'dialogClassSkills',
     'classSkillsModalList',
     'classSkillsLimit',
+    'classFeaturesModalList',
+    'classFeaturesLimit',
+    'dialogClassFeatures',
+    'classFeaturesButton',
     'dialogTools',
     'toolsModalList',
     'toolsLimit',
@@ -619,11 +624,6 @@ export default class extends Controller {
     }
   }
 
-  handleBlankSubrace(data) {
-    console.log('subrace check');
-    console.log(data);
-  }
-
   //----------------------------- Final Pass methods ---------------------------------//
   setSkillMap() {
     this.skills.set('Athletics', [
@@ -777,6 +777,30 @@ export default class extends Controller {
     this.putClassFeatures(
       this.choices.get('player_class'),
       classFeatures,
+      this.classFeaturesTarget
+    );
+
+    let classChoices = [];
+    this.nochoices = true;
+
+    if (this.classFeatureChoices != {}) {
+      this.chooseClassFeatures(
+        Object.entries(this.classFeatureChoices)
+      );
+      this.nochoices = false;
+    }
+
+    Object.entries(this.classFeatureList).forEach((entry) => {
+      if (parseInt(entry[0]) <= this.level) {
+        entry[1].forEach((entry) => {
+          classChoices.push(entry);
+        });
+      }
+    });
+
+    this.putClassFeatures(
+      this.choices.get('player_class'),
+      classChoices,
       this.classFeaturesTarget
     );
   }
@@ -1009,7 +1033,7 @@ export default class extends Controller {
       event.target.parentNode.close();
     }
   }
-  //----------------- Class Modal ------------------//
+  //----------------- Class Skills Modal ------------------//
   chooseClassSkills() {
     this.removeAllChildNodes(this.classSkillsModalListTarget);
 
@@ -1043,6 +1067,53 @@ export default class extends Controller {
       event.target.parentNode.close();
     }
     this.resetProficiencies();
+  }
+
+  //----------------- Class Features Modal ------------------//
+  chooseClassFeatures(features) {
+    this.removeAllChildNodes(this.classFeaturesModalListTarget);
+    this.classFeaturesLimitTarget.innerText = 'Choose 1 of Each';
+    features.forEach((item) => {
+      if (parseInt(item[0]) <= this.level) {
+        this.populateOptionalFeatureModal(
+          item,
+          this.classFeaturesModalListTarget
+        );
+      }
+    });
+  }
+
+  submitClassFeaturesChoices(event) {
+    let chosen = [];
+    this.classFeaturesModalListTarget.childNodes.forEach((node) => {
+      node.childNodes.forEach((subnode) => {
+        let item = subnode.firstChild;
+        if (item.type == 'checkbox' && item.checked) {
+          chosen.push([item.id, item.value]);
+        }
+      });
+    });
+
+    let check = [];
+    let output = [];
+    let validated = true;
+    chosen.forEach((choice) => {
+      if (check.includes(choice[0])) {
+        validated = false;
+      } else {
+        check.push(choice[0]);
+        output.push(choice[1]);
+      }
+    });
+
+    if (validated) {
+      this.putModalChecksToSheet(
+        output,
+        this.classFeaturesChoicesTarget,
+        this.choices.get('player_class')
+      );
+      event.target.parentNode.close();
+    }
   }
   //----------------- Subclass Modal ------------------//
   chooseSubclassFeatures(features) {
@@ -1809,6 +1880,7 @@ export default class extends Controller {
     let buttons = [
       this.langButtonTarget,
       this.classSkillsButtonTarget,
+      this.classFeaturesButtonTarget,
       this.toolsButtonTarget,
       this.subclassButtonTarget,
       this.spellsButtonTarget,
@@ -1836,6 +1908,9 @@ export default class extends Controller {
   }
   showClassSkillsDialog() {
     this.dialogClassSkillsTarget.showModal();
+  }
+  showClassFeaturesDialog() {
+    this.dialogClassFeaturesTarget.showModal();
   }
   showToolsDialog() {
     this.dialogToolsTarget.showModal();

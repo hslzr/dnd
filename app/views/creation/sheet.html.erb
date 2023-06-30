@@ -22,6 +22,7 @@
     <button class="px-4 py-2 rounded-lg bg-blue-400 border-b-2 border-r-2" data-action="sheet#randomStats">Random Stats</button>
     <button class="px-4 py-2 rounded-lg bg-orange-300 border-b-2 border-r-2" data-action="sheet#showLangDialog" data-sheet-target="langButton">Extra Languages</button>
     <button class="px-4 py-2 rounded-lg bg-orange-300 border-b-2 border-r-2" data-action="sheet#showClassSkillsDialog" data-sheet-target="classSkillsButton">Class Skills</button>
+    <button class="px-4 py-2 rounded-lg bg-orange-300 border-b-2 border-r-2" data-action="sheet#showClassFeaturesDialog" data-sheet-target="classFeaturesButton">Class Features</button>
     <button class="px-4 py-2 rounded-lg bg-orange-300 border-b-2 border-r-2" data-action="sheet#showToolsDialog" data-sheet-target="toolsButton">Racial Tools</button>
     <button class="px-4 py-2 rounded-lg bg-orange-300 border-b-2 border-r-2" data-action="sheet#showSubclassFeaturesDialog" data-sheet-target="subclassButton">Subclass Features</button>
     <button class="px-4 py-2 rounded-lg bg-orange-300 border-b-2 border-r-2" data-action="sheet#showASIDialog" data-sheet-target="asiButton">Ability Score Increase</button>
@@ -328,6 +329,7 @@
             <div data-sheet-target="raceFeatures"></div>
             <div data-sheet-target="subraceFeatures"></div>
             <div data-sheet-target="classFeatures"></div>
+            <div data-sheet-target="classFeaturesChoices"></div>
             <div data-sheet-target="subclassFeatures"></div>
             <div data-sheet-target="subclassFeaturesChoices"></div>
             <div data-sheet-target="backgroundFeatures"></div>
@@ -572,6 +574,12 @@
         <div data-sheet-target="classSkillsModalList"></div>
       <p class="font-black text-sm" data-sheet-target="classSkillsLimit"></p>
       <button class="px-8 py-2 rounded-lg bg-blue-400 border-b-2 border-r-2" data-action="sheet#submitClassSkillsChoices">Submit</button>
+    </dialog>
+    <dialog class="border border-black rounded-md bg-gray-300" data-controller="modal"  data-sheet-target="dialogClassFeatures">
+      <p class="text-2xl font-bold">Class Features</p>
+        <div data-sheet-target="classFeaturesModalList"></div>
+      <p class="font-black text-sm" data-sheet-target="classFeaturesLimit"></p>
+      <button class="px-8 py-2 rounded-lg bg-blue-400 border-b-2 border-r-2" data-action="sheet#submitClassFeaturesChoices">Submit</button>
     </dialog>
     <dialog class="border border-black rounded-md bg-gray-300" data-controller="modal"  data-sheet-target="dialogTools">
       <p class="text-2xl font-bold">Racial Tools</p>
