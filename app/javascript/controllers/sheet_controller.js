@@ -341,6 +341,7 @@ export default class extends Controller {
         this.hit_die = data.hit_die;
         this.saving_throws = data.saving_throws;
         this.classFeatureList = data.features;
+        this.classFeatureChoices = data.custom;
         this.spell_table = data.spell_table;
         this.class_equip_choices = data.equipment_choices;
         //the seed stores saving throw proficiencies as indexes to this array
@@ -1029,23 +1030,26 @@ export default class extends Controller {
 
     features.forEach((item) => {
       if (parseInt(item[0]) <= this.level) {
-        this.populateSubclassFeatureModal(item);
+        this.populateOptionalFeatureModal(
+          item,
+          this.subclassFeaturesModalListTarget
+        );
       }
     });
   }
 
-  populateSubclassFeatureModal(feature) {
-    let frame = document.createElement('div');
-    //foreach element of feature[1] put a radio button
-    frame.class = 'flex flex-col gap-2 p-2';
-
-    let title = document.createElement('h4');
-    title.class = 'text-center font-bold text-xl';
-    title.innerText = `Level ${feature[0]}`;
+  //Adding HTML: add Turbo?
+  populateOptionalFeatureModal(feature, target) {
+    let frame = this.getTag('div', 'flex flex-col gap-2 p-2');
+    let title = this.getTag(
+      'h4',
+      'text-center font-bold text-xl',
+      `Level ${feature[0]}`
+    );
     frame.append(title);
+
     feature[1].forEach((item) => {
-      let container = document.createElement('div');
-      container.class = 'flex gap-2 p-2';
+      let container = this.getTag('div', 'flex gap-2 p-2');
       let check = document.createElement('input');
       check.type = 'checkbox';
       check.value = item;
@@ -1054,7 +1058,7 @@ export default class extends Controller {
       container.append(item);
       frame.append(container);
     });
-    this.subclassFeaturesModalListTarget.append(frame);
+    target.append(frame);
   }
 
   submitSubclassFeaturesChoices(event) {
@@ -1215,20 +1219,18 @@ export default class extends Controller {
 
     kinds.forEach((kind) => {
       let list = kind[0];
-      let frame = document.createElement('div');
-      frame.class = 'flex flex-col gap-2 p-2';
-
-      let title = document.createElement('h4');
-      title.class = 'text-center font-bold text-xl';
-      title.innerText = kind[1];
-
+      let frame = this.getTag('div', 'flex flex-col gap-2 p-2');
+      let title = this.getTag(
+        'h4',
+        'text-center font-bold text-xl',
+        kind[1]
+      );
       frame.append(title);
       //each with index over this.****
       for (let i = 0; i < list.length; i++) {
         let item = list[i];
 
-        let container = document.createElement('div');
-        container.class = 'flex gap-2 p-2';
+        let container = this.getTag('div', 'flex gap-2 p-2');
         let check = document.createElement('input');
         check.type = 'checkbox';
         check.value = kind[1];
@@ -1292,9 +1294,7 @@ export default class extends Controller {
 
     let i = 0;
     indexes.forEach((index) => {
-      let tag = document.createElement('p');
-      tag.class = 'text-center';
-      tag.innerText = targets[i][1][index]; //this.***[index] is the text we want
+      let tag = this.getTag('p', 'text-center', targets[i][1][index]); //this.***[index] is the text we want
       targets[i][0].append(tag);
       i++;
     });
@@ -1319,12 +1319,9 @@ export default class extends Controller {
     //clear it first of the old sheet if we are switching
     this.removeAllChildNodes(this.spellsModalListTarget);
     for (let i = 0; i <= max_level; i++) {
-      let frame = document.createElement('div');
-      //foreach element of feature[1] put a radio button
-      frame.class = 'flex flex-col gap-2 p-2';
+      let frame = this.getTag('div', 'flex flex-col gap-2 p-2');
+      let title = this.getTag('h4', 'text-center font-bold text-xl');
 
-      let title = document.createElement('h4');
-      title.classList.add('text-center', 'font-bold', 'text-xl');
       if (i == 0) {
         title.innerText = 'Cantrips';
       } else {
@@ -1333,8 +1330,7 @@ export default class extends Controller {
       frame.append(title);
       this.spellList.forEach((item) => {
         if (item.level == i) {
-          let container = document.createElement('div');
-          container.class = 'flex gap-2 p-2';
+          let container = this.getTag('div', 'flex gap-2 p-2');
           let check = document.createElement('input');
           check.type = 'checkbox';
           check.value = item.level;
@@ -1394,11 +1390,11 @@ export default class extends Controller {
   }
 
   putSingleSpellTaken(spell, target) {
-    let frame = document.createElement('div');
-    frame.class = 'flex flex-col gap-1 bg-gray-100 rounded-lg p-2';
-    let title = document.createElement('h4');
-    title.class = 'font-bold text-xl';
-    title.innerText = spell.name;
+    let frame = this.getTag(
+      'div',
+      'flex flex-col gap-1 bg-gray-100 rounded-lg p-2'
+    );
+    let title = this.getTag('h4', 'font-bold text-xl', spell.name);
     frame.append(title);
     frame.append(spell.description);
 
@@ -1715,24 +1711,23 @@ export default class extends Controller {
 
   //select boxes based on weapon types, simple/martial, for starting equipment
   appendWeaponSelectToTarget(wep_type, target) {
-    let selector = document.createElement('select');
-    selector.id = 'testing';
-    selector.className = 'rounded-md';
-    let plate = document.createElement('option');
+    let selector = this.getTag('select', 'rounded-md');
+    //selector.id = 'testing';
+
     let plate_title =
       wep_type.charAt(0).toUpperCase() +
       wep_type.slice(1) +
       ' Weapon';
-    plate.innerText = `- ${plate_title} -`;
+    let plate = this.getTag('option', '', `- ${plate_title} -`);
+
     selector.append(plate);
 
     fetch(`/weapons/${wep_type}`)
       .then((response) => response.json())
       .then((data) => {
         data.forEach((item) => {
-          let option = document.createElement('option');
+          let option = this.getTag('option', '', item['name']);
           option.value = item['name'];
-          option.innerText = item['name'];
           selector.append(option);
         });
         target.append(selector);
@@ -1771,9 +1766,7 @@ export default class extends Controller {
   //----------------- Modal Utilities ------------------//
   populateListModal(target, options) {
     options.forEach((option) => {
-      let container = document.createElement('div');
-      container.class = 'flex flex-col gap-2 p-2';
-
+      let container = this.getTag('div', 'flex flex-col gap-2 p-2');
       let check = document.createElement('input');
       check.type = 'checkbox';
       check.value = option;
@@ -1848,16 +1841,11 @@ export default class extends Controller {
     this.removeAllChildNodes(target);
 
     if (name != '') {
-      let tag = document.createElement('p');
-      tag.classList.add('font-bold');
-      tag.append(`${name}: `);
-      target.append(tag);
+      target.append(this.getTag('p', 'font-bold', `${name}: `));
     }
 
     collection.forEach((item) => {
-      let l_item = document.createElement('p');
-      l_item.append(item);
-      target.append(l_item);
+      target.append(this.getTag('p', '', item));
     });
   }
 
@@ -1961,20 +1949,12 @@ export default class extends Controller {
       //bold the feature label if it exists
       if (item.includes(':')) {
         let split = item.split(':');
-
-        let l_item = document.createElement('p');
-        let title = document.createElement('p');
-        title.classList.add('font-semibold');
-
-        title.append(split[0] + ':');
-        l_item.append(split[1]);
+        let title = this.getTag('p', 'font-semibold', split[0] + ':');
+        let l_item = this.getTag('p', '', split[1]);
         target.append(title);
         target.append(l_item);
       } else {
-        let l_item = document.createElement('p');
-
-        l_item.append(item);
-        target.append(l_item);
+        target.append(this.getTag('p', '', item));
       }
     });
   }
