@@ -950,6 +950,7 @@ export default class extends Controller {
 
     this.removeAllChildNodes(this.languageModalListTarget);
 
+    //make a list of languages already on the sheet
     var list = [];
     this.raceLanguagesTarget.childNodes.forEach((node) => {
       let text = node.innerText;
@@ -960,6 +961,7 @@ export default class extends Controller {
       if (text.slice(-1) != ':') list.push(text);
     });
 
+    //indexOf returns -1 if lang not found in list, we make those into options
     let options = allLanguages.filter(
       (lang) => list.indexOf(lang) === -1
     );
