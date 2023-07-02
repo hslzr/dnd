@@ -326,7 +326,7 @@ Barbarian = PlayerClass.create(
       ['martial#1','Greataxe#1'],
       ['simple#1','Handaxe#2'],
     ],
-    'default'=>['Javelin_4', "Explorer's_Pack_gearpack"],
+    'default'=>['Javelin#4', "Explorer's Pack#1"],
   },
   wealth_die: 2,
   features: {
@@ -395,6 +395,125 @@ Barbarian.subclasses.create(
       'Wolf: While you`re raging, you can use a bonus action on your turn to knock a Large or smaller creature prone when you hit it with meleee weapon attack.',
     ],
   },
+)
+
+Bard = PlayerClass.create(
+  name: 'Bard',
+  hit_die: 8,
+  starting_hp: 8,
+  primary_abilities: [5],
+  saving_throws: [1,5],
+  armor: ['Light'],
+  weapons: ['Simple','Hand Crossbow','Longsword','Rapier','Shortsword'],
+  tools: [],
+  skill_choices: ['Acrobatics','Animal Handling','Arcana','Athletics','Deception','History','Insight','Intimidation','Investigation','Medicine','Nature','Perception','Performance','Persuasion','Religion','Sleight of Hand','Stealth','Survival'],
+  num_skills: 3,
+  equipment_choices: {
+    'choices' => [
+      ['Rapier#1','Longsword#1','simple#1'],
+      ["Diplomat's Pack#1","Entertainer's Pack#1"],
+      ['Lute#1','Bagpipes#1'],
+    ],
+    'default' => ['Leather Armor#1','Dagger#1'],
+  },
+  spellcasting_ability: 6,
+  spell_table: [
+    [4,2,2,0,0,0,0,0,0,0,0],
+    [5,2,3,0,0,0,0,0,0,0,0],
+    [6,2,4,2,0,0,0,0,0,0,0],
+    [7,3,4,3,0,0,0,0,0,0,0],
+    [8,3,4,3,2,0,0,0,0,0,0],
+    [9,3,4,3,3,0,0,0,0,0,0],
+    [10,3,4,3,3,1,0,0,0,0,0],
+    [11,3,4,3,3,2,0,0,0,0,0],
+    [12,3,4,3,3,3,1,0,0,0,0],
+    [14,4,4,3,3,3,2,0,0,0,0],
+    [15,4,4,3,3,3,2,1,0,0,0],
+    [15,4,4,3,3,3,2,1,0,0,0],
+    [16,4,4,3,3,3,2,1,1,0,0],
+    [18,4,4,3,3,3,2,1,1,0,0],
+    [19,4,4,3,3,3,2,1,1,1,0],
+    [19,4,4,3,3,3,2,1,1,1,0],
+    [20,4,4,3,3,3,2,1,1,1,1],
+    [22,4,4,3,3,3,3,1,1,1,1],
+    [22,4,4,3,3,3,3,2,1,1,1],
+    [22,4,4,3,3,3,3,2,2,1,1],
+  ],
+  wealth_die: 5,
+  features: {
+    1=>[
+      "Spellcasting: You have learned to untangle and reshape the favric of reality in harmony with your wishes and music. Your spells are part of your vast repertoire, magic that you can tune to different situations. Charisma is your Spellcasting Ability.",
+      "Bardic Inspiration: You can inspire others through stirring words or music. To do so, you use a bonus action on your turn to choose one creature other than yourself within 60 feet of you who can hear you. That creature gains one Bardic Inspiration die, a d6.
+      Once within the next 10 minutes, the creature can roll the die and add it to one ability check, attack roll, or saving throw it makes. The creature can wait until after it rolls before deciding to use the Bardic Inspiration die. Once it is rolled, it is lost and a creature can only have one Bardic Inspiration at a time.
+      You can use this feature a number of times equal to your Charisma modifier (a minimum of once). You regain any expended uses after a long rest.
+      The die becomes a d8 at 5th level, a d10 at 10th, and a d12 at 15th",
+    ],
+    2=>[
+      "Jack of All Trades: You can add half your proficiency bonus, rounded down, to any ability check you make that doesn't already include your proficiency bonus.",
+      "Song of Rest: You can use soothing music or oration to help revitalize your wounded allies during a short rest. If you or any friendly creatures who can hear your performance regain hit points at the end of the short rest by spending one or more Hit Dice, each of those creatures regains an extra 1d6 hit points.
+      The extra hit points increase to 1d8 at 9th level, 1d10 at 13th, and 1d12 at 17th.",
+    ],
+    3=>[
+      "Bard College: You delve into the advanced techniques of the bard college of your choice.",
+      "Expertise: Choose two of your skill proficiencies. Your proficiency bonus is doubled for these proficiencies when you make an ability check.
+      At 10th level, you can choose another two proficiencies to gain this benefit.",
+    ],
+    4=>[
+      "Ability Score Increase:",
+    ],
+    5=>[
+      "Font of Inspiration: You regain all epended uses of Bardic Inspiration on a short or long rest."
+    ],
+    6=>[
+      "Countercharm: You gain the ability to use musical notes or words of power to disrupt mind-influencing effects. As an action, you can start a performance that lasts until the end of your next turn. During that time, you and any friendly creatures within 30 feet of you have advantage on saving throws against being frightened or charmed. A creature must be able to hear you to gain this benefit. The performance ends early if you are incapacitated or silenced or if you voluntarily end it (no action required)."
+    ],
+    10=>[
+      "Magical Secrets: You have plundered magical knowledge from a wide spectrum of disciplines. Choose two spells from any class, including this one. A spell you choose must be of a level you can cast, as shown on the Bard table, or a cantrip.
+      The chosen spells count as bard spells for you and are included in the number in the Spels Known column of the Bard table.
+      You learn two additional spells from any class at 14th, and 18th level."
+    ],
+    20=>[
+      "Superior Inspiration: When you roll initiative and have no uses of Bardic Inspiration left, you regain one use."
+    ],
+  },
+  custom: {
+  },
+)
+
+Bard.subclasses.create(
+  name: "College of Lore",
+  description: "Bards of the College of Lore know something about most things, collecting bits of knowledge from sources as diverse as scholarly tomes and peasant tales. Whether singing folk ballads in taverns or elaborate compositions in royal courts, these bards use their gifts to hold audiences spellbound.",
+  features: {
+    3=>[
+      "Bonus Proficiencies: You gain 3 skill proficiencies of your choice.",
+      "Cutting Words: You learn how to use your wit to distract, confuse, and otherwise sap the confidence and competence of others. When a creature that you can see within 60 feet of you makes an attack roll, an ability check, or a damage roll, you can use your reaction to expend one of your uses of Bardic Inspiration, rolling a Bardic Inspiration die and subtracting the number rolled from the creature's roll. You can choose to use this feature after the creature makes its roll, but before the DM determines whether the attack roll or ability check succeeds or fails, or before the creature deals its damage. The creature is immune if it can't hear you or if it's immune to being charmed.",
+    ],
+    6=>[
+      "Magical Secrets: You learn two spells of your choice from any class. A spell you choose must be of a level you can cast, as shown on the Bard table, or a cantrip. The chosen spells count as bard spells for you but don't count against the number of bard spells you know.",
+    ],
+    14=>[
+      "Peerless Skill: When you make an ability check, you can expend one use of Bardic Inspiration. Roll a Bardic Inspiration die and add the number rolled to your ability check. You can choose to do so after you roll the die for the ability check, but before the DM tells you whether you succeed or fail.",
+    ],
+  },
+)
+
+Bard.subclasses.create(
+  name: "College of Valor",
+  description: "Bards of the College of Valor are daring skalds whose tales keep alive the memory of the great heroes of the past, and thereby inspire a new generation of heroes. These bards gather in mead halls or around great bonfires to sing the deeds of the mighty, both past and present.",
+  features: {
+    3=>[
+      "Bonus Proficiencies: You gain proficiency with medium armor, shields, and martial weapons.",
+      "Combat Inspiration: You learn to inspire others in battle. A creature that has a Bardic Inspiration die from you can roll that die and add the number rolled to a weapon damage roll it just made. Alternatively, when an attack roll is made against the creature, it can use its reaction to roll the Bardic Inspiration die and add the number rolled to its AC against that attack, after seeing the roll but before knowing whether it hits or misses.",
+    ],
+    6=>[
+      "Extra Attack: You can attack twice when you take the Attack action on your turn.",
+    ],
+    14=>[
+      "Battle Magic: You have mastered the art of weaving spellcasting and weapon use into a single harmonious act. When you use your action to cast a bard spell, you can make one weapon attack as a bonus action.",
+    ],
+  },
+  armor: ['Medium','Shields'],
+  weapons: ['Martial'],
 )
 
 Ranger = PlayerClass.create(
