@@ -277,7 +277,7 @@ export default class extends Controller {
     this.equipped_armor = [];
 
     //spells
-    this.spellList = false; //we'll try setting this to a correct collection of spells with a new fetch in catUpdate
+    this.spellList = false; //we'll set this to a correct collection of spells with a new fetch in catUpdate
   }
 
   //----------------------------- Main Sheet Update Flow ---------------------------------//
@@ -513,7 +513,12 @@ export default class extends Controller {
       );
     }
     if (this.raceASI != 0 && this.subraceASI != 0) {
-      this.calculateStats();
+      Util.calculateStats(
+        this.stats,
+        this.base_stats,
+        this.raceASI,
+        this.subraceASI
+      );
       Util.updateStats(this.stat_targets, this.stats);
       this.statModUpdate();
     }
@@ -585,7 +590,13 @@ export default class extends Controller {
       this.subclassFeatureHandler();
     }
     //recalculate stats
-    if (code != 2) this.calculateStats();
+    if (code != 2)
+      Util.calculateStats(
+        this.stats,
+        this.base_stats,
+        this.raceASI,
+        this.subraceASI
+      );
 
     Util.updateStats(this.stat_targets, this.stats);
     this.statModUpdate(1);
@@ -767,7 +778,7 @@ export default class extends Controller {
       this.persuasionProfTarget,
       '',
     ]);
-  } //utility but depends on stats being assigned
+  } //utility but depends on stats being assigned and too many targets to separate
 
   populateSkillModifiers() {
     //the class saving throws are stored as indexes to the bonus array so we go through
@@ -1834,9 +1845,7 @@ export default class extends Controller {
     this.attackListTarget.append(row);
   }
 
-  //ensure only a single option is selected for one row
-
-  //Modal display activation, these are called from the sheet so dont put in a module
+  //------------Modal display activation, these are called from the sheet so dont put in a module
   showLangDialog() {
     this.dialogLanguagesTarget.showModal();
   }
@@ -1867,24 +1876,21 @@ export default class extends Controller {
 
   //----------------------------- Base Stat Methods ---------------------------------//
   statModUpdate(runFinal = 0) {
-    this.strModTarget.innerText = Util.modWithSign(
-      Util.calcMod(this.stats[0])
-    );
-    this.dexModTarget.innerText = Util.modWithSign(
-      Util.calcMod(this.stats[1])
-    );
-    this.conModTarget.innerText = Util.modWithSign(
-      Util.calcMod(this.stats[2])
-    );
-    this.intModTarget.innerText = Util.modWithSign(
-      Util.calcMod(this.stats[3])
-    );
-    this.wisModTarget.innerText = Util.modWithSign(
-      Util.calcMod(this.stats[4])
-    );
-    this.chaModTarget.innerText = Util.modWithSign(
-      Util.calcMod(this.stats[5])
-    );
+    let statmod_targets = [
+      this.strModTarget,
+      this.dexModTarget,
+      this.conModTarget,
+      this.intModTarget,
+      this.wisModTarget,
+      this.chaModTarget,
+    ];
+    let index = 0;
+    for (let target of this.statmod_targets) {
+      target.innerText = Util.modWithSign(
+        Util.calcMod(this.stats[index])
+      );
+      index++;
+    }
 
     if (
       Util.isChoicesFull(this.choices) &&
@@ -1903,21 +1909,14 @@ export default class extends Controller {
     }
 
     if (this.raceASI != 0 && this.subraceASI != 0)
-      this.calculateStats();
+      Util.calculateStats(
+        this.stats,
+        this.base_stats,
+        this.raceASI,
+        this.subraceASI
+      );
 
     Util.updateStats(this.stat_targets, this.stats);
-
     this.statModUpdate();
-  }
-
-  calculateStats() {
-    let index = 0;
-    for (let item of this.stats) {
-      this.stats[index] =
-        this.base_stats[index] +
-        this.raceASI[index] +
-        this.subraceASI[index];
-      index++;
-    }
   }
 }

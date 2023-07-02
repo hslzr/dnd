@@ -26,6 +26,16 @@ export function increaseStat(stat_list, stat, val = 1) {
   return stat_list;
 }
 
+//-------------------------------------------impure state modifiers
+//loops through this.stats and recalculates based on base_stats, raceASI, and subraceASI
+export function calculateStats(stats, base, race, subrace) {
+  let index = 0;
+  for (let item of stats) {
+    stats[index] = base[index] + race[index] + subrace[index];
+    index++;
+  }
+}
+
 //-------------------------------------------helpers
 //validates turbo form select boxes for finalPass
 export function isChoicesFull(list) {
