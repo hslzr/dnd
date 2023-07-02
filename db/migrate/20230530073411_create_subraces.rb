@@ -11,6 +11,7 @@ class CreateSubraces < ActiveRecord::Migration[7.0]
       t.string :tools, array: true, default: []
       t.string :skills, array: true, default: []
       t.string :features, array: true, default: []
+      t.text :extra_spells, default: "{}"
 
       t.timestamps
     end

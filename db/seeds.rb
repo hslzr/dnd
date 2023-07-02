@@ -34,7 +34,8 @@ User.create(
 #if no subrace we need to apply a defuault one with no modifiers
 BlankSubrace = Subrace.create(
   name: 'None',
-  extra_languages: 0
+  extra_languages: 0,
+  extra_spells: {},
 )
 
 DwarvenRace = Race.create(
@@ -58,6 +59,7 @@ DwarvenRace = Race.create(
     'Stonecunning: Whenever you make an Intelligence (History) check related to the origin of stonework, you are considered proficient in the History skill and add double your proficiency bonus to the check, instead of your normal proficiency bonus.',
   ],
   sub_count: 2,
+  extra_spells: {},
 )
 
 DwarvenRace.subraces.create(
@@ -67,6 +69,7 @@ DwarvenRace.subraces.create(
         'Dwarven Toughness: Your level is added to your hit point maximum.',
       ],
   extra_languages: 0,
+  extra_spells: {},
 )
 
 DwarvenRace.subraces.create(
@@ -75,6 +78,7 @@ DwarvenRace.subraces.create(
   features: ['Dwarven Armor Training'],
   armor: ['Light','Medium'],
   extra_languages: 0,
+  extra_spells: {},
 )
 
 #slivers are just for testing stuff
@@ -94,6 +98,7 @@ SliverRace = Race.create(
     'Hive Wisdom: You have advantage on Wisdom(Perception) checks underground.',
   ],
   sub_count: 2,
+  extra_spells: {},
 )
 
 SliverRace.subraces.create(
@@ -102,6 +107,7 @@ SliverRace.subraces.create(
   features: ['Mana Armor: Resistance to magic damage the first time it is taken each day.'],
   skills: ['Arcana'],
   extra_languages: 0,
+  extra_spells: {},
 )
 
 SliverRace.subraces.create(
@@ -110,6 +116,7 @@ SliverRace.subraces.create(
   features: ['Clone: You may create a simulacrum of yourself once per long rest that lasts for 4 hours.'],
   extra_languages: 0,
   tools: ['Jeweler\'s Tols'],
+  extra_spells: {},
 )
 
 ElvenRace = Race.create(
@@ -128,6 +135,7 @@ ElvenRace = Race.create(
     ],
   skills: ['Perception'],
   sub_count: 3,
+  extra_spells: {},
 )
 
 ElvenRace.subraces.create(
@@ -139,6 +147,7 @@ ElvenRace.subraces.create(
     'Extra Language: You can speak read, and write one extra language.',
   ],
   extra_languages: 1,
+  extra_spells: {},
 )
 
 ElvenRace.subraces.create(
@@ -148,7 +157,8 @@ ElvenRace.subraces.create(
     'Elven Weapon Training: You have proficiency with the longsword, shortsword, shortbow, and longbow',
     'Fleet of Foot: Your base walking speed increases to 35 feet.',
     'Mask of the Wild: You can attempt to hide even when you are onluy lightly obscured.',
-  ]
+  ],
+  extra_spells: {},
 )
 
 ElvenRace.subraces.create(
@@ -159,7 +169,8 @@ ElvenRace.subraces.create(
     'Sunlight Sensitivity: You have disadvantage on attack rolls and on Wisdom(Perception) checks that rely on sight when you, the target of your attack, or whatever you are trying to perceive is in direct sunlight.',
     'Drow Magic: You know the dancing lights cantrip. When yuo reach 3rd level you can cast faerie fire once per long rest. At 5th level you can cast darkness once per long rest. Charisma is your spellcasting ability for these spells.',
     'Drow Weapon Training: You have proficiency with rapiers, shortswords, and hand crossbows.',
-  ]
+  ],
+  extra_spells: {},
 )
 
 HalflingRace = Race.create(
@@ -176,6 +187,7 @@ HalflingRace = Race.create(
     'Halfling Nimbleness: You can move through the space of any creature that is of a size larger than yours.',
   ],
   sub_count: 2,
+  extra_spells: {},
 )
 
 HalflingRace.subraces.create(
@@ -183,7 +195,8 @@ HalflingRace.subraces.create(
   asi: [0,0,0,0,0,1],
   features: [
     'Naturally Stealthy: You can attempt to hide even when you are only obscured by a creature one size larger than you.',
-  ]
+  ],
+  extra_spells: {},
 )
 
 HalflingRace.subraces.create(
@@ -191,7 +204,8 @@ HalflingRace.subraces.create(
   asi: [0,0,1,0,0,0],
   features: [
     'Stout Resilience: You have advantage on saving throws against poison, and you have resistance against poison damage.',
-  ]
+  ],
+  extra_spells: {},
 )
 
 HumanRace = Race.create(
@@ -203,6 +217,7 @@ HumanRace = Race.create(
   languages: ['Common'],
   extra_languages: 1,
   speed: 30,
+  extra_spells: {},
 )
 
 DragonbornRace = Race.create(
@@ -218,6 +233,7 @@ DragonbornRace = Race.create(
     'Breath Weapon: You can use your action to exhale destructive energy. Each creature in the area must make a saving throw determined by your breath weapon with DC equal to 8 + your CON modifier + your proficiency bonus. A creature takes 2d6 damage on a fail and half on a success. The damage increases to 3d6 at 6th level, 4d6 at 11th level and 5d6 at 16th level. You can\'t use it more than once per short rest.',
     'Damage Resistance: You have resistance to the damage type associated with your draconic ancestry.',
   ],
+  extra_spells: {},
 )
 
 GnomeRace = Race.create(
@@ -233,6 +249,7 @@ GnomeRace = Race.create(
     'Gnome Cunning: You have advantage on all Intelligence, Wisdom, and Charisma saving throws against magic.',
   ],
   sub_count: 2,
+  extra_spells: {},
 )
 
 GnomeRace.subraces.create(
@@ -242,6 +259,7 @@ GnomeRace.subraces.create(
     'Illusionist: You know the minor illusion cantrip and cast it with Intelligence.',
     'Speak with Small Beasts: Through sounds and gestures you can communicate simple ideas with small or smaller beasts.',
   ],
+  extra_spells: {},
 )
 
 GnomeRace.subraces.create(
@@ -251,6 +269,7 @@ GnomeRace.subraces.create(
     'Artificer\'s Lore: Whenever you make an Intelligence(History) check related to magic items, alchemical objects, or technological devices, you can add twice your proficiency bonus, instead of any proficiency bonus you would normally apply.',
     'Tinker: You have proficiency with Tinker\'s Tools. Using these tools, you can spend 1 hour and 10gp worth of materials to construct a Tiny clockwork device which ceases to function after 24 hours unless you spend 1 hour repairing it.',
   ],
+  extra_spells: {},
 )
 
 HalfElfRace = Race.create(
@@ -268,6 +287,7 @@ HalfElfRace = Race.create(
     'Fey Ancestry: You have advantage on saving throws against being charmed, and magic can\'t put you to sleep.',
     'Skill Versatility: You gain proficiency in two skills of your choice.',
   ],
+  extra_spells: {},
 )
 
 HalfOrcRace = Race.create(
@@ -285,6 +305,7 @@ HalfOrcRace = Race.create(
     'Relentless Endurance: When you are reduced to 0 hit points but not killed outright, you can drop to 1 hit point instead once per long rest.',
     'Savage Attacks: When you score a critical hit with a melee weapon attack, you can roll one of the weapon\'s damage dice one additional time and add it to the extra damage.',
   ],
+  extra_spells: {},
 )
 
 TieflingRace = Race.create(
@@ -301,6 +322,7 @@ TieflingRace = Race.create(
     'Hellish Resistance: You have resistance to fire damage.',
     'Infernal Legacy: You know the thaumaturgy cantrip. At 3rd level, you can cast hellish rebuke as a 2nd level spell once per long rest. At 5th level you can cast darkness once per long rest. Charisma is your spellcasting ability for these spells.',
   ],
+  extra_spells: {},
 )
 
 
@@ -355,7 +377,8 @@ Barbarian = PlayerClass.create(
     18=>['Indomitable Might: If your total for a Strength check is less than your Strength score, you may use that score instead'],
     20=>['Primal Champion: Your STR and CON scores increase by 4, your maximum for those scores is now 24.'],
   },
-  custom: {}
+  custom: {},
+  extra_spells: {},
 )
 
 Barbarian.subclasses.create(
@@ -366,7 +389,8 @@ Barbarian.subclasses.create(
     10=> ['Intimidating Presence: You can use your action to frighten someone with your menacing presence. Choose one creature you can see within 30 feet, if it can see or hear you it must succeed on a WIS save with DC of 8 plus your proficiency bonus plus your CHA modifier, or be frightened of you until the end of your next turn. On subsequent turns you can use your action to extend this effect another turn. The effect ends if the creature ends its turn out of line of sight or more than 60 feet away. If they successfully save, you can`t use this on them again for 24 hours.'],
     14=> ['Retaliation: When you take damage from a creature within 5 feet of you, you can use your reaction to make a melee weapon attack against that creature.']
   },
-  custom: {}
+  custom: {},
+  extra_spells: {},
 )
 
 Barbarian.subclasses.create(
@@ -395,6 +419,7 @@ Barbarian.subclasses.create(
       'Wolf: While you`re raging, you can use a bonus action on your turn to knock a Large or smaller creature prone when you hit it with meleee weapon attack.',
     ],
   },
+  extra_spells: {},
 )
 
 Bard = PlayerClass.create(
@@ -478,6 +503,7 @@ Bard = PlayerClass.create(
   },
   custom: {
   },
+  extra_spells: {},
 )
 
 Bard.subclasses.create(
@@ -496,6 +522,7 @@ Bard.subclasses.create(
     ],
   },
   custom: {},
+  extra_spells: {},
 )
 
 Bard.subclasses.create(
@@ -516,6 +543,7 @@ Bard.subclasses.create(
   custom: {},
   armor: ['Medium','Shields'],
   weapons: ['Martial'],
+  extra_spells: {},
 )
 
 Ranger = PlayerClass.create(
@@ -630,7 +658,8 @@ Ranger = PlayerClass.create(
       "Dueling: When you are wielding a melee weapon in one hand and no other weapons, you gain a +2 bonus to damage rolls with that weapon.",
       "Two-Weapon Fighting: When you engage in two-weapon fighting, you can add your ability modifier to the damage of the second attack.",
     ]
-  }
+  },
+  extra_spells: {},
 )
 
 Ranger.subclasses.create(
@@ -657,7 +686,8 @@ Ranger.subclasses.create(
       "Uncanny Dodge: When an attacker that you can see hits you with an attackm you can use your reaction to halve the attack's damage against you.",
     ]
   },
-  features: {}
+  features: {},
+  extra_spells: {},
 )
 
 Ranger.subclasses.create(
@@ -672,7 +702,8 @@ Ranger.subclasses.create(
     11=>["When you command your beast companion to take the Attack action, the beast can make two attcks, or it can take the Multiattack action if it has that action."],
     15=>["When you cast a spell targeting yourself, you can also affect your beast companion with the spell if the beast is within 30 feet of you."],
     },
-  custom: {}
+  custom: {},
+  extra_spells: {},
 )
 
 Acolyte = Background.create(
@@ -725,8 +756,10 @@ Acolyte = Background.create(
     'I am suspicious of strangers and expect the worst of them.',
     'Once I pick a goal, I become obsessed with it to the detriment of everything else in my life.',
   ],
-  features:
-    ['Shelter of the Faithful: You command the respect of those who share your faith, and you can perform the religious ceremonies of your deity. You and your party can expect to receive free healing and care at a temple, shrine, or other established presence of your faith, though you must provide any material components needed for spells. Those who share your religion will support you at a modest lifestyle. You might have ties to a specific temple where you have a residence and the priests can be called upon for non-hazardous assistance near there.']
+  features: [
+      'Shelter of the Faithful: You command the respect of those who share your faith, and you can perform the religious ceremonies of your deity. You and your party can expect to receive free healing and care at a temple, shrine, or other established presence of your faith, though you must provide any material components needed for spells. Those who share your religion will support you at a modest lifestyle. You might have ties to a specific temple where you have a residence and the priests can be called upon for non-hazardous assistance near there.',
+    ],
+  extra_spells: {},
 )
 
 Feat_alert = Feat.create(
@@ -736,7 +769,8 @@ Feat_alert = Feat.create(
       'You gain +5 to initiative.',
       'You can`t be surprised while you are conscious.',
       'Other creatures don`t gain advantage on attack rolls against you as a result of being unseen by you.'
-    ]
+    ],
+  extra_spells: {},
 )
 
 

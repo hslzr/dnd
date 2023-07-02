@@ -5,6 +5,7 @@ class CreateFeats < ActiveRecord::Migration[7.0]
       t.string :description
       t.string :features, array: true, default: []
       t.string :extra_languages
+      t.text :extra_spells, default: "{}"
 
       t.timestamps
     end

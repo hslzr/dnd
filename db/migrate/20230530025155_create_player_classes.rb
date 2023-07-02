@@ -15,6 +15,7 @@ class CreatePlayerClasses < ActiveRecord::Migration[7.0]
       t.integer :spellcasting_ability, default: 0
       t.integer :spell_table, array: true, default: []
       #11x20 array of ints, num spells known, num cantrip, num levels 1-9
+      t.text :extra_spells, default: "{}"
       t.integer :wealth_die, default: 2
       t.integer :wealth_mult, default: 10
       t.text :features, default: "{}"
