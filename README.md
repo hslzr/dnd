@@ -16,11 +16,7 @@ Different methods of stat assignment
 # Functions needed
 I'm working on the seed and classes/subraces are adding these things I can't handle yet
    - speed modifier
-   - Cantrip or spells added,
-      specifically or chosen from a spell list,
-      with a specific spellcasting stat
-   - Extra languages on subrace not working properly I think
-   - Are draconic ancestries subraces? may as well be,
+   - Draconic ancestries should be level one class custom features
     have to add the breath weapon as an attack with the correct type
    - Extra skills and stat points in Half-Elf need handling
    - inconsistent number on spellcasting_ability in player_class model, doesn't count from 0

@@ -205,7 +205,6 @@ export default class extends Controller {
   ];
 
   connect() {
-    Util.logoutput();
     //we'll take over from the turbo frame and store the form data in a Map
     this.choices = new Map();
     this.choices.set('race', 'none');
@@ -215,13 +214,29 @@ export default class extends Controller {
     this.choices.set('background', 'none');
     this.choices.set('level', 0);
 
-    //variables set later but available as noted
-    ///set on randomStats
+    this.button_targets = [
+      this.langButtonTarget,
+      this.classSkillsButtonTarget,
+      this.classFeaturesButtonTarget,
+      this.toolsButtonTarget,
+      this.subclassButtonTarget,
+      this.spellsButtonTarget,
+      this.tbifButtonTarget,
+      this.equipmentButtonTarget,
+      this.asiButtonTarget,
+    ];
 
-    //0 is our flag value because it isnt possible in dnd
     this.stats = [0, 0, 0, 0, 0, 0];
     //store initial stats here, modify and collate in this.stats
     this.base_stats = [0, 0, 0, 0, 0, 0];
+    this.stat_targets = [
+      this.strBaseTarget,
+      this.dexBaseTarget,
+      this.conBaseTarget,
+      this.intBaseTarget,
+      this.wisBaseTarget,
+      this.chaBaseTarget,
+    ];
 
     ///set on level update in catHandler
     this.prof_mod;
@@ -231,12 +246,12 @@ export default class extends Controller {
     //used for selection and updating
     this.skills = new Map(); //initialized later in setSkillMap(), a collection of targets
     //i feel like I could save a lot of effort if I used these better
-    this.languages = this.blankCategoryMap();
-    this.extra_languages = this.blankCategoryMap();
-    this.tools = this.blankCategoryMap();
-    this.weapons = this.blankCategoryMap();
-    this.armor = this.blankCategoryMap();
-    this.features = this.blankCategoryMap();
+    this.languages = Util.blankCategoryMap();
+    this.extra_languages = Util.blankCategoryMap();
+    this.tools = Util.blankCategoryMap();
+    this.weapons = Util.blankCategoryMap();
+    this.armor = Util.blankCategoryMap();
+    this.features = Util.blankCategoryMap();
     this.classSkillChoices; //set in catUpdate
     this.numClassSkillChoices; //set in catUpdate
     this.raceToolChoices; //set in catUpdate
@@ -269,7 +284,7 @@ export default class extends Controller {
   categoryHandler(event) {
     let labels = event.params;
     let list = event.target.children;
-    this.updateChoices();
+    Util.updateChoices(this.choices);
 
     if (event.target.id != 'level') {
       for (let i = 0; i < list.length; i++) {
@@ -309,8 +324,10 @@ export default class extends Controller {
         this.raceToolChoices = data.tool_choice;
         this.raceASI = data.asi;
 
-        this.removeAllChildNodes(this.racialASIBonusTarget);
-        this.racialASIBonusTarget.append(this.getPTag(data.name));
+        Util.removeAllChildNodes(this.racialASIBonusTarget);
+        this.racialASIBonusTarget.append(
+          Util.getTag('p', 'font-medium', data.name + ': ')
+        );
         this.putRacialASI(this.raceASI, this.racialASIBonusTarget);
 
         //we have to handle races with no subrace by assigning the blank subrace here
@@ -319,7 +336,7 @@ export default class extends Controller {
           this.sheet_subrace = 'None';
           this.subraceASI = [0, 0, 0, 0, 0, 0];
 
-          this.removeAllChildNodes(this.subraceASIBonusTarget);
+          Util.removeAllChildNodes(this.subraceASIBonusTarget);
           this.choices.set('subrace', 'None');
         }
         break;
@@ -337,8 +354,10 @@ export default class extends Controller {
         this.sheet_subrace = data.name;
         this.subraceASI = data.asi;
 
-        this.removeAllChildNodes(this.subraceASIBonusTarget);
-        this.subraceASIBonusTarget.append(this.getPTag(data.name));
+        Util.removeAllChildNodes(this.subraceASIBonusTarget);
+        this.subraceASIBonusTarget.append(
+          Util.getTag('p', 'font-medium', data.name + ': ')
+        );
         this.putRacialASI(
           this.subraceASI,
           this.subraceASIBonusTarget
@@ -412,16 +431,16 @@ export default class extends Controller {
           this.castingAttackBonusTarget.innerText = '';
           this.castingSpellLimitTarget.innerText = '';
           this.castingCantripLimitTarget.innerText = '';
-          this.removeAllChildNodes(this.spellsTaken0Target);
-          this.removeAllChildNodes(this.spellsTaken1Target);
-          this.removeAllChildNodes(this.spellsTaken2Target);
-          this.removeAllChildNodes(this.spellsTaken3Target);
-          this.removeAllChildNodes(this.spellsTaken4Target);
-          this.removeAllChildNodes(this.spellsTaken5Target);
-          this.removeAllChildNodes(this.spellsTaken6Target);
-          this.removeAllChildNodes(this.spellsTaken7Target);
-          this.removeAllChildNodes(this.spellsTaken8Target);
-          this.removeAllChildNodes(this.spellsTaken9Target);
+          Util.removeAllChildNodes(this.spellsTaken0Target);
+          Util.removeAllChildNodes(this.spellsTaken1Target);
+          Util.removeAllChildNodes(this.spellsTaken2Target);
+          Util.removeAllChildNodes(this.spellsTaken3Target);
+          Util.removeAllChildNodes(this.spellsTaken4Target);
+          Util.removeAllChildNodes(this.spellsTaken5Target);
+          Util.removeAllChildNodes(this.spellsTaken6Target);
+          Util.removeAllChildNodes(this.spellsTaken7Target);
+          Util.removeAllChildNodes(this.spellsTaken8Target);
+          Util.removeAllChildNodes(this.spellsTaken9Target);
           this.spellSlots1Target.innerText = 0;
           this.spellSlots2Target.innerText = 0;
           this.spellSlots3Target.innerText = 0;
@@ -495,7 +514,7 @@ export default class extends Controller {
     }
     if (this.raceASI != 0 && this.subraceASI != 0) {
       this.calculateStats();
-      this.updateStats();
+      Util.updateStats(this.stat_targets, this.stats);
       this.statModUpdate();
     }
 
@@ -503,7 +522,7 @@ export default class extends Controller {
     //this runs if choices is entirely filled out
 
     if (
-      this.isChoicesFull() &&
+      Util.isChoicesFull(this.choices) &&
       this.stats.reduce((x, y) => x + y, 0) > 6
     ) {
       this.finalPass();
@@ -544,16 +563,16 @@ export default class extends Controller {
     this.features.set(cat_type, data_features);
 
     //we output the needed <p></p> tags to the given target
-    this.putClassFeatures(data.name, data_lang, languages);
-    this.putClassFeatures(data.name, data_weps, weps);
-    this.putClassFeatures(data.name, data_arm, arm);
-    this.putClassFeatures(data.name, data_tools, tools);
+    Util.putClassFeatures(data.name, data_lang, languages);
+    Util.putClassFeatures(data.name, data_weps, weps);
+    Util.putClassFeatures(data.name, data_arm, arm);
+    Util.putClassFeatures(data.name, data_tools, tools);
 
     if (cat_type != 'player_class') {
       //these are choices for a class
-      this.putClassFeatures(data.name, data_skills, skills);
+      Util.putClassFeatures(data.name, data_skills, skills);
       if (cat_type != 'subclass')
-        this.putClassFeatures(data.name, data_features, features);
+        Util.putClassFeatures(data.name, data_features, features);
     }
   }
 
@@ -568,32 +587,44 @@ export default class extends Controller {
     //recalculate stats
     if (code != 2) this.calculateStats();
 
-    this.updateStats();
+    Util.updateStats(this.stat_targets, this.stats);
     this.statModUpdate(1);
 
     this.passPerceptionTarget.innerText =
-      this.calcMod(this.stats[4]) + 10;
+      Util.calcMod(this.stats[4]) + 10;
 
     this.substatInitiativeTarget.innerText =
       this.dexModTarget.innerText;
 
     if (!this.equipArmorTarget.hasChildNodes()) {
       this.substatACTarget.innerText =
-        10 + this.calcMod(this.stats[1]);
+        10 + Util.calcMod(this.stats[1]);
     }
 
     this.trackingHitDiceTarget.innerText = `${this.level}d${this.hit_die}`;
 
     if (code == 0 && this.stats.reduce((x, y) => x + y, 0) > 6) {
-      this.activateButtons();
+      Util.activateButtons(
+        this.button_targets,
+        this.active_color,
+        this.disabled_color
+      );
 
       if (this.nosubchoice) {
-        this.deactivateButton(this.subclassButtonTarget);
+        Util.deactivateButton(
+          this.subclassButtonTarget,
+          this.active_color,
+          this.disabled_color
+        );
       }
 
       //running these on a non-spellcasting class breaks stuff
       if (this.spellcasting_ability == 0) {
-        this.deactivateButton(this.spellsButtonTarget);
+        Util.deactivateButton(
+          this.spellsButtonTarget,
+          this.active_color,
+          this.disabled_color
+        );
       } else {
         this.setSpellInformation();
       }
@@ -620,7 +651,7 @@ export default class extends Controller {
     for (let i = 0; i < 6; i++) {
       if (list[i] > 0) {
         target.append(
-          this.getTag('p', '', `+${list[i]} ${stats[i]}`)
+          Util.getTag('p', '', `+${list[i]} ${stats[i]}`)
         );
       }
     }
@@ -756,7 +787,7 @@ export default class extends Controller {
     });
     for (let i = 0; i < 6; i++) {
       save_modifiers[i].innerText =
-        bonuses[i] + this.calcMod(this.stats[i]);
+        bonuses[i] + Util.calcMod(this.stats[i]);
     }
 
     this.updateAllProficiencies();
@@ -776,7 +807,7 @@ export default class extends Controller {
       }
     });
 
-    this.putClassFeatures(
+    Util.putClassFeatures(
       this.choices.get('player_class'),
       classFeatures,
       this.classFeaturesTarget
@@ -800,7 +831,7 @@ export default class extends Controller {
       }
     });
 
-    this.putClassFeatures(
+    Util.putClassFeatures(
       this.choices.get('player_class'),
       classChoices,
       this.classFeaturesTarget
@@ -826,7 +857,7 @@ export default class extends Controller {
       }
     });
 
-    this.putClassFeatures(
+    Util.putClassFeatures(
       this.choices.get('subclass'),
       subclassFeatures,
       this.subclassFeaturesTarget
@@ -838,7 +869,7 @@ export default class extends Controller {
     let skilliter = this.skills.values();
     for (let i = 0; i < this.skills.size; i++) {
       let value = skilliter.next().value;
-      let bonus = this.calcMod(value[0]);
+      let bonus = Util.calcMod(value[0]);
       if (Array.from(value[2].classList).includes('bg-black'))
         bonus += this.prof_mod;
       if (Array.from(value[2].classList).includes('bg-white'))
@@ -848,7 +879,7 @@ export default class extends Controller {
   }
 
   setSpellInformation() {
-    let spell_mod = this.calcMod(
+    let spell_mod = Util.calcMod(
       this.stats[this.spellcasting_ability - 1]
     );
     this.castingSaveDCTarget.innerText =
@@ -950,7 +981,7 @@ export default class extends Controller {
       'Undercommon',
     ];
 
-    this.removeAllChildNodes(this.languageModalListTarget);
+    Util.removeAllChildNodes(this.languageModalListTarget);
 
     //make a list of languages already on the sheet
     var list = [];
@@ -978,13 +1009,13 @@ export default class extends Controller {
 
     this.langLimitTarget.innerText = `Choose ${init}`;
 
-    this.populateListModal(this.languageModalListTarget, options); //this will populate the <ul> with checkboxes
+    Util.populateListModal(this.languageModalListTarget, options); //this will populate the <ul> with checkboxes
     //onsubmit we'll validate the number chosen, and put the chosen ones into their own div
     //when backgrounds change we can empty that div and start over
   }
 
   submitLanguageChoices(event) {
-    this.removeAllChildNodes(this.extraLanguagesTarget);
+    Util.removeAllChildNodes(this.extraLanguagesTarget);
     //we clear the output here, all we have to do is limit the number of boxes you can check
 
     let chosen = [];
@@ -998,13 +1029,13 @@ export default class extends Controller {
       chosen.length ==
       parseInt(this.langLimitTarget.innerText.slice(-1))
     ) {
-      this.putModalChecksToSheet(chosen, this.extraLanguagesTarget);
+      Util.putModalchecksToSheet(chosen, this.extraLanguagesTarget);
       event.target.parentNode.close();
     }
   }
   //----------------- Tools Modal ------------------//
   chooseTools() {
-    this.removeAllChildNodes(this.toolsModalListTarget);
+    Util.removeAllChildNodes(this.toolsModalListTarget);
 
     if (this.raceToolChoices.length > 0) {
       this.toolsLimitTarget.innerText = `Choose 1`;
@@ -1012,14 +1043,14 @@ export default class extends Controller {
       this.toolsLimitTarget.innerText = 'No Tools';
     }
 
-    this.populateListModal(
+    Util.populateListModal(
       this.toolsModalListTarget,
       this.raceToolChoices
     );
   }
 
   submitToolsChoices() {
-    this.removeAllChildNodes(this.raceToolsTarget);
+    Util.removeAllChildNodes(this.raceToolsTarget);
     let racename = this.choices.get('race');
     let chosen = [];
     //the checkboxes are wrapped in a span for alignment
@@ -1029,7 +1060,7 @@ export default class extends Controller {
       }
     });
     if (chosen.length == 1) {
-      this.putModalChecksToSheet(
+      Util.putModalchecksToSheet(
         chosen,
         this.raceToolsTarget,
         racename
@@ -1039,18 +1070,18 @@ export default class extends Controller {
   }
   //----------------- Class Skills Modal ------------------//
   chooseClassSkills() {
-    this.removeAllChildNodes(this.classSkillsModalListTarget);
+    Util.removeAllChildNodes(this.classSkillsModalListTarget);
 
     this.classSkillsLimitTarget.innerText = `Choose ${this.numClassSkillChoices}`;
 
-    this.populateListModal(
+    Util.populateListModal(
       this.classSkillsModalListTarget,
       this.classSkillChoices
     );
   }
 
   submitClassSkillsChoices(event) {
-    this.removeAllChildNodes(this.classSkillsTarget);
+    Util.removeAllChildNodes(this.classSkillsTarget);
 
     let chosen = [];
     //the checkboxes are wrapped in a span for alignment
@@ -1063,7 +1094,7 @@ export default class extends Controller {
       chosen.length ==
       parseInt(this.classSkillsLimitTarget.innerText.slice(-1))
     ) {
-      this.putModalChecksToSheet(
+      Util.putModalchecksToSheet(
         chosen,
         this.classSkillsTarget,
         this.choices.get('player_class')
@@ -1075,7 +1106,7 @@ export default class extends Controller {
 
   //----------------- Class Features Modal ------------------//
   chooseClassFeatures(features) {
-    this.removeAllChildNodes(this.classFeaturesModalListTarget);
+    Util.removeAllChildNodes(this.classFeaturesModalListTarget);
     this.classFeaturesLimitTarget.innerText = 'Choose 1 of Each';
     features.forEach((item) => {
       if (parseInt(item[0]) <= this.level) {
@@ -1111,7 +1142,7 @@ export default class extends Controller {
     });
 
     if (validated) {
-      this.putModalChecksToSheet(
+      Util.putModalchecksToSheet(
         output,
         this.classFeaturesChoicesTarget,
         this.choices.get('player_class')
@@ -1121,7 +1152,7 @@ export default class extends Controller {
   }
   //----------------- Subclass Modal ------------------//
   chooseSubclassFeatures(features) {
-    this.removeAllChildNodes(this.subclassFeaturesModalListTarget);
+    Util.removeAllChildNodes(this.subclassFeaturesModalListTarget);
 
     this.subclassFeaturesLimitTarget.innerText = 'Choose 1 of Each';
 
@@ -1136,8 +1167,8 @@ export default class extends Controller {
   }
 
   populateOptionalFeatureModal(feature, target) {
-    let frame = this.getTag('div', 'flex flex-col gap-2 p-2');
-    let title = this.getTag(
+    let frame = Util.getTag('div', 'flex flex-col gap-2 p-2');
+    let title = Util.getTag(
       'h4',
       'text-center font-bold text-xl',
       `Level ${feature[0]}`
@@ -1145,7 +1176,7 @@ export default class extends Controller {
     frame.append(title);
 
     feature[1].forEach((item) => {
-      let container = this.getTag('div', 'flex gap-2 p-2');
+      let container = Util.getTag('div', 'flex gap-2 p-2');
       let check = document.createElement('input');
       check.type = 'checkbox';
       check.value = item;
@@ -1183,7 +1214,7 @@ export default class extends Controller {
     });
 
     if (validated) {
-      this.putModalChecksToSheet(
+      Util.putModalchecksToSheet(
         output,
         this.subclassFeaturesChoicesTarget,
         this.choices.get('subclass')
@@ -1202,53 +1233,53 @@ export default class extends Controller {
   }
 
   populateASIModal(length) {
-    this.removeAllChildNodes(this.asiModalListTarget);
+    Util.removeAllChildNodes(this.asiModalListTarget);
 
     let list = ['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA'];
     for (let i = 0; i < length; i++) {
-      let container = this.getTag('div', 'asi-box');
-      let choose_one = this.getTag('div', 'choice-box');
-      let choose_two = this.getTag('div', 'choice-box');
+      let container = Util.getTag('div', 'asi-box');
+      let choose_one = Util.getTag('div', 'choice-box');
+      let choose_two = Util.getTag('div', 'choice-box');
 
-      let select_one = this.getTag('select', 'rounded-sm');
+      let select_one = Util.getTag('select', 'rounded-sm');
       select_one.append(
-        this.getTag('option', 'font-semibold', '+2 to stat')
+        Util.getTag('option', 'font-semibold', '+2 to stat')
       );
       for (let stat of list) {
-        let option = this.getTag('option', 'font-semibold', stat);
+        let option = Util.getTag('option', 'font-semibold', stat);
         option.value = stat;
         select_one.append(option);
       }
       choose_one.append(select_one);
 
-      let select_two = this.getTag('select', 'rounded-sm');
-      let select_two_b = this.getTag('select', 'rounded-sm');
+      let select_two = Util.getTag('select', 'rounded-sm');
+      let select_two_b = Util.getTag('select', 'rounded-sm');
       select_two.append(
-        this.getTag('option', 'font-semibold', '+1 to stat')
+        Util.getTag('option', 'font-semibold', '+1 to stat')
       );
       select_two_b.append(
-        this.getTag('option', 'font-semibold', '+1 to stat')
+        Util.getTag('option', 'font-semibold', '+1 to stat')
       );
       for (let stat of list) {
-        let option = this.getTag('option', 'font-semibold', stat);
+        let option = Util.getTag('option', 'font-semibold', stat);
         option.value = stat;
-        let option2 = this.getTag('option', 'font-semibold', stat);
+        let option2 = Util.getTag('option', 'font-semibold', stat);
         select_two.append(option);
         select_two_b.append(option2);
       }
       choose_two.append(select_two);
       choose_two.append(select_two_b);
 
-      let checkbox = this.getTag('input', '');
+      let checkbox = Util.getTag('input', '');
       checkbox.type = 'checkbox';
       choose_one.append(checkbox);
 
-      let checkbox2 = this.getTag('input', '');
+      let checkbox2 = Util.getTag('input', '');
       checkbox2.type = 'checkbox';
       choose_two.prepend(checkbox2);
 
       container.append(choose_one);
-      container.append(this.getTag('p', 'font-black font-lg', 'or'));
+      container.append(Util.getTag('p', 'font-black font-lg', 'or'));
       container.append(choose_two);
       this.asiModalListTarget.append(container);
     }
@@ -1288,23 +1319,23 @@ export default class extends Controller {
     let index = 0;
     for (let choice of choices) {
       if (choice.length == 1) {
-        this.increaseStat(choice[0], 2);
+        this.stats = Util.increaseStat(this.stats, choice[0], 2);
       } else {
-        this.increaseStat(choice[0]);
-        this.increaseStat(choice[1]);
+        this.stats = Util.increaseStat(this.stats, choice[0]);
+        this.stats = Util.increaseStat(this.stats, choice[1]);
       }
       choice.forEach((stat) => {
-        asi_nodes[index].append(this.expandStatName(stat));
+        asi_nodes[index].append(Util.expandStatName(stat));
       });
       index++;
     }
-    this.updateStats();
+    Util.updateStats(this.stat_targets, this.stats);
     this.finalPass(2);
   }
 
   //----------------- TBIF Modal ------------------//
   chooseTBIF() {
-    this.removeAllChildNodes(this.tbifModalListTarget);
+    Util.removeAllChildNodes(this.tbifModalListTarget);
 
     let kinds = [
       [this.traits, 'Traits'],
@@ -1315,8 +1346,8 @@ export default class extends Controller {
 
     kinds.forEach((kind) => {
       let list = kind[0];
-      let frame = this.getTag('div', 'flex flex-col gap-2 p-2');
-      let title = this.getTag(
+      let frame = Util.getTag('div', 'flex flex-col gap-2 p-2');
+      let title = Util.getTag(
         'h4',
         'text-center font-bold text-xl',
         kind[1]
@@ -1326,7 +1357,7 @@ export default class extends Controller {
       for (let i = 0; i < list.length; i++) {
         let item = list[i];
 
-        let container = this.getTag('div', 'flex gap-2 p-2');
+        let container = Util.getTag('div', 'flex gap-2 p-2');
         let check = document.createElement('input');
         check.type = 'checkbox';
         check.value = kind[1];
@@ -1385,12 +1416,12 @@ export default class extends Controller {
     ];
 
     targets.forEach((target) => {
-      this.removeAllChildNodes(target[0]);
+      Util.removeAllChildNodes(target[0]);
     });
 
     let i = 0;
     indexes.forEach((index) => {
-      let tag = this.getTag('p', 'text-center', targets[i][1][index]); //this.***[index] is the text we want
+      let tag = Util.getTag('p', 'text-center', targets[i][1][index]); //this.***[index] is the text we want
       targets[i][0].append(tag);
       i++;
     });
@@ -1413,10 +1444,10 @@ export default class extends Controller {
 
   populateSpellModal(max_level) {
     //clear it first of the old sheet if we are switching
-    this.removeAllChildNodes(this.spellsModalListTarget);
+    Util.removeAllChildNodes(this.spellsModalListTarget);
     for (let i = 0; i <= max_level; i++) {
-      let frame = this.getTag('div', 'flex flex-col gap-2 p-2');
-      let title = this.getTag('h4', 'text-center font-bold text-xl');
+      let frame = Util.getTag('div', 'flex flex-col gap-2 p-2');
+      let title = Util.getTag('h4', 'text-center font-bold text-xl');
 
       if (i == 0) {
         title.innerText = 'Cantrips';
@@ -1426,7 +1457,7 @@ export default class extends Controller {
       frame.append(title);
       this.spellList.forEach((item) => {
         if (item.level == i) {
-          let container = this.getTag('div', 'flex gap-2 p-2');
+          let container = Util.getTag('div', 'flex gap-2 p-2');
           let check = document.createElement('input');
           check.type = 'checkbox';
           check.value = item.level;
@@ -1486,11 +1517,11 @@ export default class extends Controller {
   }
 
   putSingleSpellTaken(spell, target) {
-    let frame = this.getTag(
+    let frame = Util.getTag(
       'div',
       'flex flex-col gap-1 bg-gray-100 rounded-lg p-2'
     );
-    let title = this.getTag('h4', 'font-bold text-xl', spell.name);
+    let title = Util.getTag('h4', 'font-bold text-xl', spell.name);
     frame.append(title);
     frame.append(spell.description);
 
@@ -1504,8 +1535,8 @@ export default class extends Controller {
   //-----------------Equipment Modal ------------------//
 
   chooseEquipment() {
-    this.removeAllChildNodes(this.equipmentClassStartTarget);
-    this.removeAllChildNodes(this.equipmentBGStartTarget);
+    Util.removeAllChildNodes(this.equipmentClassStartTarget);
+    Util.removeAllChildNodes(this.equipmentBGStartTarget);
     let class_choices = false;
     let bg_choices = false;
     if (this.class_equip_choices['choices'].length > 0)
@@ -1522,7 +1553,7 @@ export default class extends Controller {
       );
     } else {
       this.equipmentClassStartTarget.append(
-        this.getTag(
+        Util.getTag(
           'p',
           'font-semibold p-4',
           'No choices for this class.'
@@ -1537,7 +1568,7 @@ export default class extends Controller {
       );
     } else {
       this.equipmentBGStartTarget.append(
-        this.getTag(
+        Util.getTag(
           'p',
           'font-semibold p-4',
           'No choices for this background.'
@@ -1547,18 +1578,18 @@ export default class extends Controller {
   }
 
   populateEquipmentModal(choices, target, title) {
-    this.removeAllChildNodes(target);
+    Util.removeAllChildNodes(target);
 
     choices.forEach((choice) => {
       let number_of_choices = choice.length;
-      let container = this.getTag('div', 'equipment-row');
+      let container = Util.getTag('div', 'equipment-row');
 
       choice.forEach((code) => {
         let values = code.split('#');
-        let choice_box = this.getTag('div', 'choice-box');
+        let choice_box = Util.getTag('div', 'choice-box');
         container.append(choice_box);
 
-        let choice_labels = this.getTag(
+        let choice_labels = Util.getTag(
           'div',
           'flex gap-4 items-center justify-center'
         );
@@ -1567,30 +1598,30 @@ export default class extends Controller {
         for (let i = 0; i < parseInt(values[1]); i++) {
           switch (values[0]) {
             case 'simple':
-              this.appendWeaponSelectToTarget(
+              Util.appendWeaponSelectToTarget(
                 'simple',
                 choice_labels
               );
               break;
             case 'martial':
-              this.appendWeaponSelectToTarget(
+              Util.appendWeaponSelectToTarget(
                 'martial',
                 choice_labels
               );
               break;
             default:
               choice_labels.append(
-                this.getTag('p', 'p-1', values[0])
+                Util.getTag('p', 'p-1', values[0])
               );
               break;
           }
         }
-        let checkbox = this.getTag('input', '');
+        let checkbox = Util.getTag('input', '');
         checkbox.type = 'checkbox';
         choice_box.prepend(checkbox);
 
         container.append(
-          this.getTag('p', 'text-lg font-black', 'or')
+          Util.getTag('p', 'text-lg font-black', 'or')
         );
       });
       container.removeChild(container.lastChild); //get rid of last 'or'
@@ -1603,7 +1634,7 @@ export default class extends Controller {
     let validated = true;
     let output = [];
     rows.forEach((row) => {
-      let check = this.validateEquipmentRow(row);
+      let check = Util.validateEquipmentRow(row);
       if (check) {
         check.forEach((item) => {
           output.push(item);
@@ -1620,10 +1651,10 @@ export default class extends Controller {
 
   putEquipmentToSheet(equipment) {
     //output selections to character sheet
-    this.removeAllChildNodes(this.startingEquipmentTarget);
-    this.removeAllChildNodes(this.attackNamesTarget);
-    this.removeAllChildNodes(this.attackBonusesTarget);
-    this.removeAllChildNodes(this.attackDamagesTarget);
+    Util.removeAllChildNodes(this.startingEquipmentTarget);
+    Util.removeAllChildNodes(this.attackNamesTarget);
+    Util.removeAllChildNodes(this.attackBonusesTarget);
+    Util.removeAllChildNodes(this.attackDamagesTarget);
 
     //reset equipped armor so we can recalculate AC correctly
     this.equipped_armor = [];
@@ -1662,21 +1693,21 @@ export default class extends Controller {
     equipment.forEach((item) => {
       if (data.weapons.includes(item)) {
         this.equipWeaponsTarget.append(
-          this.getTag('p', 'font-medium', item)
+          Util.getTag('p', 'font-medium', item)
         );
       } else if (data.armor.includes(item)) {
         this.equipArmorTarget.append(
-          this.getTag('p', 'font-medium', item)
+          Util.getTag('p', 'font-medium', item)
         );
         //for AC calculation
         this.equipped_armor.push(item);
       } else if (data.tools.includes(item)) {
         this.equipToolsTarget.append(
-          this.getTag('p', 'font-medium', item)
+          Util.getTag('p', 'font-medium', item)
         );
       } else {
         this.equipEquipmentTarget.append(
-          this.getTag('p', 'font-medium', item)
+          Util.getTag('p', 'font-medium', item)
         );
       }
     });
@@ -1692,14 +1723,14 @@ export default class extends Controller {
       if (this.choices.get('player_class') == 'Barbarian') {
         this.substatACTarget.innerText =
           10 +
-          this.calcMod(this.stats[1]) +
-          this.calcMod(this.stats[2]);
+          Util.calcMod(this.stats[1]) +
+          Util.calcMod(this.stats[2]);
       }
       if (this.choices.get('player_class') == 'Monk') {
         this.substatACTarget.innerText =
           10 +
-          this.calcMod(this.stats[1]) +
-          this.calcMod(this.stats[4]);
+          Util.calcMod(this.stats[1]) +
+          Util.calcMod(this.stats[4]);
       }
     }
   }
@@ -1719,11 +1750,11 @@ export default class extends Controller {
             //armor type limits the dexterity bonus available
             switch (piece.arm_type) {
               case 'Light':
-                armor_class += this.calcMod(this.stats[1]);
+                armor_class += Util.calcMod(this.stats[1]);
                 break;
               case 'Medium':
                 armor_class += Math.min(
-                  this.calcMod(this.stats[1]),
+                  Util.calcMod(this.stats[1]),
                   2
                 );
                 break;
@@ -1746,13 +1777,13 @@ export default class extends Controller {
     weapon_class,
     ranged
   ) {
-    let name = this.getTag('p', 'sheetcell w-1/4', weapon);
-    let damage = this.getTag(
+    let name = Util.getTag('p', 'sheetcell w-1/4', weapon);
+    let damage = Util.getTag(
       'p',
       'sheetcell w-1/4',
       `${die} ${dmg_type}`
     );
-    let props = this.getTag('p', 'sheetcell w-1/3', properties);
+    let props = Util.getTag('p', 'sheetcell w-1/3', properties);
 
     //all this is to figure out the attack bonus for each weapon
     //based on proficiency and the weapon type, finesse is handled by using the highest bonus
@@ -1778,13 +1809,13 @@ export default class extends Controller {
     //add proficiency
     if (
       unique.includes(name) ||
-      unique.includes(this.capitalize(weapon_class))
+      unique.includes(Util.capitalize(weapon_class))
     )
       bonus += this.prof_mod;
 
     //then, if finesse we have to choose the highest bonus of dex/str for the weapon
-    let str_bonus = this.calcMod(this.stats[0]);
-    let dex_bonus = this.calcMod(this.stats[1]);
+    let str_bonus = Util.calcMod(this.stats[0]);
+    let dex_bonus = Util.calcMod(this.stats[1]);
 
     if (properties.includes('Finesse')) {
       bonus += Math.max(str_bonus, dex_bonus);
@@ -1793,9 +1824,9 @@ export default class extends Controller {
       ranged == 1 ? (bonus += dex_bonus) : (bonus += str_bonus);
     }
 
-    let atk_bonus = this.getTag('p', 'sheetcell w-1/4', bonus);
+    let atk_bonus = Util.getTag('p', 'sheetcell w-1/4', bonus);
 
-    let row = this.getTag('div', 'flex p-2 w-full');
+    let row = Util.getTag('div', 'flex p-2 w-full');
     row.append(name);
     row.append(atk_bonus);
     row.append(damage);
@@ -1803,110 +1834,9 @@ export default class extends Controller {
     this.attackListTarget.append(row);
   }
 
-  // equipment utilities //
-
-  //select boxes based on weapon types, simple/martial, for starting equipment
-  appendWeaponSelectToTarget(wep_type, target) {
-    let selector = this.getTag('select', 'rounded-md');
-    //selector.id = 'testing';
-
-    let plate_title =
-      wep_type.charAt(0).toUpperCase() +
-      wep_type.slice(1) +
-      ' Weapon';
-    let plate = this.getTag('option', '', `- ${plate_title} -`);
-
-    selector.append(plate);
-
-    fetch(`/weapons/${wep_type}`)
-      .then((response) => response.json())
-      .then((data) => {
-        data.forEach((item) => {
-          let option = this.getTag('option', '', item['name']);
-          option.value = item['name'];
-          selector.append(option);
-        });
-        target.append(selector);
-      });
-  }
-
   //ensure only a single option is selected for one row
-  validateEquipmentRow(row) {
-    let row_output;
 
-    let count = 0;
-
-    for (let choice_box of row.children) {
-      if (choice_box.firstChild.checked) {
-        count++;
-        row_output = choice_box.lastChild;
-      }
-    }
-    if (count != 1) {
-      return false;
-    }
-
-    let validated_output = [];
-    for (let item of row_output.children) {
-      if (item.tagName == 'SELECT') {
-        let text = item.value;
-        validated_output.push(text);
-      } else {
-        validated_output.push(item.innerText);
-      }
-    }
-
-    return validated_output;
-  }
-
-  //----------------- Modal Utilities ------------------//
-  populateListModal(target, options) {
-    options.forEach((option) => {
-      let container = this.getTag(
-        'div',
-        'flex gap-2 align-center border border-white'
-      );
-      let align_span = this.getTag('span', '');
-      let check = document.createElement('input');
-      check.type = 'checkbox';
-      check.value = option;
-
-      align_span.append(check);
-      container.append(align_span);
-      container.append(option);
-
-      target.appendChild(container);
-    });
-  }
-
-  //add new choice buttons to the target list to activate them in finalPass
-  activateButtons() {
-    let buttons = [
-      this.langButtonTarget,
-      this.classSkillsButtonTarget,
-      this.classFeaturesButtonTarget,
-      this.toolsButtonTarget,
-      this.subclassButtonTarget,
-      this.spellsButtonTarget,
-      this.tbifButtonTarget,
-      this.equipmentButtonTarget,
-      this.asiButtonTarget,
-    ];
-
-    buttons.forEach((button) => {
-      button.disabled = false;
-      button.classList.remove(this.disabled_color);
-      button.classList.add(this.active_color);
-    });
-  }
-
-  deactivateButton(target) {
-    target.disabled = true;
-    target.classList.remove(this.active_color);
-    target.classList.add(this.disabled_color);
-  }
-
-  //Modal display activation
+  //Modal display activation, these are called from the sheet so dont put in a module
   showLangDialog() {
     this.dialogLanguagesTarget.showModal();
   }
@@ -1935,52 +1865,36 @@ export default class extends Controller {
     this.dialogASITarget.showModal();
   }
 
-  putModalChecksToSheet(collection, target, name = '') {
-    //creates p tags for collection and appends list to target with label for category name
-    //clears allChildfren of Target before appending so I use it in specific labele
-    //we pass in a category instance, collection within it, and output target
-    //if the collection is empty, the function returns without side-effects
-
-    if (collection.length == 0 || target == null) return;
-
-    this.removeAllChildNodes(target);
-
-    if (name != '') {
-      target.append(this.getTag('p', 'font-bold', `${name}: `));
-    }
-
-    collection.forEach((item) => {
-      target.append(this.getTag('p', '', item));
-    });
-  }
-
   //----------------------------- Base Stat Methods ---------------------------------//
   statModUpdate(runFinal = 0) {
-    this.strModTarget.innerText = this.modWithSign(
-      this.calcMod(this.stats[0])
+    this.strModTarget.innerText = Util.modWithSign(
+      Util.calcMod(this.stats[0])
     );
-    this.dexModTarget.innerText = this.modWithSign(
-      this.calcMod(this.stats[1])
+    this.dexModTarget.innerText = Util.modWithSign(
+      Util.calcMod(this.stats[1])
     );
-    this.conModTarget.innerText = this.modWithSign(
-      this.calcMod(this.stats[2])
+    this.conModTarget.innerText = Util.modWithSign(
+      Util.calcMod(this.stats[2])
     );
-    this.intModTarget.innerText = this.modWithSign(
-      this.calcMod(this.stats[3])
+    this.intModTarget.innerText = Util.modWithSign(
+      Util.calcMod(this.stats[3])
     );
-    this.wisModTarget.innerText = this.modWithSign(
-      this.calcMod(this.stats[4])
+    this.wisModTarget.innerText = Util.modWithSign(
+      Util.calcMod(this.stats[4])
     );
-    this.chaModTarget.innerText = this.modWithSign(
-      this.calcMod(this.stats[5])
+    this.chaModTarget.innerText = Util.modWithSign(
+      Util.calcMod(this.stats[5])
     );
 
-    if (this.isChoicesFull() && this.stats[0] != 0 && runFinal == 0) {
+    if (
+      Util.isChoicesFull(this.choices) &&
+      this.stats[0] != 0 &&
+      runFinal == 0
+    ) {
       this.finalPass();
     }
   }
 
-  //call stat modifications here
   randomStats() {
     for (let i = 0; i < 6; i++) {
       let rand = Math.floor(Math.random() * 20) + 1;
@@ -1991,7 +1905,7 @@ export default class extends Controller {
     if (this.raceASI != 0 && this.subraceASI != 0)
       this.calculateStats();
 
-    this.updateStats();
+    Util.updateStats(this.stat_targets, this.stats);
 
     this.statModUpdate();
   }
@@ -2005,171 +1919,5 @@ export default class extends Controller {
         this.subraceASI[index];
       index++;
     }
-  }
-  updateStats() {
-    this.strBaseTarget.innerText = this.stats[0];
-    this.dexBaseTarget.innerText = this.stats[1];
-    this.conBaseTarget.innerText = this.stats[2];
-    this.intBaseTarget.innerText = this.stats[3];
-    this.chaBaseTarget.innerText = this.stats[5];
-    this.wisBaseTarget.innerText = this.stats[4];
-  }
-
-  //----------------------------- Utility Methods ---------------------------------//
-  updateChoices() {
-    //we'll call this whenever there's a change in the top form to update the state object this.choices
-    //iterator replaces forEach on Map objects
-    let iterchoice = this.choices.entries();
-
-    //there are 6 choices to make
-    for (let i = 0; i < this.choices.size; i++) {
-      //we get the options for each form select in an HTMLCollection
-      let label = iterchoice.next().value[0];
-      let options = document.getElementById(label).children;
-
-      //we have to use set and item to deal with the HTMLCollection
-      //we won't set anything that is still on the label '- Whatever -'
-      for (let j = 0; j < options.length; j++) {
-        if (
-          options.item(j).selected &&
-          options.item(j).innerText.charAt(0) != '-'
-        )
-          this.choices.set(label, options.item(j).innerText);
-      }
-    }
-  }
-
-  putClassFeatures(name, collection, target) {
-    //creates p tags for collection and appends list to target with label for category name
-    //clears allChildfren of Target before appending so I use it in specific labele
-    //we pass in a category instance, collection within it, and output target
-    //if the collection is empty, the function returns without side-effects
-
-    if (collection.length == 0 || target == null) return;
-    //modified from above
-    this.removeAllChildNodes(target);
-
-    target.append(this.getPTag(name, 'font-black'));
-    collection.forEach((item) => {
-      //bold the feature label if it exists
-      if (item.includes(':')) {
-        let split = item.split(':');
-        let title = this.getTag('p', 'font-semibold', split[0] + ':');
-        let l_item = this.getTag('p', '', split[1]);
-        target.append(title);
-        target.append(l_item);
-      } else {
-        target.append(this.getTag('p', '', item));
-      }
-    });
-  }
-
-  removeAllChildNodes(parent) {
-    while (parent.firstChild) {
-      parent.removeChild(parent.firstChild);
-    }
-  }
-
-  getPTag(string, classname = 'font-medium') {
-    let out = document.createElement('p');
-    out.className = classname;
-    out.append(string + ': ');
-    return out;
-  }
-
-  getTag(string, classname, content) {
-    let out = document.createElement(string);
-    out.className = classname;
-    if (content) out.append(content);
-    return out;
-  }
-
-  appendItemToTarget(item, target) {
-    target.append(this.getPTag(item));
-  }
-
-  //calculate modifier
-  calcMod(base) {
-    return Math.floor(base / 2) - 5;
-  }
-
-  modWithSign(val) {
-    let sign;
-    if (val == 0) return '0';
-    if (val < 0) return `${val}`;
-    return `+${val}`;
-  }
-
-  expandStatName(stat) {
-    switch (stat) {
-      case 'STR':
-        return 'Strength';
-      case 'CON':
-        return 'Constitution';
-      case 'DEX':
-        return 'Dexterity';
-      case 'INT':
-        return 'Intelligence';
-      case 'WIS':
-        return 'Wisdom';
-      case 'CHA':
-        return 'Charisma';
-      default:
-        return 'NaS';
-    }
-  }
-
-  increaseStat(stat, val = 1) {
-    switch (stat) {
-      case 'STR':
-        this.stats[0] += val;
-        break;
-      case 'CON':
-        this.stats[2] += val;
-        break;
-      case 'DEX':
-        this.stats[1] += val;
-        break;
-      case 'INT':
-        this.stats[3] += val;
-        break;
-      case 'WIS':
-        this.stats[4] += val;
-        break;
-      case 'CHA':
-        this.stats[5] += val;
-        break;
-      default:
-        return 'NaS';
-    }
-    return;
-  }
-
-  isChoicesFull() {
-    let checklist = this.choices?.values();
-    for (let i = 0; i < this.choices.size; i++) {
-      let val = checklist.next().value;
-      if (val == 'none' || val == 0) {
-        return false;
-      }
-    }
-    return true;
-  }
-
-  //returns a Map { category_names, [] }
-  blankCategoryMap() {
-    let categories = new Map();
-    categories.set('race', []);
-    categories.set('subrace', []);
-    categories.set('player_class', []);
-    categories.set('subclass', []);
-    categories.set('background', []);
-    categories.set('feats', []);
-    return categories;
-  }
-
-  capitalize(string) {
-    let first = string.charAt(0).toUpperCase();
-    return first + string.slice(1);
   }
 }
