@@ -18,6 +18,28 @@ class CreateRaces < ActiveRecord::Migration[7.0]
       t.string :features, array: true, default: []
       t.integer :sub_count, default: 0
       t.text :extra_spells, default: "{}"
+      t.text :specific_spells, default: "{}"
+
+      #all extra spells formatted the same way
+      #extra_spell_lists = {
+      #  spelllist name => {
+      #    #we dont use a spell_table because some of thee will requre spells_or_cantrips choices
+      #    cantrips choices,[x,y,z...] //value for each character level, single value means they are all the same
+      #    spells choics,[xyz]
+      #    spells_or_cantrips choices,[xyz]
+      #    spellcasting ability, // accomodate a 'own' keyword for the character's casting ability
+      #    spells_are_extra, wether to count these spells in Spells Known
+      #  },
+      #  othr_spelllist_name => {...ss},
+      #  ...
+      #}
+
+      #specific_spells: {
+      #  1=> ['Dancing Lights', 'cantrip'],
+      #  3=> ['Faerie Fire', 'long rest'],
+      #  5=> ['Darkness', 'long rest'],
+      #  'stat'=> ['Charisma'],
+      #},
 
       t.timestamps
     end

@@ -1,5 +1,6 @@
 class Subrace < ApplicationRecord
   serialize :extra_spells, Hash
+  serialize :specific_spells, Hash
 
   belongs_to :race
   has_many :characters

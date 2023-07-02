@@ -60,6 +60,7 @@ DwarvenRace = Race.create(
   ],
   sub_count: 2,
   extra_spells: {},
+  specific_spells: {},
 )
 
 DwarvenRace.subraces.create(
@@ -70,6 +71,7 @@ DwarvenRace.subraces.create(
       ],
   extra_languages: 0,
   extra_spells: {},
+  specific_spells: {},
 )
 
 DwarvenRace.subraces.create(
@@ -79,44 +81,7 @@ DwarvenRace.subraces.create(
   armor: ['Light','Medium'],
   extra_languages: 0,
   extra_spells: {},
-)
-
-#slivers are just for testing stuff
-SliverRace = Race.create(
-  name: 'Sliver',
-  asi: [0,1,0,1,0,0],
-  age_limit: 15,
-  heightlow: "4'",
-  heighthigh: "6'",
-  languages: ['Common', 'Infernal'],
-  weapons: ['Spear'],
-  speed: 35,
-  features: [
-    'Spells affecting members of your party affect you as well.',
-    'Darkvision',
-    'Sliverskin: Resistance to Psychic damage.',
-    'Hive Wisdom: You have advantage on Wisdom(Perception) checks underground.',
-  ],
-  sub_count: 2,
-  extra_spells: {},
-)
-
-SliverRace.subraces.create(
-  name: 'Gemhide Slivers',
-  asi: [0,0,0,1,1,0],
-  features: ['Mana Armor: Resistance to magic damage the first time it is taken each day.'],
-  skills: ['Arcana'],
-  extra_languages: 0,
-  extra_spells: {},
-)
-
-SliverRace.subraces.create(
-  name: 'Hive Slivers',
-  asi: [0,0,1,0,0,0],
-  features: ['Clone: You may create a simulacrum of yourself once per long rest that lasts for 4 hours.'],
-  extra_languages: 0,
-  tools: ['Jeweler\'s Tols'],
-  extra_spells: {},
+  specific_spells: {},
 )
 
 ElvenRace = Race.create(
@@ -136,6 +101,7 @@ ElvenRace = Race.create(
   skills: ['Perception'],
   sub_count: 3,
   extra_spells: {},
+  specific_spells: {},
 )
 
 ElvenRace.subraces.create(
@@ -143,11 +109,20 @@ ElvenRace.subraces.create(
   asi: [0,0,0,1,0,0],
   features: [
     'Elven Weapon Training: You have proficiency with the longsword, shortsword, shortbow, and longbow.',
-    'Cantrip: You know one cantrip of uyour choice from the wizard spell list. Intelligence is your spellcasting stat for it.',
+    'Cantrip: You know one cantrip of your choice from the Wizard spell list. Intelligence is your spellcasting stat for that spell.',
     'Extra Language: You can speak read, and write one extra language.',
   ],
   extra_languages: 1,
-  extra_spells: {},
+  extra_spells: {
+    'Wizard'=> {
+      'cantrips_choices'=> [1],
+      'spells_choices'=> [0],
+      'spells_or_cantrips'=> [0],
+      'spell_ability'=> 'Intelligence',
+      'spells_are_extra'=> true,
+    },
+  },
+  specific_spells: {},
 )
 
 ElvenRace.subraces.create(
@@ -159,6 +134,7 @@ ElvenRace.subraces.create(
     'Mask of the Wild: You can attempt to hide even when you are onluy lightly obscured.',
   ],
   extra_spells: {},
+  specific_spells: {},
 )
 
 ElvenRace.subraces.create(
@@ -167,10 +143,16 @@ ElvenRace.subraces.create(
   features: [
     'Superior Darkvision: Your darkvision has a radius of 120 feet.',
     'Sunlight Sensitivity: You have disadvantage on attack rolls and on Wisdom(Perception) checks that rely on sight when you, the target of your attack, or whatever you are trying to perceive is in direct sunlight.',
-    'Drow Magic: You know the dancing lights cantrip. When yuo reach 3rd level you can cast faerie fire once per long rest. At 5th level you can cast darkness once per long rest. Charisma is your spellcasting ability for these spells.',
+    'Drow Magic: You know the dancing lights cantrip. When you reach 3rd level you can cast faerie fire once per long rest. At 5th level you can cast darkness once per long rest. Charisma is your spellcasting ability for these spells.',
     'Drow Weapon Training: You have proficiency with rapiers, shortswords, and hand crossbows.',
   ],
   extra_spells: {},
+  specific_spells: {
+    1=> ['Dancing Lights', 'cantrip'],
+    3=> ['Faerie Fire', 'long rest'],
+    5=> ['Darkness', 'long rest'],
+    'stat'=> ['Charisma'],
+  },
 )
 
 HalflingRace = Race.create(
@@ -188,6 +170,7 @@ HalflingRace = Race.create(
   ],
   sub_count: 2,
   extra_spells: {},
+  specific_spells: {},
 )
 
 HalflingRace.subraces.create(
@@ -197,6 +180,7 @@ HalflingRace.subraces.create(
     'Naturally Stealthy: You can attempt to hide even when you are only obscured by a creature one size larger than you.',
   ],
   extra_spells: {},
+  specific_spells: {},
 )
 
 HalflingRace.subraces.create(
@@ -206,6 +190,7 @@ HalflingRace.subraces.create(
     'Stout Resilience: You have advantage on saving throws against poison, and you have resistance against poison damage.',
   ],
   extra_spells: {},
+  specific_spells: {},
 )
 
 HumanRace = Race.create(
@@ -218,6 +203,7 @@ HumanRace = Race.create(
   extra_languages: 1,
   speed: 30,
   extra_spells: {},
+  specific_spells: {},
 )
 
 DragonbornRace = Race.create(
@@ -234,6 +220,7 @@ DragonbornRace = Race.create(
     'Damage Resistance: You have resistance to the damage type associated with your draconic ancestry.',
   ],
   extra_spells: {},
+  specific_spells: {},
 )
 
 GnomeRace = Race.create(
@@ -250,6 +237,7 @@ GnomeRace = Race.create(
   ],
   sub_count: 2,
   extra_spells: {},
+  specific_spells: {},
 )
 
 GnomeRace.subraces.create(
@@ -260,6 +248,10 @@ GnomeRace.subraces.create(
     'Speak with Small Beasts: Through sounds and gestures you can communicate simple ideas with small or smaller beasts.',
   ],
   extra_spells: {},
+  specific_spells: {
+    1=> ['Minor Illusion','cantrip'],
+    'stat'=> 'Intelligence',
+  },
 )
 
 GnomeRace.subraces.create(
@@ -269,7 +261,9 @@ GnomeRace.subraces.create(
     'Artificer\'s Lore: Whenever you make an Intelligence(History) check related to magic items, alchemical objects, or technological devices, you can add twice your proficiency bonus, instead of any proficiency bonus you would normally apply.',
     'Tinker: You have proficiency with Tinker\'s Tools. Using these tools, you can spend 1 hour and 10gp worth of materials to construct a Tiny clockwork device which ceases to function after 24 hours unless you spend 1 hour repairing it.',
   ],
+  tools: ['Tinker\'s Tools'],
   extra_spells: {},
+  specific_spells: {},
 )
 
 HalfElfRace = Race.create(
@@ -288,6 +282,7 @@ HalfElfRace = Race.create(
     'Skill Versatility: You gain proficiency in two skills of your choice.',
   ],
   extra_spells: {},
+  specific_spells: {},
 )
 
 HalfOrcRace = Race.create(
@@ -306,6 +301,7 @@ HalfOrcRace = Race.create(
     'Savage Attacks: When you score a critical hit with a melee weapon attack, you can roll one of the weapon\'s damage dice one additional time and add it to the extra damage.',
   ],
   extra_spells: {},
+  specific_spells: {},
 )
 
 TieflingRace = Race.create(
@@ -323,6 +319,12 @@ TieflingRace = Race.create(
     'Infernal Legacy: You know the thaumaturgy cantrip. At 3rd level, you can cast hellish rebuke as a 2nd level spell once per long rest. At 5th level you can cast darkness once per long rest. Charisma is your spellcasting ability for these spells.',
   ],
   extra_spells: {},
+  specific_spells: {
+    1=> ['Thaumaturgy','cantrip'],
+    3=> ['Hellish Rebuke','long rest'],
+    5=> ['Darkness','long rest'],
+    'stat'=> 'Charisma'
+  },
 )
 
 
