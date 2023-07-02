@@ -1,4 +1,5 @@
 import { Controller } from '@hotwired/stimulus';
+import * as Util from 'utilities';
 
 //all options come from the db, new db additions should just work
 export default class extends Controller {
@@ -204,6 +205,7 @@ export default class extends Controller {
   ];
 
   connect() {
+    Util.logoutput();
     //we'll take over from the turbo frame and store the form data in a Map
     this.choices = new Map();
     this.choices.set('race', 'none');

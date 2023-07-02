@@ -26,12 +26,27 @@ I'm working on the seed and classes/subraces are adding these things I can't han
    - inconsistent number on spellcasting_ability in player_class model, doesn't count from 0
    -some classes have a choice at 3rd level that decides bonuses at later levels, i don't want to change the database but we might need a variable to determine how to handle validation in the modal
 
+# secondary spell lists
+  You'll only have a few spells like this,so a smaller display frame will work, we can populate them to the sheet on submission of the modal and include the relevant stats and things inside that frame, leaving the rest of the sheet alone. These are spells with special rules, but we'll put them in the normal spell list, just with a different background color.
+
+  the database model for each background will need an extra_spell_lists Map object
+  extra_spell_lists = {
+      spelllist name => {
+        cantrips choices,[x,y,z...] //value for each character level
+        spells choics,[xyz]
+        spells_or_cantrips choices,[xyz]
+        spellcasting ability, // accomodate a 'own' keyword for the character's casting ability
+        spells_are_extra, wether to count these spells in Spells Known
+      },
+      othr_spelllist_name => {...ss},
+      ...
+  }
 
 ##  Bard
    choose three instruments as tools
    equipment_choices -> choose any musical instrument
    Bard College, modal validation, noted above
-      
+
 
 # heroku
 https://uglysheetmaker-e6deabaebc10.herokuapp.com/

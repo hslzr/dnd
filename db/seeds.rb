@@ -442,7 +442,7 @@ Bard = PlayerClass.create(
   wealth_die: 5,
   features: {
     1=>[
-      "Spellcasting: You have learned to untangle and reshape the favric of reality in harmony with your wishes and music. Your spells are part of your vast repertoire, magic that you can tune to different situations. Charisma is your Spellcasting Ability.",
+      "Spellcasting: You have learned to untangle and reshape the fabric of reality in harmony with your wishes and music. Your spells are part of your vast repertoire, magic that you can tune to different situations. Charisma is your Spellcasting Ability.",
       "Bardic Inspiration: You can inspire others through stirring words or music. To do so, you use a bonus action on your turn to choose one creature other than yourself within 60 feet of you who can hear you. That creature gains one Bardic Inspiration die, a d6.
       Once within the next 10 minutes, the creature can roll the die and add it to one ability check, attack roll, or saving throw it makes. The creature can wait until after it rolls before deciding to use the Bardic Inspiration die. Once it is rolled, it is lost and a creature can only have one Bardic Inspiration at a time.
       You can use this feature a number of times equal to your Charisma modifier (a minimum of once). You regain any expended uses after a long rest.
@@ -469,7 +469,7 @@ Bard = PlayerClass.create(
     ],
     10=>[
       "Magical Secrets: You have plundered magical knowledge from a wide spectrum of disciplines. Choose two spells from any class, including this one. A spell you choose must be of a level you can cast, as shown on the Bard table, or a cantrip.
-      The chosen spells count as bard spells for you and are included in the number in the Spels Known column of the Bard table.
+      The chosen spells count as bard spells for you and are included in the number in the Spells Known column of the Bard table.
       You learn two additional spells from any class at 14th, and 18th level."
     ],
     20=>[
@@ -495,6 +495,7 @@ Bard.subclasses.create(
       "Peerless Skill: When you make an ability check, you can expend one use of Bardic Inspiration. Roll a Bardic Inspiration die and add the number rolled to your ability check. You can choose to do so after you roll the die for the ability check, but before the DM tells you whether you succeed or fail.",
     ],
   },
+  custom: {},
 )
 
 Bard.subclasses.create(
@@ -512,6 +513,7 @@ Bard.subclasses.create(
       "Battle Magic: You have mastered the art of weaving spellcasting and weapon use into a single harmonious act. When you use your action to cast a bard spell, you can make one weapon attack as a bonus action.",
     ],
   },
+  custom: {},
   armor: ['Medium','Shields'],
   weapons: ['Martial'],
 )
@@ -835,6 +837,26 @@ ClassSpellListsSpells.create(
   class_spell_list_id: Junk_wizard.id,
   spell_id: 4
 )
+
+Junk_2 = ClassSpellList.create(
+  name: 'Bard'
+)
+
+ClassSpellListsSpells.create(
+  class_spell_list_id: Junk_2.id,
+  spell_id: 1
+)
+ClassSpellListsSpells.create(
+  class_spell_list_id: Junk_2.id,
+  spell_id: 3
+)
+ClassSpellListsSpells.create(
+  class_spell_list_id: Junk_2.id,
+  spell_id: 4
+)
+
+
+
 
 Armor.create(
   stealth_disadvantage: 1,
