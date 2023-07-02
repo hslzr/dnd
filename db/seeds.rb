@@ -115,6 +115,8 @@ ElvenRace.subraces.create(
   extra_languages: 1,
   extra_spells: {
     'Wizard'=> {
+      'level'=> 1,
+      'source'=> 'High Elf',
       'cantrips_choices'=> [1],
       'spells_choices'=> [0],
       'spells_or_cantrips'=> [0],
@@ -151,7 +153,8 @@ ElvenRace.subraces.create(
     1=> ['Dancing Lights', 'cantrip'],
     3=> ['Faerie Fire', 'long rest'],
     5=> ['Darkness', 'long rest'],
-    'stat'=> ['Charisma'],
+    'stat'=> 'Charisma',
+    'source'=> 'Drow',
   },
 )
 
@@ -251,6 +254,7 @@ GnomeRace.subraces.create(
   specific_spells: {
     1=> ['Minor Illusion','cantrip'],
     'stat'=> 'Intelligence',
+    'source'=> 'Forest Gnome',
   },
 )
 
@@ -323,7 +327,8 @@ TieflingRace = Race.create(
     1=> ['Thaumaturgy','cantrip'],
     3=> ['Hellish Rebuke','long rest'],
     5=> ['Darkness','long rest'],
-    'stat'=> 'Charisma'
+    'stat'=> 'Charisma',
+    'source'=> 'Infernal Legacy'
   },
 )
 
@@ -524,7 +529,17 @@ Bard.subclasses.create(
     ],
   },
   custom: {},
-  extra_spells: {},
+  extra_spells: {
+    'Any'=> {
+      'level'=> 6,
+      'source'=> 'College of Lore',
+      'spells_choices'=> 0,
+      'cantrips_choices'=> 0,
+      'spells_or_cantrips'=> 2,
+      'spell_ability'=> 'Charisma',
+      'spells_are_extra'=> false,
+    }
+  },
 )
 
 Bard.subclasses.create(
