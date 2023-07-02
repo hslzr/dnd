@@ -581,6 +581,9 @@ export default class extends Controller {
     }
   }
 
+  //code 0 : run class and subclass featureHandlers
+  //code 1 : dont run featureHandles, do run calculateStats
+  //code 2 : don't run calculateStats
   finalPass(code = 0) {
     this.setSkillMap();
     this.populateSkillModifiers();
@@ -1845,7 +1848,7 @@ export default class extends Controller {
     this.attackListTarget.append(row);
   }
 
-  //------------Modal display activation, these are called from the sheet so dont put in a module
+  //----------------------------- Modal Activation ---------------------------------//
   showLangDialog() {
     this.dialogLanguagesTarget.showModal();
   }

@@ -6,9 +6,11 @@
 
 * Tailwind CSS
 
-The seed file is one big copyright violation, this is not for profit or public use.
+The seed file is one big copyright violation, this is a student project and not for profit or public use.
 
 # main tasks
+Implement Secondary Spell Lists (db adjustment)
+Implement customModifiers (db adjustment)
 Fill out the seed with remaining classes, subclasses, backgrounds, and feats
 Implement Feats
 Different methods of stat assignment
