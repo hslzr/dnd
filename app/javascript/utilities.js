@@ -243,6 +243,22 @@ export function putModalChecksToSheet(collection, target, name = '') {
   });
 }
 
+export function putRacialASI(list, target) {
+  let stats = [
+    'Strength',
+    'Dexterity',
+    'Constitution',
+    'Intelligence',
+    'Wisdom',
+    'Charisma',
+  ];
+  for (let i = 0; i < 6; i++) {
+    if (list[i] > 0) {
+      target.append(getTag('p', '', `+${list[i]} ${stats[i]}`));
+    }
+  }
+}
+
 //-------------------------------------------calculations and string methods
 //calculate skill modifier
 export function calcMod(base) {

@@ -184,6 +184,12 @@ export default class extends Controller {
     'spellsTaken7',
     'spellsTaken8',
     'spellsTaken9',
+    'dialogExtraSpells',
+    'extraSpellsModalList',
+    'extraSpellsLimit',
+    'extraCantripsLimit',
+    'extraAnyLimit',
+    'extraSpellsButton',
     'tbifTraits',
     'tbifBonds',
     'tbifIdeals',
@@ -328,7 +334,7 @@ export default class extends Controller {
         this.racialASIBonusTarget.append(
           Util.getTag('p', 'font-medium', data.name + ': ')
         );
-        this.putRacialASI(this.raceASI, this.racialASIBonusTarget);
+        Util.putRacialASI(this.raceASI, this.racialASIBonusTarget);
 
         //we have to handle races with no subrace by assigning the blank subrace here
         if (data.sub_count == 0) {
@@ -358,7 +364,7 @@ export default class extends Controller {
         this.subraceASIBonusTarget.append(
           Util.getTag('p', 'font-medium', data.name + ': ')
         );
-        this.putRacialASI(
+        Util.putRacialASI(
           this.subraceASI,
           this.subraceASIBonusTarget
         );
@@ -653,24 +659,6 @@ export default class extends Controller {
     this.customModifiers(); //tbw
   }
 
-  putRacialASI(list, target) {
-    let stats = [
-      'Strength',
-      'Dexterity',
-      'Constitution',
-      'Intelligence',
-      'Wisdom',
-      'Charisma',
-    ];
-    for (let i = 0; i < 6; i++) {
-      if (list[i] > 0) {
-        target.append(
-          Util.getTag('p', '', `+${list[i]} ${stats[i]}`)
-        );
-      }
-    }
-  }
-
   //----------------------------- Final Pass methods ---------------------------------//
   setSkillMap() {
     this.skills.set('Athletics', [
@@ -927,6 +915,14 @@ export default class extends Controller {
     }
   }
 
+  setSpecificSpellsAndInformation() {
+    //tbw
+  }
+
+  setExtraSpellsInformation() {
+    //tbw
+  }
+
   makeModalChoices() {
     this.chooseLanguages();
     this.chooseClassSkills();
@@ -936,6 +932,7 @@ export default class extends Controller {
     this.chooseTBIF();
     this.chooseEquipment();
     this.chooseASI();
+    this.chooseExtraSpells();
   }
 
   resetProficiencies() {
@@ -1546,6 +1543,16 @@ export default class extends Controller {
     frame.append(`Attack Damage: ${dmg_out}`);
     target.append(frame);
   }
+  //-----------------Extra Spells Modal ------------------//
+  chooseExtraSpells() {}
+
+  populateExtraSpellsModal() {}
+
+  submitExtraSpellsChoices(event) {}
+
+  putExtraSpellsToSheet(spells) {}
+
+  putSingleExtraSpellTaken(spell, target) {}
   //-----------------Equipment Modal ------------------//
 
   chooseEquipment() {
@@ -1875,6 +1882,9 @@ export default class extends Controller {
   }
   showASIDialog() {
     this.dialogASITarget.showModal();
+  }
+  showExtraSpellsDialog() {
+    this.dialogExtraSpellsTarget.showModal();
   }
 
   //----------------------------- Base Stat Methods ---------------------------------//
