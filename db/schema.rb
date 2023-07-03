@@ -34,7 +34,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_18_194224) do
     t.string "weapons", default: [], array: true
     t.string "armor", default: [], array: true
     t.string "tools", default: [], array: true
-    t.string "extra_languages", default: "0"
+    t.string "extra_languages"
     t.text "equipment_choices", default: "{}"
     t.string "features", default: [], array: true
     t.string "traits", default: [], array: true
@@ -124,6 +124,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_18_194224) do
     t.string "description"
     t.string "features", default: [], array: true
     t.string "extra_languages"
+    t.text "extra_spells", default: "{}"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -157,6 +158,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_18_194224) do
     t.text "equipment_choices", default: "{}"
     t.integer "spellcasting_ability", default: 0
     t.integer "spell_table", default: [], array: true
+    t.text "extra_spells", default: "{}"
     t.integer "wealth_die", default: 2
     t.integer "wealth_mult", default: 10
     t.text "features", default: "{}"
@@ -172,7 +174,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_18_194224) do
     t.string "heightlow", default: "4'6\""
     t.string "heighthigh", default: "7\"6"
     t.string "languages", default: [], array: true
-    t.string "extra_languages", default: "0"
+    t.string "extra_languages"
     t.string "weapons", default: [], array: true
     t.string "armor", default: [], array: true
     t.string "tools", default: [], array: true
@@ -182,6 +184,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_18_194224) do
     t.integer "speed", default: 15
     t.string "features", default: [], array: true
     t.integer "sub_count", default: 0
+    t.text "extra_spells", default: "{}"
+    t.text "specific_spells", default: "{}"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -206,6 +210,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_18_194224) do
     t.string "name"
     t.text "features", default: "{}"
     t.text "custom", default: "{}"
+    t.text "extra_spells", default: "{}"
     t.string "skills", default: [], array: true
     t.string "weapons", default: [], array: true
     t.string "armor", default: [], array: true
@@ -226,6 +231,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_18_194224) do
     t.string "tools", default: [], array: true
     t.string "skills", default: [], array: true
     t.string "features", default: [], array: true
+    t.text "extra_spells", default: "{}"
+    t.text "specific_spells", default: "{}"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

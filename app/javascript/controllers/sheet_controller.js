@@ -284,6 +284,8 @@ export default class extends Controller {
 
     //spells
     this.spellList = false; //we'll set this to a correct collection of spells with a new fetch in catUpdate
+    this.extraSpellLists = [];
+    this.specificSpells = [];
   }
 
   //----------------------------- Main Sheet Update Flow ---------------------------------//
@@ -329,6 +331,7 @@ export default class extends Controller {
         this.substatSpeedTarget.innerText = data.speed;
         this.raceToolChoices = data.tool_choice;
         this.raceASI = data.asi;
+        this.extraSpellLists.push(data.extra_spells);
 
         Util.removeAllChildNodes(this.racialASIBonusTarget);
         this.racialASIBonusTarget.append(
