@@ -6,6 +6,7 @@ class CreateSubclasses < ActiveRecord::Migration[7.0]
       t.text :features, default: "{}"
       t.text :custom, default: "{}"
       t.text :extra_spells, default: "{}"
+      t.text :specific_spells, default: "{}"
       t.string :skills, array: true, default: []
       t.string :weapons, array: true, default: []
       t.string :armor, array: true, default: []

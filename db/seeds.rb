@@ -36,6 +36,7 @@ BlankSubrace = Subrace.create(
   name: 'None',
   extra_languages: 0,
   extra_spells: {},
+  specific_spells: {},
 )
 
 DwarvenRace = Race.create(
@@ -386,6 +387,7 @@ Barbarian = PlayerClass.create(
   },
   custom: {},
   extra_spells: {},
+  specific_spells: {},
 )
 
 Barbarian.subclasses.create(
@@ -398,6 +400,7 @@ Barbarian.subclasses.create(
   },
   custom: {},
   extra_spells: {},
+  specific_spells: {},
 )
 
 Barbarian.subclasses.create(
@@ -427,6 +430,7 @@ Barbarian.subclasses.create(
     ],
   },
   extra_spells: {},
+  specific_spells: {},
 )
 
 Bard = PlayerClass.create(
@@ -511,6 +515,7 @@ Bard = PlayerClass.create(
   custom: {
   },
   extra_spells: {},
+  specific_spells: {},
 )
 
 Bard.subclasses.create(
@@ -540,6 +545,7 @@ Bard.subclasses.create(
       'spells_are_extra'=> false,
     }
   },
+  specific_spells: {},
 )
 
 Bard.subclasses.create(
@@ -561,6 +567,7 @@ Bard.subclasses.create(
   armor: ['Medium','Shields'],
   weapons: ['Martial'],
   extra_spells: {},
+  specific_spells: {},
 )
 
 Ranger = PlayerClass.create(
@@ -677,6 +684,7 @@ Ranger = PlayerClass.create(
     ]
   },
   extra_spells: {},
+  specific_spells: {},
 )
 
 Ranger.subclasses.create(
@@ -705,6 +713,7 @@ Ranger.subclasses.create(
   },
   features: {},
   extra_spells: {},
+  specific_spells: {},
 )
 
 Ranger.subclasses.create(
@@ -721,6 +730,7 @@ Ranger.subclasses.create(
     },
   custom: {},
   extra_spells: {},
+  specific_spells: {},
 )
 
 Acolyte = Background.create(
@@ -777,6 +787,7 @@ Acolyte = Background.create(
       'Shelter of the Faithful: You command the respect of those who share your faith, and you can perform the religious ceremonies of your deity. You and your party can expect to receive free healing and care at a temple, shrine, or other established presence of your faith, though you must provide any material components needed for spells. Those who share your religion will support you at a modest lifestyle. You might have ties to a specific temple where you have a residence and the priests can be called upon for non-hazardous assistance near there.',
     ],
   extra_spells: {},
+  specific_spells: {},
 )
 
 Feat_alert = Feat.create(
@@ -788,6 +799,7 @@ Feat_alert = Feat.create(
       'Other creatures don`t gain advantage on attack rolls against you as a result of being unseen by you.'
     ],
   extra_spells: {},
+  specific_spells: {},
 )
 
 

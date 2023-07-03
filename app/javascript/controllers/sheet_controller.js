@@ -332,6 +332,7 @@ export default class extends Controller {
         this.raceToolChoices = data.tool_choice;
         this.raceASI = data.asi;
         this.extraSpellLists.push(data.extra_spells);
+        this.specificSpells?.push(data.specific_spells);
 
         Util.removeAllChildNodes(this.racialASIBonusTarget);
         this.racialASIBonusTarget.append(
@@ -362,6 +363,8 @@ export default class extends Controller {
         this.aboutSubraceTarget.innerText = data.name;
         this.sheet_subrace = data.name;
         this.subraceASI = data.asi;
+        this.extraSpellLists.push(data.extra_spells);
+        this.specificSpells?.push(data.specific_spells);
 
         Util.removeAllChildNodes(this.subraceASIBonusTarget);
         this.subraceASIBonusTarget.append(
@@ -389,6 +392,9 @@ export default class extends Controller {
         this.classFeatureChoices = data.custom;
         this.spell_table = data.spell_table;
         this.class_equip_choices = data.equipment_choices;
+
+        this.extraSpellLists.push(data.extra_spells);
+        this.specificSpells?.push(data.specific_spells);
         //the seed stores saving throw proficiencies as indexes to this array
         let primary_proficiencies = [
           this.strSaveProfTarget,
@@ -475,6 +481,9 @@ export default class extends Controller {
         this.sheet_subclass = data.name;
         this.subclassFeatureList = data.features; //default features
         this.subclassFeatureChoices = data.custom; //modal choices
+
+        this.extraSpellLists.push(data.extra_spells);
+        this.specificSpells?.push(data.specific_spells);
         break;
 
       case 'background':
@@ -490,6 +499,9 @@ export default class extends Controller {
         this.sheet_background = data.name;
         this.equipGPTarget.innerText = data.gold;
         this.bg_equip_choices = data.equipment_choices;
+
+        this.extraSpellLists.push(data.extra_spells);
+        this.specificSpells?.push(data.specific_spells);
 
         //tbif
         this.traits = data.traits;

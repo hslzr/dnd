@@ -17,6 +17,8 @@ class CreateBackgrounds < ActiveRecord::Migration[7.0]
       t.string :specialties, array: true, default: []
       t.string :specialty_description
       t.integer :gold
+      t.text :extra_spells, default: "{}"
+      t.text :specific_spells, default: "{}"
 
       t.timestamps
     end

@@ -3,6 +3,7 @@ class PlayerClass < ApplicationRecord
   serialize :custom, Hash
   serialize :equipment_choices, Hash
   serialize :extra_spells, Hash
+  serialize :specific_spells, Hash
 
   has_many :subclasses
   has_many :characters
