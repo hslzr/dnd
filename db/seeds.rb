@@ -521,7 +521,7 @@ Bard = PlayerClass.create(
         [10,2],
         [14,2],
         [18,2], #2 spells each at 10, 14 and 18th level
-      ],,
+      ],
       'cantrips_choices'=> 0,
       'spell_ability'=> 'Charisma',
       'spells_are_extra'=> false,

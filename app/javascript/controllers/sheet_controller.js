@@ -188,7 +188,6 @@ export default class extends Controller {
     'extraSpellsModalList',
     'extraSpellsLimit',
     'extraCantripsLimit',
-    'extraAnyLimit',
     'extraSpellsButton',
     'tbifTraits',
     'tbifBonds',
@@ -1557,10 +1556,39 @@ export default class extends Controller {
     //at this point we are in finalPass and our state variables are populated
     //we have to go through each collection, fetch the data needed, and populate the sheet or modal
     console.log(this.extraSpellLists);
-    console.log(this.specificSpells);
+
+    //fetch each spell list in extra SpellLists
+    let lists = this.extraSpellLists.values();
+    for (let item of lists) {
+      let listkeys = Object.keys(item);
+
+      for (let key of listkeys) {
+        let info = this.extraSpellLists.get(key);
+        if (key == 'Any') {
+          fetch(`/labels/anyspell`)
+            .then((response) => response.json())
+            .then((data) =>
+              this.populateExtraSpellsModal(data, info)
+            );
+        } else {
+          fetch(`/class_spell_lists/${key}`)
+            .then((response) => response.json())
+            .then((data) =>
+              this.populateExtraSpellsModal(data, info)
+            );
+          //use those to populate the extra spells modal
+        }
+      }
+    }
+    //specificSpells get put straight to the sheet if level is high enough for them in a separate function
+    //we send the right info to populateExtraSpells at this point
   }
 
-  populateExtraSpellsModal() {}
+  populateExtraSpellsModal(data, info) {
+    console.log(info);
+    console.log(data);
+    //working here
+  }
 
   submitExtraSpellsChoices(event) {}
 

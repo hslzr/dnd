@@ -35,4 +35,10 @@ class LabelsController < ApplicationController
       format.json { render json: @count }
     end
   end
+
+  def anyspell
+    respond_to do |format|
+      format.json { render json: Spell.all}
+    end
+  end
 end
