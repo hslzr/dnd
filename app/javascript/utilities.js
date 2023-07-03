@@ -208,7 +208,9 @@ export function putClassFeatures(name, collection, target) {
   //modified from above
   removeAllChildNodes(target);
 
-  target.append(getTag('p', 'font-black', name + ': '));
+  target.append(
+    getTag('p', 'font-black col-span-2 text-center mt-2', name)
+  );
   collection.forEach((item) => {
     //bold the feature label if it exists
     if (item.includes(':')) {
@@ -218,7 +220,7 @@ export function putClassFeatures(name, collection, target) {
       target.append(title);
       target.append(l_item);
     } else {
-      target.append(getTag('p', '', item));
+      target.append(getTag('p', 'text-center', item));
     }
   });
 }

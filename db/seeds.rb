@@ -54,8 +54,8 @@ DwarvenRace = Race.create(
   ],
   speed: 25,
   features: [
-    'Speed not reduced by heavy armor',
-    'Darkvision',
+    'Napoleonic Vigor: Speed not reduced by heavy armor',
+    'Darkvision: You can see in dim light within 60 feet of you as if it were brightly lit, and in darkness as if it were dim light, but you can\'t discern color.',
     'Dwarven Resilience: Advantage on Poison saves and resistance to Poison damage.',
     'Stonecunning: Whenever you make an Intelligence (History) check related to the origin of stonework, you are considered proficient in the History skill and add double your proficiency bonus to the check, instead of your normal proficiency bonus.',
   ],
@@ -116,11 +116,11 @@ ElvenRace.subraces.create(
   extra_languages: 1,
   extra_spells: {
     'Wizard'=> {
-      'level'=> 1,
       'source'=> 'High Elf',
-      'cantrips_choices'=> [1],
-      'spells_choices'=> [0],
-      'spells_or_cantrips'=> [0],
+      'cantrips_choices'=> [
+        [1,1]
+      ],
+      'spells_choices'=> 0,
       'spell_ability'=> 'Intelligence',
       'spells_are_extra'=> true,
     },
@@ -514,7 +514,19 @@ Bard = PlayerClass.create(
   },
   custom: {
   },
-  extra_spells: {},
+  extra_spells: {
+    'Any'=> {
+      'source'=> 'Magical Secrets',
+      'spells_choices'=> [
+        [10,2],
+        [14,2],
+        [18,2], #2 spells each at 10, 14 and 18th level
+      ],,
+      'cantrips_choices'=> 0,
+      'spell_ability'=> 'Charisma',
+      'spells_are_extra'=> false,
+    }
+  },
   specific_spells: {},
 )
 
@@ -536,11 +548,11 @@ Bard.subclasses.create(
   custom: {},
   extra_spells: {
     'Any'=> {
-      'level'=> 6,
       'source'=> 'College of Lore',
-      'spells_choices'=> 0,
+      'spells_choices'=> [
+        [6,2], #2 choices at level 6
+      ],
       'cantrips_choices'=> 0,
-      'spells_or_cantrips'=> 2,
       'spell_ability'=> 'Charisma',
       'spells_are_extra'=> false,
     }

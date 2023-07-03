@@ -283,9 +283,9 @@ export default class extends Controller {
     this.equipped_armor = [];
 
     //spells
-    this.spellList = false; //we'll set this to a correct collection of spells with a new fetch in catUpdate
-    this.extraSpellLists = [];
-    this.specificSpells = [];
+    this.spellList = false; //we'll set this to a correct collection of Class Spells with a new fetch in catUpdate
+    this.extraSpellLists = Util.blankCategoryMap();
+    this.specificSpells = Util.blankCategoryMap(); //catUpdate fills these 2 with all categories associated spellists/spells
   }
 
   //----------------------------- Main Sheet Update Flow ---------------------------------//
@@ -331,8 +331,8 @@ export default class extends Controller {
         this.substatSpeedTarget.innerText = data.speed;
         this.raceToolChoices = data.tool_choice;
         this.raceASI = data.asi;
-        this.extraSpellLists.push(data.extra_spells);
-        this.specificSpells?.push(data.specific_spells);
+        this.extraSpellLists.set('race', data.extra_spells);
+        this.specificSpells.set('race', data.specific_spells);
 
         Util.removeAllChildNodes(this.racialASIBonusTarget);
         this.racialASIBonusTarget.append(
@@ -363,8 +363,8 @@ export default class extends Controller {
         this.aboutSubraceTarget.innerText = data.name;
         this.sheet_subrace = data.name;
         this.subraceASI = data.asi;
-        this.extraSpellLists.push(data.extra_spells);
-        this.specificSpells?.push(data.specific_spells);
+        this.extraSpellLists.set('subrace', data.extra_spells);
+        this.specificSpells.set('subrace', data.specific_spells);
 
         Util.removeAllChildNodes(this.subraceASIBonusTarget);
         this.subraceASIBonusTarget.append(
@@ -393,8 +393,8 @@ export default class extends Controller {
         this.spell_table = data.spell_table;
         this.class_equip_choices = data.equipment_choices;
 
-        this.extraSpellLists.push(data.extra_spells);
-        this.specificSpells?.push(data.specific_spells);
+        this.extraSpellLists.set('player_class', data.extra_spells);
+        this.specificSpells.set('player_class', data.specific_spells);
         //the seed stores saving throw proficiencies as indexes to this array
         let primary_proficiencies = [
           this.strSaveProfTarget,
@@ -482,8 +482,8 @@ export default class extends Controller {
         this.subclassFeatureList = data.features; //default features
         this.subclassFeatureChoices = data.custom; //modal choices
 
-        this.extraSpellLists.push(data.extra_spells);
-        this.specificSpells?.push(data.specific_spells);
+        this.extraSpellLists.set('subclass', data.extra_spells);
+        this.specificSpells.set('subclass', data.specific_spells);
         break;
 
       case 'background':
@@ -500,8 +500,8 @@ export default class extends Controller {
         this.equipGPTarget.innerText = data.gold;
         this.bg_equip_choices = data.equipment_choices;
 
-        this.extraSpellLists.push(data.extra_spells);
-        this.specificSpells?.push(data.specific_spells);
+        this.extraSpellLists.set('background', data.extra_spells);
+        this.specificSpells.set('background', data.specific_spells);
 
         //tbif
         this.traits = data.traits;
@@ -521,6 +521,8 @@ export default class extends Controller {
       default:
         break;
     }
+
+    //don't try to set abilities to the sheet if we only set the character level
     if (cat_type != 'level') {
       this.populateCatAbilities(
         data,
@@ -533,6 +535,8 @@ export default class extends Controller {
         features
       );
     }
+
+    //if we have both ASI adjustments, apply them
     if (this.raceASI != 0 && this.subraceASI != 0) {
       Util.calculateStats(
         this.stats,
@@ -544,12 +548,10 @@ export default class extends Controller {
       this.statModUpdate();
     }
 
-    //once the changed category has been updated on the sheet, we want to finish up if possible
-    //this runs if choices is entirely filled out
-
+    //check for form completion on every change
     if (
       Util.isChoicesFull(this.choices) &&
-      this.stats.reduce((x, y) => x + y, 0) > 6
+      this.stats.reduce((x, y) => x + y, 0) > 6 //making sure stats have been assigned
     ) {
       this.finalPass();
     }
@@ -928,14 +930,6 @@ export default class extends Controller {
         this.spell_table[this.level - 1][i + 2];
       //using i+2 because the first two indexes are spells known and cantrips known
     }
-  }
-
-  setSpecificSpellsAndInformation() {
-    //tbw
-  }
-
-  setExtraSpellsInformation() {
-    //tbw
   }
 
   makeModalChoices() {
@@ -1559,7 +1553,12 @@ export default class extends Controller {
     target.append(frame);
   }
   //-----------------Extra Spells Modal ------------------//
-  chooseExtraSpells() {}
+  chooseExtraSpells() {
+    //at this point we are in finalPass and our state variables are populated
+    //we have to go through each collection, fetch the data needed, and populate the sheet or modal
+    console.log(this.extraSpellLists);
+    console.log(this.specificSpells);
+  }
 
   populateExtraSpellsModal() {}
 
@@ -1913,7 +1912,7 @@ export default class extends Controller {
       this.chaModTarget,
     ];
     let index = 0;
-    for (let target of this.statmod_targets) {
+    for (let target of statmod_targets) {
       target.innerText = Util.modWithSign(
         Util.calcMod(this.stats[index])
       );
