@@ -21,6 +21,7 @@ class CreatePlayerClasses < ActiveRecord::Migration[7.0]
       t.integer :wealth_mult, default: 10
       t.text :features, default: "{}"
       t.text :custom, default: "{}"
+      t.text :custom_mods, default: "{}"
 
       t.timestamps
     end

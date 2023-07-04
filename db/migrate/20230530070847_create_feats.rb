@@ -7,6 +7,7 @@ class CreateFeats < ActiveRecord::Migration[7.0]
       t.string :extra_languages
       t.text :extra_spells, default: "{}"
       t.text :specific_spells, default: "{}"
+      t.text :custom_mods, default: "{}"
 
       t.timestamps
     end

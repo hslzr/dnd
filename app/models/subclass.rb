@@ -3,6 +3,7 @@ class Subclass < ApplicationRecord
   serialize :features, Hash
   serialize :extra_spells, Hash
   serialize :specific_spells, Hash
+  serialize :custom_mods, Hash
 
   belongs_to :player_class
   has_many :characters

@@ -37,6 +37,7 @@ BlankSubrace = Subrace.create(
   extra_languages: 0,
   extra_spells: {},
   specific_spells: {},
+  custom_mods: {},
 )
 
 DwarvenRace = Race.create(
@@ -62,6 +63,7 @@ DwarvenRace = Race.create(
   sub_count: 2,
   extra_spells: {},
   specific_spells: {},
+  custom_mods: {},
 )
 
 DwarvenRace.subraces.create(
@@ -73,6 +75,7 @@ DwarvenRace.subraces.create(
   extra_languages: 0,
   extra_spells: {},
   specific_spells: {},
+  custom_mods: {},
 )
 
 DwarvenRace.subraces.create(
@@ -83,6 +86,7 @@ DwarvenRace.subraces.create(
   extra_languages: 0,
   extra_spells: {},
   specific_spells: {},
+  custom_mods: {},
 )
 
 ElvenRace = Race.create(
@@ -103,6 +107,7 @@ ElvenRace = Race.create(
   sub_count: 3,
   extra_spells: {},
   specific_spells: {},
+  custom_mods: {},
 )
 
 ElvenRace.subraces.create(
@@ -126,6 +131,7 @@ ElvenRace.subraces.create(
     },
   },
   specific_spells: {},
+  custom_mods: {},
 )
 
 ElvenRace.subraces.create(
@@ -138,6 +144,7 @@ ElvenRace.subraces.create(
   ],
   extra_spells: {},
   specific_spells: {},
+  custom_mods: {},
 )
 
 ElvenRace.subraces.create(
@@ -157,6 +164,7 @@ ElvenRace.subraces.create(
     'stat'=> 'Charisma',
     'source'=> 'Drow',
   },
+  custom_mods: {},
 )
 
 HalflingRace = Race.create(
@@ -175,6 +183,7 @@ HalflingRace = Race.create(
   sub_count: 2,
   extra_spells: {},
   specific_spells: {},
+  custom_mods: {},
 )
 
 HalflingRace.subraces.create(
@@ -185,6 +194,7 @@ HalflingRace.subraces.create(
   ],
   extra_spells: {},
   specific_spells: {},
+  custom_mods: {},
 )
 
 HalflingRace.subraces.create(
@@ -195,6 +205,7 @@ HalflingRace.subraces.create(
   ],
   extra_spells: {},
   specific_spells: {},
+  custom_mods: {},
 )
 
 HumanRace = Race.create(
@@ -208,6 +219,7 @@ HumanRace = Race.create(
   speed: 30,
   extra_spells: {},
   specific_spells: {},
+  custom_mods: {},
 )
 
 DragonbornRace = Race.create(
@@ -225,6 +237,7 @@ DragonbornRace = Race.create(
   ],
   extra_spells: {},
   specific_spells: {},
+  custom_mods: {},
 )
 
 GnomeRace = Race.create(
@@ -242,6 +255,7 @@ GnomeRace = Race.create(
   sub_count: 2,
   extra_spells: {},
   specific_spells: {},
+  custom_mods: {},
 )
 
 GnomeRace.subraces.create(
@@ -257,6 +271,7 @@ GnomeRace.subraces.create(
     'stat'=> 'Intelligence',
     'source'=> 'Forest Gnome',
   },
+  custom_mods: {},
 )
 
 GnomeRace.subraces.create(
@@ -269,6 +284,7 @@ GnomeRace.subraces.create(
   tools: ['Tinker\'s Tools'],
   extra_spells: {},
   specific_spells: {},
+  custom_mods: {},
 )
 
 HalfElfRace = Race.create(
@@ -288,6 +304,7 @@ HalfElfRace = Race.create(
   ],
   extra_spells: {},
   specific_spells: {},
+  custom_mods: {},
 )
 
 HalfOrcRace = Race.create(
@@ -307,6 +324,7 @@ HalfOrcRace = Race.create(
   ],
   extra_spells: {},
   specific_spells: {},
+  custom_mods: {},
 )
 
 TieflingRace = Race.create(
@@ -331,6 +349,7 @@ TieflingRace = Race.create(
     'stat'=> 'Charisma',
     'source'=> 'Infernal Legacy'
   },
+  custom_mods: {},
 )
 
 
@@ -388,6 +407,7 @@ Barbarian = PlayerClass.create(
   custom: {},
   extra_spells: {},
   specific_spells: {},
+  custom_mods: {},
 )
 
 Barbarian.subclasses.create(
@@ -401,6 +421,7 @@ Barbarian.subclasses.create(
   custom: {},
   extra_spells: {},
   specific_spells: {},
+  custom_mods: {},
 )
 
 Barbarian.subclasses.create(
@@ -431,6 +452,7 @@ Barbarian.subclasses.create(
   },
   extra_spells: {},
   specific_spells: {},
+  custom_mods: {},
 )
 
 Bard = PlayerClass.create(
@@ -528,6 +550,7 @@ Bard = PlayerClass.create(
     }
   },
   specific_spells: {},
+  custom_mods: {},
 )
 
 Bard.subclasses.create(
@@ -558,6 +581,7 @@ Bard.subclasses.create(
     }
   },
   specific_spells: {},
+  custom_mods: {},
 )
 
 Bard.subclasses.create(
@@ -580,6 +604,7 @@ Bard.subclasses.create(
   weapons: ['Martial'],
   extra_spells: {},
   specific_spells: {},
+  custom_mods: {},
 )
 
 Ranger = PlayerClass.create(
@@ -697,6 +722,7 @@ Ranger = PlayerClass.create(
   },
   extra_spells: {},
   specific_spells: {},
+  custom_mods: {},
 )
 
 Ranger.subclasses.create(
@@ -726,6 +752,7 @@ Ranger.subclasses.create(
   features: {},
   extra_spells: {},
   specific_spells: {},
+  custom_mods: {},
 )
 
 Ranger.subclasses.create(
@@ -743,6 +770,7 @@ Ranger.subclasses.create(
   custom: {},
   extra_spells: {},
   specific_spells: {},
+  custom_mods: {},
 )
 
 Acolyte = Background.create(
@@ -800,6 +828,7 @@ Acolyte = Background.create(
     ],
   extra_spells: {},
   specific_spells: {},
+  custom_mods: {},
 )
 
 Feat_alert = Feat.create(
@@ -812,6 +841,7 @@ Feat_alert = Feat.create(
     ],
   extra_spells: {},
   specific_spells: {},
+  custom_mods: {},
 )
 
 
@@ -983,9 +1013,6 @@ ClassSpellListsSpells.create(
   class_spell_list_id: Junk_3.id,
   spell_id: 6
 )
-
-
-
 
 Armor.create(
   stealth_disadvantage: 1,

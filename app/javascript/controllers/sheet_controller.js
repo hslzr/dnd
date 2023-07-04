@@ -291,6 +291,9 @@ export default class extends Controller {
 
     this.chosenExtras = [];
     this.chosenClassSpells = []; //for sheet output duplicate removal
+
+    //customModifiers
+    this.customMods = Util.blankCategoryMap();
   }
 
   //----------------------------- Main Sheet Update Flow ---------------------------------//
@@ -589,6 +592,9 @@ export default class extends Controller {
 
     let data_spec_spells = data.specific_spells || [];
     this.specificSpells.set(cat_type, data_extra_spells);
+
+    let data_custom_mods = data.custom_mods || [];
+    this.customMods.set(cat_type, data_custom_mods);
 
     //we output the needed <p></p> tags to the given target
     Util.putClassFeatures(data.name, data_lang, languages);

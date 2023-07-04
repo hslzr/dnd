@@ -19,6 +19,7 @@ class CreateRaces < ActiveRecord::Migration[7.0]
       t.integer :sub_count, default: 0
       t.text :extra_spells, default: "{}"
       t.text :specific_spells, default: "{}"
+      t.text :custom_mods, default: "{}"
 
       #all extra spells formatted the same way
       #extra_spell_lists = {
