@@ -288,6 +288,9 @@ export default class extends Controller {
     this.validatedExtraSpells = []; //we'll set this once the extra spells modal is prepped since we have the needed info
     this.allSpells = false;
     this.allSpellList = [];
+
+    this.chosenExtras = [];
+    this.chosenClassSpells = []; //for sheet output duplicate removal
   }
 
   //----------------------------- Main Sheet Update Flow ---------------------------------//
@@ -1506,6 +1509,7 @@ export default class extends Controller {
       this.spell_table[this.level - 1][0] +
         this.spell_table[this.level - 1][1]
     ) {
+      this.chosenClassSpells = chosen;
       this.putSpellsToSheet(chosen);
       event.target.parentNode.close();
     }
@@ -1527,10 +1531,12 @@ export default class extends Controller {
     ];
 
     spells.forEach((taken) => {
-      this.spellList.forEach((spell) => {
-        if (spell.id == taken[0])
-          this.putSingleSpellTaken(spell, targets[spell.level]);
-      });
+      if (!this.chosenExtras?.includes(taken)) {
+        this.spellList.forEach((spell) => {
+          if (spell.id == taken[0])
+            this.putSingleSpellTaken(spell, targets[spell.level]);
+        });
+      }
     });
   }
 
@@ -1808,6 +1814,7 @@ export default class extends Controller {
     });
 
     if (chosen.length <= limit) {
+      this.chosenExtras = chosen;
       this.putExtraSpellsToSheet(chosen);
       event.target.parentNode.close();
     }
@@ -1831,17 +1838,21 @@ export default class extends Controller {
 
     if (this.allSpells) {
       chosen.forEach((taken) => {
-        this.allSpellList.forEach((spell) => {
-          if (spell.id == taken[0])
-            this.putSingleSpellTaken(spell, targets[spell.level]);
-        });
+        if (!this.chosenClassSpells.includes(taken)) {
+          this.allSpellList.forEach((spell) => {
+            if (spell.id == taken[0])
+              this.putSingleSpellTaken(spell, targets[spell.level]);
+          });
+        }
       });
     } else {
       chosen.forEach((taken) => {
-        this.validatedExtraSpells.forEach((spell) => {
-          if (spell.id == taken[0])
-            this.putSingleSpellTaken(spell, targets[spell.level]);
-        });
+        if (!this.chosenClassSpells?.includes(taken)) {
+          this.validatedExtraSpells.forEach((spell) => {
+            if (spell.id == taken[0])
+              this.putSingleSpellTaken(spell, targets[spell.level]);
+          });
+        }
       });
     }
   }
