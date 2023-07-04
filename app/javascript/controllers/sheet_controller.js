@@ -285,6 +285,9 @@ export default class extends Controller {
     this.spellList = false; //we'll set this to a correct collection of Class Spells with a new fetch in catUpdate
     this.extraSpellLists = Util.blankCategoryMap();
     this.specificSpells = Util.blankCategoryMap(); //catUpdate fills these 2 with all categories associated spellists/spells
+    this.validatedExtraSpells = []; //we'll set this once the extra spells modal is prepped since we have the needed info
+    this.allSpells = false;
+    this.allSpellList = [];
   }
 
   //----------------------------- Main Sheet Update Flow ---------------------------------//
@@ -1574,31 +1577,37 @@ export default class extends Controller {
         if (key == 'Any') {
           fetch(`/labels/anyspell`)
             .then((response) => response.json())
-            .then((data) =>
+            .then((data) => {
               this.populateExtraSpellsModal(
                 data,
                 details,
                 key,
                 max_spell_level
-              )
-            );
+              );
+              this.allSpells = true;
+              this.allSpellList = data;
+            });
         } else {
           fetch(`/class_spell_lists/${key}`)
             .then((response) => response.json())
-            .then((data) =>
+            .then((data) => {
               this.populateExtraSpellsModal(
                 data,
                 details,
                 key,
                 max_spell_level
-              )
-            );
+              );
+              this.validatedExtraSpells.push(data);
+            });
           //use those to populate the extra spells modal
         }
       }
     }
     //specificSpells get put straight to the sheet if level is high enough for them in a separate function
     //we send the right info to populateExtraSpells at this point
+    this.validatedExtraSpells = [
+      ...new Set(this.validatedExtraSpells),
+    ]; //eliminate duplicates
   }
 
   //error in calculating spell slots, chooses wrong index
@@ -1754,9 +1763,49 @@ export default class extends Controller {
     this.extraSpellsModalListTarget.append(list_frame);
   }
 
-  submitExtraSpellsChoices(event) {}
+  submitExtraSpellsChoices(event) {
+    let chosen = [];
+    let frame_i = 0;
+    let source_i = 0;
+    let children_i = 0;
+    let source_children = [];
+    let limit = 0;
+    this.extraSpellsModalListTarget.childNodes.forEach((frame) => {
+      if (frame_i > 0) {
+        source_i = 0;
+        frame.childNodes.forEach((container) => {
+          if (source_i == 1) {
+            let choose_text = container.firstChild.innerText;
+            let textsplit = choose_text.split(' ');
+            limit = parseInt(textsplit[1]);
+          }
+          if (source_i > 1) {
+            source_children = container.children || [];
+            for (let item of source_children) {
+              if (children_i > 0) {
+                if (item.firstChild.firstChild.checked) {
+                  chosen.push([
+                    container.firstChild.id, //db id
+                    container.firstChild.value, //spell level
+                  ]);
+                }
+              }
+            }
+            children_i = 0;
+          }
+          source_i++;
+        });
+      }
+      frame_i++;
+    });
 
-  putExtraSpellsToSheet(spells, feature_details) {
+    if (chosen.length <= limit) {
+      this.putExtraSpellsToSheet(chosen);
+      event.target.parentNode.close();
+    }
+  }
+
+  putExtraSpellsToSheet(chosen) {
     let targets = [
       this.spellsTaken0Target,
       this.spellsTaken1Target,
@@ -1770,32 +1819,23 @@ export default class extends Controller {
       this.spellsTaken9Target,
     ];
 
-    spells.forEach((taken) => {
-      this.spellList.forEach((spell) => {
-        if (spell.id == taken[0]) {
-          let extra_info = Util.getTag(
-            'div',
-            'flex gap-2 justify-center'
-          );
-          extra_info.append(
-            Util.getTag(
-              'p',
-              'text-center p-1',
-              feature_details['source']
-            )
-          );
-          extra_info.append(
-            Util.getTag(
-              'p',
-              'text-center p-1',
-              feature_details['spell_ability']
-            )
-          );
-          targets[spell.level].append(extra_info);
-          this.putSingleSpellTaken(spell, targets[spell.level]);
-        }
+    console.log(chosen);
+
+    if (this.allSpells) {
+      chosen.forEach((taken) => {
+        this.allSpellList.forEach((spell) => {
+          if (spell.id == taken[0])
+            this.putSingleSpellTaken(spell, targets[spell.level]);
+        });
       });
-    });
+    } else {
+      chosen.forEach((taken) => {
+        this.validatedExtraSpells.forEach((spell) => {
+          if (spell.id == taken[0])
+            this.putSingleSpellTaken(spell, targets[spell.level]);
+        });
+      });
+    }
   }
   //-----------------Equipment Modal ------------------//
 
