@@ -911,6 +911,20 @@ Spell.create(
   id: 5
 )
 
+Spell.create(
+  name: 'Prestidigitation',
+  level: 0,
+  description: 'You create a small, but convincing, magical effect or illusion.',
+  cast_time: 'Instantaneous',
+  range: '30 feet',
+  components: 'Somatic',
+  duration: '10 rounds',
+  attack: 'false',
+  atk_dmg: {},
+  dmg_type: 'none',
+  id: 6
+)
+
 Junk_wizard = ClassSpellList.create(
   name: 'Ranger'
 )
@@ -964,6 +978,10 @@ ClassSpellListsSpells.create(
 ClassSpellListsSpells.create(
   class_spell_list_id: Junk_3.id,
   spell_id: 5
+)
+ClassSpellListsSpells.create(
+  class_spell_list_id: Junk_3.id,
+  spell_id: 6
 )
 
 

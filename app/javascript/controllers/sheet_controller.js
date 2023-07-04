@@ -1045,7 +1045,7 @@ export default class extends Controller {
       chosen.length ==
       parseInt(this.langLimitTarget.innerText.slice(-1))
     ) {
-      Util.putModalchecksToSheet(chosen, this.extraLanguagesTarget);
+      Util.putModalChecksToSheet(chosen, this.extraLanguagesTarget);
       event.target.parentNode.close();
     }
   }
@@ -1076,7 +1076,7 @@ export default class extends Controller {
       }
     });
     if (chosen.length == 1) {
-      Util.putModalchecksToSheet(
+      Util.putModalChecksToSheet(
         chosen,
         this.raceToolsTarget,
         racename
@@ -1110,7 +1110,7 @@ export default class extends Controller {
       chosen.length ==
       parseInt(this.classSkillsLimitTarget.innerText.slice(-1))
     ) {
-      Util.putModalchecksToSheet(
+      Util.putModalChecksToSheet(
         chosen,
         this.classSkillsTarget,
         this.choices.get('player_class')
@@ -1158,7 +1158,7 @@ export default class extends Controller {
     });
 
     if (validated) {
-      Util.putModalchecksToSheet(
+      Util.putModalChecksToSheet(
         output,
         this.classFeaturesChoicesTarget,
         this.choices.get('player_class')
@@ -1230,7 +1230,7 @@ export default class extends Controller {
     });
 
     if (validated) {
-      Util.putModalchecksToSheet(
+      Util.putModalChecksToSheet(
         output,
         this.subclassFeaturesChoicesTarget,
         this.choices.get('subclass')
@@ -1597,6 +1597,7 @@ export default class extends Controller {
                 key,
                 max_spell_level
               );
+              console.log(data);
               this.validatedExtraSpells.push(data);
             });
           //use those to populate the extra spells modal
@@ -1670,6 +1671,20 @@ export default class extends Controller {
     spell_list_name,
     max_spell_level
   ) {
+    //limit text and shortcut to depopulate ineligible features for level
+    let limit = 0;
+    if (feature_details['spells_choices'] == 0) {
+      for (let item of feature_details['cantrips_choices']) {
+        if (this.level >= item[0]) limit += item[1];
+      }
+    } else {
+      for (let item of feature_details['spells_choices']) {
+        if (this.level >= item[0]) limit += item[1];
+      }
+    }
+
+    if (limit == 0) return;
+
     let list_frame = Util.getTag(
       'div',
       'grid grid-cols-3 gap-2 p-2 rounded-lg bg-blue-300/50'
@@ -1686,15 +1701,7 @@ export default class extends Controller {
       'div',
       'col-span-3 grid grid-cols-2 flex gap-2 items-center justify-evenly'
     );
-    //limit text
-    let limit = 0;
-    if (feature_details['spells_choices'] == 0) {
-      limit = feature_details['cantrips_choices'];
-    } else {
-      for (let item of feature_details['spells_choices']) {
-        if (this.level >= item[0]) limit += item[1];
-      }
-    }
+
     info.append(
       Util.getTag(
         'p',
