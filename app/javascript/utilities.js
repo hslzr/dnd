@@ -80,6 +80,21 @@ export function updateStats(targets, stats) {
   }
 }
 
+//input two arrays, if the second is contained in the first as an entry return true, else false
+export function subarrayMatch(list, sublist) {
+  let flag;
+  for (let item of list) {
+    if (item.length == sublist.length) {
+      flag = true;
+      for (let i = 0; i < item.length; i++) {
+        if (item[i] != sublist[i]) flag = false;
+      }
+      if (flag) return true;
+    }
+  }
+  return false;
+}
+
 //-------------------------------------------modal utilities
 export function populateListModal(target, options) {
   options.forEach((option) => {

@@ -1531,7 +1531,7 @@ export default class extends Controller {
     ];
 
     spells.forEach((taken) => {
-      if (!this.chosenExtras?.includes(taken)) {
+      if (!Util.subarrayMatch(this.chosenExtras, taken)) {
         this.spellList.forEach((spell) => {
           if (spell.id == taken[0])
             this.putSingleSpellTaken(spell, targets[spell.level]);
@@ -1603,7 +1603,6 @@ export default class extends Controller {
                 key,
                 max_spell_level
               );
-              console.log(data);
               this.validatedExtraSpells.push(data);
             });
           //use those to populate the extra spells modal
@@ -1834,8 +1833,6 @@ export default class extends Controller {
       this.spellsTaken9Target,
     ];
 
-    console.log(chosen);
-
     if (this.allSpells) {
       chosen.forEach((taken) => {
         if (!this.chosenClassSpells.includes(taken)) {
@@ -1847,7 +1844,7 @@ export default class extends Controller {
       });
     } else {
       chosen.forEach((taken) => {
-        if (!this.chosenClassSpells?.includes(taken)) {
+        if (!this.chosenClassSpells.includes(taken)) {
           this.validatedExtraSpells.forEach((spell) => {
             if (spell.id == taken[0])
               this.putSingleSpellTaken(spell, targets[spell.level]);
