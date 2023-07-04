@@ -37,8 +37,9 @@ class LabelsController < ApplicationController
   end
 
   def anyspell
+    @spells = Spell.all
     respond_to do |format|
-      format.json { render json: Spell.all}
+      format.json { render json: @spells}
     end
   end
 end

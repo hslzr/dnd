@@ -1555,26 +1555,27 @@ export default class extends Controller {
   chooseExtraSpells() {
     //at this point we are in finalPass and our state variables are populated
     //we have to go through each collection, fetch the data needed, and populate the sheet or modal
-    console.log(this.extraSpellLists);
 
     //fetch each spell list in extra SpellLists
     let lists = this.extraSpellLists.values();
+
     for (let item of lists) {
       let listkeys = Object.keys(item);
 
       for (let key of listkeys) {
-        let info = this.extraSpellLists.get(key);
+        let details = item[key];
+
         if (key == 'Any') {
           fetch(`/labels/anyspell`)
             .then((response) => response.json())
             .then((data) =>
-              this.populateExtraSpellsModal(data, info)
+              this.populateExtraSpellsModal(data, details, key)
             );
         } else {
           fetch(`/class_spell_lists/${key}`)
             .then((response) => response.json())
             .then((data) =>
-              this.populateExtraSpellsModal(data, info)
+              this.populateExtraSpellsModal(data, details, key)
             );
           //use those to populate the extra spells modal
         }
@@ -1584,17 +1585,59 @@ export default class extends Controller {
     //we send the right info to populateExtraSpells at this point
   }
 
-  populateExtraSpellsModal(data, info) {
-    console.log(info);
-    console.log(data);
+  populateExtraSpellsModal(spells, feature_details, spell_list_name) {
     //working here
+    console.log('spells');
+    console.log(spells);
+    console.log('details');
+    console.log(feature_details);
+    console.log('list name');
+    console.log(spell_list_name);
   }
 
   submitExtraSpellsChoices(event) {}
 
-  putExtraSpellsToSheet(spells) {}
+  putExtraSpellsToSheet(spells, feature_details) {
+    let targets = [
+      this.spellsTaken0Target,
+      this.spellsTaken1Target,
+      this.spellsTaken2Target,
+      this.spellsTaken3Target,
+      this.spellsTaken4Target,
+      this.spellsTaken5Target,
+      this.spellsTaken6Target,
+      this.spellsTaken7Target,
+      this.spellsTaken8Target,
+      this.spellsTaken9Target,
+    ];
 
-  putSingleExtraSpellTaken(spell, target) {}
+    spells.forEach((taken) => {
+      this.spellList.forEach((spell) => {
+        if (spell.id == taken[0]) {
+          let extra_info = Util.getTag(
+            'div',
+            'flex gap-2 justify-center'
+          );
+          extra_info.append(
+            Util.getTag(
+              'p',
+              'text-center p-1',
+              feature_details['source']
+            )
+          );
+          extra_info.append(
+            Util.getTag(
+              'p',
+              'text-center p-1',
+              feature_details['spell_ability']
+            )
+          );
+          targets[spell.level].append(extra_info);
+          this.putSingleSpellTaken(spell, targets[spell.level]);
+        }
+      });
+    });
+  }
   //-----------------Equipment Modal ------------------//
 
   chooseEquipment() {

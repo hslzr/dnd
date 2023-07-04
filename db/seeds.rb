@@ -892,6 +892,25 @@ Spell.create(
   id: 4
 )
 
+Spell.create(
+  name: 'Fire Lump',
+  level: 5,
+  description: 'Hurl a lump of fire at your enemy',
+  cast_time: 'Instantaneous',
+  range: '60 feet',
+  components: 'Verbal, Somatic',
+  duration: '1 round',
+  attack: 'true',
+  atk_dmg: {
+    1=> '2d10 + 6',
+    6=> '3d10 + 10',
+    12=> '4d10 + 10',
+    16=> '5d10 + 14',
+  },
+  dmg_type: 'Fire',
+  id: 5
+)
+
 Junk_wizard = ClassSpellList.create(
   name: 'Ranger'
 )
@@ -928,6 +947,23 @@ ClassSpellListsSpells.create(
 ClassSpellListsSpells.create(
   class_spell_list_id: Junk_2.id,
   spell_id: 4
+)
+
+Junk_3 = ClassSpellList.create(
+  name: 'Wizard'
+)
+
+ClassSpellListsSpells.create(
+  class_spell_list_id: Junk_3.id,
+  spell_id: 1
+)
+ClassSpellListsSpells.create(
+  class_spell_list_id: Junk_3.id,
+  spell_id: 3
+)
+ClassSpellListsSpells.create(
+  class_spell_list_id: Junk_3.id,
+  spell_id: 5
 )
 
 
