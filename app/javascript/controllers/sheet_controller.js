@@ -187,7 +187,6 @@ export default class extends Controller {
     'dialogExtraSpells',
     'extraSpellsModalList',
     'extraSpellsLimit',
-    'extraCantripsLimit',
     'extraSpellsButton',
     'tbifTraits',
     'tbifBonds',
@@ -1669,7 +1668,7 @@ export default class extends Controller {
     list_frame.append(
       Util.getTag(
         'p',
-        'col-span-3 text-center rounded-md',
+        'col-span-3 text-center rounded-md font-black text-2xl',
         feature_details['source']
       )
     );
@@ -1678,25 +1677,51 @@ export default class extends Controller {
       'div',
       'col-span-3 grid grid-cols-2 flex gap-2 items-center justify-evenly'
     );
-    info.append(Util.getTag('p', '', 'Spell List'));
-    info.append(Util.getTag('p', '', 'Spellcasting Stat'));
+    //limit text
+    let limit = 0;
+    if (feature_details['spells_choices'] == 0) {
+      limit = feature_details['cantrips_choices'];
+    } else {
+      for (let item of feature_details['spells_choices']) {
+        if (this.level >= item[0]) limit += item[1];
+      }
+    }
     info.append(
-      Util.getTag('p', '', `${spell_list_name} Spell List`)
+      Util.getTag(
+        'p',
+        'text-center col-span-2 font-black text-sm -mt-2',
+        `Choose ${limit}`
+      )
+    );
+
+    info.append(
+      Util.getTag(
+        'p',
+        'text-center font-semibold',
+        `${spell_list_name} Spell List`
+      )
     );
     info.append(
-      Util.getTag('p', '', feature_details['spell_ability'])
+      Util.getTag(
+        'p',
+        'text-center font-semibold',
+        `Spellcasting Stat:  ${feature_details['spell_ability']}`
+      )
     );
 
     list_frame.append(info);
 
+    //limit output to cantrips if appropriate
+    if (feature_details['spells_choices'] == 0) max_spell_level = 0;
+
     for (let i = 0; i <= max_spell_level; i++) {
       let innerframe = Util.getTag(
         'div',
-        'col-span-3 grid grid-cols-2 gap-2 p-2'
+        'col-span-3 grid grid-cols-2 md:grid-cols-3 gap-2 p-2'
       );
       let title = Util.getTag(
         'h4',
-        'col-span-2 text-center font-bold text-lg'
+        'col-span-2 md:col-span-3 text-center font-bold text-lg'
       );
 
       if (i == 0) {
@@ -1709,13 +1734,16 @@ export default class extends Controller {
         if (item.level == i) {
           let container = Util.getTag(
             'div',
-            'flex gap-2 p-2 justify-center'
+            'flex gap-2 align-center justify-center rounded-md border border-white'
           );
+          let align_span = Util.getTag('span', '');
           let check = document.createElement('input');
           check.type = 'checkbox';
           check.value = item.level;
           check.id = item.id; //for validation on submit
-          container.append(check);
+
+          align_span.append(check);
+          container.append(align_span);
           container.append(item.name);
           innerframe.append(container);
         }
