@@ -1777,7 +1777,7 @@ export default class extends Controller {
           if (source_i == 1) {
             let choose_text = container.firstChild.innerText;
             let textsplit = choose_text.split(' ');
-            limit = parseInt(textsplit[1]);
+            limit += parseInt(textsplit[1]);
           }
           if (source_i > 1) {
             source_children = container.children || [];
@@ -1785,11 +1785,12 @@ export default class extends Controller {
               if (children_i > 0) {
                 if (item.firstChild.firstChild.checked) {
                   chosen.push([
-                    container.firstChild.id, //db id
-                    container.firstChild.value, //spell level
+                    item.firstChild.firstChild.id, //db id
+                    item.firstChild.firstChild.value, //spell level
                   ]);
                 }
               }
+              children_i++;
             }
             children_i = 0;
           }

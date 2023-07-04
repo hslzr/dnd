@@ -3,7 +3,6 @@ Rails.application.routes.draw do
   get 'labels/weapons'
   get 'labels/armor'
   get 'labels/anyspell'
-  get 'labels/spellset'
 
   resources :characters
   resources :races, param: :name, only: [ :show ]
