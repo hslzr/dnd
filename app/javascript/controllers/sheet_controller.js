@@ -269,6 +269,7 @@ export default class extends Controller {
     this.classFeatureList; //set in catUpdate called in finalPass -> classFeatureHandler
     this.subclassFeatureList; //set in catUpdate called in finalPass -> classFeatureHandler
     this.level; // set in catUpdate
+    this.hit_die; //for hp calc in finalPass
 
     //button colors
     this.disabled_color = 'bg-orange-300';
@@ -618,10 +619,10 @@ export default class extends Controller {
     this.populateSkillModifiers();
 
     if (code == 0) {
-      this.classFeatureHandler(); //we depend on level to show correct class features so we have to do this in finalPass
+      this.classFeatureHandler(); //we depend on level to show correct class features so we have to do these in finalPass
       this.subclassFeatureHandler();
     }
-    //recalculate stats
+    //recalculate stats, code 2 used in putASIToSheet(), we are modifying stats so we don't want to recalculate them after
     if (code != 2)
       Util.calculateStats(
         this.stats,
@@ -638,6 +639,11 @@ export default class extends Controller {
 
     this.substatInitiativeTarget.innerText =
       this.dexModTarget.innerText;
+
+    this.trackingMaxHPTarget.innerText =
+      Util.calcMod(this.stats[2]) * this.level +
+      parseInt(this.hit_die) +
+      (this.level - 1) * Math.floor(this.hit_die / 2);
 
     if (!this.equipArmorTarget.hasChildNodes()) {
       this.substatACTarget.innerText =
@@ -675,10 +681,8 @@ export default class extends Controller {
     }
 
     this.resetProficiencies();
-
-    //at end of base calculations we should apply custom methods brought in by categories
-    //e.g. the Barbarian Unarmored Defense
-    this.customModifiers(); //tbw
+    //still not sure where to put this in finalPass lifecycle
+    this.customModifiers();
   }
 
   //----------------------------- Final Pass methods ---------------------------------//
@@ -981,7 +985,16 @@ export default class extends Controller {
     this.updateAllProficiencies();
   }
 
-  customModifiers() {}
+  customModifiers() {
+    let keys = this.customMods.keys();
+    for (let key of keys) {
+      let mods = this.customMods.get(key); //we loop over every custom_mods assigned
+
+      let hp_bonus = eval(mods['hp']) || 0;
+      let temp = parseInt(this.trackingMaxHPTarget.innerText);
+      this.trackingMaxHPTarget.innerText = parseInt(hp_bonus) + temp;
+    }
+  }
 
   //----------------------------- Choice Modals ---------------------------------//
   //----------------- Languages Modal ------------------//
@@ -1565,9 +1578,11 @@ export default class extends Controller {
   //-----------------Extra Spells Modal ------------------//
   chooseExtraSpells() {
     //at this point we are in finalPass and our state variables are populated
+    //check for an empty collection to skip all this stuff for classes without extra spell lists
     //we have to go through each collection, fetch the data needed, and populate the sheet or modal
 
     //prep the modal by filling in spell slot information
+
     this.prepExtraSpellsModal();
 
     let max_spell_level = 0;

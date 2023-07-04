@@ -314,5 +314,3 @@ export function capitalize(string) {
 }
 
 //-------------------------------------------customModifiers
-
-export function customModifiers(collection) {}
