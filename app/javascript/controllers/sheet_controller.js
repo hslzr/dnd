@@ -229,6 +229,7 @@ export default class extends Controller {
       this.tbifButtonTarget,
       this.equipmentButtonTarget,
       this.asiButtonTarget,
+      this.extraSpellsButtonTarget,
     ];
 
     this.stats = [0, 0, 0, 0, 0, 0];
@@ -330,8 +331,6 @@ export default class extends Controller {
         this.substatSpeedTarget.innerText = data.speed;
         this.raceToolChoices = data.tool_choice;
         this.raceASI = data.asi;
-        this.extraSpellLists.set('race', data.extra_spells);
-        this.specificSpells.set('race', data.specific_spells);
 
         Util.removeAllChildNodes(this.racialASIBonusTarget);
         this.racialASIBonusTarget.append(
@@ -362,8 +361,6 @@ export default class extends Controller {
         this.aboutSubraceTarget.innerText = data.name;
         this.sheet_subrace = data.name;
         this.subraceASI = data.asi;
-        this.extraSpellLists.set('subrace', data.extra_spells);
-        this.specificSpells.set('subrace', data.specific_spells);
 
         Util.removeAllChildNodes(this.subraceASIBonusTarget);
         this.subraceASIBonusTarget.append(
@@ -392,8 +389,6 @@ export default class extends Controller {
         this.spell_table = data.spell_table;
         this.class_equip_choices = data.equipment_choices;
 
-        this.extraSpellLists.set('player_class', data.extra_spells);
-        this.specificSpells.set('player_class', data.specific_spells);
         //the seed stores saving throw proficiencies as indexes to this array
         let primary_proficiencies = [
           this.strSaveProfTarget,
@@ -481,8 +476,6 @@ export default class extends Controller {
         this.subclassFeatureList = data.features; //default features
         this.subclassFeatureChoices = data.custom; //modal choices
 
-        this.extraSpellLists.set('subclass', data.extra_spells);
-        this.specificSpells.set('subclass', data.specific_spells);
         break;
 
       case 'background':
@@ -498,9 +491,6 @@ export default class extends Controller {
         this.sheet_background = data.name;
         this.equipGPTarget.innerText = data.gold;
         this.bg_equip_choices = data.equipment_choices;
-
-        this.extraSpellLists.set('background', data.extra_spells);
-        this.specificSpells.set('background', data.specific_spells);
 
         //tbif
         this.traits = data.traits;
@@ -589,6 +579,12 @@ export default class extends Controller {
     let data_features = data.features || [];
     this.features.set(cat_type, data_features);
 
+    let data_extra_spells = data.extra_spells || [];
+    this.extraSpellLists.set(cat_type, data_extra_spells);
+
+    let data_spec_spells = data.specific_spells || [];
+    this.specificSpells.set(cat_type, data_extra_spells);
+
     //we output the needed <p></p> tags to the given target
     Util.putClassFeatures(data.name, data_lang, languages);
     Util.putClassFeatures(data.name, data_weps, weps);
@@ -664,7 +660,6 @@ export default class extends Controller {
       } else {
         this.setSpellInformation();
       }
-
       this.makeModalChoices();
     }
 
@@ -924,9 +919,9 @@ export default class extends Controller {
       this.spellSlots9Target,
     ];
 
-    for (let i = 0; i < 9; i++) {
-      slot_targets[i].innerText =
-        this.spell_table[this.level - 1][i + 2];
+    for (let i = 2; i < 11; i++) {
+      slot_targets[i - 2].innerText =
+        this.spell_table[this.level - 1][i];
       //using i+2 because the first two indexes are spells known and cantrips known
     }
   }
@@ -1448,9 +1443,11 @@ export default class extends Controller {
   //----------------- Spell Modal ------------------//
   chooseSpells() {
     let max_spell_level = 0;
-    this.spell_table[this.level - 1].forEach((entry) => {
-      if (entry > 0) max_spell_level++;
-    });
+    for (let i = 2; i < 11; i++) {
+      if (this.spell_table[this.level - 1][i] > 0) max_spell_level++;
+    }
+    //first two are informational, not spell slot amounts
+
     let num_spells = this.spell_table[this.level - 1][0];
     let num_cantrips = this.spell_table[this.level - 1][1];
 
@@ -1556,6 +1553,16 @@ export default class extends Controller {
     //at this point we are in finalPass and our state variables are populated
     //we have to go through each collection, fetch the data needed, and populate the sheet or modal
 
+    //prep the modal by filling in spell slot information
+    this.prepExtraSpellsModal();
+
+    let max_spell_level = 0;
+    for (let i = 2; i < 11; i++) {
+      if (this.spell_table[this.level - 1][i] > 0) max_spell_level++;
+    }
+
+    //first two entries are informational, not numbers of spell slots
+
     //fetch each spell list in extra SpellLists
     let lists = this.extraSpellLists.values();
 
@@ -1569,13 +1576,23 @@ export default class extends Controller {
           fetch(`/labels/anyspell`)
             .then((response) => response.json())
             .then((data) =>
-              this.populateExtraSpellsModal(data, details, key)
+              this.populateExtraSpellsModal(
+                data,
+                details,
+                key,
+                max_spell_level
+              )
             );
         } else {
           fetch(`/class_spell_lists/${key}`)
             .then((response) => response.json())
             .then((data) =>
-              this.populateExtraSpellsModal(data, details, key)
+              this.populateExtraSpellsModal(
+                data,
+                details,
+                key,
+                max_spell_level
+              )
             );
           //use those to populate the extra spells modal
         }
@@ -1585,14 +1602,128 @@ export default class extends Controller {
     //we send the right info to populateExtraSpells at this point
   }
 
-  populateExtraSpellsModal(spells, feature_details, spell_list_name) {
-    //working here
-    console.log('spells');
-    console.log(spells);
-    console.log('details');
-    console.log(feature_details);
-    console.log('list name');
-    console.log(spell_list_name);
+  //error in calculating spell slots, chooses wrong index
+  prepExtraSpellsModal() {
+    //we clear it here because populateExtraSpellsModal() will be called several times
+    Util.removeAllChildNodes(this.extraSpellsModalListTarget);
+
+    let slotframe = Util.getTag(
+      'div',
+      'w-full p-2 rounded-md border border-black grid grid-cols-10 grid-rows-3 mt-4 mb-2'
+    );
+    slotframe.append(
+      Util.getTag(
+        'p',
+        'col-span-10 text-sm font-black text-center',
+        'Slots'
+      )
+    );
+    slotframe.append(
+      Util.getTag(
+        'p',
+        'border-b border-black text-center p-1',
+        'Cantrips'
+      )
+    );
+    for (let i = 1; i < 10; i++) {
+      slotframe.append(
+        Util.getTag(
+          'p',
+          'border-b border-black text-center p-1',
+          `${i}`
+        )
+      );
+    }
+
+    slotframe.append(
+      Util.getTag(
+        'p',
+        'border-t border-black text-center p-1',
+        this.spell_table[this.level - 1][1]
+      )
+    );
+
+    for (let i = 2; i < 11; i++) {
+      slotframe.append(
+        Util.getTag(
+          'p',
+          'border-t border-black text-center p-1',
+          this.spell_table[this.level - 1][i]
+        )
+      );
+      //using i+2 because the first two indexes are spells known and cantrips known
+    }
+    this.extraSpellsModalListTarget.append(slotframe);
+  }
+
+  populateExtraSpellsModal(
+    spells,
+    feature_details,
+    spell_list_name,
+    max_spell_level
+  ) {
+    let list_frame = Util.getTag(
+      'div',
+      'grid grid-cols-3 gap-2 p-2 rounded-lg bg-blue-300/50'
+    );
+    list_frame.append(
+      Util.getTag(
+        'p',
+        'col-span-3 text-center rounded-md',
+        feature_details['source']
+      )
+    );
+
+    let info = Util.getTag(
+      'div',
+      'col-span-3 grid grid-cols-2 flex gap-2 items-center justify-evenly'
+    );
+    info.append(Util.getTag('p', '', 'Spell List'));
+    info.append(Util.getTag('p', '', 'Spellcasting Stat'));
+    info.append(
+      Util.getTag('p', '', `${spell_list_name} Spell List`)
+    );
+    info.append(
+      Util.getTag('p', '', feature_details['spell_ability'])
+    );
+
+    list_frame.append(info);
+
+    for (let i = 0; i <= max_spell_level; i++) {
+      let innerframe = Util.getTag(
+        'div',
+        'col-span-3 grid grid-cols-2 gap-2 p-2'
+      );
+      let title = Util.getTag(
+        'h4',
+        'col-span-2 text-center font-bold text-lg'
+      );
+
+      if (i == 0) {
+        title.innerText = 'Cantrips';
+      } else {
+        title.innerText = `Level ${i}`;
+      }
+      innerframe.append(title);
+      spells.forEach((item) => {
+        if (item.level == i) {
+          let container = Util.getTag(
+            'div',
+            'flex gap-2 p-2 justify-center'
+          );
+          let check = document.createElement('input');
+          check.type = 'checkbox';
+          check.value = item.level;
+          check.id = item.id; //for validation on submit
+          container.append(check);
+          container.append(item.name);
+          innerframe.append(container);
+        }
+      });
+      list_frame.append(innerframe);
+    }
+
+    this.extraSpellsModalListTarget.append(list_frame);
   }
 
   submitExtraSpellsChoices(event) {}
