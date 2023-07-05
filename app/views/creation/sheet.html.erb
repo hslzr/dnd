@@ -8,7 +8,7 @@
     %>
 
     <%= turbo_frame_tag "form" do %>
-      <%= form_tag creation_sheet_path, method: :get, data: { controller: "dropdown", action: "change->dropdown#submit", 'sheet-target': 'maindrop' } do %>
+      <%= form_tag creation_sheet_path, method: :get, data: { controller: "dropdown", action: "change->dropdown#submit", 'sheet-target': 'maindrop'}, class: "grid grid-cols-3 gap-4 px-4"  do %>
         <%= select_tag :race, options_from_collection_for_select(@races, "id", "name", @race&.id), prompt: "- Race -", data: { action: "change->sheet#categoryHandler", "sheet-url-param": "/races/" } %>
         <%= select_tag :subrace, options_from_collection_for_select(@subraces, "id", "name", @subrace&.id), prompt: "- Subrace -", data: { action: "change->sheet#categoryHandler", "sheet-url-param": "/subraces/" } %>
         <%= select_tag :player_class, options_from_collection_for_select(@player_classes, "id", "name", @player_class&.id), prompt: "- Class -", data: { action: "change->sheet#categoryHandler", "sheet-url-param": "/player_classes/"} %>
@@ -22,7 +22,7 @@
   <div class="grid grid-cols-4 gap-4 p-4">
     <button class="px-4 py-2 rounded-lg bg-blue-400 border-b-2 border-r-2" data-action="sheet#randomStats">Random Stats</button>
   </div>
-  <div class="grid grid-cols-6 gap-4 p-4" id="statbuttons">
+  <div class="grid grid-cols-4 gap-4 p-4" id="statbuttons">
     <button class="px-4 py-2 rounded-lg bg-orange-300 border-b-2 border-r-2" data-action="sheet#showLangDialog" data-sheet-target="langButton">Extra Languages</button>
     <button class="px-4 py-2 rounded-lg bg-orange-300 border-b-2 border-r-2" data-action="sheet#showClassSkillsDialog" data-sheet-target="classSkillsButton">Class Skills</button>
     <button class="px-4 py-2 rounded-lg bg-orange-300 border-b-2 border-r-2" data-action="sheet#showClassFeaturesDialog" data-sheet-target="classFeaturesButton">Class Features</button>
@@ -34,7 +34,7 @@
   </div>
   <section class="flex flex-col" id="sheet">
     <div class="flex">
-      <div class="flex flex-col gap-2 border-2 border-green-300 w-1/3" id="firstcolumn">
+      <div class="flex flex-col gap-2 w-1/3" id="firstcolumn">
 
         <input type="text" placeholder="Character Name" class="sheetcell w-full" data-sheet-target="charName"></input>
         <p><span class="sheetcell" data-sheet-target="profBonus"></span>Proficiency bonus</p>
@@ -272,8 +272,8 @@
         </div>
 
       </div>
-      <div class="flex flex-col gap-2 border-2 border-green-300 w-2/3" id="secondcolumn">
-        <div class="flex flex-col border-2 border-blue-400 text-center p-2" id="about">
+      <div class="flex flex-col gap-2 w-2/3" id="secondcolumn">
+        <div class="flex flex-col text-center p-2" id="about">
           <div class="flex w-full justify-center gap-2">
             <div class="flex flex-col">
               <p class="sheetcell" data-sheet-target="aboutClass"></p>
@@ -311,7 +311,7 @@
             </div>
           </div>
         </div>
-        <div class="flex gap-4 border-2 border-blue-400 text-center justify-around" id="substats">
+        <div class="flex gap-4  text-center justify-around" id="substats">
           <div class="tracking-box">
               <p class="sheetcell" data-sheet-target="substatAC"></p>
               <p class="text-xs mx-2">AC</p>
@@ -329,7 +329,7 @@
               <p class="text-xs mx-2">Inspiration</p>
           </div>
         </div>
-          <div class="flex gap-2 justify-center border-2 border-teal-300" id="playtracking">
+          <div class="flex gap-2 justify-center " id="playtracking">
             <div class="tracking-box">
               <p class="sheetcell" data-sheet-target="trackingMaxHP"></p>
               <p class="text-xs mx-2">MAX HP</p>
@@ -352,7 +352,7 @@
               <p class="text-xs mx-2 -mb-2 font-black">DEATH SAVES</p>
             </div>
         </div>
-        <div class="flex flex-col gap-1 border-2 border-orange-300 rounded-sm text-center justify-center" data-sheet-target="attackList">
+        <div class="flex flex-col gap-1  rounded-sm text-center justify-center" data-sheet-target="attackList">
           <div class="flex gap-1 p2 w-full">
             <p class="text-xs font-bold w-1/4">NAME</p>
             <p class="text-xs font-bold w-1/6">BONUS</p>
@@ -382,7 +382,7 @@
       </div>
     </div>
     <div class="flex flex-col w-full" id="pagetwo">
-      <div class="flex gap-4 border-2 border-red-400 text-center" id="castingstats">
+      <div class="flex gap-4  text-center" id="castingstats">
         <div class="tracking-box">
           <p class="sheetcell" data-sheet-target="castingAbility"></p>
           <p class="text-xs mx-2">SPELLCASTING ABILITY</p>
