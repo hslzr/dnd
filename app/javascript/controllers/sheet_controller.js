@@ -1009,19 +1009,29 @@ export default class extends Controller {
       //attacks
       let attacks = mods['attacks'] || false;
       if (attacks) {
+        //clear attacks
+        console.log('clear');
+        while (this.attackListTarget.children.length > 1) {
+          this.attackListTarget.removeChild(
+            this.attackListTarget.lastChild
+          );
+        }
+
+        //populate attacks
         for (let attack of attacks) {
+          console.log('attack');
+          console.log(attack);
           let damage;
           for (let item of attack['damage']) {
             if (item[0] <= this.level) damage = item[1];
           }
 
-          this.populateAttack(
+          this.populateModAttack(
             attack['name'],
             damage,
             attack['dmg_type'],
             eval(attack['properties']),
-            'none',
-            false
+            attack['bonus']
           );
         }
       }
@@ -2197,6 +2207,26 @@ export default class extends Controller {
       //otherwise we depend on the ranged bool to determine which bonus to use
       ranged == 1 ? (bonus += dex_bonus) : (bonus += str_bonus);
     }
+
+    let atk_bonus = Util.getTag('p', 'sheetcell w-1/4', bonus);
+
+    let row = Util.getTag('div', 'flex p-2 w-full');
+    row.append(name);
+    row.append(atk_bonus);
+    row.append(damage);
+    row.append(props);
+    this.attackListTarget.append(row);
+  }
+
+  populateModAttack(weapon, die, dmg_type, properties, bonus) {
+    console.log('tried');
+    let name = Util.getTag('p', 'sheetcell w-1/4', weapon);
+    let damage = Util.getTag(
+      'p',
+      'sheetcell w-1/4',
+      `${die} ${dmg_type}`
+    );
+    let props = Util.getTag('p', 'sheetcell w-1/3', properties);
 
     let atk_bonus = Util.getTag('p', 'sheetcell w-1/4', bonus);
 

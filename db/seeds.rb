@@ -242,7 +242,7 @@ DragonbornRace = Race.create(
 )
 
 DragonbornRace.subraces.create(
-  name: 'Black',
+  name: 'Black Dragon',
   asi: [0,0,0,0,0,0],
   features: [
     'Breath Weapon: You can use your action to exhale scorching acid in a 5 by 30ft line. Each creature in the area must make a Dexterity save with DC equal to 8 + your CON modifier + your proficiency bonus. A creature takes 2d6 Acid damage on a fail and half on a success. The damage increases to 3d6 at 6th level, 4d6 at 11th level and 5d6 at 16th level. You can\'t use it more than once per short rest.',
