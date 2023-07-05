@@ -233,7 +233,7 @@ DragonbornRace = Race.create(
   age_limit: 80,
   heightlow: "6'",
   heighthigh: "7'",
-  languages: ['Common, Draconic'],
+  languages: ['Common', 'Draconic'],
   speed: 30,
   features: [],
   extra_spells: {},
@@ -517,7 +517,7 @@ GnomeRace = Race.create(
   age_limit: 500,
   heightlow: "3'",
   heighthigh: "4'",
-  languages: ['Common, Gnomish'],
+  languages: ['Common', 'Gnomish'],
   speed: 25,
   features: [
     'Darkvision: You can see in dim light within 60 feet of you as if it were brightly lit, and in darkness as if it were dim light, but you can\'t discern color.',
@@ -589,7 +589,7 @@ HalfOrcRace = Race.create(
   age_limit: 80,
   heightlow: "5'",
   heighthigh: "7'",
-  languages: ['Common, Orc'],
+  languages: ['Common', 'Orc'],
   speed: 30,
   skills: ['Intimidation'],
   features: [
@@ -609,7 +609,7 @@ TieflingRace = Race.create(
   age_limit: 100,
   heightlow: "5'",
   heighthigh: "6'6''",
-  languages: ['Common, Infernal'],
+  languages: ['Common', 'Infernal'],
   speed: 30,
   skills: ['Intimidation'],
   features: [
@@ -825,10 +825,22 @@ Bard = PlayerClass.create(
     6=>[
       "Countercharm: You gain the ability to use musical notes or words of power to disrupt mind-influencing effects. As an action, you can start a performance that lasts until the end of your next turn. During that time, you and any friendly creatures within 30 feet of you have advantage on saving throws against being frightened or charmed. A creature must be able to hear you to gain this benefit. The performance ends early if you are incapacitated or silenced or if you voluntarily end it (no action required)."
     ],
+    8=>[
+      "Ability Score Increase:",
+    ],
     10=>[
       "Magical Secrets: You have plundered magical knowledge from a wide spectrum of disciplines. Choose two spells from any class, including this one. A spell you choose must be of a level you can cast, as shown on the Bard table, or a cantrip.
       The chosen spells count as bard spells for you and are included in the number in the Spells Known column of the Bard table.
       You learn two additional spells from any class at 14th, and 18th level."
+    ],
+    12=>[
+      "Ability Score Increase:",
+    ],
+    16=>[
+      "Ability Score Increase:",
+    ],
+    19=>[
+      "Ability Score Increase:",
     ],
     20=>[
       "Superior Inspiration: When you roll initiative and have no uses of Bardic Inspiration left, you regain one use."
@@ -908,6 +920,127 @@ Bard.subclasses.create(
   weapons: ['Martial'],
   extra_spells: {},
   specific_spells: {},
+  custom_mods: {},
+)
+
+Cleric = PlayerClass.create(
+  name: 'Cleric',
+  hit_die: 8,
+  starting_hp: 8,
+  primary_abilities: [4],
+  saving_throws: [4,5],
+  armor: ['Light','Medium','Shields'],
+  weapons: ['Simple'],
+  tools: [],
+  skill_choices: ['History','Insight','Medicine','Persuasion','Religion'],
+  num_skills: 2,
+  equipment_choices: {
+    'choices' => [
+      ['Mace#1','Warhammer#1'],
+      ["Scale Mail#1","Leather Armor#1","Chain Mail#1"],
+      ['Light Crossbow#1','simple#1'],
+      ['Priest\'s Pack#1','Explorer\'s Pack#1'],
+    ],
+    'default' => ['Shield#1','Holy Emblem#1'],
+  },
+  spellcasting_ability: 5,
+  spell_table: [
+    [-1,3,2,0,0,0,0,0,0,0,0],
+    [-1,3,3,0,0,0,0,0,0,0,0],
+    [-1,3,4,2,0,0,0,0,0,0,0],
+    [-1,4,4,3,0,0,0,0,0,0,0],
+    [-1,4,4,3,2,0,0,0,0,0,0],
+    [-1,4,4,3,3,0,0,0,0,0,0],
+    [-1,4,4,3,3,1,0,0,0,0,0],
+    [-1,4,4,3,3,2,0,0,0,0,0],
+    [-1,4,4,3,3,3,1,0,0,0,0],
+    [-1,5,4,3,3,3,2,0,0,0,0],
+    [-1,5,4,3,3,3,2,1,0,0,0],
+    [-1,5,4,3,3,3,2,1,0,0,0],
+    [-1,5,4,3,3,3,2,1,1,0,0],
+    [-1,5,4,3,3,3,2,1,1,0,0],
+    [-1,5,4,3,3,3,2,1,1,1,0],
+    [-1,5,4,3,3,3,2,1,1,1,0],
+    [-1,5,4,3,3,3,2,1,1,1,1],
+    [-1,5,4,3,3,3,3,1,1,1,1],
+    [-1,5,4,3,3,3,3,2,1,1,1],
+    [-1,5,4,3,3,3,3,2,2,1,1],
+  ],
+  wealth_die: 5,
+  features: {
+    1=>[
+      "Spellcasting: As a conduit for divine power you can cast Cleric spells. Wisdom is your Spellcasting Stat for these spells.",
+      "Spellcasting Focus: You can use a holy symbol or consecrated item as a spellcasting focus for your cleric spells.",
+    ],
+    2=>[
+      "Channel Divinity - Turn Undead: As an action, you present your holy symbol and speak a prayer censuring the undead. Each undead that can see or hear you within 30 feet of you must make a Wisdom saving throw. If the creature fails its saving throw, it is turned for 1 minute or until it takes any damage.
+      A turned creature must spend its turns trying to move as far away from you as it can, and it can't willingly move to a space within 30 feet of you. It also can't take reactions. For its action, it can use only the Dash action or try to escape from an effect that prevents it from moving. If there's nowhere to move, the creature can use the Dodge action.",
+    ],
+    4=>[
+      "Ability Score Increase:",
+    ],
+    5=>[
+      "Destroy Undead: Starting at 5th level, when an undead of CR 1/2 or lower fails its saving throw against your Turn Undead feature, the creature is instantly destroyed. The CR limit increases to 1 at 8th level, 2 at 11th, 3 at 14th, and 4 at 17th level."
+    ],
+    8=>[
+      "Ability Score Increase:",
+    ],
+    10=>[
+      "Divine Intervention: Beginning at 10th level, you can call on your deity to intervene on your behalf when your need is great.
+      Imploring your deity's aid requires you to use your action. Describe the assistance you seek, and roll percentile dice. If you roll a number equal to or lower than your cleric level, your deity intervenes. The DM chooses the nature of the intervention; the effect of any cleric spell or cleric domain spell would be appropriate. If your deity intervenes, you can't use this feature again for 7 days. Otherwise, you can use it again after you finish a long rest.",
+    ],
+    12=>[
+      "Ability Score Increase:",
+    ],
+    16=>[
+      "Ability Score Increase:",
+    ],
+    19=>[
+      "Ability Score Increase:",
+    ],
+    20=>[
+      "Command the Gods: Your call for Diving Intervention succeeds automatically.",
+    ],
+  },
+  custom: {},
+  extra_spells: {},
+  specific_spells: {},
+  custom_mods: {},
+)
+
+Cleric.subclasses.create(
+  name: "Knowledge Domain",
+  description: "The gods of konwledge value learning and understanding above all. Followers of these gods study esoteric lore, collect old tomes, delve into the secret places of the earth, and learn all they can.",
+  features: {
+    1=>[
+      "Blessings of Knowledge: You learn two languages, become proficient in 2 of Arcana, History, Nature, or Religion, and you have expertise in those skills.",
+    ],
+    2=>[
+      "Knowledge of the Ages: You can use your Channel Divinity to tap into a divine well of knowledge. As an action, choose one skill or tool and you have proficiency with it for 10 minutes.",
+    ],
+    6=>[
+      "Read Thoughts: You can use your Channel Divinity to read a creature's thoughts. You can then use your acces to its mind to command it.
+      As an action, choose one creature that you can see within 60 feet of you. That creature must make a Wisdom saving throw. If the creature succeeds on the saving throw, you can't use this feature on it again until you finish a long rest.
+      If the creature fails its save, you can read its surface thoughts (those foremost in its mind, reflecting its current emotions and what it is actively thinking about) when it is within 60 feet of you. This effect lasts for 1 minute.
+      During that time, you can use your action to end this effect and cast the Suggestion spell on the creature without expending a spell slot. The target automatically fails its saving throw against the spell.",
+    ],
+    8=>[
+      "Potent Spellcasting: You add your Wisdom modifier to the damage you deal with any cleric cantrip.",
+    ],
+    17=>[
+      "Visions of the Past: You can call up visions of the past that relate to an object you hold or your immediate surroundings. You spend at least 1 minute in meditation and prayer, then receive dreamlike, shadowy glimpses of recent events. You can meditate in this way for a number of minutes equal to your Wisdom score and must maintain concentration during that time, as if you were casting a spell.
+      Once you use this feature, you can't use it again until you finish a short or long rest."
+    ],
+  },
+  custom: {},
+  extra_spells: {},
+  specific_spells: {
+   1=>['Command','Identify'],
+   3=>['Augury','Suggestion'],
+   5=>['Nondetection','Speak With the Dead'],
+   7=>['Arcane Eye','Confusion'],
+   9=>['Legend Lore','Scrying'],
+  },
   custom_mods: {},
 )
 

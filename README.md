@@ -9,28 +9,25 @@
 The seed file is one big copyright violation, this is a student project and not for profit, sale or public use. If you only used homebrew in a new seed file you might land in a grey area.
 
 # main tasks
-Implement customModifiers (db adjustment)
 Fill out the seed with remaining classes, subclasses, backgrounds, and feats
-Implement Feats
+  I'm adding capabilities to customModifiers() as needed, working my way through the classes and starting on Cleric subclasses right now
+
+  Theres a problem with the way extra proficiencies are handled, all proficiency choices should be in the same place and use select inputs populated with the allowed values.
+  I have to rewrite the population, validation, and submission on the category proficiencies and customMod proficiencies.
+
+  If i don't do this it won't work as is, there would be huge pages of options to check in the modal.
+
 Different methods of stat assignment
 
-# Functions needed
-I'm working on the seed and classes/subraces are adding these things I can't handle yet
-   - speed modifier
-   - Draconic ancestries should be level one class custom features
-    have to add the breath weapon as an attack with the correct type
-   - Extra skills and stat points in Half-Elf need handling
-   - inconsistent number on spellcasting_ability in player_class model, doesn't count from 0
-   -some classes have a choice at 3rd level that decides bonuses at later levels, i don't want to change the database but we might need a variable to determine how to handle validation in the modal
+Implement Feats - these can use customMOd for most things I think
 
-# secondary spell lists
-  Working
-
-##  Bard
+#  Bard
    choose three instruments as tools
    equipment_choices -> choose any musical instrument
-   Bard College, affected by modal validation issue noted above
 
-
+# Cleric
+  extra proficiencies from Blessings of Knowledge
+  double check if I implemented Expertise yet somewhere in the modifier calculation
+  remaining subclasses
 # heroku
 https://uglysheetmaker-e6deabaebc10.herokuapp.com/

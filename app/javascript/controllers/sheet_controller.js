@@ -1083,6 +1083,7 @@ export default class extends Controller {
     }
   }
 
+  //------------------------------- customModifiers() methods
   populateModASI(length) {
     let list = ['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA'];
     for (let i = 0; i < length; i++) {
