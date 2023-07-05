@@ -551,8 +551,6 @@ export default class extends Controller {
       Util.isChoicesFull(this.choices) &&
       this.stats.reduce((x, y) => x + y, 0) > 20 //making sure stats have been assigned
     ) {
-      console.log(this.stats.reduce((x, y) => x + y, 0));
-      console.log('this check');
       this.finalPass();
     }
   }
@@ -616,23 +614,19 @@ export default class extends Controller {
   //code 0 : run class and subclass featureHandlers
   //code 1 : dont run featureHandles, do run calculateStats
   //code 2 : don't run calculateStats
-  finalPass(code = 0) {
-    console.log('finalPass');
+  finalPass() {
     this.setSkillMap();
     this.populateSkillModifiers();
+    this.classFeatureHandler(); //we depend on level to show correct class features so we have to do these in finalPass
+    this.subclassFeatureHandler();
 
-    if (code == 0) {
-      this.classFeatureHandler(); //we depend on level to show correct class features so we have to do these in finalPass
-      this.subclassFeatureHandler();
-    }
     //recalculate stats, code 2 used in putASIToSheet(), we are modifying stats so we don't want to recalculate them after
-    if (code != 2)
-      Util.calculateStats(
-        this.stats,
-        this.base_stats,
-        this.raceASI,
-        this.subraceASI
-      );
+    Util.calculateStats(
+      this.stats,
+      this.base_stats,
+      this.raceASI,
+      this.subraceASI
+    );
 
     Util.updateStats(this.stat_targets, this.stats);
     this.statModUpdate();
@@ -655,7 +649,7 @@ export default class extends Controller {
 
     this.trackingHitDiceTarget.innerText = `${this.level}d${this.hit_die}`;
 
-    if (code == 0 && this.stats.reduce((x, y) => x + y, 0) > 6) {
+    if (this.stats.reduce((x, y) => x + y, 0) > 6) {
       Util.activateButtons(
         this.button_targets,
         this.active_color,
@@ -684,11 +678,7 @@ export default class extends Controller {
     }
 
     this.resetProficiencies();
-    //still not sure where to put this in finalPass lifecycle
-    if (code == 0) {
-      console.log('code 0');
-      this.customModifiers();
-    }
+    this.customModifiers();
   }
 
   //----------------------------- Final Pass methods ---------------------------------//
@@ -992,7 +982,6 @@ export default class extends Controller {
   }
 
   customModifiers() {
-    console.log('custom Mods');
     let keys = this.customMods.keys();
     for (let key of keys) {
       let mods = this.customMods.get(key); //we loop over every custom_mods assigned
@@ -1010,7 +999,6 @@ export default class extends Controller {
       let attacks = mods['attacks'] || false;
       if (attacks) {
         //clear attacks
-        console.log('clear');
         while (this.attackListTarget.children.length > 1) {
           this.attackListTarget.removeChild(
             this.attackListTarget.lastChild
@@ -1019,8 +1007,6 @@ export default class extends Controller {
 
         //populate attacks
         for (let attack of attacks) {
-          console.log('attack');
-          console.log(attack);
           let damage;
           for (let item of attack['damage']) {
             if (item[0] <= this.level) damage = item[1];
@@ -1410,7 +1396,7 @@ export default class extends Controller {
       index++;
     }
     Util.updateStats(this.stat_targets, this.stats);
-    this.finalPass(2);
+    this.catUpdate({}, 'stats');
   }
 
   //----------------- TBIF Modal ------------------//
@@ -2219,7 +2205,6 @@ export default class extends Controller {
   }
 
   populateModAttack(weapon, die, dmg_type, properties, bonus) {
-    console.log('tried');
     let name = Util.getTag('p', 'sheetcell w-1/4', weapon);
     let damage = Util.getTag(
       'p',

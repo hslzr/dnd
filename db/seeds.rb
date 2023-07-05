@@ -268,6 +268,249 @@ DragonbornRace.subraces.create(
   },
 )
 
+DragonbornRace.subraces.create(
+  name: 'Blue Dragon',
+  asi: [0,0,0,0,0,0],
+  features: [
+    'Breath Weapon: You can use your action to exhale arcs of lightning in a 5 by 30ft line. Each creature in the area must make a Dexterity save with DC equal to 8 + your CON modifier + your proficiency bonus. A creature takes 2d6 Lightning damage on a fail and half on a success. The damage increases to 3d6 at 6th level, 4d6 at 11th level and 5d6 at 16th level. You can\'t use it more than once per short rest.',
+    'Draconic Resistance: You have resistance to Lightning damage',
+  ],
+  extra_spells: {},
+  specific_spells: {},
+  custom_mods: {
+    'attacks' => [
+      {
+        'name'=> 'Lightning Breath',
+        'bonus'=> '',
+        'damage'=> [
+          [1,'2d6'],
+          [6,'3d6'],
+          [11,'4d6'],
+          [16,'5d6'],
+        ],
+        'dmg_type'=> 'Lightning',
+        'properties'=> '`Save DC = ${Util.calcMod(this.stats[2]) + this.prof_mod + 8}`',
+      },
+    ],
+  },
+)
+
+DragonbornRace.subraces.create(
+  name: 'Brass Dragon',
+  asi: [0,0,0,0,0,0],
+  features: [
+    'Breath Weapon: You can use your action to exhale scorching acid in a 5 by 30ft line. Each creature in the area must make a Dexterity save with DC equal to 8 + your CON modifier + your proficiency bonus. A creature takes 2d6 Fire damage on a fail and half on a success. The damage increases to 3d6 at 6th level, 4d6 at 11th level and 5d6 at 16th level. You can\'t use it more than once per short rest.',
+    'Draconic Resistance: You have resistance to Fire damage',
+  ],
+  extra_spells: {},
+  specific_spells: {},
+  custom_mods: {
+    'attacks' => [
+      {
+        'name'=> 'Fire Breath',
+        'bonus'=> '',
+        'damage'=> [
+          [1,'2d6'],
+          [6,'3d6'],
+          [11,'4d6'],
+          [16,'5d6'],
+        ],
+        'dmg_type'=> 'Fire',
+        'properties'=> '`Save DC = ${Util.calcMod(this.stats[2]) + this.prof_mod + 8}`',
+      },
+    ],
+  },
+)
+
+DragonbornRace.subraces.create(
+  name: 'Bronze Dragon',
+  asi: [0,0,0,0,0,0],
+  features: [
+    'Breath Weapon: You can use your action to exhale arcs of lightning in a 5 by 30ft line. Each creature in the area must make a Dexterity save with DC equal to 8 + your CON modifier + your proficiency bonus. A creature takes 2d6 Lightning damage on a fail and half on a success. The damage increases to 3d6 at 6th level, 4d6 at 11th level and 5d6 at 16th level. You can\'t use it more than once per short rest.',
+    'Draconic Resistance: You have resistance to Lightning damage',
+  ],
+  extra_spells: {},
+  specific_spells: {},
+  custom_mods: {
+    'attacks' => [
+      {
+        'name'=> 'Lightning Breath',
+        'bonus'=> '',
+        'damage'=> [
+          [1,'2d6'],
+          [6,'3d6'],
+          [11,'4d6'],
+          [16,'5d6'],
+        ],
+        'dmg_type'=> 'Lightning',
+        'properties'=> '`Save DC = ${Util.calcMod(this.stats[2]) + this.prof_mod + 8}`',
+      },
+    ],
+  },
+)
+
+DragonbornRace.subraces.create(
+  name: 'Copper Dragon',
+  asi: [0,0,0,0,0,0],
+  features: [
+    'Breath Weapon: You can use your action to exhale scorching acid in a 5 by 30ft line. Each creature in the area must make a Dexterity save with DC equal to 8 + your CON modifier + your proficiency bonus. A creature takes 2d6 Acid damage on a fail and half on a success. The damage increases to 3d6 at 6th level, 4d6 at 11th level and 5d6 at 16th level. You can\'t use it more than once per short rest.',
+    'Draconic Resistance: You have resistance to Acid damage',
+  ],
+  extra_spells: {},
+  specific_spells: {},
+  custom_mods: {
+    'attacks' => [
+      {
+        'name'=> 'Acid Breath',
+        'bonus'=> '',
+        'damage'=> [
+          [1,'2d6'],
+          [6,'3d6'],
+          [11,'4d6'],
+          [16,'5d6'],
+        ],
+        'dmg_type'=> 'Acid',
+        'properties'=> '`Save DC = ${Util.calcMod(this.stats[2]) + this.prof_mod + 8}`',
+      },
+    ],
+  },
+)
+
+DragonbornRace.subraces.create(
+  name: 'Gold Dragon',
+  asi: [0,0,0,0,0,0],
+  features: [
+    'Breath Weapon: You can use your action to exhale fire in a 15 foot cone. Each creature in the area must make a Dexterity save with DC equal to 8 + your CON modifier + your proficiency bonus. A creature takes 2d6 Fire damage on a fail and half on a success. The damage increases to 3d6 at 6th level, 4d6 at 11th level and 5d6 at 16th level. You can\'t use it more than once per short rest.',
+    'Draconic Resistance: You have resistance to Fire damage',
+  ],
+  extra_spells: {},
+  specific_spells: {},
+  custom_mods: {
+    'attacks' => [
+      {
+        'name'=> 'Fire Breath',
+        'bonus'=> '',
+        'damage'=> [
+          [1,'2d6'],
+          [6,'3d6'],
+          [11,'4d6'],
+          [16,'5d6'],
+        ],
+        'dmg_type'=> 'Fire',
+        'properties'=> '`Save DC = ${Util.calcMod(this.stats[2]) + this.prof_mod + 8}`',
+      },
+    ],
+  },
+)
+
+DragonbornRace.subraces.create(
+  name: 'Green Dragon',
+  asi: [0,0,0,0,0,0],
+  features: [
+    'Breath Weapon: You can use your action to exhale acrid poisonous spray in a 15 foot cone. Each creature in the area must make a Constitution save with DC equal to 8 + your CON modifier + your proficiency bonus. A creature takes 2d6 Poison damage on a fail and half on a success. The damage increases to 3d6 at 6th level, 4d6 at 11th level and 5d6 at 16th level. You can\'t use it more than once per short rest.',
+    'Draconic Resistance: You have resistance to Poison damage',
+  ],
+  extra_spells: {},
+  specific_spells: {},
+  custom_mods: {
+    'attacks' => [
+      {
+        'name'=> 'Poison Breath',
+        'bonus'=> '',
+        'damage'=> [
+          [1,'2d6'],
+          [6,'3d6'],
+          [11,'4d6'],
+          [16,'5d6'],
+        ],
+        'dmg_type'=> 'Poison',
+        'properties'=> '`Save DC = ${Util.calcMod(this.stats[2]) + this.prof_mod + 8}`',
+      },
+    ],
+  },
+)
+
+DragonbornRace.subraces.create(
+  name: 'Red Dragon',
+  asi: [0,0,0,0,0,0],
+  features: [
+    'Breath Weapon: You can use your action to exhale scorching flames in a 15 foot cone. Each creature in the area must make a Dexterity save with DC equal to 8 + your CON modifier + your proficiency bonus. A creature takes 2d6 Fire damage on a fail and half on a success. The damage increases to 3d6 at 6th level, 4d6 at 11th level and 5d6 at 16th level. You can\'t use it more than once per short rest.',
+    'Draconic Resistance: You have resistance to Fire damage',
+  ],
+  extra_spells: {},
+  specific_spells: {},
+  custom_mods: {
+    'attacks' => [
+      {
+        'name'=> 'Fire Breath',
+        'bonus'=> '',
+        'damage'=> [
+          [1,'2d6'],
+          [6,'3d6'],
+          [11,'4d6'],
+          [16,'5d6'],
+        ],
+        'dmg_type'=> 'Fire',
+        'properties'=> '`Save DC = ${Util.calcMod(this.stats[2]) + this.prof_mod + 8}`',
+      },
+    ],
+  },
+)
+
+DragonbornRace.subraces.create(
+  name: 'Silver Dragon',
+  asi: [0,0,0,0,0,0],
+  features: [
+    'Breath Weapon: You can use your action to exhale withering cold in a 15 foot cone. Each creature in the area must make a Constitution save with DC equal to 8 + your CON modifier + your proficiency bonus. A creature takes 2d6 Cold damage on a fail and half on a success. The damage increases to 3d6 at 6th level, 4d6 at 11th level and 5d6 at 16th level. You can\'t use it more than once per short rest.',
+    'Draconic Resistance: You have resistance to Cold damage',
+  ],
+  extra_spells: {},
+  specific_spells: {},
+  custom_mods: {
+    'attacks' => [
+      {
+        'name'=> 'Cold Breath',
+        'bonus'=> '',
+        'damage'=> [
+          [1,'2d6'],
+          [6,'3d6'],
+          [11,'4d6'],
+          [16,'5d6'],
+        ],
+        'dmg_type'=> 'Cold',
+        'properties'=> '`Save DC = ${Util.calcMod(this.stats[2]) + this.prof_mod + 8}`',
+      },
+    ],
+  },
+)
+
+DragonbornRace.subraces.create(
+  name: 'White Dragon',
+  asi: [0,0,0,0,0,0],
+  features: [
+    'Breath Weapon: You can use your action to exhale withering cold in a 15 foot cone. Each creature in the area must make a Constitution save with DC equal to 8 + your CON modifier + your proficiency bonus. A creature takes 2d6 Cold damage on a fail and half on a success. The damage increases to 3d6 at 6th level, 4d6 at 11th level and 5d6 at 16th level. You can\'t use it more than once per short rest.',
+    'Draconic Resistance: You have resistance to Cold damage',
+  ],
+  extra_spells: {},
+  specific_spells: {},
+  custom_mods: {
+    'attacks' => [
+      {
+        'name'=> 'Cold Breath',
+        'bonus'=> '',
+        'damage'=> [
+          [1,'2d6'],
+          [6,'3d6'],
+          [11,'4d6'],
+          [16,'5d6'],
+        ],
+        'dmg_type'=> 'Cold',
+        'properties'=> '`Save DC = ${Util.calcMod(this.stats[2]) + this.prof_mod + 8}`',
+      },
+    ],
+  },
+)
+
 GnomeRace = Race.create(
   name: 'Gnome',
   asi: [0,0,0,2,0,0],
