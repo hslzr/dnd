@@ -159,6 +159,7 @@ export default class extends Controller {
     'subclassFeaturesLimit',
     'dialogASI',
     'asiModalList',
+    'customASI',
     'asiLimit',
     'asiButton',
     'dialogSpells',
@@ -321,6 +322,7 @@ export default class extends Controller {
   catUpdate(data, cat_type) {
     //event.target.id is actually the :name param
     let languages, extra_lang, skills, weps, arm, tools, features;
+    let finalCode = 0;
 
     //Handle category specific behaviors here
     //we set these first variables so we can add and remove the correct items whenever a form select changes
@@ -515,13 +517,19 @@ export default class extends Controller {
         this.prof_mod = Math.ceil(this.level / 4) + 1;
 
         this.profBonusTarget.innerText = this.prof_mod;
-
+      case 'asi':
+        finalCode = 1;
+        break;
       default:
         break;
     }
 
     //don't try to set abilities to the sheet if we only set the character level
-    if (cat_type != 'level' && cat_type != 'stats') {
+    if (
+      cat_type != 'level' &&
+      cat_type != 'stats' &&
+      cat_type != 'asi'
+    ) {
       this.populateCatAbilities(
         data,
         cat_type,
@@ -535,7 +543,11 @@ export default class extends Controller {
     }
 
     //if we have both ASI adjustments, apply them
-    if (this.raceASI != 0 && this.subraceASI != 0) {
+    if (
+      this.raceASI != 0 &&
+      this.subraceASI != 0 &&
+      cat_type != 'asi'
+    ) {
       Util.calculateStats(
         this.stats,
         this.base_stats,
@@ -551,7 +563,7 @@ export default class extends Controller {
       Util.isChoicesFull(this.choices) &&
       this.stats.reduce((x, y) => x + y, 0) > 20 //making sure stats have been assigned
     ) {
-      this.finalPass();
+      this.finalPass(finalCode);
     }
   }
 
@@ -603,6 +615,7 @@ export default class extends Controller {
     Util.putClassFeatures(data.name, data_arm, arm);
     Util.putClassFeatures(data.name, data_tools, tools);
 
+    //class and subclass features will be set in finalPass after level is set
     if (cat_type != 'player_class') {
       //these are choices for a class
       Util.putClassFeatures(data.name, data_skills, skills);
@@ -614,7 +627,7 @@ export default class extends Controller {
   //code 0 : run class and subclass featureHandlers
   //code 1 : dont run featureHandles, do run calculateStats
   //code 2 : don't run calculateStats
-  finalPass() {
+  finalPass(code = 0) {
     this.setSkillMap();
     this.populateSkillModifiers();
     this.classFeatureHandler(); //we depend on level to show correct class features so we have to do these in finalPass
@@ -628,8 +641,10 @@ export default class extends Controller {
       this.subraceASI
     );
 
-    Util.updateStats(this.stat_targets, this.stats);
-    this.statModUpdate();
+    if (code == 0) {
+      Util.updateStats(this.stat_targets, this.stats);
+      this.statModUpdate();
+    }
 
     this.passPerceptionTarget.innerText =
       Util.calcMod(this.stats[4]) + 10;
@@ -1021,9 +1036,40 @@ export default class extends Controller {
           );
         }
       }
+
+      //ability score increases, select 1
+      let custom_asi = mods['extra_asi'] || false;
+      if (custom_asi) {
+        Util.removeAllChildNodes(this.customASITarget);
+        this.populateModASI(custom_asi);
+      }
     }
   }
+  populateModASI(length) {
+    let list = ['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA'];
+    for (let i = 0; i < length; i++) {
+      let container = Util.getTag('div', 'asi-box');
+      let choose_one = Util.getTag('div', 'choice-box');
 
+      let select_one = Util.getTag('select', 'rounded-sm');
+      select_one.append(
+        Util.getTag('option', 'font-semibold', '+1 to stat')
+      );
+      for (let stat of list) {
+        let option = Util.getTag('option', 'font-semibold', stat);
+        option.value = stat;
+        select_one.append(option);
+      }
+      choose_one.append(select_one);
+
+      let checkbox = Util.getTag('input', '');
+      checkbox.type = 'checkbox';
+      choose_one.append(checkbox);
+
+      container.append(choose_one);
+      this.customASITarget.append(container);
+    }
+  }
   //----------------------------- Choice Modals ---------------------------------//
   //----------------- Languages Modal ------------------//
   chooseLanguages() {
@@ -1359,7 +1405,7 @@ export default class extends Controller {
       for (let item of row.children) {
         if (item.firstChild.tagName == 'SELECT') {
           if (item.lastChild.checked) {
-            chosen = [item.firstChild.value];
+            chosen = [item.firstChild.value, 2];
             count++;
           }
         } else {
@@ -1373,30 +1419,51 @@ export default class extends Controller {
       choices.push(chosen);
     }
 
+    for (let row of this.customASITarget.children) {
+      let chosen = [];
+      for (let item of row.children) {
+        chosen = [item.firstChild.value, 1];
+      }
+      choices.push(chosen);
+    }
+
     this.putASIToSheet(choices);
     event.target.parentNode.close();
   }
 
   putASIToSheet(choices) {
+    console.log(this.stats);
     let feature_nodes = this.classFeaturesTarget.children;
     let asi_nodes = Array.from(feature_nodes).filter(
       (node) => node.innerText == 'Ability Score Increase:'
     );
     let index = 0;
     for (let choice of choices) {
-      if (choice.length == 1) {
-        this.stats = Util.increaseStat(this.stats, choice[0], 2);
+      if (choice[1] == 1 || choice[1] == 2) {
+        console.log('tried');
+        this.stats = Util.increaseStat(
+          this.stats,
+          choice[0],
+          choice[1]
+        );
       } else {
         this.stats = Util.increaseStat(this.stats, choice[0]);
         this.stats = Util.increaseStat(this.stats, choice[1]);
       }
-      choice.forEach((stat) => {
-        asi_nodes[index].append(Util.expandStatName(stat));
-      });
+
+      //we want to skip the choices added by customASI
+      if (index < asi_nodes.length) {
+        //this appends the chosen stat names to the feature list entries showing 'Ability Score Increase:'
+        choice.forEach((stat) => {
+          asi_nodes[index].append(Util.expandStatName(stat));
+        });
+      }
       index++;
     }
     Util.updateStats(this.stat_targets, this.stats);
-    this.catUpdate({}, 'stats');
+    this.statModUpdate();
+    console.log(this.stats);
+    this.catUpdate({}, 'asi');
   }
 
   //----------------- TBIF Modal ------------------//
@@ -2257,6 +2324,8 @@ export default class extends Controller {
 
   //----------------------------- Base Stat Methods ---------------------------------//
   statModUpdate() {
+    console.log('modUpdate');
+    console.log(this.stats);
     let statmod_targets = [
       this.strModTarget,
       this.dexModTarget,
