@@ -577,7 +577,7 @@ HalfElfRace = Race.create(
   specific_spells: {},
   custom_mods: {
     'extra_asi'=> 2,
-    'extra_prof'=> 2,
+    'extra_profs'=> 2,
   },
 )
 

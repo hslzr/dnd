@@ -207,6 +207,11 @@ export default class extends Controller {
     'attackDamages',
     'attackProps',
     'attackList',
+    'extraSkillsButton',
+    'extraSkillsModalList',
+    'extraSkillsLimit',
+    'dialogExtraSkills',
+    'modSkills',
   ];
 
   connect() {
@@ -230,6 +235,7 @@ export default class extends Controller {
       this.equipmentButtonTarget,
       this.asiButtonTarget,
       this.extraSpellsButtonTarget,
+      this.extraSkillsButtonTarget,
     ];
 
     this.stats = [0, 0, 0, 0, 0, 0];
@@ -259,6 +265,26 @@ export default class extends Controller {
     this.armor = Util.blankCategoryMap();
     this.features = Util.blankCategoryMap();
     this.classSkillChoices; //set in catUpdate
+    this.allSkillChoices = [
+      'Acrobatics',
+      'Animal Handling',
+      'Arcana',
+      'Athletics',
+      'Deception',
+      'History',
+      'Insight',
+      'Intimidation',
+      'Investigation',
+      'Medicine',
+      'Nature',
+      'Perception',
+      'Performance',
+      'Persuasion',
+      'Religion',
+      'Sleight of Hand',
+      'Stealth',
+      'Survival',
+    ];
     this.numClassSkillChoices; //set in catUpdate
     this.raceToolChoices; //set in catUpdate
     this.raceASI = 0; //set in catUpdate, used to modify stats
@@ -972,6 +998,7 @@ export default class extends Controller {
       this.subclassSkillsTarget,
       this.backgroundSkillsTarget,
       this.featSkillsTarget,
+      this.modSkillsTarget,
     ];
 
     let assigned_skills = [];
@@ -1043,8 +1070,17 @@ export default class extends Controller {
         Util.removeAllChildNodes(this.customASITarget);
         this.populateModASI(custom_asi);
       }
+
+      //extra proficieny selections
+      let extra_profs = mods['extra_profs'] || false;
+      if (extra_profs) {
+        this.populateExtraSkillsModal(extra_profs);
+      } else {
+        console.log(`not found in ${key}`);
+      }
     }
   }
+
   populateModASI(length) {
     let list = ['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA'];
     for (let i = 0; i < length; i++) {
@@ -1069,6 +1105,43 @@ export default class extends Controller {
       container.append(choose_one);
       this.customASITarget.append(container);
     }
+  }
+
+  populateExtraSkillsModal(count) {
+    console.log('populate extra');
+    console.log(count);
+    Util.removeAllChildNodes(this.extraSkillsModalListTarget);
+
+    this.extraSkillsLimitTarget.innerText = `Choose ${count}`;
+
+    Util.populateListModal(
+      this.extraSkillsModalListTarget,
+      this.allSkillChoices
+    );
+  }
+
+  submitExtraSkillsChoices(event) {
+    Util.removeAllChildNodes(this.modSkillsTarget);
+
+    let chosen = [];
+    //the checkboxes are wrapped in a span for alignment
+    this.extraSkillsModalListTarget.childNodes.forEach((node) => {
+      if (node.firstChild.firstChild.checked) {
+        chosen.push(node.firstChild.firstChild.value);
+      }
+    });
+    if (
+      chosen.length ==
+      parseInt(this.extraSkillsLimitTarget.innerText.slice(-1))
+    ) {
+      Util.putModalChecksToSheet(
+        chosen,
+        this.modSkillsTarget,
+        'Extra Skills'
+      );
+      event.target.parentNode.close();
+    }
+    this.resetProficiencies();
   }
   //----------------------------- Choice Modals ---------------------------------//
   //----------------- Languages Modal ------------------//
@@ -1432,7 +1505,6 @@ export default class extends Controller {
   }
 
   putASIToSheet(choices) {
-    console.log(this.stats);
     let feature_nodes = this.classFeaturesTarget.children;
     let asi_nodes = Array.from(feature_nodes).filter(
       (node) => node.innerText == 'Ability Score Increase:'
@@ -1440,7 +1512,6 @@ export default class extends Controller {
     let index = 0;
     for (let choice of choices) {
       if (choice[1] == 1 || choice[1] == 2) {
-        console.log('tried');
         this.stats = Util.increaseStat(
           this.stats,
           choice[0],
@@ -1462,7 +1533,6 @@ export default class extends Controller {
     }
     Util.updateStats(this.stat_targets, this.stats);
     this.statModUpdate();
-    console.log(this.stats);
     this.catUpdate({}, 'asi');
   }
 
@@ -2321,11 +2391,12 @@ export default class extends Controller {
   showExtraSpellsDialog() {
     this.dialogExtraSpellsTarget.showModal();
   }
+  showExtraSkillsDialog() {
+    this.dialogExtraSkillsTarget.showModal();
+  }
 
   //----------------------------- Base Stat Methods ---------------------------------//
   statModUpdate() {
-    console.log('modUpdate');
-    console.log(this.stats);
     let statmod_targets = [
       this.strModTarget,
       this.dexModTarget,
