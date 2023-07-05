@@ -577,7 +577,9 @@ HalfElfRace = Race.create(
   specific_spells: {},
   custom_mods: {
     'extra_asi'=> 2,
-    'extra_profs'=> 2,
+    'extra_profs'=> [
+      [1,2],
+    ],
   },
 )
 
@@ -739,7 +741,6 @@ Barbarian.subclasses.create(
       'Eagle: You gain the eyesight of an eagle. you can see up to 1 mile away with no difficulty, able to discern even fine details as though looking at something no more than 100 feet away from you. Additionally, dim light doesn`t impose disadvantage on your Wisdom(Perception) checks.',
       'Wolf: You gain the hunting sensibilities of a wolf. You can track other creatures while traveling at a fast pace, and you can move stealthily while traveling at a normal pace.',
     ],
-    10=> ['Spirit Walker: You can cast the Commune With Nature spell as a ritual. When you do, a spiritual version of one of your totem animals appears to you to convey the information you seek.'],
     14=> [
       'Bear: While you`re raging, any creature within 5 feet of you that`s hostile to you has disadvantage on attack rolls against targets other than you or another character with this feature. An enemy is immune to this effect if it can`t see or hear you or if it can`t be frightened.',
       'Eagle: While raging, you have a flying speed equal to your current walking speed. This benefit works only in short bursts; you fall if you end your turn in the air and nothing else is holding you aloft.',
@@ -747,7 +748,10 @@ Barbarian.subclasses.create(
     ],
   },
   extra_spells: {},
-  specific_spells: {},
+  specific_spells: {
+    3=>['Beast Sense','Speak With Animals'],
+    10=>['Commune With Nature'],
+  },
   custom_mods: {},
 )
 
@@ -877,7 +881,11 @@ Bard.subclasses.create(
     }
   },
   specific_spells: {},
-  custom_mods: {},
+  custom_mods: {
+    'extra_profs'=> [
+      [3,3],
+    ]
+  },
 )
 
 Bard.subclasses.create(

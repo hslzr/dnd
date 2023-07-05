@@ -1075,8 +1075,6 @@ export default class extends Controller {
       let extra_profs = mods['extra_profs'] || false;
       if (extra_profs) {
         this.populateExtraSkillsModal(extra_profs);
-      } else {
-        console.log(`not found in ${key}`);
       }
     }
   }
@@ -1107,10 +1105,13 @@ export default class extends Controller {
     }
   }
 
-  populateExtraSkillsModal(count) {
-    console.log('populate extra');
-    console.log(count);
+  populateExtraSkillsModal(array) {
     Util.removeAllChildNodes(this.extraSkillsModalListTarget);
+
+    let count = 0;
+    for (let item of array) {
+      if (item[0] <= this.level) count += item[1];
+    }
 
     this.extraSkillsLimitTarget.innerText = `Choose ${count}`;
 
