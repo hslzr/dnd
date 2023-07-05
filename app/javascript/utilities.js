@@ -252,11 +252,22 @@ export function putModalChecksToSheet(collection, target, name = '') {
   removeAllChildNodes(target);
 
   if (name != '') {
-    target.append(getTag('p', 'font-bold', `${name}: `));
+    target.append(
+      getTag('p', 'font-black col-span-2 text-center mt-2', name)
+    );
   }
 
   collection.forEach((item) => {
-    target.append(getTag('p', '', item));
+    //bold the feature label if it exists
+    if (item.includes(':')) {
+      let split = item.split(':');
+      let title = getTag('p', 'font-semibold', split[0] + ':');
+      let l_item = getTag('p', '', split[1]);
+      target.append(title);
+      target.append(l_item);
+    } else {
+      target.append(getTag('p', 'text-center', item));
+    }
   });
 }
 
@@ -271,7 +282,9 @@ export function putRacialASI(list, target) {
   ];
   for (let i = 0; i < 6; i++) {
     if (list[i] > 0) {
-      target.append(getTag('p', '', `+${list[i]} ${stats[i]}`));
+      target.append(
+        getTag('p', 'text-center', `+${list[i]} ${stats[i]}`)
+      );
     }
   }
 }

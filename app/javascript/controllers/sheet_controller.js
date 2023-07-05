@@ -371,7 +371,11 @@ export default class extends Controller {
 
         Util.removeAllChildNodes(this.racialASIBonusTarget);
         this.racialASIBonusTarget.append(
-          Util.getTag('p', 'font-medium', data.name + ': ')
+          Util.getTag(
+            'p',
+            'font-black col-span-2 text-center mt-2',
+            data.name
+          )
         );
         Util.putRacialASI(this.raceASI, this.racialASIBonusTarget);
 
@@ -1107,7 +1111,7 @@ export default class extends Controller {
 
   populateExtraSkillsModal(array) {
     Util.removeAllChildNodes(this.extraSkillsModalListTarget);
-
+    console.log(array);
     let count = 0;
     for (let item of array) {
       if (item[0] <= this.level) count += item[1];

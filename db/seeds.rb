@@ -564,7 +564,7 @@ HalfElfRace = Race.create(
   age_limit: 200,
   heightlow: "5'",
   heighthigh: "6'",
-  languages: ['Common, Elvish'],
+  languages: ['Common','Elvish'],
   extra_languages: 1,
   speed: 30,
   features: [
