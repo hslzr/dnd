@@ -17,6 +17,9 @@ Fill out the seed with remaining classes, subclasses, backgrounds, and feats
 
   If i don't do this it won't work as is, there would be huge pages of options to check in the modal.
 
+Implement specific_spells:
+  I'm putting this off until i've filled out the spells catalog, otherwise I'll pull a bunch of db dead-ends
+
 Different methods of stat assignment
 
 Implement Feats - these can use customMOd for most things I think
@@ -29,5 +32,10 @@ Implement Feats - these can use customMOd for most things I think
   extra proficiencies from Blessings of Knowledge
   double check if I implemented Expertise yet somewhere in the modifier calculation
   remaining subclasses
+  -1 spells known, prepared spells should be used instead of spells known limit
+
+# Druid
+  specific_spells_choices handling in customModifiers() for circle of the land subclass
+  -1 spells known, prepared spells should be used instead of spells known limit
 # heroku
 https://uglysheetmaker-e6deabaebc10.herokuapp.com/

@@ -1044,6 +1044,154 @@ Cleric.subclasses.create(
   custom_mods: {},
 )
 
+Druid = PlayerClass.create(
+  name: 'Druid',
+  hit_die: 8,
+  starting_hp: 8,
+  primary_abilities: [4],
+  saving_throws: [1,4],
+  armor: ['Light','Medium','SHields'],
+  weapons: ['Club','Dagger','Dart','Javelin','Mace','Quarterstaff','Scimitar','Sickle','Sling','Spear'],
+  tools: ['Herbalism Kit'],
+  skill_choices: ['Arcana','Animal Handling','Insight','Medicine','Nature','Perception','Religion','Survival'],
+  num_skills: 2,
+  equipment_choices: {
+    'choices'=>[
+      ['Wooden Shield#1','simple#1'],
+      ['Scimitar#1','simple#1'],
+    ],
+    'default'=>['Leather Armor','Explorer\'s Pack','Yew Wand#1'],
+  },
+  spellcasting_ability: 5,
+  spell_table: [
+    [-1,2,2,0,0,0,0,0,0,0,0],
+    [-1,2,3,0,0,0,0,0,0,0,0],
+    [-1,2,4,2,0,0,0,0,0,0,0],
+    [-1,3,4,3,0,0,0,0,0,0,0],
+    [-1,3,4,3,2,0,0,0,0,0,0],
+    [-1,3,4,3,3,0,0,0,0,0,0],
+    [-1,3,4,3,3,1,0,0,0,0,0],
+    [-1,3,4,3,3,2,0,0,0,0,0],
+    [-1,3,4,3,3,3,1,0,0,0,0],
+    [-1,4,4,3,3,3,2,0,0,0,0],
+    [-1,4,4,3,3,3,2,1,0,0,0],
+    [-1,4,4,3,3,3,2,1,0,0,0],
+    [-1,4,4,3,3,3,2,1,1,0,0],
+    [-1,4,4,3,3,3,2,1,1,0,0],
+    [-1,4,4,3,3,3,2,1,1,1,0],
+    [-1,4,4,3,3,3,2,1,1,1,0],
+    [-1,4,4,3,3,3,2,1,1,1,1],
+    [-1,4,4,3,3,3,3,1,1,1,1],
+    [-1,4,4,3,3,3,3,2,1,1,1],
+    [-1,4,4,3,3,3,3,2,2,1,1],
+  ],
+  wealth_die: 2,
+  features: {
+    1=>[
+      "Druidic: You know the secret language of druids. You can speak the language and use it to leave hidden messages. You and others who know this language automatically spot such a message. Others spot the message's presence with a successful DC 15 Wisdom (Perception) check but can't decipher it without magic.",
+      "Spellcasting: Drawing on the divine essence of nature itself, you can cast spells to shape that essence to your will.",
+      "Spellcasting Focus: You can use a druidic focus as a spellcasting focus for your druid spells."
+    ],
+    2=>[
+      "Wild Shape: You can use your action to magically assume the shape of a beast that you have seen before. You can use this feature twice. You regain expended uses when you finish a short or long rest.
+      Your druid level determines the beasts you can transform into, as shown in the Beast Shapes table. At 2nd level, for example, you can transform into any beast that has a challenge rating of 1/4 or lower that doesn't have a flying or swimming speed.
+      You can stay in a beast shape for a number of hours equal to half your druid level (rounded down). You then revert to your normal form unless you expend another use of this feature. You can revert to your normal form earlier by using a bonus action on your turn. You automatically revert if you fall unconscious, drop to 0 hit points, or die.",
+    ],
+    4=>[
+      "Ability Score Increase:"
+    ],
+    8=>[
+      "Ability Score Increase:",
+    ],
+    12=>[
+      "Ability Score Increase:"
+    ],
+    16=>[
+      "Ability Score Increase:"
+    ],
+    18=>[
+      "Timeless Body: The primal magic that you wield causes you to age more slowly. For every 10 years that pass, your body ages only 1 year.",
+      "Beast Spells: You can cast many of your druid spells in any shape you assume using Wild Shape. You can perform the somatic and verbal components of a druid spell while in a beast shape, but you aren't able to provide material components.",
+    ],
+    19=>[
+      "Ability Score Increase:"
+    ],
+    20=>[
+      "Archdruid: You can use your Wild Shape an unlimited number of times.
+      Additionally, you can ignore the verbal and somatic components of your druid spells, as well as any material components that lack a cost and aren't consumed by a spell. You gain this benefit in both your normal shape and your beast shape from Wild Shape.",
+    ],
+  },
+  custom: {},
+  extra_spells: {},
+  specific_spells: {},
+  custom_mods: {},
+)
+
+Druid.subclasses.create(
+  name: "Circle of the Land",
+  description: "The Circle of the Land is made up of mystics and sages who safeguard ancient knowledge and rites through a vast oral tradition. These druids meet within sacred circles of trees or standing stones to whisper primal secrets in Druidic. The circle’s wisest members preside as the chief priests of communities that hold to the Old Faith and serve as advisors to the rulers of those folk. As a member of this circle, your magic is influenced by the land where you were initiated into the circle’s mysterious rites.",
+  features: {
+    2=>[
+      "Bonus Cantrip: You learn one additional druid cantrip.",
+      "Natural Recovery: You can regain some of your magical energy by sitting in meditation and communing with nature. During a short rest, you choose expended spell slots to recover. The spell slots can have a combined level that is equal to or less than half your druid level (rounded up), and none of the slots can be 6th level or higher. You can’t use this feature again until you finish a long rest.",
+    ],
+    6=>[
+      "Land's Stride: Ymoving through nonmagical difficult terrain costs you no extra movement. You can also pass through nonmagical plants without being slowed by them and without taking damage from them if they have thorns, spines, or a similar hazard.
+      In addition, you have advantage on saving throws against plants that are magically created or manipulated to impede movement, such those created by the entangle spell.",
+    ],
+    10=>[
+      "Nature's Ward: You can't be charmed or frightened by elementals or fey, and you are immune to poison and disease.",
+    ],
+    14=>[
+      "Nature's Sanctuary: Creatures of the natural world sense your connection to nature and become hesitant to attack you. When a beast or plant creature attacks you, that creature must make a Wisdom saving throw against your druid spell save DC. On a failed save, the creature must choose a different target, or the attack automatically misses. On a successful save, the creature is immune to this effect for 24 hours.
+      The creature is aware of this effect before it makes its attack against you.",
+    ],
+  },
+  custom: {},
+  extra_spells: {},
+  specific_spells: {},
+  custom_mods: {
+    'specific_spells_choices'=> [
+      {
+        name: 'Arctic',
+        spells: {
+          3=>["Hold Person","Spike Growth"],
+          5=>["Sleet Storm","Slow"],
+          7=>["Freedom of Movement","Ice Storm"],
+          9=>["Commune With Nature","Cone of Cold"],
+        }
+      },
+      {
+        name: 'Coast',
+        spells: {
+          3=>["Mirror Image","Misty Step"],
+          5=>["Water Breathing","Water Walk"],
+          7=>["Control Water","Freedom of Movement"],
+          9=>["Conjure Elemental","Scrying"],
+        }
+      },
+       {
+        name: 'Desert',
+        spells: {
+          3=>["Blur","Silence"],
+          5=>["Create Food and Water","Protection from Energy"],
+          7=>["Blight","Hallucinatory Terrain"],
+          9=>["Insect Plague","Wall of Stone"],
+        }
+      },
+       {
+        name: 'Forest',
+        spells: {
+          3=>["Barkskin","Spider Climb"],
+          5=>["Call Lightning","Plant Growth"],
+          7=>["Divination","Freedom of Movement"],
+          9=>["Dream","Insect Plague"],
+        }
+      },
+    ]
+  },
+)
+
 Ranger = PlayerClass.create(
   name: 'Ranger',
   hit_die: 10,
@@ -1558,6 +1706,14 @@ Armor.create(
   weight: 6,
   cost_gp: 10,
   name: 'Round Shield'
+)
+
+Armor.create(
+  arm_type: 'Shield',
+  ac_base: 2,
+  weight: 6,
+  cost_gp: 10,
+  name: 'Wooden Shield'
 )
 
 Weapon.create(
