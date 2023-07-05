@@ -521,7 +521,7 @@ export default class extends Controller {
     }
 
     //don't try to set abilities to the sheet if we only set the character level
-    if (cat_type != 'level') {
+    if (cat_type != 'level' && cat_type != 'stats') {
       this.populateCatAbilities(
         data,
         cat_type,
@@ -549,8 +549,10 @@ export default class extends Controller {
     //check for form completion on every change
     if (
       Util.isChoicesFull(this.choices) &&
-      this.stats.reduce((x, y) => x + y, 0) > 6 //making sure stats have been assigned
+      this.stats.reduce((x, y) => x + y, 0) > 20 //making sure stats have been assigned
     ) {
+      console.log(this.stats.reduce((x, y) => x + y, 0));
+      console.log('this check');
       this.finalPass();
     }
   }
@@ -615,6 +617,7 @@ export default class extends Controller {
   //code 1 : dont run featureHandles, do run calculateStats
   //code 2 : don't run calculateStats
   finalPass(code = 0) {
+    console.log('finalPass');
     this.setSkillMap();
     this.populateSkillModifiers();
 
@@ -632,7 +635,7 @@ export default class extends Controller {
       );
 
     Util.updateStats(this.stat_targets, this.stats);
-    this.statModUpdate(1);
+    this.statModUpdate();
 
     this.passPerceptionTarget.innerText =
       Util.calcMod(this.stats[4]) + 10;
@@ -682,7 +685,10 @@ export default class extends Controller {
 
     this.resetProficiencies();
     //still not sure where to put this in finalPass lifecycle
-    this.customModifiers();
+    if (code == 0) {
+      console.log('code 0');
+      this.customModifiers();
+    }
   }
 
   //----------------------------- Final Pass methods ---------------------------------//
@@ -986,13 +992,39 @@ export default class extends Controller {
   }
 
   customModifiers() {
+    console.log('custom Mods');
     let keys = this.customMods.keys();
     for (let key of keys) {
       let mods = this.customMods.get(key); //we loop over every custom_mods assigned
 
+      //hp modifier on hill dwarf as this.level
       let hp_bonus = eval(mods['hp']) || 0;
       let temp = parseInt(this.trackingMaxHPTarget.innerText);
       this.trackingMaxHPTarget.innerText = parseInt(hp_bonus) + temp;
+
+      //speed
+      let speed = mods['speed'] || false;
+      if (speed) this.substatSpeedTarget.innerText = speed;
+
+      //attacks
+      let attacks = mods['attacks'] || false;
+      if (attacks) {
+        for (let attack of attacks) {
+          let damage;
+          for (let item of attack['damage']) {
+            if (item[0] <= this.level) damage = item[1];
+          }
+
+          this.populateAttack(
+            attack['name'],
+            damage,
+            attack['dmg_type'],
+            eval(attack['properties']),
+            'none',
+            false
+          );
+        }
+      }
     }
   }
 
@@ -2209,7 +2241,7 @@ export default class extends Controller {
   }
 
   //----------------------------- Base Stat Methods ---------------------------------//
-  statModUpdate(runFinal = 0) {
+  statModUpdate() {
     let statmod_targets = [
       this.strModTarget,
       this.dexModTarget,
@@ -2224,14 +2256,6 @@ export default class extends Controller {
         Util.calcMod(this.stats[index])
       );
       index++;
-    }
-
-    if (
-      Util.isChoicesFull(this.choices) &&
-      this.stats[0] != 0 &&
-      runFinal == 0
-    ) {
-      this.finalPass();
     }
   }
 
@@ -2251,6 +2275,6 @@ export default class extends Controller {
       );
 
     Util.updateStats(this.stat_targets, this.stats);
-    this.statModUpdate();
+    this.catUpdate({}, 'stats');
   }
 }

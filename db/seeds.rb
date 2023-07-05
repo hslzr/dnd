@@ -146,7 +146,9 @@ ElvenRace.subraces.create(
   ],
   extra_spells: {},
   specific_spells: {},
-  custom_mods: {},
+  custom_mods: {
+    'speed' => '35',
+  },
 )
 
 ElvenRace.subraces.create(
@@ -158,6 +160,7 @@ ElvenRace.subraces.create(
     'Drow Magic: You know the dancing lights cantrip. When you reach 3rd level you can cast faerie fire once per long rest. At 5th level you can cast darkness once per long rest. Charisma is your spellcasting ability for these spells.',
     'Drow Weapon Training: You have proficiency with rapiers, shortswords, and hand crossbows.',
   ],
+  weapons: ['Rapier','Shortsword','Hand Crossbow'],
   extra_spells: {},
   specific_spells: {
     1=> ['Dancing Lights', 'cantrip'],
@@ -232,14 +235,37 @@ DragonbornRace = Race.create(
   heighthigh: "7'",
   languages: ['Common, Draconic'],
   speed: 30,
-  features: [
-    'Draconic Ancestry: You have a draconic ancestry that determines your breath weapon.',
-    'Breath Weapon: You can use your action to exhale destructive energy. Each creature in the area must make a saving throw determined by your breath weapon with DC equal to 8 + your CON modifier + your proficiency bonus. A creature takes 2d6 damage on a fail and half on a success. The damage increases to 3d6 at 6th level, 4d6 at 11th level and 5d6 at 16th level. You can\'t use it more than once per short rest.',
-    'Damage Resistance: You have resistance to the damage type associated with your draconic ancestry.',
-  ],
+  features: [],
   extra_spells: {},
   specific_spells: {},
   custom_mods: {},
+)
+
+DragonbornRace.subraces.create(
+  name: 'Black',
+  asi: [0,0,0,0,0,0],
+  features: [
+    'Breath Weapon: You can use your action to exhale scorching acid in a 5 by 30ft line. Each creature in the area must make a Dexterity save with DC equal to 8 + your CON modifier + your proficiency bonus. A creature takes 2d6 Acid damage on a fail and half on a success. The damage increases to 3d6 at 6th level, 4d6 at 11th level and 5d6 at 16th level. You can\'t use it more than once per short rest.',
+    'Draconic Resistance: You have resistance to Acid damage',
+  ],
+  extra_spells: {},
+  specific_spells: {},
+  custom_mods: {
+    'attacks' => [
+      {
+        'name'=> 'Acid Breath',
+        'bonus'=> '',
+        'damage'=> [
+          [1,'2d6'],
+          [6,'3d6'],
+          [11,'4d6'],
+          [16,'5d6'],
+        ],
+        'dmg_type'=> 'Acid',
+        'properties'=> '`Save DC = ${Util.calcMod(this.stats[2]) + this.prof_mod + 8}`',
+      },
+    ],
+  },
 )
 
 GnomeRace = Race.create(
