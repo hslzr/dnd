@@ -24,13 +24,12 @@
   </div>
   <div class="grid grid-cols-4 gap-4 p-4" id="statbuttons">
     <button class="px-4 py-2 rounded-lg bg-orange-300 border-b-2 border-r-2" data-action="sheet#showLangDialog" data-sheet-target="langButton">Extra Languages</button>
-    <button class="px-4 py-2 rounded-lg bg-orange-300 border-b-2 border-r-2" data-action="sheet#showClassSkillsDialog" data-sheet-target="classSkillsButton">Class Skills</button>
+    <button class="px-4 py-2 rounded-lg bg-orange-300 border-b-2 border-r-2" data-action="sheet#showClassSkillsDialog" data-sheet-target="classSkillsButton">Skills</button>
     <button class="px-4 py-2 rounded-lg bg-orange-300 border-b-2 border-r-2" data-action="sheet#showClassFeaturesDialog" data-sheet-target="classFeaturesButton">Class Features</button>
     <button class="px-4 py-2 rounded-lg bg-orange-300 border-b-2 border-r-2" data-action="sheet#showToolsDialog" data-sheet-target="toolsButton">Racial Tools</button>
     <button class="px-4 py-2 rounded-lg bg-orange-300 border-b-2 border-r-2" data-action="sheet#showSubclassFeaturesDialog" data-sheet-target="subclassButton">Subclass Features</button>
     <button class="px-4 py-2 rounded-lg bg-orange-300 border-b-2 border-r-2" data-action="sheet#showExtraSpellsDialog" data-sheet-target="extraSpellsButton">Extra Spells</button>
     <button class="px-4 py-2 rounded-lg bg-orange-300 border-b-2 border-r-2" data-action="sheet#showASIDialog" data-sheet-target="asiButton">Ability Score Increase</button>
-    <button class="px-4 py-2 rounded-lg bg-orange-300 border-b-2 border-r-2" data-action="sheet#showExtraSkillsDialog" data-sheet-target="extraSkillsButton">Extra Skills</button>
   </div>
   <section class="flex flex-col" id="sheet">
     <div class="flex">
@@ -578,9 +577,13 @@
       <button class="px-8 py-2 rounded-lg bg-blue-400 border-b-2 border-r-2" data-action="sheet#submitLanguageChoices">Submit</button>
     </dialog>
     <dialog class="border border-black rounded-md bg-gray-300" data-controller="modal"  data-sheet-target="dialogClassSkills">
-      <p class="text-2xl font-bold">Class Skills</p>
+    <p class="text-2xl font-bold w-full text-center">Skills</p>
+      <p class="text-xl font-bold">Class Skills</p>
         <div data-sheet-target="classSkillsModalList"></div>
       <p class="font-black text-sm" data-sheet-target="classSkillsLimit"></p>
+      <p class="text-xl font-bold">Extra Skills</p>
+        <div data-sheet-target="extraSkillsModalList"></div>
+      <p class="font-black text-sm" data-sheet-target="extraSkillsLimit"></p>
       <button class="px-8 py-2 rounded-lg bg-blue-400 border-b-2 border-r-2" data-action="sheet#submitClassSkillsChoices">Submit</button>
     </dialog>
     <dialog class="border border-black rounded-md bg-gray-300" data-controller="modal"  data-sheet-target="dialogClassFeatures">
@@ -620,12 +623,6 @@
         <div data-sheet-target="extraSpellsModalList"></div>
       <p class="font-black text-sm" data-sheet-target="extraSpellsLimit"></p>
       <button class="px-8 py-2 rounded-lg bg-blue-400 border-b-2 border-r-2" data-action="sheet#submitExtraSpellsChoices">Submit</button>
-    </dialog>
-    <dialog class="border border-black rounded-md bg-gray-300" data-controller="modal"  data-sheet-target="dialogExtraSkills">
-      <p class="text-2xl font-bold">Extra Skills</p>
-        <div data-sheet-target="extraSkillsModalList"></div>
-      <p class="font-black text-sm" data-sheet-target="extraSkillsLimit"></p>
-      <button class="px-8 py-2 rounded-lg bg-blue-400 border-b-2 border-r-2" data-action="sheet#submitExtraSkillsChoices">Submit</button>
     </dialog>
     <dialog class="border border-black rounded-md bg-gray-300" data-controller="modal"  data-sheet-target="dialogTBIF">
       <p class="text-2xl font-bold">Traits</p>

@@ -206,10 +206,7 @@ export default class extends Controller {
     'attackDamages',
     'attackProps',
     'attackList',
-    'extraSkillsButton',
     'extraSkillsModalList',
-    'extraSkillsLimit',
-    'dialogExtraSkills',
     'modSkills',
   ];
 
@@ -234,7 +231,6 @@ export default class extends Controller {
       this.equipmentButtonTarget,
       this.asiButtonTarget,
       this.extraSpellsButtonTarget,
-      this.extraSkillsButtonTarget,
     ];
 
     this.stats = [0, 0, 0, 0, 0, 0];
@@ -1126,7 +1122,7 @@ export default class extends Controller {
     }
   }
 
-  submitExtraSkillsChoices(event) {
+  submitExtraSkillsChoices() {
     Util.removeAllChildNodes(this.modSkillsTarget);
 
     let chosen = [];
@@ -1139,8 +1135,9 @@ export default class extends Controller {
       this.modSkillsTarget,
       'Extra Skills'
     );
-    event.target.parentNode.close();
-    this.resetProficiencies();
+    //not called beacuse we are calling this from within a different submit button
+    //event.target.parentNode.close();
+    //this.resetProficiencies();
   }
   //----------------------------- Choice Modals ---------------------------------//
   //----------------- Languages Modal ------------------//
@@ -1267,6 +1264,9 @@ export default class extends Controller {
       this.classSkillsTarget,
       this.choices.get('player_class')
     );
+
+    this.submitExtraSkillsChoices();
+
     event.target.parentNode.close();
     this.resetProficiencies();
   }
@@ -2372,9 +2372,6 @@ export default class extends Controller {
   }
   showExtraSpellsDialog() {
     this.dialogExtraSpellsTarget.showModal();
-  }
-  showExtraSkillsDialog() {
-    this.dialogExtraSkillsTarget.showModal();
   }
 
   //----------------------------- Base Stat Methods ---------------------------------//
