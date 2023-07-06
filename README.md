@@ -9,6 +9,9 @@
 The seed file is one big copyright violation, this is a student project and not for profit, sale or public use. If you only used homebrew in a new seed file you might land in a grey area.
 
 # main tasks
+combine modals that make sense
+  all proficiencies should be in select boxes
+
 Fill out the seed with remaining classes, subclasses, backgrounds, and feats
   I'm adding capabilities to customModifiers() as needed, working my way through the classes and starting on Cleric subclasses right now
 
