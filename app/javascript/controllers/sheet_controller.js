@@ -153,7 +153,6 @@ export default class extends Controller {
     'classFeaturesButton',
     'dialogTools',
     'toolsModalList',
-    'toolsLimit',
     'dialogSubclassFeatures',
     'subclassFeaturesModalList',
     'subclassFeaturesLimit',
@@ -1118,12 +1117,13 @@ export default class extends Controller {
       if (item[0] <= this.level) count += item[1];
     }
 
-    this.extraSkillsLimitTarget.innerText = `Choose ${count}`;
-
-    Util.populateListModal(
-      this.extraSkillsModalListTarget,
-      this.allSkillChoices
-    );
+    for (let j = 0; j < count; j++) {
+      Util.putSelect(
+        'Skills',
+        this.allSkillChoices,
+        this.extraSkillsModalListTarget
+      );
+    }
   }
 
   submitExtraSkillsChoices(event) {
@@ -1132,21 +1132,14 @@ export default class extends Controller {
     let chosen = [];
     //the checkboxes are wrapped in a span for alignment
     this.extraSkillsModalListTarget.childNodes.forEach((node) => {
-      if (node.firstChild.firstChild.checked) {
-        chosen.push(node.firstChild.firstChild.value);
-      }
+      chosen.push(node.value);
     });
-    if (
-      chosen.length ==
-      parseInt(this.extraSkillsLimitTarget.innerText.slice(-1))
-    ) {
-      Util.putModalChecksToSheet(
-        chosen,
-        this.modSkillsTarget,
-        'Extra Skills'
-      );
-      event.target.parentNode.close();
-    }
+    Util.putModalChecksToSheet(
+      chosen,
+      this.modSkillsTarget,
+      'Extra Skills'
+    );
+    event.target.parentNode.close();
     this.resetProficiencies();
   }
   //----------------------------- Choice Modals ---------------------------------//
@@ -1185,23 +1178,28 @@ export default class extends Controller {
       if (text.slice(-1) != ':') list.push(text);
     });
 
-    //indexOf returns -1 if lang not found in list, we make those into options
+    //indexOf returns -1 if lang not found in race/subrace languages list, we make those into options
     let options = allLanguages.filter(
       (lang) => list.indexOf(lang) === -1
     );
 
+    //loop through the categoryMap and add up the extra languages from each category
     let init = 0;
     let temp;
     let lang_iter = this.extra_languages.values();
     for (let i = 0; i < this.extra_languages.size; i++) {
       temp = lang_iter.next().value;
+      //skip empty objects
       if (typeof temp === 'string') init += parseInt(temp);
     }
 
-    this.langLimitTarget.innerText = `Choose ${init}`;
-
-    Util.populateListModal(this.languageModalListTarget, options); //this will populate the <ul> with checkboxes
-    //onsubmit we'll validate the number chosen, and put the chosen ones into their own div
+    for (let j = 0; j < init; j++) {
+      Util.putSelect(
+        'Languages',
+        options,
+        this.languageModalListTarget
+      );
+    }
     //when backgrounds change we can empty that div and start over
   }
 
@@ -1212,31 +1210,19 @@ export default class extends Controller {
     let chosen = [];
     //the checkboxes are wrapped in a span for alignment
     this.languageModalListTarget.childNodes.forEach((node) => {
-      if (node.firstChild.firstChild.checked) {
-        chosen.push(node.firstChild.firstChild.value);
-      }
+      chosen.push(node.value);
     });
-    if (
-      chosen.length ==
-      parseInt(this.langLimitTarget.innerText.slice(-1))
-    ) {
-      Util.putModalChecksToSheet(chosen, this.extraLanguagesTarget);
-      event.target.parentNode.close();
-    }
+    Util.putModalChecksToSheet(chosen, this.extraLanguagesTarget);
+    event.target.parentNode.close();
   }
   //----------------- Tools Modal ------------------//
   chooseTools() {
     Util.removeAllChildNodes(this.toolsModalListTarget);
 
-    if (this.raceToolChoices.length > 0) {
-      this.toolsLimitTarget.innerText = `Choose 1`;
-    } else {
-      this.toolsLimitTarget.innerText = 'No Tools';
-    }
-
-    Util.populateListModal(
-      this.toolsModalListTarget,
-      this.raceToolChoices
+    Util.putSelect(
+      'Tools',
+      this.raceToolChoices,
+      this.toolsModalListTarget
     );
   }
 
@@ -1246,29 +1232,26 @@ export default class extends Controller {
     let chosen = [];
     //the checkboxes are wrapped in a span for alignment
     this.toolsModalListTarget.childNodes.forEach((node) => {
-      if (node.firstChild.firstChild.checked) {
-        chosen.push(node.firstChild.firstChild.value);
-      }
+      chosen.push(node.value);
     });
-    if (chosen.length == 1) {
-      Util.putModalChecksToSheet(
-        chosen,
-        this.raceToolsTarget,
-        racename
-      );
-      event.target.parentNode.close();
-    }
+    Util.putModalChecksToSheet(
+      chosen,
+      this.raceToolsTarget,
+      racename
+    );
+    event.target.parentNode.close();
   }
   //----------------- Class Skills Modal ------------------//
   chooseClassSkills() {
     Util.removeAllChildNodes(this.classSkillsModalListTarget);
 
-    this.classSkillsLimitTarget.innerText = `Choose ${this.numClassSkillChoices}`;
-
-    Util.populateListModal(
-      this.classSkillsModalListTarget,
-      this.classSkillChoices
-    );
+    for (let i = 0; i < this.numClassSkillChoices; i++) {
+      Util.putSelect(
+        'Skills',
+        this.classSkillChoices,
+        this.classSkillsModalListTarget
+      );
+    }
   }
 
   submitClassSkillsChoices(event) {
@@ -1277,21 +1260,14 @@ export default class extends Controller {
     let chosen = [];
     //the checkboxes are wrapped in a span for alignment
     this.classSkillsModalListTarget.childNodes.forEach((node) => {
-      if (node.firstChild.firstChild.checked) {
-        chosen.push(node.firstChild.firstChild.value);
-      }
+      chosen.push(node.value);
     });
-    if (
-      chosen.length ==
-      parseInt(this.classSkillsLimitTarget.innerText.slice(-1))
-    ) {
-      Util.putModalChecksToSheet(
-        chosen,
-        this.classSkillsTarget,
-        this.choices.get('player_class')
-      );
-      event.target.parentNode.close();
-    }
+    Util.putModalChecksToSheet(
+      chosen,
+      this.classSkillsTarget,
+      this.choices.get('player_class')
+    );
+    event.target.parentNode.close();
     this.resetProficiencies();
   }
 

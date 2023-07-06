@@ -96,23 +96,17 @@ export function subarrayMatch(list, sublist) {
 }
 
 //-------------------------------------------modal utilities
-export function populateListModal(target, options) {
-  options.forEach((option) => {
-    let container = getTag(
-      'div',
-      'flex gap-2 align-center border border-white'
-    );
-    let align_span = getTag('span', '');
-    let check = document.createElement('input');
-    check.type = 'checkbox';
-    check.value = option;
 
-    align_span.append(check);
-    container.append(align_span);
-    container.append(option);
-
-    target.appendChild(container);
-  });
+//put a select teg to the given target
+export function putSelect(title, options, target) {
+  let select = getTag('select', 'rounded-md');
+  select.append(getTag('option', '', title));
+  for (let item of options) {
+    let option = getTag('option', '', item);
+    option.value = item;
+    select.append(option);
+  }
+  target.append(select);
 }
 
 //fetch data and populate weapon select based on given type
