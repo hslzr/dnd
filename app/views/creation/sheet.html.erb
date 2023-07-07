@@ -251,14 +251,14 @@
         </div>
 
         <% for i in 1..9  do %>
-          <div class="flex flex-col" id="spell<% i %>">
+          <div class="flex flex-col" id="spell<%= i %>">
             <div class="flex justify-center">
               <div class="flex flex-col gap-1">
-                <h4 class="font-bold">Level <% i %> Spells</h4>
-                <div class="spell-box" data-sheet-target="spellsTaken<% i %>"></div>
+                <h4 class="font-bold">Level <%= i %> Spells</h4>
+                <div class="spell-box" data-sheet-target="spellsTaken<%= i %>"></div>
               </div>
               <div class="tracking-box">
-                <p data-sheet-target="spellSlots<% i %>">0</p>
+                <p data-sheet-target="spellSlots<%= i %>">0</p>
                 <p>Spell Slots</p>
               </div>
             </div>
@@ -324,27 +324,14 @@
       <button class="px-8 py-2 rounded-lg bg-blue-400 border-b-2 border-r-2" data-action="sheet#submitClassSkillsChoices">Submit</button>
     </dialog>
 
+    <% for modal in @modals do %>
+      <dialog class="border border-black rounded-md bg-gray-300" data-controller="modal"  data-sheet-target="dialog<%= modal.gsub(/\s+/, "") %>">
+        <p class="text-2xl font-bold"><%= modal %></p>
+          <div data-sheet-target="<%= modal.downcase.gsub(/\s+/, "") %>ModalList"></div>
+        <button class="px-8 py-2 rounded-lg bg-blue-400 border-b-2 border-r-2" data-action="sheet#submit<%= modal.gsub(/\s+/, "") %>Choices">Submit</button>
+      </dialog>
+    <% end %>
 
-    <dialog class="border border-black rounded-md bg-gray-300" data-controller="modal"  data-sheet-target="dialogLanguages">
-      <p class="text-2xl font-bold">Languages</p>
-        <div data-sheet-target="languageModalList"></div>
-      <button class="px-8 py-2 rounded-lg bg-blue-400 border-b-2 border-r-2" data-action="sheet#submitLanguageChoices">Submit</button>
-    </dialog>
-    <dialog class="border border-black rounded-md bg-gray-300" data-controller="modal"  data-sheet-target="dialogClassFeatures">
-      <p class="text-2xl font-bold">Class Features</p>
-        <div data-sheet-target="classFeaturesModalList"></div>
-      <button class="px-8 py-2 rounded-lg bg-blue-400 border-b-2 border-r-2" data-action="sheet#submitClassFeaturesChoices">Submit</button>
-    </dialog>
-    <dialog class="border border-black rounded-md bg-gray-300" data-controller="modal"  data-sheet-target="dialogTools">
-      <p class="text-2xl font-bold">Racial Tools</p>
-        <div data-sheet-target="toolsModalList"></div>
-      <button class="px-8 py-2 rounded-lg bg-blue-400 border-b-2 border-r-2" data-action="sheet#submitToolsChoices">Submit</button>
-    </dialog>
-    <dialog class="border border-black rounded-md bg-gray-300" data-controller="modal"  data-sheet-target="dialogSubclassFeatures">
-      <p class="text-2xl font-bold">Subclass Features</p>
-        <div data-sheet-target="subclassFeaturesModalList"></div>
-      <button class="px-8 py-2 rounded-lg bg-blue-400 border-b-2 border-r-2" data-action="sheet#submitSubclassFeaturesChoices">Submit</button>
-    </dialog>
     <dialog class="border border-black rounded-md bg-gray-300" data-controller="modal"  data-sheet-target="dialogASI">
       <p class="text-2xl font-bold">Ability Score Increases</p>
         <div data-sheet-target="asiModalList"></div>
@@ -363,12 +350,6 @@
         <div data-sheet-target="extraSpellsModalList"></div>
       <p class="font-black text-sm" data-sheet-target="extraSpellsLimit"></p>
       <button class="px-8 py-2 rounded-lg bg-blue-400 border-b-2 border-r-2" data-action="sheet#submitExtraSpellsChoices">Submit</button>
-    </dialog>
-    <dialog class="border border-black rounded-md bg-gray-300" data-controller="modal"  data-sheet-target="dialogTBIF">
-      <p class="text-2xl font-bold">Traits</p>
-        <div data-sheet-target="tbifModalList"></div>
-      <p class="font-black text-sm">Choose 1 of each</p>
-      <button class="px-8 py-2 rounded-lg bg-blue-400 border-b-2 border-r-2" data-action="sheet#submitTBIF">Submit</button>
     </dialog>
     <dialog class="border border-black rounded-md bg-gray-300" data-controller="modal"  data-sheet-target="dialogEquipment">
       <p class="text-2xl font-bold">Starting Equipment</p>

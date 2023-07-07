@@ -142,19 +142,19 @@ export default class extends Controller {
     'equipTools',
     'equipEquipment',
     'dialogLanguages',
-    'languageModalList',
+    'languagesModalList',
     'langLimit',
     'dialogClassSkills',
     'classSkillsModalList',
     'classSkillsLimit',
-    'classFeaturesModalList',
+    'classfeaturesModalList',
     'classFeaturesLimit',
     'dialogClassFeatures',
     'classFeaturesButton',
     'dialogTools',
     'toolsModalList',
     'dialogSubclassFeatures',
-    'subclassFeaturesModalList',
+    'subclassfeaturesModalList',
     'subclassFeaturesLimit',
     'dialogASI',
     'asiModalList',
@@ -192,8 +192,8 @@ export default class extends Controller {
     'tbifBonds',
     'tbifIdeals',
     'tbifFlaws',
-    'tbifModalList',
-    'dialogTBIF',
+    'traitsModalList',
+    'dialogTraits',
     'tbifButton',
     'equipmentModalList',
     'dialogEquipment',
@@ -208,11 +208,6 @@ export default class extends Controller {
     'attackList',
     'extraSkillsModalList',
     'modSkills',
-    'test1',
-    'test2',
-    'test3',
-    'test4',
-    'test5',
   ];
 
   connect() {
@@ -718,17 +713,6 @@ export default class extends Controller {
 
     this.resetProficiencies();
     this.customModifiers();
-
-    let tests = [
-      this.test1Target,
-      this.test2Target,
-      this.test3Target,
-      this.test4Target,
-      this.test5Target,
-    ];
-    for (let i of tests) {
-      i.innerText = 'testing';
-    }
   }
 
   //----------------------------- Final Pass methods ---------------------------------//
@@ -747,8 +731,8 @@ export default class extends Controller {
     ]);
     this.skills.set('Sleight of Hand', [
       this.stats[1],
-      this.sleightOfHandModTarget,
-      this.sleightOfHandProfTarget,
+      this.sleightofhandModTarget,
+      this.sleightofhandProfTarget,
       '',
     ]);
     this.skills.set('Stealth', [
@@ -789,8 +773,8 @@ export default class extends Controller {
     ]);
     this.skills.set('Animal Handling', [
       this.stats[4],
-      this.animalHandlingModTarget,
-      this.animalHandlingProfTarget,
+      this.animalhandlingModTarget,
+      this.animalhandlingProfTarget,
       '',
     ]);
     this.skills.set('Insight', [
@@ -1175,7 +1159,7 @@ export default class extends Controller {
       'Undercommon',
     ];
 
-    Util.removeAllChildNodes(this.languageModalListTarget);
+    Util.removeAllChildNodes(this.languagesModalListTarget);
 
     //make a list of languages already on the sheet
     var list = [];
@@ -1207,19 +1191,19 @@ export default class extends Controller {
       Util.putSelect(
         'Languages',
         options,
-        this.languageModalListTarget
+        this.languagesModalListTarget
       );
     }
     //when backgrounds change we can empty that div and start over
   }
 
-  submitLanguageChoices(event) {
+  submitLanguagesChoices(event) {
     Util.removeAllChildNodes(this.extraLanguagesTarget);
     //we clear the output here, all we have to do is limit the number of boxes you can check
 
     let chosen = [];
     //the checkboxes are wrapped in a span for alignment
-    this.languageModalListTarget.childNodes.forEach((node) => {
+    this.languagesModalListTarget.childNodes.forEach((node) => {
       chosen.push(node.value);
     });
     Util.putModalChecksToSheet(chosen, this.extraLanguagesTarget);
@@ -1286,12 +1270,12 @@ export default class extends Controller {
 
   //----------------- Class Features Modal ------------------//
   chooseClassFeatures(features) {
-    Util.removeAllChildNodes(this.classFeaturesModalListTarget);
+    Util.removeAllChildNodes(this.classfeaturesModalListTarget);
     features.forEach((item) => {
       if (parseInt(item[0]) <= this.level) {
         this.populateOptionalFeatureModal(
           item,
-          this.classFeaturesModalListTarget
+          this.classfeaturesModalListTarget
         );
       }
     });
@@ -1299,7 +1283,7 @@ export default class extends Controller {
 
   submitClassFeaturesChoices(event) {
     let chosen = [];
-    this.classFeaturesModalListTarget.childNodes.forEach((node) => {
+    this.classfeaturesModalListTarget.childNodes.forEach((node) => {
       node.childNodes.forEach((subnode) => {
         let item = subnode.firstChild;
         if (item.type == 'checkbox' && item.checked) {
@@ -1331,12 +1315,12 @@ export default class extends Controller {
   }
   //----------------- Subclass Modal ------------------//
   chooseSubclassFeatures(features) {
-    Util.removeAllChildNodes(this.subclassFeaturesModalListTarget);
+    Util.removeAllChildNodes(this.subclassfeaturesModalListTarget);
     features.forEach((item) => {
       if (parseInt(item[0]) <= this.level) {
         this.populateOptionalFeatureModal(
           item,
-          this.subclassFeaturesModalListTarget
+          this.subclassfeaturesModalListTarget
         );
       }
     });
@@ -1366,7 +1350,7 @@ export default class extends Controller {
 
   submitSubclassFeaturesChoices(event) {
     let chosen = [];
-    this.subclassFeaturesModalListTarget.childNodes.forEach(
+    this.subclassfeaturesModalListTarget.childNodes.forEach(
       (node) => {
         node.childNodes.forEach((subnode) => {
           let item = subnode.firstChild;
@@ -1529,7 +1513,7 @@ export default class extends Controller {
 
   //----------------- TBIF Modal ------------------//
   chooseTBIF() {
-    Util.removeAllChildNodes(this.tbifModalListTarget);
+    Util.removeAllChildNodes(this.traitsModalListTarget);
 
     let kinds = [
       [this.traits, 'Traits'],
@@ -1560,11 +1544,11 @@ export default class extends Controller {
         container.append(item);
         frame.append(container);
       }
-      this.tbifModalListTarget.append(frame);
+      this.traitsModalListTarget.append(frame);
     });
   }
 
-  submitTBIF(event) {
+  submitTraits(event) {
     let targets = [
       this.tbifTraitsTarget,
       this.tbifBondsTarget,
@@ -1572,7 +1556,7 @@ export default class extends Controller {
       this.tbifFlawsTarget,
     ];
     let chosen = [];
-    this.tbifModalListTarget.childNodes.forEach((node) => {
+    this.traitsModalListTarget.childNodes.forEach((node) => {
       node.childNodes.forEach((subnode) => {
         let item = subnode.firstChild;
         if (item.type == 'checkbox' && item.checked) {
@@ -2372,7 +2356,7 @@ export default class extends Controller {
     this.dialogSpellsTarget.showModal();
   }
   showTBIFDialog() {
-    this.dialogTBIFTarget.showModal();
+    this.dialogTraitsTarget.showModal();
   }
   showEquipmentDialog() {
     this.dialogEquipmentTarget.showModal();

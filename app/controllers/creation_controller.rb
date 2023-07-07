@@ -25,13 +25,19 @@ class CreationController < ApplicationController
     end
 
     @stats = Array.new
-
     @stats.push(['str','strength',['Athletics']])
     @stats.push(['dex','dexterity',['Acrobatics','Sleight of Hand','Stealth']])
     @stats.push(['con','constitution',[]])
     @stats.push(['int','intelligence',['Arcana','History','Investigation','Nature','Religion']])
     @stats.push(['wis','wisdom',['Animal Handling','Insight','Medicine','Perception','Survival']])
     @stats.push(['cha','charisma',['Deception','Intimidation','Performance','Persuasion']])
+
+    @modals = Array.new
+    @modals.push('Languages')
+    @modals.push('Class Features')
+    @modals.push('Tools')
+    @modals.push('Subclass Features')
+    @modals.push('Traits')
 
   end
 
