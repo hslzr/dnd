@@ -25,8 +25,8 @@ export default class extends Controller {
     'dexSaveProf',
     'acrobaticsMod',
     'acrobaticsProf',
-    'sleightOfHandMod',
-    'sleightOfHandProf',
+    'sleightofhandMod',
+    'sleightofhandProf',
     'stealthMod',
     'stealthProf',
     'conBase',
@@ -51,8 +51,8 @@ export default class extends Controller {
     'wisMod',
     'wisSavingThrowMod',
     'wisSaveProf',
-    'animalHandlingMod',
-    'animalHandlingProf',
+    'animalhandlingMod',
+    'animalhandlingProf',
     'insightMod',
     'insightProf',
     'medicineMod',
@@ -208,6 +208,11 @@ export default class extends Controller {
     'attackList',
     'extraSkillsModalList',
     'modSkills',
+    'test1',
+    'test2',
+    'test3',
+    'test4',
+    'test5',
   ];
 
   connect() {
@@ -259,6 +264,7 @@ export default class extends Controller {
     this.weapons = Util.blankCategoryMap();
     this.armor = Util.blankCategoryMap();
     this.features = Util.blankCategoryMap();
+
     this.classSkillChoices; //set in catUpdate
     this.allSkillChoices = [
       'Acrobatics',
@@ -666,6 +672,7 @@ export default class extends Controller {
       this.subraceASI
     );
 
+    //catUpdate passes a 1 if cat_type == 'asi' we dont want to run over our changes with these functions
     if (code == 0) {
       Util.updateStats(this.stat_targets, this.stats);
       this.statModUpdate();
@@ -696,14 +703,6 @@ export default class extends Controller {
         this.disabled_color
       );
 
-      if (this.nosubchoice) {
-        Util.deactivateButton(
-          this.subclassButtonTarget,
-          this.active_color,
-          this.disabled_color
-        );
-      }
-
       //running these on a non-spellcasting class breaks stuff
       if (this.spellcasting_ability == 0) {
         Util.deactivateButton(
@@ -719,6 +718,17 @@ export default class extends Controller {
 
     this.resetProficiencies();
     this.customModifiers();
+
+    let tests = [
+      this.test1Target,
+      this.test2Target,
+      this.test3Target,
+      this.test4Target,
+      this.test5Target,
+    ];
+    for (let i of tests) {
+      i.innerText = 'testing';
+    }
   }
 
   //----------------------------- Final Pass methods ---------------------------------//
@@ -1112,6 +1122,9 @@ export default class extends Controller {
     for (let item of array) {
       if (item[0] <= this.level) count += item[1];
     }
+    if (count == 0) {
+      console.log('no extras');
+    }
 
     for (let j = 0; j < count; j++) {
       Util.putSelect(
@@ -1274,7 +1287,6 @@ export default class extends Controller {
   //----------------- Class Features Modal ------------------//
   chooseClassFeatures(features) {
     Util.removeAllChildNodes(this.classFeaturesModalListTarget);
-    this.classFeaturesLimitTarget.innerText = 'Choose 1 of Each';
     features.forEach((item) => {
       if (parseInt(item[0]) <= this.level) {
         this.populateOptionalFeatureModal(
@@ -1320,9 +1332,6 @@ export default class extends Controller {
   //----------------- Subclass Modal ------------------//
   chooseSubclassFeatures(features) {
     Util.removeAllChildNodes(this.subclassFeaturesModalListTarget);
-
-    this.subclassFeaturesLimitTarget.innerText = 'Choose 1 of Each';
-
     features.forEach((item) => {
       if (parseInt(item[0]) <= this.level) {
         this.populateOptionalFeatureModal(
@@ -2323,6 +2332,7 @@ export default class extends Controller {
     this.attackListTarget.append(row);
   }
 
+  //used for dragonborne breath weapons
   populateModAttack(weapon, die, dmg_type, properties, bonus) {
     let name = Util.getTag('p', 'sheetcell w-1/4', weapon);
     let damage = Util.getTag(

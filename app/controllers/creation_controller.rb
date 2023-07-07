@@ -18,6 +18,21 @@ class CreationController < ApplicationController
     for i in 1..20 do
       @levels.push([i,i])
     end
+
+    @targets = []
+    for i in 1..5 do
+      @targets.push("test#{i}")
+    end
+
+    @stats = Array.new
+
+    @stats.push(['str','strength',['Athletics']])
+    @stats.push(['dex','dexterity',['Acrobatics','Sleight of Hand','Stealth']])
+    @stats.push(['con','constitution',[]])
+    @stats.push(['int','intelligence',['Arcana','History','Investigation','Nature','Religion']])
+    @stats.push(['wis','wisdom',['Animal Handling','Insight','Medicine','Perception','Survival']])
+    @stats.push(['cha','charisma',['Deception','Intimidation','Performance','Persuasion']])
+
   end
 
   private
