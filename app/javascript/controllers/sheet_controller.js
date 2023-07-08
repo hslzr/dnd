@@ -4,7 +4,6 @@ import * as Util from 'utilities';
 //all options come from the db, new db additions should just work
 export default class extends Controller {
   static targets = [
-    //in order of appearance
     'langButton',
     'classSkillsButton',
     'toolsButton',
@@ -200,7 +199,7 @@ export default class extends Controller {
     'equipmentClassStart',
     'equipmentBGStart',
     'equipmentButton',
-    'attackNames',
+    'atkNames',
     'attackBonuses',
     'attackDamages',
     'attackProps',
@@ -1067,7 +1066,7 @@ export default class extends Controller {
       let attacks = mods['attacks'] || false;
       if (attacks) {
         //clear attacks
-        while (this.attackListTarget.children.length > 1) {
+        while (this.attackListTarget.children.length > 2) {
           this.attackListTarget.removeChild(
             this.attackListTarget.lastChild
           );
@@ -1588,7 +1587,7 @@ export default class extends Controller {
     });
   }
 
-  submitTraits(event) {
+  submitTraitsChoices(event) {
     let targets = [
       this.tbifTraitsTarget,
       this.tbifBondsTarget,
@@ -2222,7 +2221,7 @@ export default class extends Controller {
 
   putEquipmentToSheet(equipment) {
     //output selections to character sheet
-    Util.removeAllChildNodes(this.attackNamesTarget);
+    Util.removeAllChildNodes(this.atkNamesTarget);
     Util.removeAllChildNodes(this.attackBonusesTarget);
     Util.removeAllChildNodes(this.attackDamagesTarget);
 
