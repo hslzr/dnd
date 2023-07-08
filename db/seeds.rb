@@ -1762,6 +1762,27 @@ ClassSpellListsSpells.create(
   spell_id: 4
 )
 
+Junk_wizard4 = ClassSpellList.create(
+  name: 'Druid'
+)
+
+ClassSpellListsSpells.create(
+  class_spell_list_id: Junk_wizard4.id,
+  spell_id: 1
+)
+ClassSpellListsSpells.create(
+  class_spell_list_id: Junk_wizard4.id,
+  spell_id: 2
+)
+ClassSpellListsSpells.create(
+  class_spell_list_id: Junk_wizard4.id,
+  spell_id: 3
+)
+ClassSpellListsSpells.create(
+  class_spell_list_id: Junk_wizard4.id,
+  spell_id: 4
+)
+
 Junk_2 = ClassSpellList.create(
   name: 'Bard'
 )
