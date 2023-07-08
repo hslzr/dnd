@@ -1,14 +1,14 @@
 
 <div data-controller="sheet">
   <div class="flex flex-col align-bottom gap-4">
-    <h1 class="font-black text-4xl">Creation</h1>
+    <h1 class="font-black text-4xl p-4 self-center">Creation</h1>
 
     <%#
       We just use the turbo_frame for conditional form select population, the sheet is handled with JS
     %>
 
     <%= turbo_frame_tag "form" do %>
-      <%= form_tag creation_sheet_path, method: :get, data: { controller: "dropdown", action: "change->dropdown#submit", 'sheet-target': 'maindrop'}, class: "grid grid-cols-3 gap-4 px-4"  do %>
+      <%= form_tag creation_sheet_path, method: :get, data: { controller: "dropdown", action: "change->dropdown#submit", 'sheet-target': 'maindrop'}, class: "grid grid-cols-2 md:grid-cols-4 gap-4 px-4"  do %>
         <%= select_tag :race, options_from_collection_for_select(@races, "id", "name", @race&.id), prompt: "- Race -", data: { action: "change->sheet#categoryHandler", "sheet-url-param": "/races/" } %>
         <%= select_tag :subrace, options_from_collection_for_select(@subraces, "id", "name", @subrace&.id), prompt: "- Subrace -", data: { action: "change->sheet#categoryHandler", "sheet-url-param": "/subraces/" } %>
         <%= select_tag :player_class, options_from_collection_for_select(@player_classes, "id", "name", @player_class&.id), prompt: "- Class -", data: { action: "change->sheet#categoryHandler", "sheet-url-param": "/player_classes/"} %>
@@ -18,10 +18,10 @@
       <% end %>
     <% end %>
   </div>
-  <div class="grid grid-cols-4 gap-4 p-4">
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-4 p-4">
     <button class="px-4 py-2 rounded-lg bg-blue-400 border-b-2 border-r-2" data-action="sheet#randomStats">Random Stats</button>
   </div>
-  <div class="grid grid-cols-4 gap-4 p-4" id="statbuttons">
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-4 p-4" id="statbuttons">
     <button class="px-4 py-2 rounded-lg bg-orange-300 border-b-2 border-r-2" data-action="sheet#showLangDialog" data-sheet-target="langButton">Extra Languages</button>
     <button class="px-4 py-2 rounded-lg bg-orange-300 border-b-2 border-r-2" data-action="sheet#showClassSkillsDialog" data-sheet-target="classSkillsButton">Skills</button>
     <button class="px-4 py-2 rounded-lg bg-orange-300 border-b-2 border-r-2" data-action="sheet#showClassFeaturesDialog" data-sheet-target="classFeaturesButton">Class Features</button>
@@ -31,15 +31,15 @@
     <button class="px-4 py-2 rounded-lg bg-orange-300 border-b-2 border-r-2" data-action="sheet#showASIDialog" data-sheet-target="asiButton">Ability Score Increase</button>
   </div>
   <section class="flex flex-col" id="sheet">
-    <div class="flex">
-      <div class="flex flex-col gap-2 w-1/3" id="firstcolumn">
+    <div class="grid grid-cols-2 md:grid-cols-3">
+      <div class="flex flex-col gap-2 col-span-2 md:col-span-1" id="firstcolumn">
 
         <input type="text" placeholder="Character Name" class="sheetcell w-full" data-sheet-target="charName"></input>
-        <p><span class="sheetcell" data-sheet-target="profBonus"></span>Proficiency bonus</p>
-        <p><span class="sheetcell" data-sheet-target="passPerception"></span>Passive Perception</p>
+        <p class="self-center" ><span class="sheetcell" data-sheet-target="profBonus"></span>Proficiency bonus</p>
+        <p class="self-center"><span class="sheetcell" data-sheet-target="passPerception"></span>Passive Perception</p>
 
         <% for stat in @stats do %>
-          <div class="flex align-center" id ="<%= stat[0] %>block">
+          <div class="flex align-center justify-center" id ="<%= stat[0] %>block">
             <div class="statframe">
               <div class="base-statbox">
                 <div class="text-sm border border-black rounded-full" data-sheet-target="<%= stat[0] %>Base"></div>
@@ -105,9 +105,9 @@
         </div>
 
       </div>
-      <div class="flex flex-col gap-2 w-2/3" id="secondcolumn">
-        <div class="flex flex-col text-center p-2" id="about">
-          <div class="flex w-full justify-center gap-2">
+      <div class="flex flex-col gap-2 col-span-2 justify" id="secondcolumn">
+        <div class="flex flex-col p-2" id="about">
+          <div class="grid grid-cols-2 md:grid-cols-4 justify-center gap-2">
             <div class="flex flex-col">
               <p class="sheetcell" data-sheet-target="aboutClass"></p>
               <p class="text-xs mx-2">CLASS</p>
@@ -125,7 +125,7 @@
               <p class="text-xs mx-2">BACKGROUND</p>
             </div>
           </div>
-          <div class="flex w-full justify-center gap-2">
+          <div class="grid grid-cols-2 md:grid-cols-4 justify-center gap-2">
             <div class="flex flex-col">
               <p class="sheetcell" data-sheet-target="aboutRace"></p>
               <p class="text-xs mx-2">RACE</p>
@@ -144,7 +144,7 @@
             </div>
           </div>
         </div>
-        <div class="flex gap-4  text-center justify-around" id="substats">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 justify-around" id="substats">
           <div class="flex flex-col p-2 border-2 border-black rounded-lg min-w-1/6">
               <p class="sheetcell" data-sheet-target="substatAC"></p>
               <p class="text-xs mx-2">AC</p>
@@ -162,7 +162,7 @@
               <p class="text-xs mx-2">Inspiration</p>
           </div>
         </div>
-          <div class="flex gap-2 justify-center " id="playtracking">
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-2 justify-center " id="playtracking">
             <div class="flex flex-col p-2 border-2 border-black rounded-lg">
               <p class="sheetcell" data-sheet-target="trackingMaxHP"></p>
               <p class="text-xs mx-2">MAX HP</p>
