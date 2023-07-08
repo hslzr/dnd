@@ -200,7 +200,6 @@ export default class extends Controller {
     'equipmentClassStart',
     'equipmentBGStart',
     'equipmentButton',
-    'startingEquipment',
     'attackNames',
     'attackBonuses',
     'attackDamages',
@@ -404,7 +403,11 @@ export default class extends Controller {
 
         Util.removeAllChildNodes(this.subraceASIBonusTarget);
         this.subraceASIBonusTarget.append(
-          Util.getTag('p', 'font-medium', data.name + ': ')
+          Util.getTag(
+            'p',
+            'font-black col-span-2 text-center mt-2',
+            data.name
+          )
         );
         Util.putRacialASI(
           this.subraceASI,
@@ -1738,6 +1741,7 @@ export default class extends Controller {
   }
 
   putSingleSpellTaken(spell, target) {
+    console.log(spell);
     let frame = Util.getTag(
       'div',
       'flex flex-col gap-1 bg-gray-100 rounded-lg p-2'
@@ -1750,7 +1754,9 @@ export default class extends Controller {
     Object.entries(spell.atk_dmg).forEach((level) => {
       if (parseInt(level[0]) <= this.level) dmg_out = level[1];
     });
-    frame.append(`Attack Damage: ${dmg_out}`);
+    frame.append(
+      Util.getTag('p', '', `${dmg_out} ${spell.dmg_type} Damage`)
+    );
     target.append(frame);
   }
   //-----------------Extra Spells Modal ------------------//
@@ -2216,7 +2222,6 @@ export default class extends Controller {
 
   putEquipmentToSheet(equipment) {
     //output selections to character sheet
-    Util.removeAllChildNodes(this.startingEquipmentTarget);
     Util.removeAllChildNodes(this.attackNamesTarget);
     Util.removeAllChildNodes(this.attackBonusesTarget);
     Util.removeAllChildNodes(this.attackDamagesTarget);

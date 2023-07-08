@@ -145,39 +145,39 @@
           </div>
         </div>
         <div class="flex gap-4  text-center justify-around" id="substats">
-          <div class="tracking-box">
+          <div class="flex flex-col p-2 border-2 border-black rounded-lg min-w-1/6">
               <p class="sheetcell" data-sheet-target="substatAC"></p>
               <p class="text-xs mx-2">AC</p>
           </div>
-          <div class="tracking-box">
+          <div class="flex flex-col p-2 border-2 border-black rounded-lg min-w-1/6">
               <p class="sheetcell" data-sheet-target="substatInitiative"></p>
               <p class="text-xs mx-2">Initiative</p>
           </div>
-          <div class="tracking-box">
+          <div class="flex flex-col p-2 border-2 border-black rounded-lg min-w-1/6">
               <p class="sheetcell" data-sheet-target="substatSpeed"></p>
               <p class="text-xs mx-2">Speed</p>
           </div>
-          <div class="tracking-box">
+          <div class="flex flex-col p-2 border-2 border-black rounded-lg min-w-1/6">
               <p class="sheetcell" data-sheet-target="substatInspiration"></p>
               <p class="text-xs mx-2">Inspiration</p>
           </div>
         </div>
           <div class="flex gap-2 justify-center " id="playtracking">
-            <div class="tracking-box">
+            <div class="flex flex-col p-2 border-2 border-black rounded-lg">
               <p class="sheetcell" data-sheet-target="trackingMaxHP"></p>
               <p class="text-xs mx-2">MAX HP</p>
               <p class="sheetcell" data-sheet-target="trackingCurrentHP"></p>
               <p class="text-xs mx-2">CURRENT HP</p>
             </div>
-            <div class="tracking-box">
+            <div class="flex flex-col justify-center p-2 border-2 border-black rounded-lg">
               <p class="sheetcell" data-sheet-target="trackingTemporaryHP"></p>
               <p class="text-xs mx-2">TEMPORARY HP</p>
             </div>
-            <div class="tracking-box">
+            <div class="flex flex-col justify-center p-2 border-2 border-black rounded-lg">
               <p class="sheetcell" data-sheet-target="trackingHitDice"></p>
               <p class="text-xs mx-2">HIT DICE</p>
             </div>
-            <div class="tracking-box">
+            <div class="flex flex-col p-2 border-2 border-black rounded-lg">
               <p class="sheetcell" data-sheet-target="trackingDeathSaveSuccess"></p>
               <p class="text-xs mx-2">SUCCESSES</p>
               <p class="sheetcell" data-sheet-target="trackingDeathSaveFailure"></p>
@@ -215,107 +215,94 @@
       </div>
     </div>
     <div class="flex flex-col justify-center w-full" id="pagetwo">
-      <h2 class="tracking-box text-xl font-black text-center w-full">Feature Spells</h2>
+      <h2 class="p-2 border-4 border-black rounded-lg m-2 col-span-full text-xl font-black text-center">Feature Spells</h2>
       <div class ="flex flex-col justify-center gap-2 p-2 w-full" data-sheet-target="specSpellsList"></div>
     </div>
-    <div class="flex flex-col w-full" id="pagethree">
-      <div class="flex gap-4  text-center" id="castingstats">
-        <div class="tracking-box">
+    <div class="flex flex-col w-full -mt-4" id="pagethree">
+      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 text-center" id="spells">
+        <h2 class="p-2 border-4 border-black rounded-lg m-2 col-span-full text-xl font-black">Class Spells ~ <span class="font-light text-sm"><span data-sheet-target="castingSpellLimit">0</span> known</span></h2>
+        <div class="flex gap-4 justify-center text-center col-span-full" id="castingstats">
+        <div class="flex flex-col p-2 border-4 border-black rounded-lg">
           <p class="sheetcell" data-sheet-target="castingAbility"></p>
           <p class="text-xs mx-2">SPELLCASTING ABILITY</p>
         </div>
-        <div class="tracking-box">
+        <div class="flex flex-col p-2 border-4 border-black rounded-lg">
           <p class="sheetcell" data-sheet-target="castingSaveDC"></p>
           <p class="text-xs mx-2">SPELL SAVE DC</p>
         </div>
-        <div class="tracking-box">
+        <div class="flex flex-col p-2 border-4 border-black rounded-lg">
           <p class="sheetcell" data-sheet-target="castingAttackBonus"></p>
           <p class="text-xs mx-2">SPELL ATTACK BONUS</p>
         </div>
-        <div class="tracking-box">
-          <p class="sheetcell" data-sheet-target="castingSpellLimit"></p>
-          <p class="text-xs mx-2">SPELLS</p>
-        </div>
-        <div class="tracking-box">
-          <p class="sheetcell" data-sheet-target="castingCantripLimit"></p>
-          <p class="text-xs mx-2">CANTRIPS</p>
-        </div>
         <button class="px-8 py-2 rounded-lg bg-orange-300 border-b-2 border-r-2" data-action="sheet#showSpellsDialog" data-sheet-target="spellsButton">Choose Spells</button>
       </div>
-
-      <div class="flex flex-col text-center" id="spells">
-        <h2 class="tracking-box text-xl font-black">Class Spells</h2>
-         <div class="flex flex-col" id="cantrips">
+        <div class="flex flex-col col-span-full mt-4" id="cantrips">
           <div class="flex justify-center">
              <div class="flex flex-col gap-1">
-              <h4 class="font-bold">Cantrips</h4>
-              <div class="spell-box" data-sheet-target="spellsTaken0"></div>
+              <h4 class="font-bold">Cantrips ~ <span class="font-light text-sm"><span data-sheet-target="castingCantripLimit">0</span> known</span></h4>
+              <div class="flex flex-col gap-1 w-[80vw] mb-4" data-sheet-target="spellsTaken0"></div>
             </div>
           </div>
         </div>
-
         <% for i in 1..9  do %>
           <div class="flex flex-col" id="spell<%= i %>">
-            <div class="flex justify-center">
-              <div class="flex flex-col gap-1">
-                <h4 class="font-bold">Level <%= i %> Spells</h4>
-                <div class="spell-box" data-sheet-target="spellsTaken<%= i %>"></div>
-              </div>
-              <div class="tracking-box">
-                <p data-sheet-target="spellSlots<%= i %>">0</p>
-                <p>Spell Slots</p>
+            <div class="flex justify-center w-full px-2">
+              <div class="flex flex-col p-2 gap-1">
+                <h4 class="font-bold">Level <%= i %> Spells ~ <span class="font-light text-sm"><span data-sheet-target="spellSlots<%= i %>">0</span> slots</span></h4>
+                <div class="flex flex-col gap-1 mb-4" data-sheet-target="spellsTaken<%= i %>"></div>
               </div>
             </div>
           </div>
         <% end %>
       </div>
 
-      <div class="flex flex-col text-center" id="tbif">
-        <button class="px-8 py-2 rounded-lg bg-orange-300 border-b-2 border-r-2" data-action="sheet#showTBIFDialog" data-sheet-target="tbifButton">Personality</button>
-        <div class="tracking-box">
-          <h4 class="font-bold font-sm">Personality Traits</h4>
-          <div class="p-2 bg-gray-100 rounded-lg text-center" data-sheet-target="tbifTraits"></div>
+      <div class="grid grid-cols-1 md:grid-cols-2 w-full p-2">
+        <div class="flex flex-col text-center" id="tbif">
+          <button class="px-8 py-2 mx-4 mb-2 rounded-lg bg-orange-300 border-b-2 border-r-2" data-action="sheet#showTBIFDialog" data-sheet-target="tbifButton">Personality</button>
+          <div class="flex flex-col p-2 border-2 border-black rounded-lg">
+            <h4 class="font-bold font-sm">Personality Traits</h4>
+            <div class="p-2 bg-gray-100 rounded-lg text-center" data-sheet-target="tbifTraits"></div>
+          </div>
+          <div class="flex flex-col p-2 border-2 border-black rounded-lg">
+            <h4 class="font-bold font-sm">Bonds</h4>
+            <div class="p-2 bg-gray-100 rounded-lg text-center" data-sheet-target="tbifBonds"></div>
+          </div>
+          <div class="flex flex-col p-2 border-2 border-black rounded-lg">
+            <h4 class="font-bold font-sm">Ideals</h4>
+            <div class="p-2 bg-gray-100 rounded-lg text-center" data-sheet-target="tbifIdeals"></div>
+          </div>
+          <div class="flex flex-col p-2 border-2 border-black rounded-lg">
+            <h4 class="font-bold font-sm">Flaws</h4>
+            <div class="p-2 bg-gray-100 rounded-lg text-center" data-sheet-target="tbifFlaws"></div>
+          </div>
         </div>
-        <div class="tracking-box">
-          <h4 class="font-bold font-sm">Bonds</h4>
-          <div class="p-2 bg-gray-100 rounded-lg text-center" data-sheet-target="tbifBonds"></div>
-        </div>
-        <div class="tracking-box">
-          <h4 class="font-bold font-sm">Ideals</h4>
-          <div class="p-2 bg-gray-100 rounded-lg text-center" data-sheet-target="tbifIdeals"></div>
-        </div>
-        <div class="tracking-box">
-          <h4 class="font-bold font-sm">Flaws</h4>
-          <div class="p-2 bg-gray-100 rounded-lg text-center" data-sheet-target="tbifFlaws"></div>
+
+        <div class="flex flex-col" id="equipment">
+          <button class="px-8 py-2 mx-4 mb-2 rounded-lg bg-orange-300 border-b-2 border-r-2" data-action="sheet#showEquipmentDialog" data-sheet-target="equipmentButton">Starting Equipment</button>
+           <div class="flex justify-evenly text-center">
+            <div class="flex flex-col p-2 border-2 border-black rounded-lg w-1/6">
+              <p class="sheetcell" data-sheet-target="equipGP"></p>
+              <p class="text-xs mx-2">GP</p>
+            </div>
+            <div class="flex flex-col p-2 border-2 border-black rounded-lg w-1/6">
+              <p class="sheetcell" data-sheet-target="equipSP"></p>
+              <p class="text-xs mx-2">SP</p>
+            </div>
+            <div class="flex flex-col p-2 border-2 border-black rounded-lg w-1/6">
+              <p class="sheetcell" data-sheet-target="equipCP"></p>
+              <p class="text-xs mx-2">CP</p>
+            </div>
+          </div>
+          <h4 class="font-bold text-center">Weapons</h4>
+          <div class="flex gap-2 items-center" data-sheet-target="equipWeapons"></div>
+          <h4 class="font-bold text-center">Armor</h4>
+          <div class="flex gap-2 items-center" data-sheet-target="equipArmor"></div>
+          <h4 class="font-bold text-center">Tools</h4>
+          <div class="flex gap-2 items-center" data-sheet-target="equipTools"></div>
+          <h4 class="font-bold text-center">Equipment</h4>
+          <div class="flex gap-2 items-center" data-sheet-target="equipEquipment"></div>
         </div>
       </div>
-
-      <div class="flex flex-col" id="equipment">
-        <div class="flex text-center">
-          <div class="tracking-box">
-            <p class="sheetcell" data-sheet-target="equipGP"></p>
-            <p class="text-xs mx-2">GP</p>
-          </div>
-          <div class="tracking-box">
-            <p class="sheetcell" data-sheet-target="equipSP"></p>
-            <p class="text-xs mx-2">SP</p>
-          </div>
-          <div class="tracking-box">
-            <p class="sheetcell" data-sheet-target="equipCP"></p>
-            <p class="text-xs mx-2">CP</p>
-          </div>
-        </div>
-        <button class="px-8 py-2 rounded-lg bg-orange-300 border-b-2 border-r-2" data-action="sheet#showEquipmentDialog" data-sheet-target="equipmentButton">Starting Equipment</button></button>
-        <h4 class="font-bold" data-sheet-target="startingEquipment">Starting Equipment</div>
-        <h4 class="font-bold">Weapons</h4>
-        <div class="flex gap-2 items-center" data-sheet-target="equipWeapons"></div>
-        <h4 class="font-bold">Armor</h4>
-        <div class="flex gap-2 items-center" data-sheet-target="equipArmor"></div>
-        <h4 class="font-bold">Tools</h4>
-        <div class="flex gap-2 items-center" data-sheet-target="equipTools"></div>
-        <h4 class="font-bold">Equipment</h4>
-        <div class="flex gap-2 items-center" data-sheet-target="equipEquipment"></div>
-      </h4>
     </div>
 
 
