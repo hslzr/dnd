@@ -309,16 +309,16 @@
     <dialog class="border border-black rounded-md bg-gray-300" data-controller="modal"  data-sheet-target="dialogClassSkills">
     <p class="text-2xl font-bold w-full text-center">Skills</p>
       <p class="text-xl font-bold">Class Skills</p>
-        <div data-sheet-target="classSkillsModalList"></div>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-2" data-sheet-target="classSkillsModalList"></div>
       <p class="text-xl font-bold" id="extraSkillsLabel">Extra Skills</p>
-        <div data-sheet-target="extraSkillsModalList"></div>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-2" data-sheet-target="extraSkillsModalList"></div>
       <button class="px-8 py-2 rounded-lg bg-blue-400 border-b-2 border-r-2" data-action="sheet#submitClassSkillsChoices">Submit</button>
     </dialog>
 
     <% for modal in @modals do %>
       <dialog class="border border-black rounded-md bg-gray-300" data-controller="modal"  data-sheet-target="dialog<%= modal.gsub(/\s+/, "") %>">
         <p class="text-2xl font-bold"><%= modal %></p>
-          <div data-sheet-target="<%= modal.downcase.gsub(/\s+/, "") %>ModalList"></div>
+          <div class="grid grid-cols-2 md:grid-cols-3 gap-2" data-sheet-target="<%= modal.downcase.gsub(/\s+/, "") %>ModalList"></div>
         <button class="px-8 py-2 rounded-lg bg-blue-400 border-b-2 border-r-2" data-action="sheet#submit<%= modal.gsub(/\s+/, "") %>Choices">Submit</button>
       </dialog>
     <% end %>

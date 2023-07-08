@@ -9,8 +9,6 @@
 The seed file is one big copyright violation, this is a student project and not for profit, sale or public use. If you only used homebrew in a new seed file you might land in a grey area.
 
 # main tasks
-combine modals that make sense
-  all proficiencies should be in select boxes
 
 Fill out the seed with remaining classes, subclasses, backgrounds, and feats
   I'm adding capabilities to customModifiers() as needed, working my way through the classes and starting on Cleric subclasses right now
@@ -32,7 +30,6 @@ Implement Feats - these can use customMOd for most things I think
    equipment_choices -> choose any musical instrument
 
 # Cleric
-  extra proficiencies from Blessings of Knowledge
   double check if I implemented Expertise yet somewhere in the modifier calculation
   remaining subclasses
   -1 spells known, prepared spells should be used instead of spells known limit
