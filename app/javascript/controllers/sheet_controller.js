@@ -208,6 +208,7 @@ export default class extends Controller {
     'attackList',
     'extraSkillsModalList',
     'modSkills',
+    'specSpellsList',
   ];
 
   connect() {
@@ -322,6 +323,7 @@ export default class extends Controller {
 
   //----------------------------- Main Sheet Update Flow ---------------------------------//
   categoryHandler(event) {
+    //consoel.log('categoryHandler');
     let labels = event.params;
     let list = event.target.children;
     Util.updateChoices(this.choices);
@@ -342,6 +344,7 @@ export default class extends Controller {
   }
 
   catUpdate(data, cat_type) {
+    //consoel.log('catUpdate');
     //event.target.id is actually the :name param
     let languages, extra_lang, skills, weps, arm, tools, features;
     let finalCode = 0;
@@ -603,6 +606,7 @@ export default class extends Controller {
     tools,
     features
   ) {
+    //consoel.log('populateCatAbilities');
     //not all categories have these so I'm defaulting to empty array
     //which will make putClassFeatures fizzle out and do nothing
     let data_lang = data.languages || [];
@@ -630,7 +634,7 @@ export default class extends Controller {
     this.extraSpellLists.set(cat_type, data_extra_spells);
 
     let data_spec_spells = data.specific_spells || [];
-    this.specificSpells.set(cat_type, data_extra_spells);
+    this.specificSpells.set(cat_type, data_spec_spells);
 
     let data_custom_mods = data.custom_mods || [];
     this.customMods.set(cat_type, data_custom_mods);
@@ -654,6 +658,10 @@ export default class extends Controller {
   //code 1 : dont run featureHandles, do run calculateStats
   //code 2 : don't run calculateStats
   finalPass(code = 0) {
+    //consoel.log('finalPass');
+
+    //consoel.log(code);
+
     this.setSkillMap();
     this.populateSkillModifiers();
     this.classFeatureHandler(); //we depend on level to show correct class features so we have to do these in finalPass
@@ -708,6 +716,7 @@ export default class extends Controller {
       } else {
         this.setSpellInformation();
       }
+      this.populateSpecificSpells();
       this.makeModalChoices();
     }
 
@@ -971,6 +980,37 @@ export default class extends Controller {
     }
   }
 
+  populateSpecificSpells() {
+    console.log(this.specificSpells);
+    for (let item of this.specificSpells.values()) {
+      if (item.source) {
+        let valid = [];
+        for (let value of Object.keys(item)) {
+          if (value != 'source' && value != 'stat') {
+            if (parseInt(value) <= this.level) {
+              item[value].forEach((spell) => {
+                valid.push(spell);
+              });
+            }
+          }
+        }
+
+        let frame = Util.getTag(
+          'div',
+          'flex justify-center items-center p-2 gap-2 bg-blue-300/50 rounded-lg'
+        );
+        frame.append(Util.getTag('p', '', `${item.source}`));
+        frame.append(
+          Util.getTag('p', '', `Casting Stat: ${item.stat}`)
+        );
+        valid.forEach((spell) => {
+          frame.append(Util.getTag('p', '', spell));
+        });
+        this.specSpellsListTarget.append(frame);
+      }
+    }
+  }
+
   makeModalChoices() {
     this.chooseLanguages();
     this.chooseClassSkills();
@@ -1074,6 +1114,7 @@ export default class extends Controller {
 
   //------------------------------- customModifiers() methods
   populateModASI(length) {
+    //consoel.log('populateModASI');
     let list = ['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA'];
     for (let i = 0; i < length; i++) {
       let container = Util.getTag('div', 'asi-box');
@@ -1101,13 +1142,13 @@ export default class extends Controller {
 
   populateExtraSkillsModal(array) {
     Util.removeAllChildNodes(this.extraSkillsModalListTarget);
-    console.log(array);
+    //consoel.log(array);
     let count = 0;
     for (let item of array) {
       if (item[0] <= this.level) count += item[1];
     }
     if (count == 0) {
-      console.log('no extras');
+      //consoel.log('no extras');
     }
 
     for (let j = 0; j < count; j++) {
@@ -1139,6 +1180,7 @@ export default class extends Controller {
   //----------------------------- Choice Modals ---------------------------------//
   //----------------- Languages Modal ------------------//
   chooseLanguages() {
+    //consoel.log('chooseLanguages');
     let allLanguages = [
       'Common',
       'Elvish',
@@ -1194,7 +1236,6 @@ export default class extends Controller {
         this.languagesModalListTarget
       );
     }
-    //when backgrounds change we can empty that div and start over
   }
 
   submitLanguagesChoices(event) {
@@ -1211,6 +1252,7 @@ export default class extends Controller {
   }
   //----------------- Tools Modal ------------------//
   chooseTools() {
+    //consoel.log('chooseTools');
     Util.removeAllChildNodes(this.toolsModalListTarget);
 
     Util.putSelect(
@@ -1237,6 +1279,7 @@ export default class extends Controller {
   }
   //----------------- Class Skills Modal ------------------//
   chooseClassSkills() {
+    //consoel.log('chooseCLassSkills');
     Util.removeAllChildNodes(this.classSkillsModalListTarget);
 
     for (let i = 0; i < this.numClassSkillChoices; i++) {
@@ -1270,6 +1313,7 @@ export default class extends Controller {
 
   //----------------- Class Features Modal ------------------//
   chooseClassFeatures(features) {
+    //consoel.log('chooseClassFeatures');
     Util.removeAllChildNodes(this.classfeaturesModalListTarget);
     features.forEach((item) => {
       if (parseInt(item[0]) <= this.level) {
@@ -1315,6 +1359,7 @@ export default class extends Controller {
   }
   //----------------- Subclass Modal ------------------//
   chooseSubclassFeatures(features) {
+    //consoel.log('chooseSubclassFeatures');
     Util.removeAllChildNodes(this.subclassfeaturesModalListTarget);
     features.forEach((item) => {
       if (parseInt(item[0]) <= this.level) {
@@ -1384,6 +1429,7 @@ export default class extends Controller {
   }
   //------------------ Level Up ASI Choices ------------//
   chooseASI() {
+    //consoel.log('chooseASI');
     let feature_nodes = this.classFeaturesTarget.children;
     let asi_nodes = Array.from(feature_nodes).filter(
       (node) => node.innerText == 'Ability Score Increase:'
@@ -1513,6 +1559,7 @@ export default class extends Controller {
 
   //----------------- TBIF Modal ------------------//
   chooseTBIF() {
+    //consoel.log('chooseTBIF');
     Util.removeAllChildNodes(this.traitsModalListTarget);
 
     let kinds = [
@@ -1606,6 +1653,7 @@ export default class extends Controller {
   }
   //----------------- Spell Modal ------------------//
   chooseSpells() {
+    //consoel.log('chooseSpells');
     let max_spell_level = 0;
     for (let i = 2; i < 11; i++) {
       if (this.spell_table[this.level - 1][i] > 0) max_spell_level++;
@@ -1717,6 +1765,7 @@ export default class extends Controller {
   }
   //-----------------Extra Spells Modal ------------------//
   chooseExtraSpells() {
+    //consoel.log('chooseExtraSpells');
     //at this point we are in finalPass and our state variables are populated
     //check for an empty collection to skip all this stuff for classes without extra spell lists
     //we have to go through each collection, fetch the data needed, and populate the sheet or modal
@@ -2017,6 +2066,7 @@ export default class extends Controller {
   //-----------------Equipment Modal ------------------//
 
   chooseEquipment() {
+    //consoel.log('chooseEquipment');
     Util.removeAllChildNodes(this.equipmentClassStartTarget);
     Util.removeAllChildNodes(this.equipmentBGStartTarget);
     let class_choices = false;
@@ -2370,6 +2420,7 @@ export default class extends Controller {
 
   //----------------------------- Base Stat Methods ---------------------------------//
   statModUpdate() {
+    //consoel.log('statModUpdate');
     let statmod_targets = [
       this.strModTarget,
       this.dexModTarget,

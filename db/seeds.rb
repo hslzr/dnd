@@ -100,7 +100,7 @@ ElvenRace = Race.create(
   languages: ['Common', 'Elvish'],
   speed: 30,
   features: [
-    'Darkvision',
+    'Darkvision: You can see in dim light within 60 feet of you as if it were brightly lit, and in darkness as if it were dim light, but you can\'t discern color.',
     'Keen Senses: You have proficiency in Perception.',
     'Fey Ancestry: You have advantage on saving throws against being charmed, and can\'t be put to sleep magically.',
     'Trance: Elves don\'t need to sleep. Instead they meditate deeply for 4 hours a day.',

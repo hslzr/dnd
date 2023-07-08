@@ -64,7 +64,6 @@
           </div>
         <% end %>
 
-
         <div class="flex flex-col bg-orange-100/50 font-light p-4 pb-6">
         <p class="font-black text-2xl mt-2 text-center">Skills</p>
             <div class="grid grid-cols-2 gap-2" data-sheet-target="raceSkills"></div>
@@ -215,7 +214,11 @@
         </div>
       </div>
     </div>
-    <div class="flex flex-col w-full" id="pagetwo">
+    <div class="flex flex-col justify-center w-full" id="pagetwo">
+      <h2 class="tracking-box text-xl font-black text-center w-full">Feature Spells</h2>
+      <div class ="grid grid-cols-1 md:grid-cols-2 gap-2 p-2 w-full" data-sheet-target="specSpellsList"></div>
+    </div>
+    <div class="flex flex-col w-full" id="pagethree">
       <div class="flex gap-4  text-center" id="castingstats">
         <div class="tracking-box">
           <p class="sheetcell" data-sheet-target="castingAbility"></p>
@@ -239,8 +242,9 @@
         </div>
         <button class="px-8 py-2 rounded-lg bg-orange-300 border-b-2 border-r-2" data-action="sheet#showSpellsDialog" data-sheet-target="spellsButton">Choose Spells</button>
       </div>
+
       <div class="flex flex-col text-center" id="spells">
-        <h2 class="tracking-box text-lg font-black">Spells</h2>
+        <h2 class="tracking-box text-xl font-black">Class Spells</h2>
          <div class="flex flex-col" id="cantrips">
           <div class="flex justify-center">
              <div class="flex flex-col gap-1">
@@ -264,9 +268,8 @@
             </div>
           </div>
         <% end %>
-
-
       </div>
+
       <div class="flex flex-col text-center" id="tbif">
         <button class="px-8 py-2 rounded-lg bg-orange-300 border-b-2 border-r-2" data-action="sheet#showTBIFDialog" data-sheet-target="tbifButton">Personality</button>
         <div class="tracking-box">
@@ -286,6 +289,7 @@
           <div class="p-2 bg-gray-100 rounded-lg text-center" data-sheet-target="tbifFlaws"></div>
         </div>
       </div>
+
       <div class="flex flex-col" id="equipment">
         <div class="flex text-center">
           <div class="tracking-box">
