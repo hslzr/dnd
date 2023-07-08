@@ -163,9 +163,9 @@ ElvenRace.subraces.create(
   weapons: ['Rapier','Shortsword','Hand Crossbow'],
   extra_spells: {},
   specific_spells: {
-    1=> ['Dancing Lights', 'cantrip'],
-    3=> ['Faerie Fire', 'long rest'],
-    5=> ['Darkness', 'long rest'],
+    1=> [['Dancing Lights', 'Cantrip']],
+    3=> [['Faerie Fire', 'Long Rest']],
+    5=> [['Darkness', 'Long Rest']],
     'stat'=> 'Charisma',
     'source'=> 'Drow',
   },
@@ -538,7 +538,7 @@ GnomeRace.subraces.create(
   ],
   extra_spells: {},
   specific_spells: {
-    1=> ['Minor Illusion','cantrip'],
+    1=> [['Minor Illusion','Cantrip']],
     'stat'=> 'Intelligence',
     'source'=> 'Forest Gnome',
   },
@@ -619,9 +619,9 @@ TieflingRace = Race.create(
   ],
   extra_spells: {},
   specific_spells: {
-    1=> ['Thaumaturgy','cantrip'],
-    3=> ['Hellish Rebuke','long rest'],
-    5=> ['Darkness','long rest'],
+    1=> [['Thaumaturgy','Cantrip']],
+    3=> [['Hellish Rebuke','Long Rest']],
+    5=> [['Darkness','Long Rest']],
     'stat'=> 'Charisma',
     'source'=> 'Infernal Legacy'
   },
@@ -749,8 +749,8 @@ Barbarian.subclasses.create(
   },
   extra_spells: {},
   specific_spells: {
-    3=>['Beast Sense','Speak With Animals'],
-    10=>['Commune With Nature'],
+    3=>[['Beast Sense','Ritual'],['Speak With Animals','Ritual']],
+    10=>[['Commune With Nature','Ritual']],
   },
   custom_mods: {},
 )
@@ -1035,11 +1035,11 @@ Cleric.subclasses.create(
   custom: {},
   extra_spells: {},
   specific_spells: {
-   1=>['Command','Identify'],
-   3=>['Augury','Suggestion'],
-   5=>['Nondetection','Speak With the Dead'],
-   7=>['Arcane Eye','Confusion'],
-   9=>['Legend Lore','Scrying'],
+   1=>[['Command','Normal'],['Identify','Normal']],
+   3=>[['Augury','Normal'],['Suggestion','Normal']],
+   5=>[['Nondetection','Normal'],['Speak With the Dead','Normal']],
+   7=>[['Arcane Eye','Normal'],['Confusion','Normal']],
+   9=>[['Legend Lore','Normal'],['Scrying','Normal']],
   },
   custom_mods: {},
 )

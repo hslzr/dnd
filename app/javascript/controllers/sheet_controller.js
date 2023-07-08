@@ -994,18 +994,8 @@ export default class extends Controller {
             }
           }
         }
+        let frame = Util.getSpellCard(item.source, item.stat, valid);
 
-        let frame = Util.getTag(
-          'div',
-          'flex justify-center items-center p-2 gap-2 bg-blue-300/50 rounded-lg'
-        );
-        frame.append(Util.getTag('p', '', `${item.source}`));
-        frame.append(
-          Util.getTag('p', '', `Casting Stat: ${item.stat}`)
-        );
-        valid.forEach((spell) => {
-          frame.append(Util.getTag('p', '', spell));
-        });
         this.specSpellsListTarget.append(frame);
       }
     }

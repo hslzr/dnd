@@ -321,3 +321,34 @@ export function capitalize(string) {
 }
 
 //-------------------------------------------customModifiers
+
+//--components
+
+export function getSpellCard(source, stat, spells) {
+  let box = getTag(
+    'div',
+    'flex flex-col md:flex-row gap-2 p-4 rounded-lg border border-black bg-blue-300/50 text-sm'
+  );
+  let info = getTag(
+    'div',
+    'border border-black rounded-lg flex flex-col justify-center items-center gap-4 p-2'
+  );
+
+  info.append(getTag('p', 'font-black', 'Source'));
+  info.append(getTag('p', '', source));
+  info.append(getTag('p', 'font-black', 'Casting Stat'));
+  info.append(getTag('p', '', stat));
+
+  box.append(info);
+
+  let list = getTag(
+    'div',
+    'border border-black rounded-lg grid grid-cols-2 gap-4 p-2'
+  );
+
+  for (let spell of spells) {
+    list.append(getTag('p', '', `${spell[0]} - ${spell[1]}`));
+  }
+  box.append(list);
+  return box;
+}
