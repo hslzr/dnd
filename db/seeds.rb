@@ -1332,6 +1332,67 @@ Fighter.subclasses.create(
   custom_mods: {},
 )
 
+Monk = PlayerClass.create(
+  name: 'Monk',
+  hit_die: 8,
+  starting_hp: 8,
+  saving_throws: [0,1],
+  armor: [],
+  weapons: ['Simple','Shortsword'],
+  skill_choices: ['Acrobatics','Athletics','History','Insight','Religion','Stealth'],
+  num_skills: 2,
+  wealth_die: 0,
+  equipment_choices: {
+    'choices'=>[
+      ['Shortsword#1','simple#1'],
+      ['DUngeoneer\'s Pack#1','Explorer\'s Pack']
+    ],
+    'default'=> ['Darts#1']
+  },
+  features: {
+    1=>[
+      "Unarmored Defense: While you have no armor equipped, your AC is 10 + your Dexterity modifier + your Wisdom modifier.",
+    ],
+  },
+  custom: {},
+  custom_mods: {
+    'tool_choice'=>[
+      ['artisan','instrument'],
+    ],
+    'martial_die'=>[
+      4,4,4,4,6,6,6,6,6,6,8,8,8,8,8,8,10,10,10,10
+    ],
+    'unarmored_movement'=>[
+      0,10,10,10,10,15,15,15,15,20,20,20,20,25,25,25,25,30,30,30
+    ],
+  },
+  spellcasting_ability: 0,
+  spell_table: [
+    [0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0],
+  ],
+  extra_spells: {},
+  specific_spells: {},
+)
+
 Ranger = PlayerClass.create(
   name: 'Ranger',
   hit_die: 10,
