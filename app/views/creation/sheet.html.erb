@@ -221,21 +221,21 @@
     <div class="flex flex-col w-full -mt-4" id="pagethree">
       <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 text-center" id="spells">
         <h2 class="p-2 border-4 border-black rounded-lg m-2 col-span-full text-xl font-black">Class Spells ~ <span class="font-light text-sm"><span data-sheet-target="castingSpellLimit">0</span> known</span></h2>
-        <div class="flex gap-4 justify-center text-center col-span-full" id="castingstats">
-        <div class="flex flex-col p-2 border-4 border-black rounded-lg">
-          <p class="sheetcell" data-sheet-target="castingAbility"></p>
-          <p class="text-xs mx-2">SPELLCASTING ABILITY</p>
+        <div class="grid grid-cols-2 md:grid-cols-4 mx-8 gap-4 justify-center text-center col-span-full" id="castingstats">
+          <div class="flex flex-col p-2 border-4 border-black rounded-lg">
+            <p class="sheetcell" data-sheet-target="castingAbility"></p>
+            <p class="text-xs mx-2">SPELLCASTING ABILITY</p>
+          </div>
+          <div class="flex flex-col p-2 border-4 border-black rounded-lg">
+            <p class="sheetcell" data-sheet-target="castingSaveDC"></p>
+            <p class="text-xs mx-2">SPELL SAVE DC</p>
+          </div>
+          <div class="flex flex-col p-2 border-4 border-black rounded-lg">
+            <p class="sheetcell" data-sheet-target="castingAttackBonus"></p>
+            <p class="text-xs mx-2">SPELL ATTACK BONUS</p>
+          </div>
+          <button class="px-8 py-2 rounded-lg bg-orange-300 border-b-2 border-r-2" data-action="sheet#showSpellsDialog" data-sheet-target="spellsButton">Choose Spells</button>
         </div>
-        <div class="flex flex-col p-2 border-4 border-black rounded-lg">
-          <p class="sheetcell" data-sheet-target="castingSaveDC"></p>
-          <p class="text-xs mx-2">SPELL SAVE DC</p>
-        </div>
-        <div class="flex flex-col p-2 border-4 border-black rounded-lg">
-          <p class="sheetcell" data-sheet-target="castingAttackBonus"></p>
-          <p class="text-xs mx-2">SPELL ATTACK BONUS</p>
-        </div>
-        <button class="px-8 py-2 rounded-lg bg-orange-300 border-b-2 border-r-2" data-action="sheet#showSpellsDialog" data-sheet-target="spellsButton">Choose Spells</button>
-      </div>
         <div class="flex flex-col col-span-full mt-4" id="cantrips">
           <div class="flex justify-center">
              <div class="flex flex-col gap-1">
