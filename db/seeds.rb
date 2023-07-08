@@ -1192,6 +1192,146 @@ Druid.subclasses.create(
   },
 )
 
+Fighter = PlayerClass.create(
+  name: 'Fighter',
+  hit_die: 10,
+  starting_hp: 10,
+  primary_abilities: [0,2],
+  saving_throws: [0,2],
+  armor: ['Light','Medium','Heavy','Shields'],
+  weapons: ['Simple','Martial'],
+  tools: [],
+  skill_choices: ['Acrobatics','Animal Handling','Athletics','History','Insight','Intimidation','Perception','Survival'],
+  num_skills: 2,
+  equipment_choices: {
+    'choices'=> [
+      ['Chain Mail#1',['Leather Armor#1','Longbow#1','Arrows#1']],
+      [['martial#1','Round Shield'],'martial#2'],
+      [['Light Crossbow#1','Bolts#1'],'Handaxe#2'],
+      ['Dungeoneer\'s Pack#1','Explorer\'s Pack#1'],
+    ],
+    'default'=> [],
+  },
+  wealth_die: 5,
+  features: {
+    1=> [
+      "Second Wind: You have a limited well of stamina that you can draw on to protect yourself from harm. On your turn, you can use a bonus action to regain hit points equal to 1d10 + your fighter level. Once you use this feature, you must finish a short or long rest before you can use it again.",
+    ],
+    2=> [
+      "Action Surge: You can push yourself beyond your normal limits for a moment. On your turn, you can take one additional action.
+      Once you use this feature, you must finish a short or long rest before you can use it again.",
+    ],
+    4=>[
+      "Ability Score Increase:",
+    ],
+    5=>[
+      "Extra Attack: You can attack twice when you take the attack action on your turn.",
+    ],
+    6=>[
+      "Ability Score Increase:",
+    ],
+    8=>[
+      "Ability Score Increase:",
+    ],
+    9=>[
+      "Indomitable: You can reroll a saving throw that you fail. If you do so, you must use the new roll, and you can’t use this feature again until you finish a long rest.",
+    ],
+    11=>[
+      "Extra Attack: You can now attack three times when you take the attack action on your turn.",
+    ],
+    12=>[
+      "Ability Score Increase:",
+    ],
+    13=>[
+      "Indefatigable: You can use your Indomitable feature twice between long rests.",
+    ],
+    14=>[
+      "Ability Score Increase:",
+    ],
+    16=>[
+      "Ability Score Increase:",
+    ],
+    17=> [
+      "Improved Action Surge: You can use your Action Surge twice before your rest, but only once per turn.",
+      "Indeclinable: You can use your Indomitable feature three times between long rests.",
+    ],
+    19=>[
+      "Ability Score Increase:",
+    ],
+    20=>[
+      "Tetra-Strike: You can attack four times when you take the Attack action on your turn.",
+    ],
+  },
+  custom: {
+    1=> [
+      "Archery: You gain a +2 bonus to attack rolls you make with ranged weapons.",
+      "Defense: While you are wearing armor, you gain a +1 bonus to AC.",
+      "Dueling: When you are wielding a melee weapon in one hand and no other weapons, you gain a +2 bonus to damage rolls with that weapon.",
+      "Two-Weapon Fighting: When you engage in two-weapon fighting, you can add your ability modifier to the damage of the second attack.",
+    ],
+  },
+  extra_spells: {},
+  specific_spells: {},
+  custom_mods: {},
+  spellcasting_ability: 0,
+  spell_table: [
+    [0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0],
+  ],
+)
+
+Fighter.subclasses.create(
+  name: "Champion",
+  description: "The archetypal Champion focuses on the development of raw physical power honed to deadly perfection. Those who model themselves on this archetype combine rigorous training with physical excellence to deal devastating blows.",
+  custom: {
+    10=>[
+      "Archery: You gain a +2 bonus to attack rolls you make with ranged weapons.",
+      "Defense: While you are wearing armor, you gain a +1 bonus to AC.",
+      "Dueling: When you are wielding a melee weapon in one hand and no other weapons, you gain a +2 bonus to damage rolls with that weapon.",
+      "Two-Weapon Fighting: When you engage in two-weapon fighting, you can add your ability modifier to the damage of the second attack.",
+    ],
+  },
+  features: {
+    1=> [
+      "Improved Critical: Your weapon attacks score a critical hit on a roll of 19 or 20.",
+    ],
+    7=> [
+      "Remarkable Athlete: You can add half your proficiency bonus (round up) to any Strength, Dexterity, or Constitution check you make that doesn’t already use your proficiency bonus.
+      In addition, when you make a running long jump, the distance you can cover increases by a number of feet equal to your Strength modifier.",
+    ],
+    10=> [
+      "Fighting Style: You may choose a second option from the Fighting Style class feature.",
+    ],
+    15=> [
+      "Superior Critical: Your weapon attacks score a critical hit on a roll of 18 or higher.",
+    ],
+    18=> [
+      "Survivor: You attain the pinnacle of resilience in battle. At the start of each of your turns, you regain hit points equal to 5 + your Constitution modifier if you have no more than half of your hit points left. You don’t gain this benefit if you have 0 hit points.",
+    ]
+  },
+  extra_spells: {},
+  specific_spells: {},
+  custom_mods: {},
+)
+
 Ranger = PlayerClass.create(
   name: 'Ranger',
   hit_die: 10,
@@ -2094,7 +2234,7 @@ Equipment.create(
 )
 
 Equipment.create(
-  name: "Crossbow Bolts",
+  name: "Bolts",
   count: 20,
   weight: 2,
   cost_gp: 100,

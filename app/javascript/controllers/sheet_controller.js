@@ -2107,44 +2107,87 @@ export default class extends Controller {
       let container = Util.getTag('div', 'equipment-row');
 
       choice.forEach((code) => {
-        let values = code.split('#');
-        let choice_box = Util.getTag('div', 'choice-box');
-        container.append(choice_box);
+        if (typeof code == 'string') {
+          let values = code.split('#');
+          let choice_box = Util.getTag('div', 'choice-box');
+          container.append(choice_box);
 
-        let choice_labels = Util.getTag(
-          'div',
-          'flex gap-4 items-center justify-center'
-        );
-        choice_box.append(choice_labels);
+          let choice_labels = Util.getTag(
+            'div',
+            'flex gap-4 items-center justify-center'
+          );
+          choice_box.append(choice_labels);
 
-        for (let i = 0; i < parseInt(values[1]); i++) {
-          switch (values[0]) {
-            case 'simple':
-              Util.appendWeaponSelectToTarget(
-                'simple',
-                choice_labels
-              );
-              break;
-            case 'martial':
-              Util.appendWeaponSelectToTarget(
-                'martial',
-                choice_labels
-              );
-              break;
-            default:
-              choice_labels.append(
-                Util.getTag('p', 'p-1', values[0])
-              );
-              break;
+          for (let i = 0; i < parseInt(values[1]); i++) {
+            switch (values[0]) {
+              case 'simple':
+                Util.appendWeaponSelectToTarget(
+                  'simple',
+                  choice_labels
+                );
+                break;
+              case 'martial':
+                Util.appendWeaponSelectToTarget(
+                  'martial',
+                  choice_labels
+                );
+                break;
+              default:
+                choice_labels.append(
+                  Util.getTag('p', 'p-1', values[0])
+                );
+                break;
+            }
           }
-        }
-        let checkbox = Util.getTag('input', '');
-        checkbox.type = 'checkbox';
-        choice_box.prepend(checkbox);
+          let checkbox = Util.getTag('input', '');
+          checkbox.type = 'checkbox';
+          choice_box.prepend(checkbox);
 
-        container.append(
-          Util.getTag('p', 'text-lg font-black', 'or')
-        );
+          container.append(
+            Util.getTag('p', 'text-lg font-black', 'or')
+          );
+        } else {
+          let choice_box = Util.getTag('div', 'choice-box');
+          container.append(choice_box);
+
+          let choice_labels = Util.getTag(
+            'div',
+            'flex gap-4 items-center justify-center'
+          );
+          choice_box.append(choice_labels);
+          for (let item of code) {
+            let values = item.split('#');
+            for (let i = 0; i < parseInt(values[1]); i++) {
+              switch (values[0]) {
+                case 'simple':
+                  Util.appendWeaponSelectToTarget(
+                    'simple',
+                    choice_labels
+                  );
+                  break;
+                case 'martial':
+                  Util.appendWeaponSelectToTarget(
+                    'martial',
+                    choice_labels
+                  );
+                  break;
+                default:
+                  choice_labels.append(
+                    Util.getTag('p', 'p-1', values[0])
+                  );
+                  break;
+              }
+            }
+          }
+
+          let checkbox = Util.getTag('input', '');
+          checkbox.type = 'checkbox';
+          choice_box.prepend(checkbox);
+
+          container.append(
+            Util.getTag('p', 'text-lg font-black', 'or')
+          );
+        }
       });
       container.removeChild(container.lastChild); //get rid of last 'or'
       target.append(container);
