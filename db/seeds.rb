@@ -1630,14 +1630,14 @@ Feat_alert = Feat.create(
   custom_mods: {},
 )
 
-bard = Array[](5,6,9,23,24,30,33,37,43,45,50,52,59,60,62,83,85,86,94,96,97,98,101,102,106,107,109,114,118,119,122,124,126,127,128,129,132,146,147,148,149,152,155,157,161,162,164,170,174,175,178,180,185,187,188,193,195,196,198,199,201,204,205,206,207,209,213,215,216,219,223,224,226,227,228,230,232,235,237,239,243,246,250,252,254,255,256,257,259,263,264)
-cleric = Array[](2,8,11,18,19,24,26,28,30,32,34,37,43,50,55,56,65,72,75,76,79,80,81,85,89,93,94,95,100,101,103,104,111,114,119,129,132,133,138,140,145,148,151,152,153,157,162,163,165,166,169,171,173,174,177,181,182,191,192,196,199,201,205,206,210,216,217,218,221,223,249,250,251,258)
-druid = Array[](5,6,7,10,12,23,27,29,35,42,45,57,62,63,66,67,68,70,72,75,76,80,85,88,94,95,101.105,109,110,111,114,117,124,128,129,132,133,138,139,141,144,147,148,152,154,158,159,162,165,167,170,173,174,175,177,181,186,192,194,199,204,205,206,207,216,221,223,228,233,238,244,250,251,252,253,254,262)
-paladin = Array[](2,20,21,22,25,26,34,36,40,49,55,58,79,84,85,89,92,93,94,95,100,101,113,131,133,152,178,194,199,205,206,210,214)
-ranger = Array[](3,5,6,27,29,57,63,64,69,70,77,85,88,94,95,116,133,144,148,158,159,168,184,199,202,204,205,206,207,239,244,252)
-sorceror = Array[](1,4,9,14,26,33,35,37,38,39,41,44,45,46,47,48,50,52,53,54,59,61,62,78,82,83,86,87,88,90,94.96,97,98,99,101,105,106,107,111,114,115,119,121,122,125,126,127,134,135,136,138,143,144,149,150,151,156,161,167,172,180,181,185,186,190,192,193,194,195,200,201,203,208,209,212,215,219,223,224,225,227,229,231,238,246,251,253,254,256,257,259,260)
-warlock = Array[](14,16,17,18,26,33,35,45,46,48,52,59,67,71,78,81,83,87,91,97,101,106,109,112,118,119,121,122,126,128,134,142,143,146,147,149,150,155,170,176,179,180,181,183,185,188,189,193,209,210,215,219,227,229,231,251,253,256,257,259)
-wizard = Array[](1,3,4,8,9,11,12,13,14,15,18,26,30,31,33,35,37,38,39,41,44,45,46,47,48,50,51,52,53,54,59,61,62,66,68,71,73,75,76,78,81,82,83,86,87,88,90,91,94,96,97,98,99,101,106,107,108,109,115,119,120,121,122,123,125,126,127,128,129,130,134,135,136,137,141,142,143,144,146,147,149,150,151,152,153,156,157,160,161,164,167,170,172,180,181,185,186,187,188,189,190,193,194,195,196,197,198,200,201,203,205,206,207,208,209,210,211,212,213,214,215,219,220,222,223,224,225,226,227,228,229,230,231,232,234,235,236,237,238,239,240,241,242,243,245,246,247,248,250,251,253,254,256,257,259,260,261,263,264)
+bard = Array[](5,6,9,23,24,30,33,37,43,45,50,52,59,60,62,83,85,86,94,96,97,98,101,102,106,107,109,114,118,119,122,124,126,127,128,129,132,146,147,148,149,152,155,157,161,162,164,170,174,175,178,180,185,187,188,193,195,196,198,199,201,204,205,206,207,209,213,215,216,219,223,224,226,227,228,230,232,235,237,239,243,246,250,252,254,255,256,257,259,263,264,269,274,278,285,287,288,289,292,297,298,300)
+cleric = Array[](2,8,11,18,19,24,26,28,30,32,34,37,43,50,55,56,65,72,75,76,79,80,81,85,89,93,94,95,100,101,103,104,111,114,119,129,132,133,138,140,145,148,151,152,153,157,162,163,165,166,169,171,173,174,177,181,182,191,192,196,199,201,205,206,210,216,217,218,221,223,249,250,251,258,265,266,267,268,269,274,276,277,278,280,282,283,285,289,294,297)
+druid = Array[](5,6,7,10,12,23,27,29,35,42,45,57,62,63,66,67,68,70,72,75,76,80,85,88,94,95,101.105,109,110,111,114,117,124,128,129,132,133,138,139,141,144,147,148,152,154,158,159,162,165,167,170,173,174,175,177,181,186,192,194,199,204,205,206,207,216,221,223,228,233,238,244,250,251,252,253,254,262,265,267,268,274,275,277,279,285,291,295,301)
+paladin = Array[](2,20,21,22,25,26,34,36,40,49,55,58,79,84,85,89,92,93,94,95,100,101,113,131,133,152,178,194,199,205,206,210,214,266,267,268,269,276,280,286,294)
+ranger = Array[](3,5,6,27,29,57,63,64,69,70,77,85,88,94,95,116,133,144,148,158,159,168,184,199,202,204,205,206,207,239,244,252,265,267,297)
+sorceror = Array[](1,4,9,14,26,33,35,37,38,39,41,44,45,46,47,48,50,52,53,54,59,61,62,78,82,83,86,87,88,90,94.96,97,98,99,101,105,106,107,111,114,115,119,121,122,125,126,127,134,135,136,138,143,144,149,150,151,156,161,167,172,180,181,185,186,190,192,193,194,195,200,201,203,208,209,212,215,219,223,224,225,227,229,231,238,246,251,253,254,256,257,259,260,265,272,273,279,284,288,293,296,298,300,301,302)
+warlock = Array[](14,16,17,18,26,33,35,45,46,48,52,59,67,71,78,81,83,87,91,97,101,106,109,112,118,119,121,122,126,128,134,142,143,146,147,149,150,155,170,176,179,180,181,183,185,188,189,193,209,210,215,219,227,229,231,251,253,256,257,259,266,271,276,285,287,292)
+wizard = Array[](1,3,4,8,9,11,12,13,14,15,18,26,30,31,33,35,37,38,39,41,44,45,46,47,48,50,51,52,53,54,59,61,62,66,68,71,73,75,76,78,81,82,83,86,87,88,90,91,94,96,97,98,99,101,106,107,108,109,115,119,120,121,122,123,125,126,127,128,129,130,134,135,136,137,141,142,143,144,146,147,149,150,151,152,153,156,157,160,161,164,167,170,172,180,181,185,186,187,188,189,190,193,194,195,196,197,198,200,201,203,205,206,207,208,209,210,211,212,213,214,215,219,220,222,223,224,225,226,227,228,229,230,231,232,234,235,236,237,238,239,240,241,242,243,245,246,247,248,250,251,253,254,256,257,259,260,261,263,264,265,266,270,271,272,273,276,279,281,284,285,287,288,289,290,291,292,293,296,298,299,300,301,302)
 
 Bard_list = ClassSpellList.create( name: 'Bard' )
 Cleric_list = ClassSpellList.create( name: 'Cleric' )
@@ -2401,6 +2401,9 @@ This spell's damage increases by 1d8 when you reach 5th level (2d8), 11th level 
   attack: 'true',
   atk_dmg: {
     1=> '1d8',
+    5=> '2d8',
+    11=> '3d8',
+    17=> '4d8',
   },
   dmg_type: 'Necrotic',
   id: 46,
@@ -3590,6 +3593,9 @@ The spell creates more than one beam when you reach higher levels: two beams at 
   attack: 'true',
   atk_dmg: {
     1=> '1d10',
+    5=> '2d10',
+    11=> '3d10',
+    17=> '4d10',
   },
   dmg_type: 'Force',
   id: 112,
@@ -4019,6 +4025,9 @@ This spell's damage increases by 1d10 when you reach 5th level (2d10), 11th leve
   attack: 'true',
   atk_dmg: {
     1=> '1d10',
+    5=> '2d10',
+    11=> '3d10',
+    17=> '4d10',
   },
   dmg_type: 'Fire',
   id: 136,
@@ -6160,6 +6169,9 @@ This spell's damage increases by 1d12 when you reach 5th level (2d12), 11th leve
   attack: 'true',
   atk_dmg: {
     1=> '1d12',
+    5=> '2d12',
+    11=> '3d12',
+    17=> '4d12',
   },
   dmg_type: 'Poison',
   id: 253,
@@ -6348,6 +6360,9 @@ This spell's damage increases by 1d8 when you reach 5th level (2d8), 11th level 
   attack: 'true',
   atk_dmg: {
     1=> '1d8',
+    5=> '2d8',
+    11=> '3d8',
+    17=> '4d8',
   },
   dmg_type: 'Fire',
   id: 262,
@@ -6395,6 +6410,657 @@ Physical interaction with the image reveals it to be an illusion, because things
 
 Spell.create(
   name: "Protection from Energy",
+  level: 3,
+  description: "For the duration, the willing creature you touch has resistance to one damage type of your choice - acid, cold, fire, lightning, or thunder.",
+  school: 'abjuration',
+  range: 'Touch',
+  duration: 'Concentration, up to 1 hour',
+  attack: 'false',
+  atk_dmg: {},
+  dmg_type: '',
+  id: 265,
+)
+
+Spell.create(
+  name: "Protection from Evil and Good",
+  level: 1,
+  description: "Until the spell ends, one willing creature you touch is protected against certain types of creatures - aberrations, celestials, elementals, fey, fiends, and undead.
+
+The protection grants several benefits. Creatures of those types have disadvantage on attack rolls against the target. The target also can't be charmed, frightened, or possessed by them. If the target is already charmed, frightened, or possessed by such a creature, the target has advantage on any new saving throw against the relevant effect.",
+  school: 'abjuration',
+  range: 'Touch',
+  components: ['V','S','M (holy water, or powdered silver and iron, which the spell consumes)'],
+  duration: 'Concentration, up to 10 minutes',
+  attack: 'false',
+  atk_dmg: {},
+  dmg_type: '',
+  id: 266,
+)
+
+Spell.create(
+  name: "Protection from Poison",
+  level: 2,
+  description: "You touch a creature. If it is poisoned, you neutralize the poison. If more than one poison afflicts the target, you neutralize one poison that you know is present, or you neutralize one at random.
+
+For the duration, the target has advantage on saving throws against being poisoned, and it has resistance to poison damage.
+Show Attribute List
+",
+  school: 'abjuration',
+  range: 'Touch',
+  duration: '1 hour',
+  attack: 'false',
+  atk_dmg: {},
+  dmg_type: '',
+  id: 267,
+)
+
+Spell.create(
+  name: "Purify Food and Drink",
+  level: 1,
+  description: "All nonmagical food and drink within a 5-foot-radius sphere centered on a point of your choice within range is purified and rendered free of poison and disease.",
+  school: 'transmutation',
+  ritual: 1,
+  range: '10 feet',
+  attack: 'false',
+  atk_dmg: {},
+  dmg_type: '',
+  id: 268,
+)
+
+Spell.create(
+  name: "Raise Dead",
+  level: 5,
+  description: "You return a dead creature you touch to life, provided that it has been dead no longer than 10 days. If the creature's soul is both willing and at liberty to rejoin the body, the creature returns to life with 1 hit point.
+
+This spell also neutralizes any poison and cures nonmagical diseases that affected the creature at the time it died. This spell doesn't, however, remove magical diseases, curses, or similar effects, if these aren't first removed prior to casting the spell, they take effect when the creature returns to life. The spell can't return an undead creature to life.
+
+This spell closes all mortal wounds, but it doesn't restore missing body parts. If the creature is lacking body parts or organs integral for its survival - its head, for instance - the spell automatically fails.
+
+Coming back from the dead is an ordeal. The target takes a -4 penalty to all attack rolls, saving throws, and ability checks. Every time the target finishes a long rest, the penalty is reduced by 1 until it disappears.",
+  school: 'necromancy',
+  range: 'Touch',
+  cast_time: '1 hour'
+  components: ['V','S','M (a diamond worth at least 500 gp, which the spell consumes)'],
+  attack: 'false',
+  atk_dmg: {},
+  dmg_type: '',
+  id: 269,
+)
+
+Spell.create(
+  name: "Rary's Telepathic Bond",
+  level: 5,
+  description: "You forge a telepathic link among up to eight willing creatures of your choice within range, psychically linking each creature to all the others for the duration. Creatures with Intelligence scores of 2 or less aren't affected by this spell.
+
+Until the spell ends, the targets⁠ can communicate telepathically through the bond whether or not they have a common⁠ language. The communication⁠ is possible over any distance, though it can't extend to other planes of existence.",
+  school: 'divination',
+  ritual: 1,
+  range: '30 feet',
+  components: ['V','S','M (pieces of eggshell from two different kinds of creatures)'],
+  duration: '1 hour',
+  attack: 'false',
+  atk_dmg: {},
+  dmg_type: '',
+  id: 270,
+)
+
+Spell.create(
+  name: "Ray of Enfeeblement",
+  level: 2,
+  description: "A black beam of enervating energy springs from your finger toward a creature within range. Make a ranged spell attack against the target. On a hit, the target deals only half damage with weapon attacks that use Strength until the spell ends.
+
+At the end of each of the target's turns, it can make a Constitution saving throw against the spell. On a success, the spell ends.",
+  school: 'necromancy',
+  range: '60 feet',
+  duration: 'Concentration, up to 1 minute',
+  attack: 'false',
+  atk_dmg: {},
+  dmg_type: '',
+  id: 271,
+)
+
+Spell.create(
+  name: "Ray of Frost",
+  level: 0,
+  description: "A frigid beam of blue-white light streaks toward a creature within range. Make a ranged spell attack against the target. On a hit, it takes 1d8 cold damage, and its speed is reduced by 10 feet until the start of your next turn.
+
+The spell's damage increases by 1d8 when you reach 5th level (2d8), 11th level (3d8), and 17th level (4d8).",
+  school: 'evocation',
+  range: '60 feet',
+  attack: 'true',
+  atk_dmg: {
+    1=> '1d8',
+    5=> '2d8',
+    11=> '3d8',
+    17=> '4d8',
+  },
+  dmg_type: 'Cold',
+  id: 272,
+)
+
+Spell.create(
+  name: "Ray of Sickness",
+  level: 1,
+  description: "A ray of sickening greenish energy lashes out toward a creature within range. Make a ranged spell attack against the target. On a hit, the target takes 2d8 poison damage and must make a Constitution saving throw. On a failed save, it is also poisoned until the end of your next turn.
+
+At Higher Levels. When you cast this spell using a spell slot of 2nd level or higher, the damage increases by 1d8 for each slot level above 1st.",
+  school: 'necromancy',
+  range: '60 feet',
+  attack: 'true'``,
+  atk_dmg: {
+    1=> '2d8',
+  },
+  dmg_type: '',
+  id: 273,
+)
+
+Spell.create(
+  name: "Regenerate",
+  level: 7,
+  description: "You touch a creature and stimulate its natural healing ability. The target regains 4d8 + 15 hit points. For the duration of the spell, the target regains 1 hit point at the start of each of its turns (10 hit points each minute).
+
+The target's severed body members (fingers, legs, tails, and so on), if any, are restored after 2 minutes. If you have the severed part and hold it to the stump, the spell instantaneously causes the limb to knit to the stump.",
+  school: 'transmutation',
+  range: 'Touch',
+  cast_time: '1 minute'
+  components: ['V','S','M (a prayer wheel and holy water)'],
+  duration: '1 hour',
+  attack: 'false',
+  atk_dmg: {},
+  dmg_type: '',
+  id: 274,
+)
+
+Spell.create(
+  name: "Reincarnate",
+  level: 5,
+  description: "You touch a dead humanoid or a piece of a dead humanoid. Provided that the creature has been dead no longer than 10 days, the spell forms a new adult body for it and then calls the soul to enter that body. If the target's soul isn't free or willing to do so, the spell fails.
+
+The magic fashions a new body for the creature to inhabit, which likely causes the creature's race to change. The DM rolls a d100 and consults the PHB to determine what form the creature takes when restored to life, or the DM chooses a form.
+
+The reincarnated creature recalls its former life and experiences. It retains the capabilities it had in its original form, except it exchanges its original race for the new one and changes its racial traits accordingly.",
+  school: 'transmutation',
+  range: 'Touch',
+  components: ['V','S','M (rare oils and unguents worth at least 1,000 gp, which the spell consumes)'],
+  attack: 'false',
+  atk_dmg: {},
+  dmg_type: '',
+  id: 275,
+)
+
+Spell.create(
+  name: "Remove Curse",
+  level: 3,
+  description: "At your touch, all curses affecting one creature or object end. If the object is a cursed magic item, its curse remains, but the spell breaks its owner's attunement to the object so it can be removed or discarded.",
+  school: 'abjuration',
+  range: 'Touch',
+  attack: 'false',
+  atk_dmg: {},
+  dmg_type: '',
+  id: 276,
+)
+
+Spell.create(
+  name: "Resistance",
+  level: 0,
+  description: "You touch one willing creature. Once before the spell ends, the target can roll a d4 and add the number rolled to one saving throw of its choice. It can roll the die before or after the saving throw. The spell then ends.",
+  school: 'abjuration',
+  range: 'Touch',
+  components: ['V','S','M (a miniature cloak)'],
+  duration: 'Concentration, up to 1 minute',
+  attack: 'false',
+  atk_dmg: {},
+  dmg_type: '',
+  id: 277,
+)
+
+Spell.create(
+  name: "Resurrection",
+  level: 7,
+  description: "You touch a dead creature that has been dead for no more than a century, that didn't die of old age, and that isn't undead. If its soul is free and willing, the target returns to life with all its hit points.
+
+This spell neutralizes any poisons and cures normal diseases afflicting the creature when it died. It doesn't, however, remove magical diseases, curses, and the like, if such affects aren't removed prior to casting the spell, they afflict the target on its return to life.
+
+This spell closes all mortal wounds and restores any missing body parts.
+
+Coming back from the dead is an ordeal. The target takes a -4 penalty to all attack rolls, saving throws, and ability checks. Every time the target finishes a long rest, the penalty is reduced by 1 until it disappears.
+
+Casting this spell to restore life to a creature that has been dead for one year or longer taxes you greatly. Until you finish a long rest, you can't cast spells again, and you have disadvantage on all attack rolls, ability checks, and saving throws.",
+  school: 'necromancy',
+  cast_time: '1 hour'
+  range: 'TOuch',
+  components: ['V','S','M (a diamond worth at least 1,000 gp, which the spell consumes)'],
+  attack: 'false',
+  atk_dmg: {},
+  dmg_type: '',
+  id: 278
+)
+
+Spell.create(
+  name: "Reverse Gravity",
+  level: 7,
+  description: "This spell reverses gravity in a 50-foot-radius, 100-foot high cylinder centered on a point within range. All creatures and objects that aren't somehow anchored to the ground in the area fall upward and reach the top of the area when you cast this spell. A creature can make a Dexterity saving throw to grab onto a fixed object it can reach, thus avoiding the fall.
+
+If some solid object (such as a ceiling) is encountered in this fall, falling objects and creatures strike it just as they would during a normal downward fall. If an object or creature reaches the top of the area without striking anything, it remains there, oscillating slightly, for the duration.
+
+At the end of the duration, affected objects and creatures fall back down.",
+  school: 'transmutation',
+  range: '100 feet',
+  components: ['V','S','M (a lodestone and iron filings)'],
+  duration: 'Concentration, up to 1 minute',
+  attack: 'false',
+  atk_dmg: {},
+  dmg_type: '',
+  id: 279
+)
+
+Spell.create(
+  name: "Revivify",
+  level: 3,
+  description: "You touch a creature that has died within the last minute. That creature returns to life with 1 hit point. This spell can't return to life a creature that has died of old age, nor can it restore any missing body parts.",
+  school: 'necromancy',
+  range: 'Touch',
+  components: ['V','S','M (a diamond worth 300 gp, which the spell consumes)'],
+  attack: 'false',
+  atk_dmg: {},
+  dmg_type: '',
+  id: 280,
+)
+
+Spell.create(
+  name: "Rope Trick",
+  level: 2,
+  description: "You touch a length of rope that is up to 60 feet long. One end of the rope then rises into the air until the whole rope hangs perpendicular to the ground. At the upper end of the rope, an invisible entrance opens to an extradimensional space that lasts until the spell ends.
+
+The extradimensional space can be reached by climbing to the top of the rope. The space can hold as many as eight Medium or smaller creatures. The rope can be pulled into the space, making the rope disappear from view outside the space.
+
+Attacks and spells can't cross through the entrance into or out of the extradimensional space, but those inside can see out of it as if through a 3-foot-by-5-foot window centered on the rope.
+
+Anything inside the extradimensional space drops out when the spell ends.",
+  school: 'transmutation',
+  range: 'Touch',
+  components: ['V','S','M (powdered corn extract and a twisted loop of parchment)'],
+  duration: '1 hour',
+  attack: 'false',
+  atk_dmg: {},
+  dmg_type: '',
+  id: 281,
+)
+
+Spell.create(
+  name: "Sacred Flame",
+  level: 0,
+  description: "Flame-like radiance descends on a creature that you can see within range. The target must succeed on a Dexterity saving throw or take 1d8 radiant damage. The target gains no benefit from cover for this saving throw.
+
+The spell's damage increases by 1d8 when you reach 5th level (2d8), 11th level (3d8), and 17th level (4d8).",
+  school: 'evocation',
+  range: '60 feet',
+  attack: 'true',
+  atk_dmg: {
+    1=> '1d8',
+    5=> '2d8',
+    11=> '3d8',
+    17=> '4d8',
+  },
+  dmg_type: 'Radiant',
+  id: 282,
+)
+
+Spell.create(
+  name: "Sanctuary",
+  level: 1,
+  description: "You ward a creature within range against attack. Until the spell ends, any creature who targets the warded creature with an attack or a harmful spell must first make a Wisdom saving throw. On a failed save, the creature must choose a new target or lose the attack or spell. This spell doesn't protect the warded creature from area effects, such as the explosion of a fireball.
+
+If the warded creature makes an attack or casts a spell that affects an enemy creature, this spell ends.",
+  school: 'abjuration',
+  range: '30 feet',
+  cast_time: '1 bonus action',
+  components: ['V','S','M (a small silver mirror)'],
+  duration: '1 minute',
+  attack: 'false',
+  atk_dmg: {},
+  dmg_type: '',
+  id: 283,
+)
+
+Spell.create(
+  name: "Scorching Ray",
+  level: 2,
+  description: "You create three rays of fire and hurl them at targets within range. You can hurl them at one target or several.
+
+Make a ranged spell attack for each ray. On a hit, the target takes 2d6 fire damage.
+
+At Higher Levels: When you cast this spell using a spell slot of 3rd level or higher, you create one additional ray for each slot level above 2nd.",
+  school: 'evocation',
+  range: '120 feet',
+  attack: 'true',
+  atk_dmg: {
+    1=> '2d6',
+  },
+  dmg_type: 'Fire',
+  id: 284,
+)
+
+Spell.create(
+  name: "Scrying",
+  level: 5,
+  description: "You can see and hear a particular creature you choose that is on the same plane of existence as you. The target must make a Wisdom saving throw, which is modified by how well you know the target and the sort of physical connection you have to it. If a target knows you're casting this spell, it can fail the saving throw voluntarily if it wants to be observed.
+
+On a successful save, the target isn't affected, and you can't use this spell against it again for 24 hours.
+
+On a failed save, the spell creates an invisible sensor within 10 feet of the target. You can see and hear through the sensor as if you were there. The sensor moves with the target, remaining within 10 feet of it for the duration. A creature that can see invisible objects sees the sensor as a luminous orb about the size of your fist.
+
+Instead of targeting a creature, you can choose a location you have seen before as the target of this spell. When you do, the sensor appears at that location and doesn't move.",
+  school: 'divination',
+  cast_time: '10 minutes'
+  components: ['V','S','M (a focus worth at least 1,000 gp, such as a crystal ball, a silver mirror, or a font filled with holy water)'],
+  duration: 'Concentration, up to 10 minutes',
+  attack: 'false',
+  atk_dmg: {},
+  dmg_type: '',
+  id: 285,
+)
+
+Spell.create(
+  name: "Searing Smite",
+  level: 1,
+  description: "The next time you hit a creature with a melee weapon attack during the spell’s duration, your weapon flares with white-hot intensity, and the attack deals an extra 1d6 fire damage to the target and causes the target to ignite in flames.
+
+At the start of each of its turns until the spell ends, the target must make a Constitution saving throw. On a failed save, it takes 1d6 fire damage. On a successful save, the spells ends. If the target or a creature within 5 feet of it uses an action to put out the flames, or if some other effect douses the flames (such as the target being submerged in water), the spell ends.
+
+At Higher Levels. When you cast this spell using a spell slot of 2nd level or higher, the initial extra damage dealt by the attack increases by 1d6 for each slot.",
+  school: 'evocation',
+  components: ['V'],
+  cast_time: '1 bonus action'
+  duration: 'Concentration, up to 1 minute',
+  attack: 'false',
+  atk_dmg: {},
+  dmg_type: '',
+  id: 286,
+)
+
+Spell.create(
+  name: "See Invisibility",
+  level: 2,
+  description: "For the duration, you see invisible creatures and objects as if they were visible, and you can see into the Ethereal Plane. Ethereal creatures and objects appear ghostly and translucent.",
+  school: 'divination',
+  components: ['V','S','M (a pinch of talc and a small sprinkling of powdered silver)'],
+  duration: '1 hour',
+  attack: 'false',
+  atk_dmg: {},
+  dmg_type: '',
+  id: 287
+)
+
+Spell.create(
+  name: "Seeming",
+  level: 5,
+  description: "This spell allows you to change the appearance of any number of creatures that you can see within range. You give each target you choose a new, illusory appearance. An unwilling target can make a Charisma saving throw, and if it succeeds, it is unaffected by this spell.
+
+The spell disguises physical appearances as well as clothing, armor, weapons, and equipment. You can make each creature seem 1 foot shorter or taller and appear thin, fat, or in-between. You can't change a target's body type, so you must choose a form that has the same basic arrangement of limbs. Otherwise, the extent of the illusion is up to you. The spell lasts for the duration, unless you use your action to dismiss it sooner.
+
+The changes wrought by this spell fail to hold up to physical inspections. For example, if you use this spell to add a hat to a creature's outfit objects pass through the hat, and anyone who touches it would feel nothing or would feel the creature's head and hair. If you use this spell to appear thinner then you are, the hand of someone who reaches out to touch you would bump into you while it was seemingly still in midair.
+
+A creature can use its action to inspect a target and make an Intelligence (Investigation) check against your spell save DC. If it succeeds, it becomes aware that the target is disguised.",
+  school: 'illusion',
+  range: '30 feet',
+  duration: '8 hours',
+  attack: 'false',
+  atk_dmg: {},
+  dmg_type: '',
+  id: 288,
+)
+
+Spell.create(
+  name: "Sending",
+  level: 3,
+  description: "You send a short message of twenty-five words or less to a creature with you are familiar. The creature hears the message in its mind, recognizes you as the sender if it knows you, and can answer in a like manner immediately. The spell enables creatures with Intelligence scores of at least 1 to understand the meaning of your message.
+
+You can send the message across any distance and even to other planes of existence, but if the target is on a different plane than you, there is a 5 percent chance that the message doesn't arrive.",
+  school: 'evocation',
+  range: 'Unlimited',
+  components: ['V','S','M (a short piece of fine copper wire)'],
+  duration: '1 round',
+  attack: 'false',
+  atk_dmg: {},
+  dmg_type: '',
+  id: 289,
+)
+
+Spell.create(
+  name: "Sequester",
+  level: 7,
+  description: "By means of this spell, a willing creature or an object can be hidden away, safe from detection for the duration. When you cast the spell and touch the target, it becomes invisible and can't be targeted by divination spells or perceived through scrying sensors created by the divination of spells.
+
+If the target is a creature, it falls into a state of suspended animation. Time ceases to flow for it, and it doesn't grow older.
+
+You can set a condition for the spell to end early. The condition can be anything you choose, but it must occur or be visible within 1 mile of the target. Examples include after 1,000 years or when the tarrasque awakes. This spells also ends if the target takes any damage.",
+  school: 'transmutation',
+  range: 'Touch',
+  components: ['V','S','M (a powder composed of diamond, emerald, ruby, and sapphire dust worth at least 5,000 gp, which the spell consumes)'],
+  duration: 'Until dispelled',
+  attack: 'false',
+  atk_dmg: {},
+  dmg_type: '',
+  id: 290,
+)
+
+Spell.create(
+  name: "Shapechange",
+  level: 9,
+  description: "You assume the form of a different creature for the duration. The new form can be any creature with a challenge rating equal to your level or lower. The creature can't be a construct or an undead, and you must have seen the sort of creature at least once. You transform into an average example of that creature, one without any class levels or the Spellcasting trait.
+
+Your game statistics are replaced by the statistics of the chosen creature, though you retain your alignment and Intelligence, Wisdom, and Charisma scores. You also retain all of your skill and saving throw proficiencies, in addition to gaining those of the creature. If the creature has the same proficiency as you, and the bonus listed in its statistics is higher than yours, use the creature's bonus in place of yours. You can't use any legendary actions or lair actions of the new form.
+
+You assume the hit points and Hit Dice of the new form. When you revert to your normal, you return to the number of hit points you had before you transformed. If you revert as a result of dropping to 0 hit points, any excess damage carries over to your normal form. As long as the excess damage doesn't reduce your normal form to 0 hit points, you aren't knocked unconscious.
+
+You retain the benefit of any features from your class, race, or other source and can use them, provided that your new form is physically capable of doing so. You can't use any special senses you have (for example, darkvision) unless your new form also has that sense. You can only speak if the creature can normally speak.
+
+When you transform, you choose whether your equipment falls to the ground, merges into the new form, or is worn by it. Worn equipment functions as normal. The DM determines whether it is practical for the new form to wear a piece of equipment, based on the creature's shape and size. Your equipment doesn't change shape or size to match the new form, and any equipment that the new form can't wear must either fall to the ground or merge into your new form. Equipment that merges has no effect in that state.
+
+During this spell's duration, you can use your action to assume a different form following the same restrictions and rules for the original form, with one exception - if your new form has more hit points than your current one, your hit points remain at their current value.",
+  school: 'transmutation',
+  components: ['V','S','M (a jade circlet worth at least 1,500 gp, which you must place on your head before you cast the spell)'],
+  duration: 'Concentration, up to 1 hour',
+  attack: 'false',
+  atk_dmg: {},
+  dmg_type: '',
+  id: 291,
+)
+
+Spell.create(
+  name: "Shatter",
+  level: 2,
+  description: "A sudden loud ringing noise, painfully intense, erupts from a point of your choice within range. Each creature in a 10-foot-radius sphere centered on that point must make a Constitution saving throw. A creature takes 3d8 thunder damage on a failed save, or half as much damage on a successful one. A creature made of inorganic material such as stone, crystal, or metal has disadvantage on this saving throw.
+
+A nonmagical object that isn't being worn or carried also takes the damage if it's in the spell's area.
+
+At Higher Levels: When you cast this spell using a spell slot of 3rd level or higher, the damage increases by 1d8 for each slot level above 2nd.",
+  school: 'evocation',
+  range: '60 feet',
+  components: ['V','S','M (a chip of mica)'],
+  attack: 'true',
+  atk_dmg: {
+    1=> '3d8',
+  },
+  dmg_type: 'Thunder',
+  id: 292,
+)
+
+Spell.create(
+  name: "Shield",
+  level: 1,
+  description: "An invisible barrier of magical force appears and protects you. Until the start of your next turn, you have a +5 bonus to AC, including against the triggering attack, and you take no damage from magic missile.",
+  school: 'abjuration',
+  cast_time: '1 reaction',
+  duration: '1 round',
+  attack: 'false',
+  atk_dmg: {},
+  dmg_type: '',
+  id: 293,
+)
+
+Spell.create(
+  name: "Shield of Faith",
+  level: 1,
+  description: "A shimmering field appears and surrounds a creature of your choice within range, granting it a +2 bonus to AC for the duration.",
+  school: 'abjuration',
+  cast_time: '1 bonus action',
+  range: '60 feet',
+  components: ['V','S','M (a small parchment with a bit of holy text written on it)'],
+  duration: 'Concentration, up to 10 minutes',
+  attack: 'false',
+  atk_dmg: {},
+  dmg_type: '',
+  id: 294,
+)
+
+Spell.create(
+  name: "Shillelagh",
+  level: 0,
+  description: "The wood of a club or quarterstaff you are holding is imbued with nature's power. For the duration, you can use your spellcasting ability instead of Strength for the attack and damage rolls of melee attacks using that weapon, and the weapon's damage die becomes a d8. The weapon also becomes magical, if it isn't already. The spell ends if you cast it again or if you let go of the weapon.",
+  school: 'transmutation',
+  range: 'Touch',
+  components: ['V','S','M (mistletoe, a shamrock leaf, and a club or quarterstaff)'],
+  duration: '1 minute',
+  attack: 'false',
+  atk_dmg: {},
+  dmg_type: '',
+  id: 295,
+)
+
+Spell.create(
+  name: "Shocking Grasp",
+  level: 0,
+  description: "Lightning springs from your hand to deliver a shock to a creature you try to touch. Make a melee spell attack against the target. You have advantage on the attack roll if the target is wearing armor made of metal. On a hit, the target takes 1d8 lightning damage, and it can't take reactions until the start of its next turn.
+
+The spell's damage increases by 1d8 when you reach 5th level (2d8), 11th level (3d8), and 17th level (4d8).",
+  school: 'evocation',
+  range: 'Touch',
+  attack: 'true',
+  atk_dmg: {
+    1=> '1d8',
+    5=> '2d8',
+    11=> '3d8',
+    17=> '4d8',
+  },
+  dmg_type: 'Lightning',
+  id: 296,
+)
+
+Spell.create(
+  name: "Silence",
+  level: 2,
+  description: "For the duration, no sound can be created within or pass through a 20-foot-radius sphere centered on a point you choose within range. Any creature or object entirely inside the sphere is immune to thunder damage, and creatures are deafened while entirely inside it. Casting a spell that includes a verbal component is impossible there.",
+  school: 'illusion',
+  ritual: 1,
+  range: '120 feet',
+  duration: 'Concentration, up to 10 minutes',
+  attack: 'false',
+  atk_dmg: {},
+  dmg_type: '',
+  id: 297,
+)
+
+Spell.create(
+  name: "Silent Image",
+  level: 1,
+  description: "You create the image of an object, a creature, or some other visible phenomenon that is no larger than a 15-foot cube. The image appears at a spot within range and lasts for the duration. The image is purely visual, it isn't accompanied by sound, smell, or other sensory effects.
+
+You can use your action to cause the image to move to any spot within range. As the image changes location, you can alter its appearance so that its movements appear natural for the image. For example, if you create an image of a creature and move it, you can alter the image so that it appears to be walking.
+
+Physical interaction with the image reveals it to be an illusion, because things can pass through it. A creature that uses its action to examine the image can determine that it is an illusion with a successful Intelligence (Investigation) check against your spell save DC. If a creature discerns the illusion for what it is, the creature can see through the image.",
+  school: 'illusion',
+  range: '60 feet',
+  components: ['V','S','M (a bit of fleece)'],
+  duration: 'Concentration, up to 10 minutes',
+  attack: 'false',
+  atk_dmg: {},
+  dmg_type: '',
+  id: 298,
+)
+
+Spell.create(
+  name: "Simulacrum",
+  level: 7,
+  description: "You shape an illusory duplicate of one beast or humanoid that is within range for the entire casting time of the spell. The duplicate is a creature, partially real and formed from ice or snow, and it can take actions and otherwise be affected as a normal creature. It appears to be the same as the original, but it has half the creature's hit point maximum and is formed without any equipment. Otherwise, the illusion uses all the statistics of the creature it duplicates.
+
+The simulacrum is friendly to you and creatures you designate. It obeys your spoken commands, moving and acting in accordance with your wishes and acting on your turn in combat. The simulacrum lacks the ability to learn or become more powerful, so it never increases its level or other abilities, nor can it regain expended spell slots.
+
+If the simulacrum is damaged, you can repair it in an alchemical laboratory, using rare herbs and minerals worth 100 gp per hit point it regains. The simulacrum lasts until it drops to 0 hit points, at which point it reverts to snow and melts instantly.
+
+If you cast this spell again, any currently active duplicates you created with this spell are instantly destroyed.",
+  school: 'illusion',
+  cast_time: '12 hours',
+  range: 'Touch',
+  components: ['V','S','M (Snow or ice in quantities sufficient to made a life-size copy of the duplicated creature; some hair, fingernail clippings, or other piece of that creature’s body placed inside the snow or ice; and powdered ruby worth 1,500 gp, sprinkled over the duplicate and consumed by the spell)'],
+  duration: 'Until dispelled',
+  attack: 'false',
+  atk_dmg: {},
+  dmg_type: '',
+  id: 299,
+)
+
+Spell.create(
+  name: "Sleep",
+  level: 1,
+  description: "This spell sends creatures into a magical slumber. Roll 5d8, the total is how many hit points of creatures this spell can affect. Creatures within 20 feet of a point you choose within range are affected in ascending order of their current hit points (ignoring unconscious creatures).
+
+Starting with the creature that has the lowest current hit points, each creature affected by this spell falls unconscious until the spell ends, the sleeper takes damage, or someone uses an action to shake or slap the sleeper awake. Subtract each creature's hit points from the total before moving on to the creature with the next lowest hit points. A creature's hit points must be equal to or less than the remaining total for that creature to be affected.
+
+Undead and creatures immune to being charmed aren't affected by this spell.
+
+At Higher Levels: When you cast this spell using a spell slot of 2nd level or higher, roll an additional 2d8 for each slot level above 1st.",
+  school: 'enchantment',
+  range: '90 feet',
+  components: ['V','S','M (a pinch of fne sand, rose petals, or a cricket)'],
+  duration: '1 minute',
+  attack: 'false',
+  atk_dmg: {},
+  dmg_type: '',
+  id: 300,
+)
+
+Spell.create(
+  name: "Sleet Storm",
+  level: 3,
+  description: "Until the spell ends, freezing rain and sleet fall in a 20-foot-tall cylinder with a 40-foot radius centered on a point you choose within range. The area is heavily obscured, and exposed flames in the area are doused.
+
+The ground in the area is covered with slick ice, making it difficult terrain. When a creature enters the spell's area for the first time on a turn or starts its turn there, it must make a Dexterity saving throw. On a failed save, it falls prone.
+
+If a creature is concentrating in the spell's area, the creature must make a successful Constitution saving throw against your spell save DC or lose concentration.",
+  school: 'conjuration',
+  range: '150 feet',
+  components: ['V','S','M (a pinch of dust and a few drops of water)'],
+  duration: 'Concentration, up to 1 minute',
+  attack: 'false',
+  atk_dmg: {},
+  dmg_type: '',
+  id: 301,
+)
+
+Spell.create(
+  name: "Slow",
+  level: 3,
+  description: "You alter time around up to six creatures of your choice in a 40-foot cube within range. Each target must succeed on a Wisdom saving throw or be affected by this spell for the duration.
+
+An affected target's speed is halved, it takes a -2 penalty to AC and Dexterity saving throws, and it can't use reactions. On its turn, it can use either an action or a bonus action, not both. Regardless of the creature's abilities or magic items, it can't make more than one melee or ranged attack during its turn.
+
+If the creature attempts to cast a spell with a casting time of 1 action, roll a d20. On an 11 or higher, the spell doesn't take effect until the creature's next turn, and the creature must use its action on that turn to complete the spell. If it can't, the spell is wasted.
+
+A creature affected by this spell makes another Wisdom saving throw at the end of its turn. On a successful save, the effect ends for it.",
+  school: 'transmutation',
+  range: '120 feet',
+  components: ['V','S','M (a drop of molasses)'],
+  duration: 'Concentration, up to 1 minute',
+  attack: 'false',
+  atk_dmg: {},
+  dmg_type: '',
+  id: 302,
+)
+
+Spell.create(
+  name: "Spare the Dying",
   level: ,
   description: "",
   school: '',
@@ -6406,7 +7072,7 @@ Spell.create(
     1=> '',
   },
   dmg_type: '',
-  id: 265,
+  id:
 )
 =begin
 Spell.create(
