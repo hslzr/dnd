@@ -1663,6 +1663,7 @@ export default class extends Controller {
   }
 
   populateSpellModal(max_level) {
+
     //clear it first of the old sheet if we are switching
     Util.removeAllChildNodes(this.spellsModalListTarget);
     for (let i = 0; i <= max_level; i++) {
@@ -1704,7 +1705,7 @@ export default class extends Controller {
       });
     });
     if (
-      chosen.length <
+      chosen.length <=
       this.spell_table[this.level - 1][0] +
         this.spell_table[this.level - 1][1]
     ) {
@@ -1740,6 +1741,14 @@ export default class extends Controller {
   }
 
   putSingleSpellTaken(spell, target) {
+
+    function getRow(tag, content) {
+      let row = Util.getTag('div','rounded-lg bg-gray-300 px-8 flex justify-start gap-4');
+      row.append(Util.getTag('p','font-black',tag));
+      row.append(Util.getTag('p','',content));
+      return row;
+    }
+
     console.log(spell);
     let frame = Util.getTag(
       'div',
@@ -1747,15 +1756,18 @@ export default class extends Controller {
     );
     let title = Util.getTag('h4', 'font-bold text-xl', spell.name);
     frame.append(title);
-    frame.append(spell.description);
-
-    let dmg_out;
-    Object.entries(spell.atk_dmg).forEach((level) => {
-      if (parseInt(level[0]) <= this.level) dmg_out = level[1];
-    });
-    frame.append(
-      Util.getTag('p', '', `${dmg_out} ${spell.dmg_type} Damage`)
-    );
+    let splitter = spell.description.split('\n');
+    frame.append(getRow('Description',splitter[0]));
+    
+    if(spell.attack != 'false') {
+      let dmg_out;
+      Object.entries(spell.atk_dmg).forEach((level) => {
+        if (parseInt(level[0]) <= this.level) dmg_out = level[1];
+      });
+      frame.append(
+        Util.getTag('p', '', `${dmg_out} ${spell.dmg_type} Damage`)
+      );
+    }
     target.append(frame);
   }
   //-----------------Extra Spells Modal ------------------//
