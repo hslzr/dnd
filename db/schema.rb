@@ -200,12 +200,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_18_194224) do
 
   create_table "spells", force: :cascade do |t|
     t.string "name"
-    t.integer "level"
+    t.integer "level", default: 0
     t.text "description"
-    t.string "cast_time"
-    t.string "range"
-    t.string "components"
-    t.string "duration"
+    t.string "school"
+    t.integer "ritual", default: 0
+    t.string "cast_time", default: "1 action"
+    t.string "range", default: "Self"
+    t.string "components", default: ["V", "S", ""], array: true
+    t.string "duration", default: "Instantaneous"
     t.string "attack", default: "false"
     t.text "atk_dmg", default: "{}"
     t.string "dmg_type", default: "none"

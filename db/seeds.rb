@@ -623,7 +623,7 @@ TieflingRace = Race.create(
     3=> [['Hellish Rebuke','Long Rest']],
     5=> [['Darkness','Long Rest']],
     'stat'=> 'Charisma',
-    'source'=> 'Infernal Legacy'
+    'source'=> 'Infernal Legacy',
   },
   custom_mods: {},
 )
@@ -657,16 +657,16 @@ Barbarian = PlayerClass.create(
   features: {
     1=>[
       'Rage: Advantage on STR checks and STR saves, Rage Damage bonus, resistance to bludgeoning, piercing and slashing damage.',
-      'Unarmored Defense: Without armor your AC is 10 + Dex modifier'
+      'Unarmored Defense: Without armor your AC is 10 + Dex modifier',
     ],
     2=>[
       'Reckless Attack: Advantage on your first melee STR attack roll and attacks against you until your next turn.',
-      'Danger Sense: Advantage on DEX saves against effects you can see. You can`t do this if you are blinded, deafened, or incapacitated.'
+      'Danger Sense: Advantage on DEX saves against effects you can see. You can`t do this if you are blinded, deafened, or incapacitated.',
     ],
     3=>['Primal Path: Choose a path that shapes the nature of your rage.'],
     4=>["Abiliity Score Increase:"],
     5=>['Extra Attack: You may attack twice whenever you take the Attack actin on your turn.',
-       'Fast Movement: Your speed increases by 10 feet while you aren`t wearing heavy armor'
+       'Fast Movement: Your speed increases by 10 feet while you aren`t wearing heavy armor',
       ],
     7=>['Feral Instinct: You have advantage on initiative rolls. If you are surprised at the beginning of combat and aren`t incapacitated, you can act normall on your first turn, but only if you enter your rage before doiug anything else.'],
     8=>["Ability Score Increase:"],
@@ -1571,7 +1571,7 @@ Acolyte = Background.create(
       'Prayer Book#1',
       'Incense#5',
       'Clothes, sacred vestments#1',
-      'Clothes, common#1'
+      'Clothes, common#1',
     ],
   },
   gold: 15,
@@ -1623,7 +1623,7 @@ Feat_alert = Feat.create(
   features: [
       'You gain +5 to initiative.',
       'You can`t be surprised while you are conscious.',
-      'Other creatures don`t gain advantage on attack rolls against you as a result of being unseen by you.'
+      'Other creatures don`t gain advantage on attack rolls against you as a result of being unseen by you.',
     ],
   extra_spells: {},
   specific_spells: {},
@@ -2057,7 +2057,7 @@ Spell.create(
   range: 'Touch',
   components: ['V','S','M (a handful of oak bark)'],
   duration: 'Concentration, up to 1 hour',
-  attack: 'false'.
+  attack: 'false',
   atk_dmg: {},
   dmg_type: '',
   id: 27,
@@ -2544,7 +2544,7 @@ Spell.create(
   level: 5,
   description: "You contact your deity or a divine proxy and ask up to three questions that can be answered with a yes or no. You must ask your questions before the spell ends. You receive a correct answer for each question.
 
-Divine beings aren't necessarily omniscient, so you might receive "unclear" as an answer if a question pertains to information that lies beyond the deity's knowledge. In a case where a one-word answer could be misleading or contrary to the deity's interests, the DM might offer a short phrase as an answer instead.",
+Divine beings aren't necessarily omniscient, so you might receive 'unclear' as an answer if a question pertains to information that lies beyond the deity's knowledge. In a case where a one-word answer could be misleading or contrary to the deity's interests, the DM might offer a short phrase as an answer instead.",
   school: 'divination',
   ritual: 1,
   cast_time: '1 minute',
@@ -2565,6 +2565,7 @@ You instantly gain knowledge of up to three facts of your choice about any of th
   school: 'divination',
   cast_time: '1 minute',
   attack: 'false',
+  atk_dmg: {},
   dmg_type: '',
   id: 57,
 )
@@ -3408,7 +3409,7 @@ Spell.create(
 Regardless of its current hit points, a celestial, an elemental, a fey, or a fiend that fails its save is forced back to its plane of origin (if it isn't there already) and can't return to your current plane for 24 hours by any means short of a wish spell.",
   school: 'evocation',
   cast_time: '1 bonus action',
-  range: '30 feet'
+  range: '30 feet',
   components: ['V'],
   attack: 'false',
   atk_dmg: {},
@@ -3998,7 +3999,7 @@ Spell.create(
 
 This spell's damage increases by 1d10 when you reach 5th level (2d10), 11th level (3d10), and 17th level (4d10).",
   school: 'evocation',
-  range: '120 feet'
+  range: '120 feet',
   attack: 'true',
   atk_dmg: {
     1=> '1d10',
@@ -4206,7 +4207,7 @@ Spell.create(
 This spell immediately ends if you cast it again before its duration ends.",
   school: 'divination',
   range: 'Touch',
-  cast_time: '1 minute'
+  cast_time: '1 minute',
   components: ['V','S','M (a hummingbird feather)'],
   duration: '8 hours',
   attack: 'false',
@@ -4214,6 +4215,7 @@ This spell immediately ends if you cast it again before its duration ends.",
   dmg_type: '',
   id: 147,
 )
+
 
 Spell.create(
   name: "Freedom of Movement",
@@ -4358,7 +4360,7 @@ Any spell of 5th level or lower cast from outside the barrier can't affect creat
 
 At Higher Levels: When you cast this spell using a spell slot of 7th level or higher, the barrier blocks spells of one level higher for each slot level above 6th.",
   school: 'abjuration',
-  range: 'Self (10-foot radius)'
+  range: 'Self (10-foot radius)',
   components: ['V','S','M (a glass or crystal bead that shatters when the spell ends)'],
   duration: 'Concentration, up to 1 minute',
   attack: 'false',
@@ -4387,7 +4389,7 @@ Spell Glyph: You can store a prepared spell of 3rd level or lower in the glyph b
 At Higher Levels: When you cast this spell using a spell slot of 4th level or higher, the damage of an explosive runes glyph increases by 1d8 for each slot level above 3rd. If you create a spell glyph, you can store any spell of up to the same level as the slot you use for the glyph of warding.",
   school: 'abjuration',
   range: 'Touch',
-  cast_time: '1 hour'
+  cast_time: '1 hour',
   components: ['V','S','M (incense and powdered diamond worth at least 200 gp, which the spell consumes)'],
   duration: 'Until dispelled or triggered',
   attack: 'false',
@@ -4418,7 +4420,7 @@ Spell.create(
 
 Until the spell ends, you can direct the vine to lash out at the same creature or another one as a bonus action on each of your turns.",
   school: 'conjuration',
-  cast_time: '1 bonus action'
+  cast_time: '1 bonus action',
   range: '30 feet',
   duration: 'Concentration, up to 1 minute',
   attack: 'false',
@@ -4646,7 +4648,7 @@ Spell.create(
 
 The tactile characteristics of the terrain are unchanged, so creatures entering the area are likely to see through the illusion. If the difference isn't obvious by touch, a creature carefully examining the illusion can attempt an Intelligence (Investigation) check against your spell save DC to disbelieve it. A creature who discerns the illusion for what it is, sees it as a vague image superimposed on the terrain.",
   school: 'illusion',
-  cast_time: '10 minutes'
+  cast_time: '10 minutes',
   range: '300 feet',
   components: ['V','S','M (a stone, a twig, and a bit of green plant)'],
   duration: '24 hours',
@@ -4708,7 +4710,7 @@ Spell.create(
 
 At Higher Levels: When you cast this spell using a spell slot of 2nd level or higher, the healing increases by 1d4 for each slot level above 1st.",
   school: 'evocation',
-  cast_time: '1 bonus action'
+  cast_time: '1 bonus action',
   range: '60 feet',
   components: ['V'],
   attack: 'false',
@@ -4744,7 +4746,7 @@ Spell.create(
 
 At Higher Levels. When you cast this spell using a spell slot of 2nd level or higher, the damage increases by 1d10 for each slot level above 1st.",
   school: 'evocation',
-  cast_time: '1 reaction'
+  cast_time: '1 reaction',
   range: '60 feet',
   attack: 'true',
   atk_dmg: {
@@ -4762,7 +4764,7 @@ Spell.create(
 A creature that partakes of the feast gains several benefits. The creature is cured of all diseases and poison, becomes immune to poison and being frightened, and makes all Wisdom saving throws with advantage. Its hit point maximum also increases by 2d10, and it gains the same number of hit points. These benefits last for 24 hours.",
   school: 'conjuration',
   range: '30 feet',
-  cast_time: '30 minutes'
+  cast_time: '30 minutes',
   components: ['V','S','M (a gem-encrusted bowl worth at least 1,000 gp, which the spell consumes)'],
   attack: 'false',
   atk_dmg: {},
@@ -4797,7 +4799,7 @@ A Remove Curse cast on the target ends this spell early.
 At Higher Levels. When you cast this spell using a spell slot of 3rd or 4th level, you can maintain your concentration on the spell for up to 8 hours. When you use a spell slot of 5th level or higher, you can maintain your concentration on the spell for up to 24 hours.",
   school: 'enchantment',
   range: '90 feet',
-  cast_time: '1 bonus action'
+  cast_time: '1 bonus action',
   components: ['V','S','M (the petrified eye of a newt)'],
   duration: 'Concentration, up to 1 hour',
   attack: 'false',
@@ -4876,7 +4878,7 @@ Spell.create(
 
 At Higher Levels: When you cast this spell using a spell slot of 3rd or 4th level, you can maintain your concentration on the spell for up to 8 hours. When you use a spell slot of 5th level or higher, you can maintain your concentration on the spell for up to 24 hours.",
   school: 'divination',
-  cast_time: '1 bonus action'
+  cast_time: '1 bonus action',
   range: '90 feet',
   components: ['V'],
   duration: 'Concentration, up to 1 hour',
@@ -4949,7 +4951,7 @@ Should the spell be dispelled, the original script and the illusion both disappe
 
 A creature with truesight can read the hidden message.",
   school: 'illusion',
-  cast_time: '1 minute'
+  cast_time: '1 minute',
   range: 'Touch',
   ritual: 1,
   components: ['S','M (a lead-based ink worth at least 10 gp, which the spell consumes)'],
@@ -4994,7 +4996,7 @@ A dispel magic spell can end the spell only if it is cast as a 9th-level spell, 
 You can use a particular special component to create only one prison at a time. If you cast the spell again using the same component, the target of the first casting is immediately freed from its binding.",
   school: 'abjuration',
   range: '30 feet',
-  cast_time: '1 minute'
+  cast_time: '1 minute',
   components: ['V','S','M (a vellum depiction or a carved statuette in the likeness of the target, and a special component that varies according to the version of the spell you choose, worth at least 500 gp per Hit Die of the target)'],
   duration: 'Until dispelled',
   attack: 'false',
@@ -5354,7 +5356,7 @@ When you cast this spell, you can elect to cause its magic to operate in the rev
 
 At Higher Levels: When you cast this spell using a spell slot of 4th level or higher, the duration increases by 1 hour for each slot level above 3rd.",
   school: 'abjuration',
-  cast_time: '1 minute'
+  cast_time: '1 minute',
   range: '10 feet',
   components: ['V','S','M (holy water or powdered silver and iron worth at least 100 gp, which the spell consumes)'],
   duration: '1 hour',
@@ -5381,7 +5383,7 @@ If the container is destroyed or the spell ends, your soul immediately returns t
 
 When the spell ends, the container is destroyed.",
   school: 'necromancy',
-  cast_time: '1 minute'
+  cast_time: '1 minute',
   components: ['V','S','M (a gem, crystal, reliquary, or some other ornamental container worth at least 500 gp)'],
   duration: 'Until dispelled',
   attack: 'false',
@@ -5415,7 +5417,7 @@ When that circumstance occurs, a magical mouth appears on the object and recites
 
 The triggering circumstance can be as general or as detailed as you like, though it must be based on visual or audible conditions that occur within 30 feet of the object. For example, you could instruct the mouth to speak when any creature moves within 30 feet of the object or when a silver bell rings within 30 feet of it.",
   school: 'illusion',
-  cast_time: '1 minute'
+  cast_time: '1 minute',
   ritual: 1,
   range: '30 feet',
   components: ['V','S','M (a small bit of honeycomb and jade dust worth at least 10 gp, which the spell consumes)'],
@@ -5496,7 +5498,7 @@ Spell.create(
 At Higher Levels: When you cast this spell using a spell slot of 4th level or higher, the healing increases by 1d4 for each slot level above 3rd.",
   school: 'evocation',
   range: '60 feet',
-  cast_time: '1 bonus action'
+  cast_time: '1 bonus action',
   components: ['V'],
   attack: 'false',
   atk_dmg: {},
@@ -5586,7 +5588,7 @@ Spell.create(
 This spell can physically repair a magic item or construct, but the spell can't restore magic to such an object.",
   school: 'transmutation',
   range: 'Touch',
-  cast_time: '1 minute'
+  cast_time: '1 minute',
   components: ['V','S','M (two lodestones)'],
   attack: 'false',
   atk_dmg: {},
@@ -5670,7 +5672,7 @@ The illusion includes audible, visual, tactile, and olfactory elements, so it ca
 
 Creatures with truesight can see through the illusion to the terrain's true form, however, all other elements of the illusion remain, so while the creature is aware of the illusion's presence, the creature can still physically interact with the illusion.",
   school: 'illusion',
-  cast_time: '10 minutes'
+  cast_time: '10 minutes',
   range: 'Sight',
   duration: '10 days',
   attack: 'false',
@@ -5719,7 +5721,7 @@ Spell.create(
   level: 2,
   description: "Briefly surrounded by silvery mist, you teleport up to 30 feet to an unoccupied space that you can see.",
   school: 'conjuration',
-  cast_time: '1 bonus action'
+  cast_time: '1 bonus action',
   components: ['V'],
   attack: 'false',
   atk_dmg: {},
@@ -6456,7 +6458,7 @@ This spell closes all mortal wounds, but it doesn't restore missing body parts. 
 Coming back from the dead is an ordeal. The target takes a -4 penalty to all attack rolls, saving throws, and ability checks. Every time the target finishes a long rest, the penalty is reduced by 1 until it disappears.",
   school: 'necromancy',
   range: 'Touch',
-  cast_time: '1 hour'
+  cast_time: '1 hour',
   components: ['V','S','M (a diamond worth at least 500 gp, which the spell consumes)'],
   attack: 'false',
   atk_dmg: {},
@@ -6523,7 +6525,7 @@ Spell.create(
 At Higher Levels. When you cast this spell using a spell slot of 2nd level or higher, the damage increases by 1d8 for each slot level above 1st.",
   school: 'necromancy',
   range: '60 feet',
-  attack: 'true'``,
+  attack: 'true',
   atk_dmg: {
     1=> '2d8',
   },
@@ -6539,7 +6541,7 @@ Spell.create(
 The target's severed body members (fingers, legs, tails, and so on), if any, are restored after 2 minutes. If you have the severed part and hold it to the stump, the spell instantaneously causes the limb to knit to the stump.",
   school: 'transmutation',
   range: 'Touch',
-  cast_time: '1 minute'
+  cast_time: '1 minute',
   components: ['V','S','M (a prayer wheel and holy water)'],
   duration: '1 hour',
   attack: 'false',
@@ -6604,7 +6606,7 @@ Coming back from the dead is an ordeal. The target takes a -4 penalty to all att
 
 Casting this spell to restore life to a creature that has been dead for one year or longer taxes you greatly. Until you finish a long rest, you can't cast spells again, and you have disadvantage on all attack rolls, ability checks, and saving throws.",
   school: 'necromancy',
-  cast_time: '1 hour'
+  cast_time: '1 hour',
   range: 'TOuch',
   components: ['V','S','M (a diamond worth at least 1,000 gp, which the spell consumes)'],
   attack: 'false',
@@ -6729,7 +6731,7 @@ On a failed save, the spell creates an invisible sensor within 10 feet of the ta
 
 Instead of targeting a creature, you can choose a location you have seen before as the target of this spell. When you do, the sensor appears at that location and doesn't move.",
   school: 'divination',
-  cast_time: '10 minutes'
+  cast_time: '10 minutes',
   components: ['V','S','M (a focus worth at least 1,000 gp, such as a crystal ball, a silver mirror, or a font filled with holy water)'],
   duration: 'Concentration, up to 10 minutes',
   attack: 'false',
@@ -6748,7 +6750,7 @@ At the start of each of its turns until the spell ends, the target must make a C
 At Higher Levels. When you cast this spell using a spell slot of 2nd level or higher, the initial extra damage dealt by the attack increases by 1d6 for each slot.",
   school: 'evocation',
   components: ['V'],
-  cast_time: '1 bonus action'
+  cast_time: '1 bonus action',
   duration: 'Concentration, up to 1 minute',
   attack: 'false',
   atk_dmg: {},
@@ -8077,23 +8079,23 @@ Spell.create(
 )
 =end
 
-bard = Array[](5,6,9,23,24,30,33,37,43,45,50,52,59,60,62,83,85,86,94,96,97,98,101,102,106,107,109,114,118,119,122,124,126,127,128,129,132,146,147,148,149,152,155,157,161,162,164,170,174,175,178,180,185,187,188,193,195,196,198,199,201,204,205,206,207,209,213,215,216,219,223,224,226,227,228,230,232,235,237,239,243,246,250,252,254,255,256,257,259,263,264,269,274,278,285,287,288,289,292,297,298,300,304,305,306,312,316,320,321,324,325,330,332,335,337,338,340,342,359)
-cleric = Array[](2,8,11,18,19,24,26,28,30,32,34,37,43,50,55,56,65,72,75,76,79,80,81,85,89,93,94,95,100,101,103,104,111,114,119,129,132,133,138,140,145,148,151,152,153,157,162,163,165,166,169,171,173,174,177,181,182,191,192,196,199,201,205,206,210,216,217,218,221,223,249,250,251,258,265,266,267,268,269,274,276,277,278,280,282,283,285,289,294,297,303,305,309,310,313,320,327,332,336,337,348,350,357,359)
-druid = Array[](5,6,7,10,12,23,27,29,35,42,45,57,62,63,66,67,68,70,72,75,76,80,85,88,94,95,101.105,109,110,111,114,117,124,128,129,132,133,138,139,141,144,147,148,152,154,158,159,162,165,167,170,173,174,175,177,181,186,192,194,199,204,205,206,207,216,221,223,228,233,238,244,250,251,252,253,254,262,265,267,268,274,275,277,279,285,291,295,301.304,306,308,313,314,315,317,318,328,330,333,334,336,339,343,346,347,349,350,353,354)
-paladin = Array[](2,20,21,22,25,26,34,36,40,49,55,58,79,84,85,89,92,93,94,95,100,101,113,131,133,152,178,194,199,205,206,210,214,266,267,268,269,276,280,286,294,311,329,358,359)
-ranger = Array[](3,5,6,27,29,57,63,64,69,70,77,85,88,94,95,116,133,144,148,158,159,168,184,199,202,204,205,206,207,239,244,252,265,267,297,304,306,308,314,319,334,349,350,354)
-sorceror = Array[](1,4,9,14,26,33,35,37,38,39,41,44,45,46,47,48,50,52,53,54,59,61,62,78,82,83,86,87,88,90,94.96,97,98,99,101,105,106,107,111,114,115,119,121,122,125,126,127,134,135,136,138,143,144,149,150,151,156,161,167,172,180,181,185,186,190,192,193,194,195,200,201,203,208,209,212,215,219,223,224,225,227,229,231,238,246,251,253,254,256,257,259,260,265,272,273,279,284,288,293,296,298,300,301,302,307,312,314,316,317,318,322,324,325,330,331,332,337,338,343,346,349,350,351,355,356)
-warlock = Array[](14,16,17,18,26,33,35,45,46,48,52,59,67,71,78,81,83,87,91,97,101,106,109,112,118,119,121,122,126,128,134,142,143,146,147,149,150,155,170,176,179,180,181,183,185,188,189,193,209,210,215,219,227,229,231,251,253,256,257,259,266,271,276,285,287,292,307,316,332,335,337,338,340,341,356)
-wizard = Array[](1,3,4,8,9,11,12,13,14,15,18,26,30,31,33,35,37,38,39,41,44,45,46,47,48,50,51,52,53,54,59,61,62,66,68,71,73,75,76,78,81,82,83,86,87,88,90,91,94,96,97,98,99,101,106,107,108,109,115,119,120,121,122,123,125,126,127,128,129,130,134,135,136,137,141,142,143,144,146,147,149,150,151,152,153,156,157,160,161,164,167,170,172,180,181,185,186,187,188,189,190,193,194,195,196,197,198,200,201,203,205,206,207,208,209,210,211,212,213,214,215,219,220,222,223,224,225,226,227,228,229,230,231,232,234,235,236,237,238,239,240,241,242,243,245,246,247,248,250,251,253,254,256,257,259,260,261,263,264,265,266,270,271,272,273,276,279,281,284,285,287,288,289,290,291,292,293,296,298,299,300,301,302,307,312,313,314,316,317,318,320,321,322,323,324,325,326,330,331,332,335,337,338,340,341,343,344,345,346,349,351,352,355,356)
+bard = [5,6,9,23,24,30,33,37,43,45,50,52,59,60,62,83,85,86,94,96,97,98,101,102,106,107,109,114,118,119,122,124,126,127,128,129,132,146,147,148,149,152,155,157,161,162,164,170,174,175,178,180,185,187,188,193,195,196,198,199,201,204,205,206,207,209,213,215,216,219,223,224,226,227,228,230,232,235,237,239,243,246,250,252,254,255,256,257,259,263,264,269,274,278,285,287,288,289,292,297,298,300,304,305,306,312,316,320,321,324,325,330,332,335,337,338,340,342,359]
+cleric = [2,8,11,18,19,24,26,28,30,32,34,37,43,50,55,56,65,72,75,76,79,80,81,85,89,93,94,95,100,101,103,104,111,114,119,129,132,133,138,140,145,148,151,152,153,157,162,163,165,166,169,171,173,174,177,181,182,191,192,196,199,201,205,206,210,216,217,218,221,223,249,250,251,258,265,266,267,268,269,274,276,277,278,280,282,283,285,289,294,297,303,305,309,310,313,320,327,332,336,337,348,350,357,359]
+druid = [5,6,7,10,12,23,27,29,35,42,45,57,62,63,66,67,68,70,72,75,76,80,85,88,94,95,101.105,109,110,111,114,117,124,128,129,132,133,138,139,141,144,147,148,152,154,158,159,162,165,167,170,173,174,175,177,181,186,192,194,199,204,205,206,207,216,221,223,228,233,238,244,250,251,252,253,254,262,265,267,268,274,275,277,279,285,291,295,301.304,306,308,313,314,315,317,318,328,330,333,334,336,339,343,346,347,349,350,353,354]
+paladin = [2,20,21,22,25,26,34,36,40,49,55,58,79,84,85,89,92,93,94,95,100,101,113,131,133,152,178,194,199,205,206,210,214,266,267,268,269,276,280,286,294,311,329,358,359]
+ranger = [3,5,6,27,29,57,63,64,69,70,77,85,88,94,95,116,133,144,148,158,159,168,184,199,202,204,205,206,207,239,244,252,265,267,297,304,306,308,314,319,334,349,350,354]
+sorceror = [1,4,9,14,26,33,35,37,38,39,41,44,45,46,47,48,50,52,53,54,59,61,62,78,82,83,86,87,88,90,94.96,97,98,99,101,105,106,107,111,114,115,119,121,122,125,126,127,134,135,136,138,143,144,149,150,151,156,161,167,172,180,181,185,186,190,192,193,194,195,200,201,203,208,209,212,215,219,223,224,225,227,229,231,238,246,251,253,254,256,257,259,260,265,272,273,279,284,288,293,296,298,300,301,302,307,312,314,316,317,318,322,324,325,330,331,332,337,338,343,346,349,350,351,355,356]
+warlock = [14,16,17,18,26,33,35,45,46,48,52,59,67,71,78,81,83,87,91,97,101,106,109,112,118,119,121,122,126,128,134,142,143,146,147,149,150,155,170,176,179,180,181,183,185,188,189,193,209,210,215,219,227,229,231,251,253,256,257,259,266,271,276,285,287,292,307,316,332,335,337,338,340,341,356]
+wizard = [1,3,4,8,9,11,12,13,14,15,18,26,30,31,33,35,37,38,39,41,44,45,46,47,48,50,51,52,53,54,59,61,62,66,68,71,73,75,76,78,81,82,83,86,87,88,90,91,94,96,97,98,99,101,106,107,108,109,115,119,120,121,122,123,125,126,127,128,129,130,134,135,136,137,141,142,143,144,146,147,149,150,151,152,153,156,157,160,161,164,167,170,172,180,181,185,186,187,188,189,190,193,194,195,196,197,198,200,201,203,205,206,207,208,209,210,211,212,213,214,215,219,220,222,223,224,225,226,227,228,229,230,231,232,234,235,236,237,238,239,240,241,242,243,245,246,247,248,250,251,253,254,256,257,259,260,261,263,264,265,266,270,271,272,273,276,279,281,284,285,287,288,289,290,291,292,293,296,298,299,300,301,302,307,312,313,314,316,317,318,320,321,322,323,324,325,326,330,331,332,335,337,338,340,341,343,344,345,346,349,351,352,355,356]
 
 Bard_list = ClassSpellList.create( name: 'Bard' )
 Cleric_list = ClassSpellList.create( name: 'Cleric' )
 Druid_list = ClassSpellList.create( name: 'Druid' )
-Pal_list = ClassSpellList.create( name: 'Paladin' )
-Ran_list = ClassSpellList.create( name: 'Ranger' )
-Sorc_list = ClassSpellList.create( name: 'Sorceror' )
-War_list = ClassSpellList.create( name: 'Warlock' )
-Wiz_list = ClassSpellList.create( name: 'Wizard' )
+Paladin_list = ClassSpellList.create( name: 'Paladin' )
+Ranger_list = ClassSpellList.create( name: 'Ranger' )
+Sorceror_list = ClassSpellList.create( name: 'Sorceror' )
+Warlock_list = ClassSpellList.create( name: 'Warlock' )
+Wizard_list = ClassSpellList.create( name: 'Wizard' )
 
 bard.each do |index|
   ClassSpellListsSpells.create(
@@ -8161,7 +8163,7 @@ Armor.create(
 Armor.create(
   weight: 10,
   cost_gp: 10,
-  name: 'Leather'
+  name: 'Leather',
 )
 
 Armor.create(
@@ -8176,7 +8178,7 @@ Armor.create(
   ac_base: 12,
   weight: 12,
   cost_gp: 10,
-  name: 'Hide Armor'
+  name: 'Hide Armor',
 )
 
 Armor.create(
@@ -8184,7 +8186,7 @@ Armor.create(
   ac_base: 13,
   weight: 20,
   cost_gp: 50,
-  name: 'Chain Shirt'
+  name: 'Chain Shirt',
 )
 
 Armor.create(
@@ -8193,7 +8195,7 @@ Armor.create(
   stealth_disadvantage: 1,
   weight: 45,
   cost_gp: 50,
-  name: 'Scale Mail'
+  name: 'Scale Mail',
 )
 
 Armor.create(
@@ -8201,7 +8203,7 @@ Armor.create(
   ac_base: 14,
   weight: 20,
   cost_gp: 400,
-  name: 'Breastplate'
+  name: 'Breastplate',
 )
 
 Armor.create(
@@ -8210,7 +8212,7 @@ Armor.create(
   stealth_disadvantage: 1,
   weight: 40,
   cost_gp: 750,
-  name: 'Half Plate'
+  name: 'Half Plate',
 )
 
 Armor.create(
@@ -8219,7 +8221,7 @@ Armor.create(
   stealth_disadvantage: 1,
   weight: 40,
   cost_gp: 30,
-  name: 'Ring Mail'
+  name: 'Ring Mail',
 )
 
 Armor.create(
@@ -8229,7 +8231,7 @@ Armor.create(
   weight: 55,
   cost_gp: 75,
   str_req: 13,
-  name: 'Chain Mail'
+  name: 'Chain Mail',
 )
 
 Armor.create(
@@ -8239,7 +8241,7 @@ Armor.create(
   weight: 60,
   cost_gp: 200,
   str_req: 15,
-  name: 'Splint Armor'
+  name: 'Splint Armor',
 )
 
 Armor.create(
@@ -8249,7 +8251,7 @@ Armor.create(
   weight: 65,
   cost_gp: 1500,
   str_req: 15,
-  name: 'Full Plate Steel'
+  name: 'Full Plate Steel',
 )
 
 Armor.create(
@@ -8257,7 +8259,7 @@ Armor.create(
   ac_base: 2,
   weight: 6,
   cost_gp: 10,
-  name: 'Round Shield'
+  name: 'Round Shield',
 )
 
 Armor.create(
@@ -8265,14 +8267,14 @@ Armor.create(
   ac_base: 2,
   weight: 6,
   cost_gp: 10,
-  name: 'Wooden Shield'
+  name: 'Wooden Shield',
 )
 
 Weapon.create(
   properties: ['Light'],
   weight: 2,
   cost_gp: 1,
-  name: 'Club'
+  name: 'Club',
 )
 
 Weapon.create(
