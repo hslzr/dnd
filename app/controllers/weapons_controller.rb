@@ -11,12 +11,12 @@ class WeaponsController < ApplicationController
 
   def show
     respond_to do |format|
-      format.json { render json: @weapon }
+      format.json { render json: @weapons }
     end
   end
 
   private
   def set_weapon
-    @weapon = Weapon.where(wep_type: params[:wep_type])
+    @weapons = Weapon.where(wep_type: params[:wep_type])
   end
 end

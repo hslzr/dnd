@@ -656,9 +656,8 @@ export default class extends Controller {
     }
   }
 
-  //code 0 : run class and subclass featureHandlers
-  //code 1 : dont run featureHandles, do run calculateStats
-  //code 2 : don't run calculateStats
+  //code 0 : run everything
+  //code 1 : dont run updatetats or statModUpdate
   finalPass(code = 0) {
     //consoel.log('finalPass');
 
@@ -1100,6 +1099,14 @@ export default class extends Controller {
       let extra_profs = mods['extra_profs'] || false;
       if (extra_profs) {
         this.populateExtraSkillsModal(extra_profs);
+      }
+
+      //seed passes in type of equipment and a number, we put a select box with equip of that type
+      let extra_equipment = mods['extra_equip'] || false;
+      if (extra_equipment) {
+        console.log('extra equipment');
+        extra_equipment
+        this.equipmentModalListTarget.firstChild.append()
       }
     }
   }
@@ -1757,17 +1764,22 @@ export default class extends Controller {
     let title = Util.getTag('h4', 'font-bold text-xl', spell.name);
     frame.append(title);
     let splitter = spell.description.split('\n');
-    frame.append(getRow('Description',splitter[0]));
-    
+
+    frame.append(getRow('Level: ', spell.level));
+    frame.append(getRow('Cast Time: ', spell.cast_time ));
+    frame.append(getRow('Range: ', spell.range));
+    frame.append(getRow('Components: ', spell.components.join(', ')));
+    frame.append(getRow('Duration: ', spell.duration));
     if(spell.attack != 'false') {
       let dmg_out;
       Object.entries(spell.atk_dmg).forEach((level) => {
         if (parseInt(level[0]) <= this.level) dmg_out = level[1];
       });
-      frame.append(
-        Util.getTag('p', '', `${dmg_out} ${spell.dmg_type} Damage`)
-      );
+      frame.append(getRow('Damage: ',`${dmg_out} ${spell.dmg_type}`));
     }
+    frame.append(getRow('Description: ',splitter[0]));
+    
+    
     target.append(frame);
   }
   //-----------------Extra Spells Modal ------------------//
@@ -2072,6 +2084,18 @@ export default class extends Controller {
   }
   //-----------------Equipment Modal ------------------//
 
+  //working with this section of the class and background 
+  /*
+  equipment_choices: {
+    'choices' => [
+      ['Rapier#1','Longsword#1','simple#1'],
+      ["Diplomat's Pack#1","Entertainer's Pack#1"],
+      ['Lute#1','Bagpipes#1'],
+    ],
+    'default' => ['Leather Armor#1','Dagger#1'],
+  },
+  */
+
   chooseEquipment() {
     //consoel.log('chooseEquipment');
     Util.removeAllChildNodes(this.equipmentClassStartTarget);
@@ -2082,7 +2106,7 @@ export default class extends Controller {
       class_choices = this.class_equip_choices['choices'];
 
     if (this.bg_equip_choices['choices'].length > 0)
-      bg_choices = (this.bg_equip_choices['choices'], 'Background');
+      bg_choices = this.bg_equip_choices['choices'];
 
     if (class_choices) {
       this.populateEquipmentModal(
@@ -2116,16 +2140,26 @@ export default class extends Controller {
     }
   }
 
+  /* choices looks like this
+    [
+      ['Rapier#1','Longsword#1','simple#1'],
+      ["Diplomat's Pack#1","Entertainer's Pack#1"],
+      ['Lute#1','Bagpipes#1'],
+    ],
+  */
   populateEquipmentModal(choices, target, title) {
     Util.removeAllChildNodes(target);
 
     choices.forEach((choice) => {
-      let number_of_choices = choice.length;
+      let number_of_choices = choice.length; //[3,3,2] above
       let container = Util.getTag('div', 'equipment-row');
 
-      choice.forEach((code) => {
-        if (typeof code == 'string') {
+      choice.forEach((code) => { //'Rapier#1'  or 'Longsword#1'
+        if (typeof code == 'string') { //I think this is the only one that will ever fire
+
+
           let values = code.split('#');
+
           let choice_box = Util.getTag('div', 'choice-box');
           container.append(choice_box);
 
@@ -2134,26 +2168,14 @@ export default class extends Controller {
             'flex gap-4 items-center justify-center'
           );
           choice_box.append(choice_labels);
+
 
           for (let i = 0; i < parseInt(values[1]); i++) {
-            switch (values[0]) {
-              case 'simple':
-                Util.appendWeaponSelectToTarget(
-                  'simple',
-                  choice_labels
-                );
-                break;
-              case 'martial':
-                Util.appendWeaponSelectToTarget(
-                  'martial',
-                  choice_labels
-                );
-                break;
-              default:
-                choice_labels.append(
-                  Util.getTag('p', 'p-1', values[0])
-                );
-                break;
+            //codes for a select box are all lowercase, but named items are capitalized
+            if(values[0].toLowerCase() == values[0]) {
+              Util.getSelect(values[0], choice_labels);
+            } else {
+              choice_labels.append(Util.getTag('p','p-1',values[0]));
             }
           }
           let checkbox = Util.getTag('input', '');
@@ -2163,48 +2185,7 @@ export default class extends Controller {
           container.append(
             Util.getTag('p', 'text-lg font-black', 'or')
           );
-        } else {
-          let choice_box = Util.getTag('div', 'choice-box');
-          container.append(choice_box);
-
-          let choice_labels = Util.getTag(
-            'div',
-            'flex gap-4 items-center justify-center'
-          );
-          choice_box.append(choice_labels);
-          for (let item of code) {
-            let values = item.split('#');
-            for (let i = 0; i < parseInt(values[1]); i++) {
-              switch (values[0]) {
-                case 'simple':
-                  Util.appendWeaponSelectToTarget(
-                    'simple',
-                    choice_labels
-                  );
-                  break;
-                case 'martial':
-                  Util.appendWeaponSelectToTarget(
-                    'martial',
-                    choice_labels
-                  );
-                  break;
-                default:
-                  choice_labels.append(
-                    Util.getTag('p', 'p-1', values[0])
-                  );
-                  break;
-              }
-            }
-          }
-
-          let checkbox = Util.getTag('input', '');
-          checkbox.type = 'checkbox';
-          choice_box.prepend(checkbox);
-
-          container.append(
-            Util.getTag('p', 'text-lg font-black', 'or')
-          );
-        }
+        } else { console.log( 'code not a string' ); }
       });
       container.removeChild(container.lastChild); //get rid of last 'or'
       target.append(container);

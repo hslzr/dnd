@@ -42,4 +42,26 @@ class LabelsController < ApplicationController
       format.json { render json: @spells}
     end
   end
+
+  def instrument
+    @instruments = Tool.where(tool_type: 'instrument')
+
+    respond_to do |format|
+      format.json { render json: @instruments}
+    end
+  end
+
+  def gearpack
+    @packs = Gearpack.all
+    respond_to do |format|
+      format.json { render json: @packs}
+    end
+  end
+
+  def artisan
+    @tools = Tool.where(tool_type: 'artisan')
+    respond_to do |format|
+      format.json { render json: @tools}
+    end
+  end
 end

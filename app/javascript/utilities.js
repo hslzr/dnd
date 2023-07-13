@@ -198,6 +198,57 @@ export function getTag(string, classname, content) {
   return out;
 }
 
+//supports simple and martial for now
+//testing instrument, backpack, focus, artisan
+
+//type == string, select box will be appended to sel_target async
+export function getSelect(type, sel_target) {
+  let selector = getTag('select', 'rounded-md');
+
+  let plate_title;
+  let fetch_prefix;
+  //set our fetch routes and titles
+  switch(type) {
+    case 'simple':
+      plate_title = type.charAt(0).toUpperCase() + type.slice(1) + ' Weapon';
+      fetch_prefix = '/weapons/';
+      break;
+    case 'martial':
+      plate_title = type.charAt(0).toUpperCase() + type.slice(1) + ' Weapon';
+      fetch_prefix = '/weapons/';
+      break;
+    case 'instrument':
+      plate_title = type.charAt(0).toUpperCase() + type.slice(1);
+      fetch_prefix = '/labels/';
+      break;
+    case 'gearpack':
+      plate_title = 'Backpack';
+      fetch_prefix = '/labels/';
+      break;
+    case 'artisan':
+      plate_title = "Artisan's Tools";
+      fetch_prefix = '/labels/';
+      break;
+    default:
+      'select pop error';
+      break;
+  }
+  
+  let plate = getTag('option', '', `- ${plate_title} -`);
+  selector.append(plate);
+
+  fetch( fetch_prefix + type )
+    .then((response) => response.json())
+    .then((data) => {
+      data.forEach((item) => {
+        let option = getTag('option', '', item['name']);
+        option.value = item['name'];
+        selector.append(option);
+      });
+      sel_target.append(selector);
+    });
+}
+
 //empty an Element of children
 export function removeAllChildNodes(parent) {
   while (parent.firstChild) {

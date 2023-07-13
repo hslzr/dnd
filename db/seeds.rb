@@ -770,7 +770,7 @@ Bard = PlayerClass.create(
     'choices' => [
       ['Rapier#1','Longsword#1','simple#1'],
       ["Diplomat's Pack#1","Entertainer's Pack#1"],
-      ['Lute#1','Bagpipes#1'],
+      ['Lute#1','instrument#1'],
     ],
     'default' => ['Leather Armor#1','Dagger#1'],
   },
@@ -846,8 +846,7 @@ Bard = PlayerClass.create(
       "Superior Inspiration: When you roll initiative and have no uses of Bardic Inspiration left, you regain one use."
     ],
   },
-  custom: {
-  },
+  custom: {},
   extra_spells: {
     'Any'=> {
       'source'=> 'Magical Secrets',
@@ -1345,7 +1344,7 @@ Monk = PlayerClass.create(
   equipment_choices: {
     'choices'=>[
       ['Shortsword#1','simple#1'],
-      ['DUngeoneer\'s Pack#1','Explorer\'s Pack']
+      ['Dungeoneer\'s Pack#1','Explorer\'s Pack#1']
     ],
     'default'=> ['Darts#1']
   },
@@ -1565,7 +1564,7 @@ Acolyte = Background.create(
   skills: ['Insight', 'Religion'],
   extra_languages: 2,
   equipment_choices: {
-    'choices'=>[],
+    'choices'=>[['Longsword#1','martial#1']],
     'default'=>[
       'Holy Emblem#1',
       'Prayer Book#1',
@@ -3279,7 +3278,11 @@ Once you detect the presence of a creature in this way, you can read its thought
 Spell.create(
   name: 'Dimension Door',
   level: 4,
-  description: "",
+  description: "You teleport yourself from your current location to any other spot within range. You arrive at exactly the spot desired. It can be a place you can see, one you can visualize, or one you can describe by stating distance and direction, such as 200 feet straight downward or upward to the northwest at a 45-degree angle, 300 feet.
+
+  You can bring along objects as long as their weight doesn't exceed what you can carry. You can also bring one willing creature of your size or smaller who is carrying gear up to its carrying capacity. The creature must be within 5 feet of you when you cast this spell.
+  
+  If you would arrive in a place already occupied by an object or a creature, you and any creature traveling with you each take 4d6 force damage, and the spell fails to teleport you.",
   school: 'conjuration',
   range: '500 feet',
   components: ['V'],
