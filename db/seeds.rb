@@ -1033,6 +1033,7 @@ Cleric.subclasses.create(
       Once you use this feature, you can't use it again until you finish a short or long rest."
     ],
   },
+  extra_languages: 2,
   custom: {},
   extra_spells: {},
   specific_spells: {
@@ -1044,7 +1045,11 @@ Cleric.subclasses.create(
     'stat'=>'Wisdom',
     'source'=>'Knowledge Domain',
   },
-  custom_mods: {},
+  custom_mods: {
+    'expertise_choices' => ['Arcana','Nature','History','Religion'],
+    'num_expertise'=> 2,
+    'expertise_source'=> 'Knowledge Domain',
+  },
 )
 
 Druid = PlayerClass.create(

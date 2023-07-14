@@ -104,6 +104,7 @@ export default class extends Controller {
     'subclassSkills',
     'backgroundSkills',
     'featSkills',
+    'expertiseSkills',
     'raceLanguages',
     'extraLanguages',
     'subraceLanguages',
@@ -349,7 +350,6 @@ export default class extends Controller {
   }
 
   catUpdate(data, cat_type) {
-    //consoel.log('catUpdate');
     //event.target.id is actually the :name param
     let languages, extra_lang, skills, weps, arm, tools, features;
     let finalCode = 0;
@@ -448,13 +448,14 @@ export default class extends Controller {
           this.chaSaveProfTarget,
         ];
         primary_proficiencies.forEach((target) => {
-          target.classList.remove('bg-black');
+          target.classList.remove(this.prof_color);
+          target.classList.remove(this.expertise_color);
         });
 
         //this.saving_throws has indexes of primary_proficiences whose text we set to '+'
         for (let i = 0; i < this.saving_throws.length; i++) {
           let item = this.saving_throws[i];
-          primary_proficiencies[item].classList.add('bg-black');
+          primary_proficiencies[item].classList.add(this.prof_color);
         }
 
         //class skill options for modal
@@ -615,11 +616,11 @@ export default class extends Controller {
     tools,
     features
   ) {
-    //consoel.log('populateCatAbilities');
     //not all categories have these so I'm defaulting to empty array
     //which will make putClassFeatures fizzle out and do nothing
     let data_lang = data.languages || [];
     this.languages.set(cat_type, data_lang);
+
     let data_extra_lang = data.extra_languages || [];
     this.extra_languages.set(cat_type, data_extra_lang);
 
@@ -627,6 +628,7 @@ export default class extends Controller {
 
     let data_weps = data.weapons || [];
     this.weapons.set(cat_type, data_weps);
+    
     let data_arm = data.armor || [];
     this.armor.set(cat_type, data_arm);
 
@@ -666,10 +668,6 @@ export default class extends Controller {
   //code 0 : run everything
   //code 1 : dont run updatetats or statModUpdate
   finalPass(code = 0) {
-    //consoel.log('finalPass');
-
-    //consoel.log(code);
-
     this.setSkillMap();
     this.populateSkillModifiers();
     this.classFeatureHandler(); //we depend on level to show correct class features so we have to do these in finalPass
@@ -734,6 +732,7 @@ export default class extends Controller {
 
   //----------------------------- Final Pass methods ---------------------------------//
   setSkillMap() {
+    console.log('setSkillMap');
     this.skills.set('Athletics', [
       this.stats[0],
       this.athleticsModTarget,
@@ -988,7 +987,8 @@ export default class extends Controller {
     }
   }
 
-  /*
+  populateSpecificSpells() {
+    /*
     specific_spells: {
       1=>[['Command','Normal'],['Identify','Normal']],
       3=>[['Augury','Normal'],['Suggestion','Normal']],
@@ -999,7 +999,6 @@ export default class extends Controller {
       'source'=>'Knowledge Domain',
     },
   */
-  populateSpecificSpells() {
     Util.removeAllChildNodes(this.specSpellsListTarget);
 
     for (let item of this.specificSpells.values()) {
@@ -1034,6 +1033,7 @@ export default class extends Controller {
   }
 
   resetProficiencies() {
+    console.log('resetProficiencies');
     let sources = [
       this.raceSkillsTarget,
       this.subraceSkillsTarget,
@@ -1045,28 +1045,50 @@ export default class extends Controller {
     ];
 
     let assigned_skills = [];
+    let expertise_skills = [];
 
+    let exp_source = this.expertiseSkillsTarget;
+
+    //find a way to make this discern between proficiency and expertise
     sources.forEach((source) => {
       source.childNodes.forEach((node) => {
         let text = node.innerText;
-        if (!assigned_skills.includes(text) && text.slice(-1) != ':')
-          assigned_skills.push(node.innerText);
+        if (!assigned_skills.includes(text))
+          assigned_skills.push(text);
       });
     });
 
+    exp_source.childNodes.forEach((node) => {
+      let text = node.innerText;
+      if (text != 'Expertise') 
+        expertise_skills.push(text);
+    });
+
     //set proftarget innerText which will get picked up by updateAllProficiencies
+    //duplicate for expertise
     let iter = this.skills.entries();
     for (let i = 0; i < this.skills.size; i++) {
       let entry = iter.next().value;
+
+      let name = entry[0];
+      let profTarget = entry[1][2];
+
+
       if (assigned_skills.includes(entry[0]))
-        entry[1][2].classList.add('bg-black');
-      else entry[1][2].classList.remove('bg-black');
+        profTarget.classList.add(this.prof_color);
+      else profTarget.classList.remove(this.prof_color);
+
+      if (expertise_skills.includes(entry[0])) {
+        profTarget.classList.remove(this.prof_color);
+        profTarget.classList.add(this.expertise_color);
+      } else profTarget.classList.remove(this.expertise_color);
     }
 
     this.updateAllProficiencies();
   }
 
   customModifiers() {
+    console.log('customModifiers');
     let keys = this.customMods.keys();
     for (let key of keys) {
       let mods = this.customMods.get(key); //we loop over every custom_mods assigned
@@ -1119,12 +1141,20 @@ export default class extends Controller {
       if (extra_profs) {
         this.populateExtraSkillsModal(extra_profs);
       }
+
+      //extra proficiency expertise selections
+      let expertise_choices = mods['expertise_choices'] || false;
+      if(expertise_choices) {
+        let num = mods['num_expertise'];
+        let source = mods['expertise_source'];
+        this.populateExtraExpertise(expertise_choices, num, source);
+      }
+
     }
   }
 
   //------------------------------- customModifiers() methods
   populateModASI(length) {
-    //consoel.log('populateModASI');
     let list = ['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA'];
     for (let i = 0; i < length; i++) {
       let container = Util.getTag('div', 'asi-box');
@@ -1151,14 +1181,16 @@ export default class extends Controller {
   }
 
   populateExtraSkillsModal(array) {
+    /*
+      'extra_profs'=> [
+        [1,2],
+      ],
+    */
     Util.removeAllChildNodes(this.extraSkillsModalListTarget);
-    //consoel.log(array);
+    //console.log(array);
     let count = 0;
     for (let item of array) {
       if (item[0] <= this.level) count += item[1];
-    }
-    if (count == 0) {
-      //consoel.log('no extras');
     }
 
     for (let j = 0; j < count; j++) {
@@ -1170,27 +1202,51 @@ export default class extends Controller {
     }
   }
 
+  //put num selects with choices options to extraSkillsModalListTarget
+  populateExtraExpertise(choices, num, source) {
+    this.extraSkillsModalListTarget.append(Util.getTag('h4','col-span-full text-lg font-bold',`Expertise from ${source}`))
+    for(let i = 0; i < num; i++) {
+      Util.putSelect(
+        'Expertise',
+        choices,
+        this.extraSkillsModalListTarget
+      );
+    }
+  }
+
   submitExtraSkillsChoices() {
     Util.removeAllChildNodes(this.modSkillsTarget);
 
     let chosen = [];
+    let expertise = [];
+
     //the checkboxes are wrapped in a span for alignment
     this.extraSkillsModalListTarget.childNodes.forEach((node) => {
-      chosen.push(node.value);
+      if (node.tagName == 'SELECT') {
+        if(node.firstChild.innerText == 'Skills') {
+          chosen.push(node.value);
+        } else {
+          expertise.push(node.value);
+        }
+      }
     });
+
     Util.putModalChecksToSheet(
       chosen,
       this.modSkillsTarget,
       'Extra Skills'
     );
-    //not called beacuse we are calling this from within a different submit button
-    //event.target.parentNode.close();
-    //this.resetProficiencies();
+
+    Util.putModalChecksToSheet(
+      expertise,
+      this.expertiseSkillsTarget,
+      'Expertise'
+    )
   }
+
   //----------------------------- Choice Modals ---------------------------------//
   //----------------- Languages Modal ------------------//
   chooseLanguages() {
-    //consoel.log('chooseLanguages');
     let allLanguages = [
       'Common',
       'Elvish',
@@ -1262,7 +1318,6 @@ export default class extends Controller {
   }
   //----------------- Tools Modal ------------------//
   chooseTools() {
-    //consoel.log('chooseTools');
     Util.removeAllChildNodes(this.toolsModalListTarget);
 
     Util.putSelect(
@@ -1289,7 +1344,6 @@ export default class extends Controller {
   }
   //----------------- Class Skills Modal ------------------//
   chooseClassSkills() {
-    //consoel.log('chooseCLassSkills');
     Util.removeAllChildNodes(this.classSkillsModalListTarget);
 
     for (let i = 0; i < this.numClassSkillChoices; i++) {
@@ -1323,7 +1377,6 @@ export default class extends Controller {
 
   //----------------- Class Features Modal ------------------//
   chooseClassFeatures(features) {
-    //consoel.log('chooseClassFeatures');
     Util.removeAllChildNodes(this.classfeaturesModalListTarget);
     features.forEach((item) => {
       if (parseInt(item[0]) <= this.level) {
@@ -1369,7 +1422,6 @@ export default class extends Controller {
   }
   //----------------- Subclass Modal ------------------//
   chooseSubclassFeatures(features) {
-    //consoel.log('chooseSubclassFeatures');
     Util.removeAllChildNodes(this.subclassfeaturesModalListTarget);
     features.forEach((item) => {
       if (parseInt(item[0]) <= this.level) {
@@ -1439,7 +1491,6 @@ export default class extends Controller {
   }
   //------------------ Level Up ASI Choices ------------//
   chooseASI() {
-    //consoel.log('chooseASI');
     let feature_nodes = this.classFeaturesTarget.children;
     let asi_nodes = Array.from(feature_nodes).filter(
       (node) => node.innerText == 'Ability Score Increase:'
@@ -1569,7 +1620,6 @@ export default class extends Controller {
 
   //----------------- TBIF Modal ------------------//
   chooseTBIF() {
-    //consoel.log('chooseTBIF');
     Util.removeAllChildNodes(this.traitsModalListTarget);
 
     let kinds = [
@@ -1663,7 +1713,6 @@ export default class extends Controller {
   }
   //----------------- Spell Modal ------------------//
   chooseSpells() {
-    //consoel.log('chooseSpells');
     let max_spell_level = 0;
     for (let i = 2; i < 11; i++) {
       if (this.spell_table[this.level - 1][i] > 0) max_spell_level++;
@@ -1827,7 +1876,6 @@ export default class extends Controller {
   }
   //-----------------Extra Spells Modal ------------------//
   chooseExtraSpells() {
-    //consoel.log('chooseExtraSpells');
     //at this point we are in finalPass and our state variables are populated
     //check for an empty collection to skip all this stuff for classes without extra spell lists
     //we have to go through each collection, fetch the data needed, and populate the sheet or modal
@@ -2139,7 +2187,6 @@ export default class extends Controller {
   },
   */
   chooseEquipment() {
-    //consoel.log('chooseEquipment');
     Util.removeAllChildNodes(this.equipmentClassStartTarget);
     Util.removeAllChildNodes(this.equipmentBGStartTarget);
     let class_choices = false;
@@ -2492,7 +2539,6 @@ export default class extends Controller {
 
   //----------------------------- Base Stat Methods ---------------------------------//
   statModUpdate() {
-    //consoel.log('statModUpdate');
     let statmod_targets = [
       this.strModTarget,
       this.dexModTarget,
