@@ -751,6 +751,8 @@ Barbarian.subclasses.create(
   specific_spells: {
     3=>[['Beast Sense','Ritual'],['Speak With Animals','Ritual']],
     10=>[['Commune With Nature','Ritual']],
+    'stat'=>'None',
+    'source'=>'Totem Warrior',
   },
   custom_mods: {},
 )
@@ -1034,11 +1036,13 @@ Cleric.subclasses.create(
   custom: {},
   extra_spells: {},
   specific_spells: {
-   1=>[['Command','Normal'],['Identify','Normal']],
-   3=>[['Augury','Normal'],['Suggestion','Normal']],
-   5=>[['Nondetection','Normal'],['Speak With the Dead','Normal']],
-   7=>[['Arcane Eye','Normal'],['Confusion','Normal']],
-   9=>[['Legend Lore','Normal'],['Scrying','Normal']],
+    1=>[['Command','Normal'],['Identify','Normal']],
+    3=>[['Augury','Normal'],['Suggestion','Normal']],
+    5=>[['Nondetection','Normal'],['Speak With the Dead','Normal']],
+    7=>[['Arcane Eye','Normal'],['Confusion','Normal']],
+    9=>[['Legend Lore','Normal'],['Scrying','Normal']],
+    'stat'=>'Wisdom',
+    'source'=>'Knowledge Domain',
   },
   custom_mods: {},
 )

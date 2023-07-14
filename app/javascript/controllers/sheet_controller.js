@@ -317,11 +317,14 @@ export default class extends Controller {
 
     //customModifiers
     this.customMods = Util.blankCategoryMap();
+
+    //proficiency and expertise colors
+    this.prof_color = 'bg-black';
+    this.expertise_color = 'bg-red-400';
   }
 
   //----------------------------- Main Sheet Update Flow ---------------------------------//
   categoryHandler(event) {
-    //consoel.log('categoryHandler');
     let labels = event.params;
     let list = event.target.children;
     Util.updateChoices(this.choices);
@@ -641,7 +644,7 @@ export default class extends Controller {
     let data_custom_mods = data.custom_mods || [];
     this.customMods.set(cat_type, data_custom_mods);
 
-    //we output the needed <p></p> tags to the given target
+    //we output to the given target
     Util.putClassFeatures(data.name, data_lang, languages);
     Util.putClassFeatures(data.name, data_weps, weps);
     Util.putClassFeatures(data.name, data_arm, arm);
@@ -835,11 +838,9 @@ export default class extends Controller {
       this.persuasionProfTarget,
       '',
     ]);
-  } //utility but depends on stats being assigned and too many targets to separate
+  } 
 
   populateSkillModifiers() {
-    //the class saving throws are stored as indexes to the bonus array so we go through
-    //all this to assign 6 values possible bonuses from this.saving_throws then output to 6 different targets
     let save_modifiers = [
       this.strSavingThrowModTarget,
       this.dexSavingThrowModTarget,
@@ -849,6 +850,7 @@ export default class extends Controller {
       this.chaSavingThrowModTarget,
     ];
 
+    //the class saving throws are stored as indexes 0-5 so we use that here
     let bonuses = [0, 0, 0, 0, 0, 0];
     this.saving_throws.forEach((item) => {
       bonuses[item] += this.prof_mod;
@@ -933,14 +935,15 @@ export default class extends Controller {
   }
 
   updateAllProficiencies() {
-    //based on innerText of ProfTarget
+    //based on background color of ProfTarget
+    //Expertise is red
     let skilliter = this.skills.values();
     for (let i = 0; i < this.skills.size; i++) {
       let value = skilliter.next().value;
       let bonus = Util.calcMod(value[0]);
-      if (Array.from(value[2].classList).includes('bg-black'))
+      if (Array.from(value[2].classList).includes(this.prof_color))
         bonus += this.prof_mod;
-      if (Array.from(value[2].classList).includes('bg-white'))
+      if (Array.from(value[2].classList).includes(this.expertise_color))
         bonus += this.prof_mod * 2;
       value[1].innerText = bonus;
     }
@@ -981,10 +984,23 @@ export default class extends Controller {
     }
   }
 
+  /*
+    specific_spells: {
+      1=>[['Command','Normal'],['Identify','Normal']],
+      3=>[['Augury','Normal'],['Suggestion','Normal']],
+      5=>[['Nondetection','Normal'],['Speak With the Dead','Normal']],
+      7=>[['Arcane Eye','Normal'],['Confusion','Normal']],
+      9=>[['Legend Lore','Normal'],['Scrying','Normal']],
+      'stat'=>'Wisdom',
+      'source'=>'Knowledge Domain',
+    },
+  */
   populateSpecificSpells() {
-    console.log(this.specificSpells);
+    Util.removeAllChildNodes(this.specSpellsListTarget);
+
     for (let item of this.specificSpells.values()) {
-      if (item.source) {
+      if (Object.entries(item).length > 0) {
+        console.log('source');
         let valid = [];
         for (let value of Object.keys(item)) {
           if (value != 'source' && value != 'stat') {
@@ -1660,6 +1676,9 @@ export default class extends Controller {
     //first two are informational, not spell slot amounts
 
     let num_spells = this.spell_table[this.level - 1][0];
+    //Clerics prepare a number of spells equal to their level + their Wisdom mod
+    if(this.choices.get('player_class') == 'Cleric') num_spells = Math.max(parseInt(this.level) + parseInt(Util.calcMod(this.stats[4])), 1);
+
     let num_cantrips = this.spell_table[this.level - 1][1];
 
     this.spellsLimitTarget.innerText = `Choose ${num_spells} spells.`;
@@ -1711,11 +1730,10 @@ export default class extends Controller {
         }
       });
     });
-    if (
-      chosen.length <=
-      this.spell_table[this.level - 1][0] +
-        this.spell_table[this.level - 1][1]
-    ) {
+    let spellsLimit = this.spell_table[this.level - 1][0] + this.spell_table[this.level - 1][1];
+    if(this.choices['player_class'] = 'Cleric') spellsLimit = this.level + Util.calcMod(stats[4]) + this.spell_table[this.level - 1][1];
+    
+    if(chosen.length <= spellsLimit) {
       this.chosenClassSpells = chosen;
       this.putSpellsToSheet(chosen);
       event.target.parentNode.close();
@@ -2095,7 +2113,6 @@ export default class extends Controller {
     'default' => ['Leather Armor#1','Dagger#1'],
   },
   */
-
   chooseEquipment() {
     //consoel.log('chooseEquipment');
     Util.removeAllChildNodes(this.equipmentClassStartTarget);

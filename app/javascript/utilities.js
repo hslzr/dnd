@@ -256,13 +256,13 @@ export function removeAllChildNodes(parent) {
   }
 }
 
-//-------------------------------------------Sheet Updates
-
+//-------------------------------------------Sheet Update Helpers
+//from populateCatAbilites
 export function putClassFeatures(name, collection, target) {
   //creates p tags for collection and appends list to target with label for category name
   //clears allChildfren of Target before appending so I use it in specific labele
   //we pass in a category instance, collection within it, and output target
-  //if the collection is empty, the function returns without side-effects
+  //we check for the empty collections that popCatAbilities will send in regularly
 
   if (collection.length == 0 || target == null) return;
   //modified from above
@@ -334,13 +334,49 @@ export function putRacialASI(list, target) {
   }
 }
 
-//-------------------------------------------calculations and string methods
+export function getSpellCard(source, stat, spells) {
+  let box = getTag(
+    'div',
+    'flex flex-col md:flex-row gap-2 p-4 rounded-lg border border-black bg-blue-300/50 text-sm'
+  );
+  let info = getTag(
+    'div',
+    'border border-black rounded-lg flex flex-col justify-center items-center gap-1 p-2'
+  );
+
+  info.append(getTag('p', 'font-black', source));
+  info.append(getTag('p', 'font-black text-sm', stat));
+
+  box.append(info);
+
+  let list = getTag(
+    'div',
+    'border border-black rounded-lg grid grid-cols-2 gap-4 p-2'
+  );
+  
+  let cast_type = "";
+  for (let spell of spells) {
+    switch(spell[1]) {
+      case 'Normal':
+        cast_type = '';
+        break;
+      default:
+        cast_type = '- ' + spell[1];
+        break;
+    }
+    list.append(getTag('p', '', `${spell[0]} ${cast_type}`));
+  }
+  box.append(list);
+  return box;
+}
+
+//------------------------------------------- little helpers
 //calculate skill modifier
 export function calcMod(base) {
   return Math.floor(base / 2) - 5;
 }
 
-//return string with + or - sign as needed
+//return int as string with + or - sign
 export function modWithSign(val) {
   if (val > 0) return `+${val}`;
   return `${val}`;
@@ -369,37 +405,4 @@ export function expandStatName(stat) {
 export function capitalize(string) {
   let first = string.charAt(0).toUpperCase();
   return first + string.slice(1);
-}
-
-//-------------------------------------------customModifiers
-
-//--components
-
-export function getSpellCard(source, stat, spells) {
-  let box = getTag(
-    'div',
-    'flex flex-col md:flex-row gap-2 p-4 rounded-lg border border-black bg-blue-300/50 text-sm'
-  );
-  let info = getTag(
-    'div',
-    'border border-black rounded-lg flex flex-col justify-center items-center gap-4 p-2'
-  );
-
-  info.append(getTag('p', 'font-black', 'Source'));
-  info.append(getTag('p', '', source));
-  info.append(getTag('p', 'font-black', 'Casting Stat'));
-  info.append(getTag('p', '', stat));
-
-  box.append(info);
-
-  let list = getTag(
-    'div',
-    'border border-black rounded-lg grid grid-cols-2 gap-4 p-2'
-  );
-
-  for (let spell of spells) {
-    list.append(getTag('p', '', `${spell[0]} - ${spell[1]}`));
-  }
-  box.append(list);
-  return box;
 }
