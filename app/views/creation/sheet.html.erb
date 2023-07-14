@@ -306,44 +306,45 @@
     </div>
 
 
-    <dialog class="border border-black rounded-md bg-gray-300" data-controller="modal"  data-sheet-target="dialogClassSkills">
-    <p class="text-2xl font-bold w-full text-center">Skills</p>
+    
+
+    <% for modal in @modals do %>
+      <dialog class="border border-black rounded-md bg-gray-300" data-controller="modal" data-sheet-target="dialog<%= modal.gsub(/\s+/, "") %>">
+        <p class="text-3xl font-black"><%= modal %></p>
+          <div class="grid grid-cols-2 md:grid-cols-3 gap-2" data-sheet-target="<%= modal.downcase.gsub(/\s+/, "") %>ModalList"></div>
+        <button class="px-8 py-2 rounded-lg bg-blue-400 border-b-2 border-r-2" data-action="sheet#submit<%= modal.gsub(/\s+/, "") %>Choices">Submit</button>
+      </dialog>
+    <% end %>
+    <dialog class="border border-black rounded-md bg-gray-300" data-controller="modal" data-sheet-target="dialogClassSkills">
+      <p class="text-3xl font-black w-full text-center">Skills</p>
       <p class="text-xl font-bold">Class Skills</p>
         <div class="grid grid-cols-2 md:grid-cols-3 gap-2" data-sheet-target="classSkillsModalList"></div>
       <p class="text-xl font-bold" id="extraSkillsLabel">Extra Skills</p>
         <div class="grid grid-cols-2 md:grid-cols-3 gap-2" data-sheet-target="extraSkillsModalList"></div>
       <button class="px-8 py-2 rounded-lg bg-blue-400 border-b-2 border-r-2" data-action="sheet#submitClassSkillsChoices">Submit</button>
     </dialog>
-
-    <% for modal in @modals do %>
-      <dialog class="border border-black rounded-md bg-gray-300" data-controller="modal"  data-sheet-target="dialog<%= modal.gsub(/\s+/, "") %>">
-        <p class="text-2xl font-bold"><%= modal %></p>
-          <div class="grid grid-cols-2 md:grid-cols-3 gap-2" data-sheet-target="<%= modal.downcase.gsub(/\s+/, "") %>ModalList"></div>
-        <button class="px-8 py-2 rounded-lg bg-blue-400 border-b-2 border-r-2" data-action="sheet#submit<%= modal.gsub(/\s+/, "") %>Choices">Submit</button>
-      </dialog>
-    <% end %>
-
-    <dialog class="border border-black rounded-md bg-gray-300" data-controller="modal"  data-sheet-target="dialogASI">
-      <p class="text-2xl font-bold">Ability Score Increases</p>
+    <dialog class="border border-black rounded-md bg-gray-300" data-controller="modal" data-sheet-target="dialogASI">
+      <p class="text-3xl font-black">Ability Score Increases</p>
         <div data-sheet-target="asiModalList"></div>
         <div data-sheet-target="customASI"></div>
       <button class="px-8 py-2 rounded-lg bg-blue-400 border-b-2 border-r-2" data-action="sheet#submitASIChoices">Submit</button>
     </dialog>
-    <dialog class="border border-black rounded-md bg-gray-300" data-controller="modal"  data-sheet-target="dialogSpells">
-      <p class="text-2xl font-bold">Spells</p>
-        <div data-sheet-target="spellsModalList"></div>
-      <p class="font-black text-sm" data-sheet-target="spellsLimit"></p>
-      <p class="font-black text-sm" data-sheet-target="cantripLimit"></p>
+    <dialog class="border border-black rounded-md bg-gray-300" data-controller="modal" data-sheet-target="dialogSpells">
+      <p class="text-3xl font-black">Spells</p>
+      <h4 class="col-span-full font-black text-lg">Cantrips <span class="text-sm" data-sheet-target="cantripLimit"></span></h4>
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-2" data-sheet-target="cantripsModalList"></div>
+      <h4 class="col-span-full font-black text-lg">Spells <span class="text-sm" data-sheet-target="spellsLimit"></span></h4>
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-2" data-sheet-target="spellsModalList"></div>
       <button class="px-8 py-2 rounded-lg bg-blue-400 border-b-2 border-r-2" data-action="sheet#submitSpellsChoices">Submit</button>
     </dialog>
-    <dialog class="border border-black rounded-md bg-gray-300" data-controller="modal"  data-sheet-target="dialogExtraSpells">
-      <p class="text-2xl font-bold">Extra Spells</p>
+    <dialog class="border border-black rounded-md bg-gray-300" data-controller="modal" data-sheet-target="dialogExtraSpells">
+      <p class="text-3xl font-black">Extra Spells</p>
         <div data-sheet-target="extraSpellsModalList"></div>
       <p class="font-black text-sm" data-sheet-target="extraSpellsLimit"></p>
       <button class="px-8 py-2 rounded-lg bg-blue-400 border-b-2 border-r-2" data-action="sheet#submitExtraSpellsChoices">Submit</button>
     </dialog>
-    <dialog class="border border-black rounded-md bg-gray-300" data-controller="modal"  data-sheet-target="dialogEquipment">
-      <p class="text-2xl font-bold">Starting Equipment</p>
+    <dialog class="border border-black rounded-md bg-gray-300" data-controller="modal" data-sheet-target="dialogEquipment">
+      <p class="text-3xl font-black">Starting Equipment</p>
         <div data-sheet-target="equipmentModalList">
           <div class="flex flex-col gap-4 items-center">
             <div class="flex flex-col items-center justify-center gap-2 bg-gray-200 rounded-lg" data-sheet-target="equipmentClassStart">

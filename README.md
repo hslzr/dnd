@@ -17,19 +17,18 @@ Different methods of stat assignment
 Implement Feats - these can use customMOd for most things I think
 
 #  Bard
-   choose three instruments as tools
-   equipment_choices -> choose any musical instrument
+   done
 
 # Cleric
-  double check if I implemented Expertise yet somewhere in the modifier calculation
+  blessings of knowledge => need expertise proficiency select
   remaining subclasses
-  -1 spells known, prepared spells should be used instead of spells known limit
 
 # Druid
   specific_spells_choices handling in customModifiers() for circle of the land subclass
   -1 spells known, prepared spells should be used instead of spells known limit
 
 # Spells
-   all seeded, submit Modal not working
+   done
+
 # heroku
 https://uglysheetmaker-e6deabaebc10.herokuapp.com/

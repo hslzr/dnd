@@ -161,6 +161,7 @@ export default class extends Controller {
     'asiLimit',
     'asiButton',
     'dialogSpells',
+    'cantripsModalList',
     'spellsModalList',
     'spellsLimit',
     'cantripLimit',
@@ -311,6 +312,9 @@ export default class extends Controller {
     this.validatedExtraSpells = []; //we'll set this once the extra spells modal is prepped since we have the needed info
     this.allSpells = false;
     this.allSpellList = [];
+    //modal submission validation
+    this.classCantLimit = 0;
+    this.classSpellLimit = 0;
 
     this.chosenExtras = [];
     this.chosenClassSpells = []; //for sheet output duplicate removal
@@ -1000,7 +1004,6 @@ export default class extends Controller {
 
     for (let item of this.specificSpells.values()) {
       if (Object.entries(item).length > 0) {
-        console.log('source');
         let valid = [];
         for (let value of Object.keys(item)) {
           if (value != 'source' && value != 'stat') {
@@ -1115,14 +1118,6 @@ export default class extends Controller {
       let extra_profs = mods['extra_profs'] || false;
       if (extra_profs) {
         this.populateExtraSkillsModal(extra_profs);
-      }
-
-      //seed passes in type of equipment and a number, we put a select box with equip of that type
-      let extra_equipment = mods['extra_equip'] || false;
-      if (extra_equipment) {
-        console.log('extra equipment');
-        extra_equipment
-        this.equipmentModalListTarget.firstChild.append()
       }
     }
   }
@@ -1681,8 +1676,8 @@ export default class extends Controller {
 
     let num_cantrips = this.spell_table[this.level - 1][1];
 
-    this.spellsLimitTarget.innerText = `Choose ${num_spells} spells.`;
-    this.cantripLimitTarget.innerText = `Choose ${num_cantrips} cantrips.`;
+    this.spellsLimitTarget.innerText = `  -  choose ${num_spells}`;
+    this.cantripLimitTarget.innerText = `  -  choose ${num_cantrips}`;
 
     //populate the modal with headings and spells, with checkboxes
     this.populateSpellModal(max_spell_level);
@@ -1693,47 +1688,78 @@ export default class extends Controller {
     //clear it first of the old sheet if we are switching
     Util.removeAllChildNodes(this.spellsModalListTarget);
     for (let i = 0; i <= max_level; i++) {
-      let frame = Util.getTag('div', 'flex flex-col gap-2 p-2');
-      let title = Util.getTag('h4', 'text-center font-bold text-xl');
+      let title = Util.getTag('h4', 'col-span-full font-black text-lg');
 
-      if (i == 0) {
-        title.innerText = 'Cantrips';
-      } else {
+      if (i > 0) {
         title.innerText = `Level ${i}`;
+        this.spellsModalListTarget.append(title);
       }
-      frame.append(title);
+      
       this.spellList.forEach((item) => {
         if (item.level == i) {
-          let container = Util.getTag('div', 'flex gap-2 p-2');
+          let container = Util.getTag('div', 'flex gap-2 p-2 items-center');
           let check = document.createElement('input');
           check.type = 'checkbox';
           check.value = item.level;
           check.id = item.id; //for validation on submit
           container.append(check);
           container.append(item.name);
-          frame.append(container);
+          if( i == 0) {
+            this.cantripsModalListTarget.append(container);
+          } else {
+            this.spellsModalListTarget.append(container);
+          }
         }
       });
-      this.spellsModalListTarget.append(frame);
     }
   }
 
+  //need to rebuild this for new modal structure
   submitSpellsChoices(event) {
     let chosen = [];
-    this.spellsModalListTarget.childNodes.forEach((frame) => {
-      frame.childNodes.forEach((container) => {
-        if (container.firstChild.checked) {
-          chosen.push([
-            container.firstChild.id, //db id
-            container.firstChild.value, //spell level
-          ]);
-        }
-      });
+    let cantrip_count = 0;
+    let spell_count = 0;
+
+    this.cantripsModalListTarget.childNodes.forEach((container) => {
+      if (container.firstChild.checked) {
+        chosen.push([
+          container.firstChild.id, //db id
+          container.firstChild.value, //spell level
+        ]);
+        cantrip_count++;
+      }
     });
-    let spellsLimit = this.spell_table[this.level - 1][0] + this.spell_table[this.level - 1][1];
-    if(this.choices['player_class'] = 'Cleric') spellsLimit = this.level + Util.calcMod(stats[4]) + this.spell_table[this.level - 1][1];
-    
-    if(chosen.length <= spellsLimit) {
+    this.spellsModalListTarget.childNodes.forEach((container) => {
+      if (container.firstChild.checked) {
+        chosen.push([
+          container.firstChild.id, //db id
+          container.firstChild.value, //spell level
+        ]);
+        spell_count++;
+      }
+    });
+
+    //named classes don't use the spell table for spells known and simply prepare a number of spells from the whole spell list
+    let counts_validated = false;
+    switch(this.choices.get('player_class')) {
+      case 'Cleric':
+        if(spell_count <= Math.max(this.level + Util.calcMod(stats[4]), 1) && cantrip_count <= this.spell_table[this.level - 1][1]) {
+          counts_validated = true;
+        }
+        break;
+      case 'Druid':
+        if(spell_count <= Math.max(this.level + Util.calcMod(stats[4]), 1) && cantrip_count <= this.spell_table[this.level - 1][1]) {
+          counts_validated = true;
+        }
+        break;
+      default:
+        if(spell_count <= this.spell_table[this.level -1][0] && cantrip_count <= this.spell_table[this.level - 1][1]) {
+          counts_validated = true;
+        }
+        break;
+    }
+
+    if(counts_validated) {
       this.chosenClassSpells = chosen;
       this.putSpellsToSheet(chosen);
       event.target.parentNode.close();
@@ -1774,7 +1800,6 @@ export default class extends Controller {
       return row;
     }
 
-    console.log(spell);
     let frame = Util.getTag(
       'div',
       'flex flex-col gap-1 bg-gray-100 rounded-lg p-2'
@@ -2202,7 +2227,7 @@ export default class extends Controller {
           container.append(
             Util.getTag('p', 'text-lg font-black', 'or')
           );
-        } else { console.log( 'code not a string' ); }
+        } else { console.log( 'popEquipmentModel error' ); }
       });
       container.removeChild(container.lastChild); //get rid of last 'or'
       target.append(container);
