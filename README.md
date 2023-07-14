@@ -16,16 +16,29 @@ Different methods of stat assignment
 
 Implement Feats - these can use customMOd for most things I think
 
-#  Bard
-   done
+# Barbarian
+  fill subclasses
+
+# Bard
+  fill subclasses
 
 # Cleric
-  blessings of knowledge => need expertise proficiency select
-  remaining subclasses
+  fill subclasses
 
 # Druid
   specific_spells_choices handling in customModifiers() for circle of the land subclass
-  -1 spells known, prepared spells should be used instead of spells known limit
+  fill subclasses
+
+# Fighter
+  fill subclasses - Eldritch Knight might be weird
+
+# Monk
+  ki points not handled at all yet
+  fill subclasses
+
+# Ranger 
+  done
+  fill subclasses
 
 # Spells
    done
