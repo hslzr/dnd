@@ -25,10 +25,12 @@ Implement Feats - these can use customMOd for most things I think
 
 # Druid
   specific_spells_choices handling in customModifiers() for circle of the land subclass
-  -1 spells known, prepared spells should be used instead of spells known limit
 
 # Spells
    done
+
+# bugs
+  attack spells dont populate attacks
 
 # heroku
 https://uglysheetmaker-e6deabaebc10.herokuapp.com/
