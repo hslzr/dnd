@@ -1214,7 +1214,8 @@ export default class extends Controller {
     let chosen = [];
 
     for (let item of this.specialtiesMoalListTarget.childNodes) {
-      console.log(item);
+      console.log(item.tagName);
+      if (item.tagName == 'INPUT') {
     }
   }
 
