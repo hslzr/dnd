@@ -209,6 +209,8 @@ export default class extends Controller {
     'extraSkillsModalList',
     'modSkills',
     'specSpellsList',
+    'dialogSpecialties',
+    'specialtiesModalList',
   ];
 
   connect() {
@@ -628,7 +630,7 @@ export default class extends Controller {
 
     let data_weps = data.weapons || [];
     this.weapons.set(cat_type, data_weps);
-    
+
     let data_arm = data.armor || [];
     this.armor.set(cat_type, data_arm);
 
@@ -841,7 +843,7 @@ export default class extends Controller {
       this.persuasionProfTarget,
       '',
     ]);
-  } 
+  }
 
   populateSkillModifiers() {
     let save_modifiers = [
@@ -946,7 +948,9 @@ export default class extends Controller {
       let bonus = Util.calcMod(value[0]);
       if (Array.from(value[2].classList).includes(this.prof_color))
         bonus += this.prof_mod;
-      if (Array.from(value[2].classList).includes(this.expertise_color))
+      if (
+        Array.from(value[2].classList).includes(this.expertise_color)
+      )
         bonus += this.prof_mod * 2;
       value[1].innerText = bonus;
     }
@@ -1060,8 +1064,7 @@ export default class extends Controller {
 
     exp_source.childNodes.forEach((node) => {
       let text = node.innerText;
-      if (text != 'Expertise') 
-        expertise_skills.push(text);
+      if (text != 'Expertise') expertise_skills.push(text);
     });
 
     //set proftarget innerText which will get picked up by updateAllProficiencies
@@ -1072,7 +1075,6 @@ export default class extends Controller {
 
       let name = entry[0];
       let profTarget = entry[1][2];
-
 
       if (assigned_skills.includes(entry[0]))
         profTarget.classList.add(this.prof_color);
@@ -1144,12 +1146,75 @@ export default class extends Controller {
 
       //extra proficiency expertise selections
       let expertise_choices = mods['expertise_choices'] || false;
-      if(expertise_choices) {
+      if (expertise_choices) {
         let num = mods['num_expertise'];
         let source = mods['expertise_source'];
         this.populateExtraExpertise(expertise_choices, num, source);
       }
+      /*
+        'specialties'=> {
+          'title'=> 'Maneuvers',
+          'limits'=> [
+            [1,3],
+            [5,4],
+            [7,5],
+            [14,7]
+          ],
+          'list'=> [['name','description'],['',''],['',''],],
+        }
+      */
+      let specialties = mods['specialties'] || false;
+      if (specialties) {
+        let limit = 0;
+        for (let item of specialties['limits']) {
+          if (this.level >= item[0]) limit = item[1];
+        }
+        this.populateSpecialtiesModal(specialties, limit);
+      }
+    }
+  }
 
+  populateSpecialtiesModal(specialties, limit) {
+    target.append(
+      Util.getTag(
+        'h4',
+        'text-lg font-black text-center col-span-full',
+        specialties['title']
+      )
+    );
+    target.append(
+      Util.getTag(
+        'p',
+        'text-sm font-bold text-center col-span-full',
+        `Choose ${limit}`
+      )
+    );
+    for (let entry of specialties['list']) {
+      let frame = Util.getTag(
+        'div',
+        'flex flex-col justify-start gap-2 p-2 bg-gray-300'
+      );
+      frame.append(
+        Util.getTag('p', 'bg-gray-100 font-bold rounded-lg', entry[0])
+      );
+      frame.append(
+        Util.getTag('p', 'bg-gray-100 rounded-lg', entry[1])
+      );
+
+      let check = document.createElement('input');
+      check.type = 'checkbox';
+      check.value = entry[0];
+
+      frame.append(check);
+    }
+    this.specialtiesModalListTarget.append(frame);
+  }
+
+  submitSpecialties(event) {
+    let chosen = [];
+
+    for (let item of this.specialtiesMoalListTarget.childNodes) {
+      console.log(item);
     }
   }
 
@@ -1204,8 +1269,14 @@ export default class extends Controller {
 
   //put num selects with choices options to extraSkillsModalListTarget
   populateExtraExpertise(choices, num, source) {
-    this.extraSkillsModalListTarget.append(Util.getTag('h4','col-span-full text-lg font-bold',`Expertise from ${source}`))
-    for(let i = 0; i < num; i++) {
+    this.extraSkillsModalListTarget.append(
+      Util.getTag(
+        'h4',
+        'col-span-full text-lg font-bold',
+        `Expertise from ${source}`
+      )
+    );
+    for (let i = 0; i < num; i++) {
       Util.putSelect(
         'Expertise',
         choices,
@@ -1223,7 +1294,7 @@ export default class extends Controller {
     //the checkboxes are wrapped in a span for alignment
     this.extraSkillsModalListTarget.childNodes.forEach((node) => {
       if (node.tagName == 'SELECT') {
-        if(node.firstChild.innerText == 'Skills') {
+        if (node.firstChild.innerText == 'Skills') {
           chosen.push(node.value);
         } else {
           expertise.push(node.value);
@@ -1241,7 +1312,7 @@ export default class extends Controller {
       expertise,
       this.expertiseSkillsTarget,
       'Expertise'
-    )
+    );
   }
 
   //----------------------------- Choice Modals ---------------------------------//
@@ -1721,7 +1792,11 @@ export default class extends Controller {
 
     let num_spells = this.spell_table[this.level - 1][0];
     //Clerics prepare a number of spells equal to their level + their Wisdom mod
-    if(this.choices.get('player_class') == 'Cleric') num_spells = Math.max(parseInt(this.level) + parseInt(Util.calcMod(this.stats[4])), 1);
+    if (this.choices.get('player_class') == 'Cleric')
+      num_spells = Math.max(
+        parseInt(this.level) + parseInt(Util.calcMod(this.stats[4])),
+        1
+      );
 
     let num_cantrips = this.spell_table[this.level - 1][1];
 
@@ -1733,27 +1808,32 @@ export default class extends Controller {
   }
 
   populateSpellModal(max_level) {
-
     //clear it first of the old sheet if we are switching
     Util.removeAllChildNodes(this.spellsModalListTarget);
     for (let i = 0; i <= max_level; i++) {
-      let title = Util.getTag('h4', 'col-span-full font-black text-lg');
+      let title = Util.getTag(
+        'h4',
+        'col-span-full font-black text-lg'
+      );
 
       if (i > 0) {
         title.innerText = `Level ${i}`;
         this.spellsModalListTarget.append(title);
       }
-      
+
       this.spellList.forEach((item) => {
         if (item.level == i) {
-          let container = Util.getTag('div', 'flex gap-2 p-2 items-center');
+          let container = Util.getTag(
+            'div',
+            'flex gap-2 p-2 items-center'
+          );
           let check = document.createElement('input');
           check.type = 'checkbox';
           check.value = item.level;
           check.id = item.id; //for validation on submit
           container.append(check);
           container.append(item.name);
-          if( i == 0) {
+          if (i == 0) {
             this.cantripsModalListTarget.append(container);
           } else {
             this.spellsModalListTarget.append(container);
@@ -1790,25 +1870,36 @@ export default class extends Controller {
 
     //named classes don't use the spell table for spells known and simply prepare a number of spells from the whole spell list
     let counts_validated = false;
-    switch(this.choices.get('player_class')) {
+    switch (this.choices.get('player_class')) {
       case 'Cleric':
-        if(spell_count <= Math.max(this.level + Util.calcMod(stats[4]), 1) && cantrip_count <= this.spell_table[this.level - 1][1]) {
+        if (
+          spell_count <=
+            Math.max(this.level + Util.calcMod(stats[4]), 1) &&
+          cantrip_count <= this.spell_table[this.level - 1][1]
+        ) {
           counts_validated = true;
         }
         break;
       case 'Druid':
-        if(spell_count <= Math.max(this.level + Util.calcMod(stats[4]), 1) && cantrip_count <= this.spell_table[this.level - 1][1]) {
+        if (
+          spell_count <=
+            Math.max(this.level + Util.calcMod(stats[4]), 1) &&
+          cantrip_count <= this.spell_table[this.level - 1][1]
+        ) {
           counts_validated = true;
         }
         break;
       default:
-        if(spell_count <= this.spell_table[this.level -1][0] && cantrip_count <= this.spell_table[this.level - 1][1]) {
+        if (
+          spell_count <= this.spell_table[this.level - 1][0] &&
+          cantrip_count <= this.spell_table[this.level - 1][1]
+        ) {
           counts_validated = true;
         }
         break;
     }
 
-    if(counts_validated) {
+    if (counts_validated) {
       this.chosenClassSpells = chosen;
       this.putSpellsToSheet(chosen);
       event.target.parentNode.close();
@@ -1841,11 +1932,13 @@ export default class extends Controller {
   }
 
   putSingleSpellTaken(spell, target) {
-
     function getRow(tag, content) {
-      let row = Util.getTag('div','rounded-lg bg-gray-300 px-8 flex justify-start gap-4');
-      row.append(Util.getTag('p','font-black',tag));
-      row.append(Util.getTag('p','',content));
+      let row = Util.getTag(
+        'div',
+        'rounded-lg bg-gray-300 px-8 flex justify-start gap-4'
+      );
+      row.append(Util.getTag('p', 'font-black', tag));
+      row.append(Util.getTag('p', '', content));
       return row;
     }
 
@@ -1858,26 +1951,27 @@ export default class extends Controller {
     let splitter = spell.description.split('\n');
 
     frame.append(getRow('Level: ', spell.level));
-    frame.append(getRow('Cast Time: ', spell.cast_time ));
+    frame.append(getRow('Cast Time: ', spell.cast_time));
     frame.append(getRow('Range: ', spell.range));
     frame.append(getRow('Components: ', spell.components.join(', ')));
     frame.append(getRow('Duration: ', spell.duration));
-    if(spell.attack != 'false') {
+    if (spell.attack != 'false') {
       let dmg_out;
       Object.entries(spell.atk_dmg).forEach((level) => {
         if (parseInt(level[0]) <= this.level) dmg_out = level[1];
       });
-      frame.append(getRow('Damage: ',`${dmg_out} ${spell.dmg_type}`));
+      frame.append(
+        getRow('Damage: ', `${dmg_out} ${spell.dmg_type}`)
+      );
     }
-    frame.append(getRow('Description: ',splitter[0]));
-    
-    
+    frame.append(getRow('Description: ', splitter[0]));
+
     target.append(frame);
   }
   //-----------------Extra Spells Modal ------------------//
   chooseExtraSpells() {
     /* example key/value pair
-    
+
       'Any'=> {
       'source'=> 'College of Lore',
       'spells_choices'=> [
@@ -2182,7 +2276,7 @@ export default class extends Controller {
   }
   //-----------------Equipment Modal ------------------//
 
-  //working with this section of the class and background 
+  //working with this section of the class and background
   /*
   equipment_choices: {
     'choices' => [
@@ -2250,9 +2344,10 @@ export default class extends Controller {
       let number_of_choices = choice.length; //[3,3,2] above
       let container = Util.getTag('div', 'equipment-row');
 
-      choice.forEach((code) => { //'Rapier#1'  or 'Longsword#1'
-        if (typeof code == 'string') { //I think this is the only one that will ever fire
-
+      choice.forEach((code) => {
+        //'Rapier#1'  or 'Longsword#1'
+        if (typeof code == 'string') {
+          //I think this is the only one that will ever fire
 
           let values = code.split('#');
 
@@ -2265,13 +2360,14 @@ export default class extends Controller {
           );
           choice_box.append(choice_labels);
 
-
           for (let i = 0; i < parseInt(values[1]); i++) {
             //codes for a select box are all lowercase, but named items are capitalized
-            if(values[0].toLowerCase() == values[0]) {
+            if (values[0].toLowerCase() == values[0]) {
               Util.getSelect(values[0], choice_labels);
             } else {
-              choice_labels.append(Util.getTag('p','p-1',values[0]));
+              choice_labels.append(
+                Util.getTag('p', 'p-1', values[0])
+              );
             }
           }
           let checkbox = Util.getTag('input', '');
@@ -2281,7 +2377,9 @@ export default class extends Controller {
           container.append(
             Util.getTag('p', 'text-lg font-black', 'or')
           );
-        } else { console.log( 'popEquipmentModel error' ); }
+        } else {
+          console.log('popEquipmentModel error');
+        }
       });
       container.removeChild(container.lastChild); //get rid of last 'or'
       target.append(container);
