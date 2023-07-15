@@ -717,6 +717,7 @@ Barbarian.subclasses.create(
     14=> ['Retaliation: When you take damage from a creature within 5 feet of you, you can use your reaction to make a melee weapon attack against that creature.']
   },
   custom: {},
+  equipment_choices: {},
   extra_spells: {},
   specific_spells: {},
   custom_mods: {},
@@ -747,6 +748,7 @@ Barbarian.subclasses.create(
       'Wolf: While you`re raging, you can use a bonus action on your turn to knock a Large or smaller creature prone when you hit it with meleee weapon attack.',
     ],
   },
+  equipment_choices: {},
   extra_spells: {},
   specific_spells: {
     3=>[['Beast Sense','Ritual'],['Speak With Animals','Ritual']],
@@ -882,6 +884,7 @@ Bard.subclasses.create(
     ],
   },
   custom: {},
+  equipment_choices: {},
   extra_spells: {
     'Any'=> {
       'source'=> 'College of Lore',
@@ -917,6 +920,7 @@ Bard.subclasses.create(
     ],
   },
   custom: {},
+  equipment_choices: {},
   armor: ['Medium','Shields'],
   weapons: ['Martial'],
   extra_spells: {},
@@ -1035,6 +1039,7 @@ Cleric.subclasses.create(
   },
   extra_languages: 2,
   custom: {},
+  equipment_choices: {},
   extra_spells: {},
   specific_spells: {
     1=>[['Command','Normal'],['Identify','Normal']],
@@ -1076,6 +1081,7 @@ Cleric.subclasses.create(
   },
   armor: ["Heavy"],
   custom: {},
+  equipment_choices: {},
   extra_spells: {},
   specific_spells: {
     1=>[['Bless','Normal'],['Cure Wounds','Normal']],
@@ -1115,6 +1121,7 @@ Cleric.subclasses.create(
     ],
   },
   custom: {},
+  equipment_choices: {},
   extra_spells: {},
   specific_spells: {
     1=>[['Burning Hands','Normal'],['Faerie Fire','Normal'],['Light','Cantrip']],
@@ -1153,6 +1160,7 @@ Cleric.subclasses.create(
   },
   armor: ["Heavy"],
   custom: {},
+  equipment_choices: {},
   extra_spells: {
     'Druid'=> {
       'source'=> 'Nature Domain',
@@ -1202,6 +1210,7 @@ Cleric.subclasses.create(
   weapons: ["Martial"],
   armor: ["Heavy"],
   custom: {},
+  equipment_choices: {},
   extra_spells: {},
   specific_spells: {
     1=>[['Fog Cloud','Normal'],['Thunderwave','Normal']],
@@ -1242,6 +1251,7 @@ Cleric.subclasses.create(
     ],
   },
   custom: {},
+  equipment_choices: {},
   extra_spells: {},
   specific_spells: {
     1=>[['Charm Person','Normal'],['Disguise Self','Normal']],
@@ -1279,8 +1289,9 @@ Cleric.subclasses.create(
     ],
   },
   weapons: ["Martial"],
-  armor: ["Heavy"]
+  armor: ["Heavy"],
   custom: {},
+  equipment_choices: {},
   extra_spells: {},
   specific_spells: {
     1=>[['Divine Favor','Normal'],['Shield of Faith','Normal']],
@@ -1400,6 +1411,7 @@ Druid.subclasses.create(
     ]
   },
   custom: {},
+  equipment_choices: {},
   extra_spells: {},
   specific_spells: {
     14=>[['Alter Self','Cantrip']],
@@ -1408,6 +1420,7 @@ Druid.subclasses.create(
   },
   custom_mods: {},
 )
+
 Druid.subclasses.create(
   name: "Circle of the Arctic",
   description: "The Circle of the Land is made up of mystics and sages who safeguard ancient knowledge and rites through a vast oral tradition. These druids meet within sacred circles of trees or standing stones to whisper primal secrets in Druidic. The circle’s wisest members preside as the chief priests of communities that hold to the Old Faith and serve as advisors to the rulers of those folk. As a member of this circle, your magic is influenced by the land where you were initiated into the circle’s mysterious rites.",
@@ -1429,6 +1442,7 @@ Druid.subclasses.create(
     ],
   },
   custom: {},
+  equipment_choices: {},
   extra_spells: {},
   specific_spells: {
     3=>[['Hold Person','Normal'],['Spike Growth','Normal']],
@@ -1462,6 +1476,7 @@ Druid.subclasses.create(
     ],
   },
   custom: {},
+  equipment_choices: {},
   extra_spells: {},
   specific_spells: {
     3=>[['Mirror Image','Normal'],['Misty Step','Normal']],
@@ -1495,6 +1510,7 @@ Druid.subclasses.create(
     ],
   },
   custom: {},
+  equipment_choices: {},
   extra_spells: {},
   specific_spells: {
     3=>[['Blur','Normal'],['Silence','Normal']],
@@ -1528,6 +1544,7 @@ Druid.subclasses.create(
     ],
   },
   custom: {},
+  equipment_choices: {},
   extra_spells: {},
   specific_spells: {
     3=>[['Barkskin','Normal'],['Spider Climb','Normal']],
@@ -1561,6 +1578,7 @@ Druid.subclasses.create(
     ],
   },
   custom: {},
+  equipment_choices: {},
   extra_spells: {},
   specific_spells: {
     3=>[['Invisibility','Normal'],['Pass Without Trace','Normal']],
@@ -1594,6 +1612,7 @@ Druid.subclasses.create(
     ],
   },
   custom: {},
+  equipment_choices: {},
   extra_spells: {},
   specific_spells: {
     3=>[['Spider Climb','Normal'],['Spike Growth','Normal']],
@@ -1627,6 +1646,7 @@ Druid.subclasses.create(
     ],
   },
   custom: {},
+  equipment_choices: {},
   extra_spells: {},
   specific_spells: {
     3=>[['Darkness','Normal'],["Melf's Acid Arrow",'Normal']],
@@ -1660,6 +1680,7 @@ Druid.subclasses.create(
     ],
   },
   custom: {},
+  equipment_choices: {},
   extra_spells: {},
   specific_spells: {
     3=>[['Spider Climb','Normal'],['Web','Normal']],
@@ -1790,7 +1811,7 @@ Fighter.subclasses.create(
     ],
   },
   features: {
-    1=> [
+    3=> [
       "Improved Critical: Your weapon attacks score a critical hit on a roll of 19 or 20.",
     ],
     7=> [
@@ -1806,6 +1827,57 @@ Fighter.subclasses.create(
     18=> [
       "Survivor: You attain the pinnacle of resilience in battle. At the start of each of your turns, you regain hit points equal to 5 + your Constitution modifier if you have no more than half of your hit points left. You don’t gain this benefit if you have 0 hit points.",
     ]
+  },
+  equipment_choices: {},
+  extra_spells: {},
+  specific_spells: {},
+  custom_mods: {},
+)
+
+Fighter.subclasses.create(
+  name: "Battle Master",
+  description: "Those who emulate the archetypal Battle Master employ martial techniques passed down through generations. To a Battle Master, combat is an academic field, sometimes including subjects beyond battle such as weaponsmithing and calligraphy. Not every fighter absorbs the lessons of history, theory, and artistry that are reflected in the Battle Master archetype, but those who do are well-rounded fighters of great skill and knowledge.",
+  custom: {
+    10=>[
+      "",
+    ],
+  },
+  equipment_choices: {
+    'choices' => [
+      ['artisan#1'],
+    ],
+    'default' => [],
+  },
+  features: {
+    3=> [
+      "Combat Superiority: you learn maneuvers that are fueled by special dice called superiority dice.
+      
+      Maneuvers. You learn three maneuvers of your choice. Many maneuvers enhance an attack in some way. You can use only one maneuver per attack. You learn two additional maneuvers of your choice at 7th, 10th, and 15th level. Each time you learn new maneuvers, you can also replace one maneuver you know with a different one.
+
+Superiority Dice. You have four superiority dice, which are d8s. A superiority die is expended when you use it. You regain all of your expended superiority dice when you finish a short or long rest. You gain another superiority die at 7th level and one more at 15th level.
+
+Saving Throws. Some of your maneuvers require your target to make a saving throw to resist the maneuver's effects. The saving throw DC is calculated as follows:
+
+Maneuver save DC = 8 + your proficiency bonus + your Strength or Dexterity modifier (your choice)",
+      "Student of War: You gain proficiency with one type of artisan's tools of your choice.",
+    ],
+    7=> [
+      "Know Your Enemy:  if you spend at least 1 minute observing or interacting with another creature outside combat, you can learn certain information about its capabilities compared to your own. The DM tells you if the creature is your equal, superior, or inferior in regard to two of the following characteristics of your choice:
+
+      Strength score
+      Dexterity score
+      Constitution score
+      Armor Class
+      Current hit points
+      Total class levels, if any
+      Fighter class levels, if any",
+    ],
+    10=> [
+      "Improved Combat Superiority: Your superiority dice turn into d10s. At 18th level, they turn into d12s.",
+    ],
+    15=> [
+      "Relentless: When you roll initiative and have no superiority dice remaining, you regain 1 superiority die.",
+    ],
   },
   extra_spells: {},
   specific_spells: {},
@@ -2015,6 +2087,7 @@ Ranger.subclasses.create(
       "Uncanny Dodge: When an attacker that you can see hits you with an attackm you can use your reaction to halve the attack's damage against you.",
     ]
   },
+  equipment_choices: {},
   features: {},
   extra_spells: {},
   specific_spells: {},
@@ -2034,6 +2107,7 @@ Ranger.subclasses.create(
     15=>["When you cast a spell targeting yourself, you can also affect your beast companion with the spell if the beast is within 30 feet of you."],
     },
   custom: {},
+  equipment_choices: {},
   extra_spells: {},
   specific_spells: {},
   custom_mods: {},

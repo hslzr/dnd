@@ -223,6 +223,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_18_194224) do
     t.text "extra_spells", default: "{}"
     t.text "custom_mods", default: "{}"
     t.text "specific_spells", default: "{}"
+    t.text "equipment_choices", default: "{}"
     t.string "skills", default: [], array: true
     t.string "weapons", default: [], array: true
     t.string "armor", default: [], array: true
