@@ -717,6 +717,7 @@ Barbarian.subclasses.create(
     14=> ['Retaliation: When you take damage from a creature within 5 feet of you, you can use your reaction to make a melee weapon attack against that creature.']
   },
   custom: {},
+  equipment_choices: {},
   extra_spells: {},
   specific_spells: {},
   custom_mods: {},
@@ -747,6 +748,7 @@ Barbarian.subclasses.create(
       'Wolf: While you`re raging, you can use a bonus action on your turn to knock a Large or smaller creature prone when you hit it with meleee weapon attack.',
     ],
   },
+  equipment_choices: {},
   extra_spells: {},
   specific_spells: {
     3=>[['Beast Sense','Ritual'],['Speak With Animals','Ritual']],
@@ -882,6 +884,7 @@ Bard.subclasses.create(
     ],
   },
   custom: {},
+  equipment_choices: {},
   extra_spells: {
     'Any'=> {
       'source'=> 'College of Lore',
@@ -917,6 +920,7 @@ Bard.subclasses.create(
     ],
   },
   custom: {},
+  equipment_choices: {},
   armor: ['Medium','Shields'],
   weapons: ['Martial'],
   extra_spells: {},
@@ -1033,7 +1037,9 @@ Cleric.subclasses.create(
       Once you use this feature, you can't use it again until you finish a short or long rest."
     ],
   },
+  extra_languages: 2,
   custom: {},
+  equipment_choices: {},
   extra_spells: {},
   specific_spells: {
     1=>[['Command','Normal'],['Identify','Normal']],
@@ -1044,6 +1050,258 @@ Cleric.subclasses.create(
     'stat'=>'Wisdom',
     'source'=>'Knowledge Domain',
   },
+  custom_mods: {
+    'expertise_choices' => ['Arcana','Nature','History','Religion'],
+    'num_expertise'=> 2,
+    'expertise_source'=> 'Knowledge Domain',
+  },
+)
+
+Cleric.subclasses.create(
+  name: "Life Domain",
+  description: "The Life domain focuses on the vibrant positive energy – one of the fundamental forces of the universe – that sustains all life. The gods of life promote vitality and health through healing the sick and wounded, caring for those in need, and driving away the forces of death and undeath.",
+  features: {
+    1=>[
+      "Armor of God: You gain proficiency with heavy armor.",
+      "Your healing spells are more effective. Whenever you use a spell of 1st level or higher to restore hit points to a creature, the creature regains additional hit points equal to 2 + the spell's level.",
+    ],
+    2=>[
+      "Preserve Life: You can use your Channel Divinity to heal the badly injured.
+      You present your holy symbol and evoke healing energy that can restore a number of hit points equal to five times your cleric level. Choose any creatures within 30 feet of you, and divide those hit points among them. This feature can restore a creature to no more than half of its hit point maximum. You can't use this feature on an undead or a construct.",
+      ],
+    6=>[
+      "Blessed Healer: The healing spells you cast on others heal you as well. When you cast a spell of 1st level or higher that restores hit points to a creature other than you, you regain hit points equal to 2 + the spell's level.",
+    ],
+    8=>[
+      "Divine Strike: You gain the ability to infuse your weapon strikes with divine energy. Once on each of your turns when you hit a creature with a weapon attack, you can cause the attack to deal an extra 1d8 radiant damage to the target. When you reach 14th level, the extra damage increases to 2d8.",
+    ],
+    17=>[
+      "Supreme Healing: When you would normally roll one or more dice to restore hit points with a spell, you instead use the highest number possible for each die. For example, instead of restoring 2d6 hit points to a creature, you restore 12."
+    ],
+  },
+  armor: ["Heavy"],
+  custom: {},
+  equipment_choices: {},
+  extra_spells: {},
+  specific_spells: {
+    1=>[['Bless','Normal'],['Cure Wounds','Normal']],
+    3=>[['Lesser Restoration','Normal'],['Spiritual Weapon','Normal']],
+    5=>[['Beacon of Hope','Normal'],['Revivify','Normal']],
+    7=>[['Death Ward','Normal'],['Guardian of Faith','Normal']],
+    9=>[['Mass Cure Wounds','Normal'],['Raise Dead','Normal']],
+    'stat'=>'Wisdom',
+    'source'=>'Life Domain',
+  },
+  custom_mods: {},
+)
+
+Cleric.subclasses.create(
+  name: "Light Domain",
+  description: "Gods of light, including Helm, Lathander, Pholtus, Branchala, the Silver Flame, Belenus, Apollo, and Re-Horakhty, promote the ideals of rebirth and renewal, truth, vigilance, and beauty, often using the symbol of the sun.",
+  features: {
+    1=> [
+      "Holy Light: You gain the Light cantrip",
+      "Warding Flare: You can interpose divine light between yourself and an attacking enemy. When you are attacked by a creature within 30 feet of you that you can see, you can use your reaction to impose disadvantage on the attack roll, causing light to flare before the attacker before it hits or misses. An attacker that can't be blinded is immune to this feature.
+
+      You can use this feature a number of times equal to your Wisdom modifier (a minimum of once). You regain all expended uses when you finish a long rest",
+    ],
+    2=> [
+      "Radiance of the Dawn: You can use your Channel Divinity to harness sunlight, banishing darkness and dealing radiant damage to your foes.
+
+      As an action, you present your holy symbol, and any magical darkness within 30 feet of you is dispelled. Additionally, each hostile creature within 30 feet of you must make a Constitution saving throw. A creature takes radiant damage equal to 2d10 + your cleric level on a failed saving throw, and half as much damage on a successful one. A creature that has total cover from you is not affected.",
+    ],
+    6=> [
+      "Improved Flare: You can also use your Warding Flare feature when a creature that you can see within 30 feet of you attacks a creature other than you.",
+    ],
+    8=> [
+      "Potent Spellcasting: You add your Wisdom modifier to the damage you deal with any cleric cantrip.",
+    ],
+    17=> [
+      "Corona of Light: You can use your action to activate an aura of sunlight that lasts for 1 minute or until you dismiss it using another action. You emit bright light in a 60-foot radius and dim light 30 feet beyond that. Your enemies in the bright light have disadvantage on saving throws against any spell that deals fire or radiant damage.",
+    ],
+  },
+  custom: {},
+  equipment_choices: {},
+  extra_spells: {},
+  specific_spells: {
+    1=>[['Burning Hands','Normal'],['Faerie Fire','Normal'],['Light','Cantrip']],
+    3=>[['Flaming Sphere','Normal'],['Scorching Ray','Normal']],
+    5=>[['Daylight','Normal'],['Fireball','Normal']],
+    7=>[['Guardian of Faith','Normal'],['Wall of Fire','Normal']],
+    9=>[['Flame Strike','Normal'],['Scrying','Normal']],
+    'stat'=>'Wisdom',
+    'source'=>'Light Domain',
+  },
+  custom_mods: {},
+)
+
+Cleric.subclasses.create(
+  name: "Nature Domain",
+  description: "Gods of nature are as varied as the natural world itself; from inscrutable gods of the deep forests (such as Silvanus, Obad-Hai, Chislev, Balinor, and Pan) to friendly deities associated with particular springs and groves (such as Eldath). Druids revere nature as a whole and might serve one of these deities, but many of these gods have clerics as well. Champions who take a more active role in advancing the interests of a particular nature god. These clerics might hunt the evil monstrosities that despoil the woodlands, bless the harvest of the faithful, or wither the crops of those who anger their gods.",
+  features: {
+    1=> [
+      "Acolyte of Nature: you learn one cantrip of your choice from the druid spell list. This cantrip counts as a cleric cantrip for you, but it doesn’t count against the number of cleric cantrips you know. You also gain proficiency in one of the following skills of your choice: Animal Handling, Nature, or Survival.",
+      "Armor of God: you gain proficiency with heavy armor.",
+    ],
+    2=> [
+      "Charm Animals and Plants: You can use your Channel Divinity to charm animals and plants.
+
+      As an action, you present your holy symbol and invoke the name of your deity. Each beast or plant creature that can see you within 30 feet of you must make a Wisdom saving throw. If the creature fails its saving throw, it is charmed by you for 1 minute or until it takes damage. While it is charmed by you, it is friendly to you and other creatures you designate.",
+    ],
+    6=> [
+      "Dampen Elements: When you or a creature within 30 feet of you takes acid, cold, fire, lightning, or thunder damage, you can use your reaction to grant resistance to the creature against that instance of the damage.",
+    ],
+    8=> [
+      "Divine Strike: You gain the ability to infuse your weapon strikes with divine energy. Once on each of your turns when you hit a creature with a weapon attack, you can cause the attack to deal an extra 1d8 cold, fire, or lightning damage (your choice) to the target. When you reach 14th level, the extra damage increases to 2d8.",
+    ],
+    17=> [
+      "Master of Nature: You gain the ability to command animals and plant creatures. While creatures are charmed by your Charm Animals and Plants feature, you can take a bonus action on your turn to verbally command what each of those creatures will do on its next turn.",
+    ],
+  },
+  armor: ["Heavy"],
+  custom: {},
+  equipment_choices: {},
+  extra_spells: {
+    'Druid'=> {
+      'source'=> 'Nature Domain',
+      'spells_choices'=> [],
+      'cantrips_choices'=> 1,
+      'spell_ability'=> 'Wisdom',
+      'spells_are_extra'=> true,
+    }
+  },
+  specific_spells: {
+    1=>[['Animal Friendship','Normal'],['Speak with Animals','Normal']],
+    3=>[['Barkskin','Normal'],['Spike Growth','Normal']],
+    5=>[['Plant Growth','Normal'],['Wind Wall','Normal']],
+    7=>[['Dominate Beast','Normal'],['Grasping Vine','Normal']],
+    9=>[['Insect Plague','Normal'],['Tree Stride','Normal']],
+    'stat'=>'Wisdom',
+    'source'=>'Nature Domain',
+  },
+  custom_mods: {},
+)
+
+Cleric.subclasses.create(
+  name: "Tempest Domain",
+  description: "Tempest gods send their clerics to inspire fear in the common folk, either to keep those folk on the path of righteousness or to encourage them to offer sacrifices of propitiation to ward off divine wrath.",
+  features: {
+    1=> [
+      "Divine Armament: You gain proficiency with martial weapons and heavy armor.",
+      "Wrath of the Storm: You can thunderously rebuke attackers. When a creature within 5 feet of you that you can see hits you with an attack, you can use your reaction to cause the creature to make a Dexterity saving throw. The creature takes 2d8 lightning or thunder damage (your choice) on a failed saving throw, and half as much damage on a successful one.
+
+      You can use this feature a number of times equal to your Wisdom modifier (a minimum of once). You regain all expended uses when you finish a long rest.",
+    ],
+    2=> [
+      "Destructive Wrath: You can use your Channel Divinity to wield the power of the storm with unchecked ferocity.
+
+      When you roll lightning or thunder damage, you can use your Channel Divinity to deal maximum damage, instead of rolling.",
+    ],
+    6=> [
+      "Thunderous Strike: When you deal lightning damage to a Large or smaller creature, you can also push it up to 10 feet away from you.",
+    ],
+    8=> [
+      "Divine Strike: You gain the ability to infuse your weapon strikes with divine energy. Once on each of your turns when you hit a creature with a weapon attack, you can cause the attack to deal an extra 1d8 thunder damage to the target. When you reach 14th level, the extra damage increases to 2d8.",
+    ],
+    17=> [
+      "Stormborn: You have a flying speed equal to your current walking speed whenever you are not underground or indoors.",
+    ],
+  },
+  weapons: ["Martial"],
+  armor: ["Heavy"],
+  custom: {},
+  equipment_choices: {},
+  extra_spells: {},
+  specific_spells: {
+    1=>[['Fog Cloud','Normal'],['Thunderwave','Normal']],
+    3=>[['Gust of Wind','Normal'],['Shatter','Normal']],
+    5=>[['Call Lightning','Normal'],['Sleet Storm','Normal']],
+    7=>[['Control Water','Normal'],['Ice Storm','Normal']],
+    9=>[['Destructive Wave','Normal'],['Insect Plague','Normal']],
+    'stat'=>'Wisdom',
+    'source'=>'Tempest Domain',
+  },
+  custom_mods: {},
+)
+
+Cleric.subclasses.create(
+  name: "Trickery Domain",
+  description: "Gods of Trickery are mischief-makers and instigators who stand as a constant challenge to the accepted order among both gods and mortals. Their clerics are a disruptive force in the world, puncturing pride, mocking tyrants, stealing from the rich, freeing captives, and flouting hollow traditions. They prefer subterfuge, pranks, deception, and theft rather than direct confrontation.",
+  features: {
+    1=> [
+      "Blessing of the Trickster: you can use your action to touch a willing creature other than yourself to give it advantage on Dexterity (Stealth) checks. This blessing lasts for 1 hour or until you use this feature again.",
+    ],
+    2=> [
+      "Invoke Duplicity: You can use your Channel Divinity to create an illusory duplicate of yourself.
+
+      As an action, you create a perfect illusion of yourself that lasts for 1 minute, or until you lose your concentration (as if you were concentrating on a spell). The illusion appears in an unoccupied space that you can see within 30 feet of you. As a bonus action on your turn, you can move the illusion up to 30 feet to a space you can see, but it must remain within 120 feet of you.
+      
+      For the duration, you can cast spells as though you were in the illusion's space, but you must use your own senses. Additionally, when both you and your illusion are within 5 feet of a creature that can see the illusion, you have advantage on attack rolls against that creature, given how distracting the illusion is to the target."
+    ],
+    6=> [
+      "Cloak of Shadows: You can use your Channel Divinity to vanish.
+
+      As an action, you become invisible until the end of your next turn. You become visible if you attack or cast a spell.",
+    ],
+    8=> [
+      "Divine Strike: You gain the ability to infuse your weapon strikes with poison – a gift from your deity. Once on each of your turns when you hit a creature with a weapon attack, you can cause the attack to deal an extra 1d8 poison damage to the target. When you reach 14th level, the extra damage increases to 2d8.",
+    ],
+    17=> [
+      "Improved Duplicity: You can create up to four duplicates of yourself, instead of one, when you use Invoke Duplicity. As a bonus action on your turn, you can move any number of them up to 30 feet, to a maximum range of 120 feet.",
+    ],
+  },
+  custom: {},
+  equipment_choices: {},
+  extra_spells: {},
+  specific_spells: {
+    1=>[['Charm Person','Normal'],['Disguise Self','Normal']],
+    3=>[['Mirror Image','Normal'],['Pass Without Trace','Normal']],
+    5=>[['Blink','Normal'],['Dispel Magic','Normal']],
+    7=>[['Dimension Door','Normal'],['Polymorph','Normal']],
+    9=>[['Dominate Person','Normal'],['Modify Memory','Normal']],
+    'stat'=>'Wisdom',
+    'source'=>'Trickery Domain',
+  },
+  custom_mods: {},
+)
+
+Cleric.subclasses.create(
+  name: "War Domain",
+  description: "War has many manifestations. It can make heroes of ordinary people. It can be desperate and horrific, with acts of cruelty and cowardice eclipsing instances of excellence and courage. In either case, the gods of war watch over warriors and reward them for their great deeds. The clerics of such gods excel in battle, inspiring others to fight the good fight or offering acts of violence as prayers.",
+  features: {
+    1=> [
+      "Divine Armament: You gain proficiency with martial weapons and heavy armor.",
+      "War Priest: Your god delivers bolts of inspiration to you while you are engaged in battle. When you use the Attack action, you can make one weapon attack as a bonus action.
+
+      You can use this feature a number of times equal to your Wisdom modifier (a minimum of once). You regain all expended uses when you finish a long rest.",
+    ],
+    2=> [
+      "Guided Strike: You can use your Channel Divinity to strike with supernatural accuracy. When you make an attack roll, you can use your Channel Divinity to gain a +10 bonus to the roll. You make this choice after you see the roll, but before the DM says whether the attack hits or misses.",
+    ],
+    6=> [
+      "War God's Blessing: When a creature within 30 feet of you makes an attack roll, you can use your reaction to grant that creature a +10 bonus to the roll, using your Channel Divinity. You make this choice after you see the roll, but before the DM says whether the attack hits or misses.",
+    ],
+    8=> [
+      "Divine Strike: You gain the ability to infuse your weapon strikes with divine energy. Once on each of your turns when you hit a creature with a weapon attack, you can cause the attack to deal an extra 1d8 damage of the same type dealt by the weapon to the target. When you reach 14th level, the extra damage increases to 2d8.",
+    ],
+    17=> [
+      "Avatar of Battle: You gain resistance to bludgeoning, piercing, and slashing damage from nonmagical attacks.",
+    ],
+  },
+  weapons: ["Martial"],
+  armor: ["Heavy"],
+  custom: {},
+  equipment_choices: {},
+  extra_spells: {},
+  specific_spells: {
+    1=>[['Divine Favor','Normal'],['Shield of Faith','Normal']],
+    3=>[['Magic Weapon','Normal'],['Spiritual Weapon','Normal']],
+    5=>[["Crusader's Mantle",'Normal'],['Spirit Guardians','Normal']],
+    7=>[['Freedom of Movement','Normal'],['Stoneskin','Normal']],
+    9=>[['Flame Strike','Normal'],['Hold Monster','Normal']],
+    'stat'=>'Wisdom',
+    'source'=>'War Domain',
+  },
   custom_mods: {},
 )
 
@@ -1053,7 +1311,7 @@ Druid = PlayerClass.create(
   starting_hp: 8,
   primary_abilities: [4],
   saving_throws: [1,4],
-  armor: ['Light','Medium','SHields'],
+  armor: ['Light','Medium','Shields'],
   weapons: ['Club','Dagger','Dart','Javelin','Mace','Quarterstaff','Scimitar','Sickle','Sling','Spear'],
   tools: ['Herbalism Kit'],
   skill_choices: ['Arcana','Animal Handling','Insight','Medicine','Nature','Perception','Religion','Survival'],
@@ -1131,7 +1389,40 @@ Druid = PlayerClass.create(
 )
 
 Druid.subclasses.create(
-  name: "Circle of the Land",
+  name: "Circle of the Moon",
+  description: "Druids of the Circle of the Moon are fierce guardians of the wilds. Their order gathers under the full moon to share news and trade warnings. They haunt the deepest parts of the wilderness, where they might go for weeks on end before crossing paths with another humanoid creature, let alone another druid.",
+  features: {
+    2=>[
+      "Combat Wild Shape: You gain the ability to use Wild Shape on your turn as a bonus action, rather than as an action.
+
+      Additionally, while you are transformed by Wild Shape, you can use a bonus action to expend one spell slot to regain 1d8 hit points per level of the spell slot expended.",
+      "Circle Forms: The rites of your circle grant you the ability to transform into more dangerous animal forms. Starting at 2nd level, you can use your Wild Shape to transform into a beast with a challenge rating as high as 1. You ignore the Max. CR column of the Beast Shapes table, but must abide by the other limitations there.
+
+      Starting at 6th level, you can transform into a beast with a challenge rating as high as your druid level divided by 3, rounded down.",
+    ],
+    6=>[
+      "Primal Strike: Your attacks in beast form count as magical for the purpose of overcoming resistance and immunity to nonmagical attacks and damage.",
+    ],
+    10=>[
+      "Elemental Wild Shape: You can expend two uses of Wild Shape at the same time to transform into an air elemental, an earth elemental, a fire elemental, or a water elemental.",
+    ],
+    14=>[
+      "Thousand Forms: You have learned to use magic to alter your physical form in more subtle ways. You can cast the Alter Self spell at will."
+    ]
+  },
+  custom: {},
+  equipment_choices: {},
+  extra_spells: {},
+  specific_spells: {
+    14=>[['Alter Self','Cantrip']],
+    'stat'=>'Wisdom',
+    'source'=>'Circle of the Moon',
+  },
+  custom_mods: {},
+)
+
+Druid.subclasses.create(
+  name: "Circle of the Arctic",
   description: "The Circle of the Land is made up of mystics and sages who safeguard ancient knowledge and rites through a vast oral tradition. These druids meet within sacred circles of trees or standing stones to whisper primal secrets in Druidic. The circle’s wisest members preside as the chief priests of communities that hold to the Old Faith and serve as advisors to the rulers of those folk. As a member of this circle, your magic is influenced by the land where you were initiated into the circle’s mysterious rites.",
   features: {
     2=>[
@@ -1139,7 +1430,7 @@ Druid.subclasses.create(
       "Natural Recovery: You can regain some of your magical energy by sitting in meditation and communing with nature. During a short rest, you choose expended spell slots to recover. The spell slots can have a combined level that is equal to or less than half your druid level (rounded up), and none of the slots can be 6th level or higher. You can’t use this feature again until you finish a long rest.",
     ],
     6=>[
-      "Land's Stride: Ymoving through nonmagical difficult terrain costs you no extra movement. You can also pass through nonmagical plants without being slowed by them and without taking damage from them if they have thorns, spines, or a similar hazard.
+      "Land's Stride: Moving through nonmagical difficult terrain costs you no extra movement. You can also pass through nonmagical plants without being slowed by them and without taking damage from them if they have thorns, spines, or a similar hazard.
       In addition, you have advantage on saving throws against plants that are magically created or manipulated to impede movement, such those created by the entangle spell.",
     ],
     10=>[
@@ -1151,48 +1442,255 @@ Druid.subclasses.create(
     ],
   },
   custom: {},
+  equipment_choices: {},
   extra_spells: {},
-  specific_spells: {},
-  custom_mods: {
-    'specific_spells_choices'=> [
-      {
-        name: 'Arctic',
-        spells: {
-          3=>["Hold Person","Spike Growth"],
-          5=>["Sleet Storm","Slow"],
-          7=>["Freedom of Movement","Ice Storm"],
-          9=>["Commune With Nature","Cone of Cold"],
-        }
-      },
-      {
-        name: 'Coast',
-        spells: {
-          3=>["Mirror Image","Misty Step"],
-          5=>["Water Breathing","Water Walk"],
-          7=>["Control Water","Freedom of Movement"],
-          9=>["Conjure Elemental","Scrying"],
-        }
-      },
-       {
-        name: 'Desert',
-        spells: {
-          3=>["Blur","Silence"],
-          5=>["Create Food and Water","Protection from Energy"],
-          7=>["Blight","Hallucinatory Terrain"],
-          9=>["Insect Plague","Wall of Stone"],
-        }
-      },
-       {
-        name: 'Forest',
-        spells: {
-          3=>["Barkskin","Spider Climb"],
-          5=>["Call Lightning","Plant Growth"],
-          7=>["Divination","Freedom of Movement"],
-          9=>["Dream","Insect Plague"],
-        }
-      },
-    ]
+  specific_spells: {
+    3=>[['Hold Person','Normal'],['Spike Growth','Normal']],
+    5=>[['Sleet Storm','Normal'],['Slow','Normal']],
+    7=>[['Freedom of Movement','Normal'],['Ice Storm','Normal']],
+    9=>[['Commune with Nature','Normal'],['Cone of Cold','Normal']],
+    'stat'=>'Wisdom',
+    'source'=>'Circle of the Arctic',
   },
+  custom_mods: {},
+)
+
+Druid.subclasses.create(
+  name: "Circle of the Coast",
+  description: "The Circle of the Land is made up of mystics and sages who safeguard ancient knowledge and rites through a vast oral tradition. These druids meet within sacred circles of trees or standing stones to whisper primal secrets in Druidic. The circle’s wisest members preside as the chief priests of communities that hold to the Old Faith and serve as advisors to the rulers of those folk. As a member of this circle, your magic is influenced by the land where you were initiated into the circle’s mysterious rites.",
+  features: {
+    2=>[
+      "Bonus Cantrip: You learn one additional druid cantrip.",
+      "Natural Recovery: You can regain some of your magical energy by sitting in meditation and communing with nature. During a short rest, you choose expended spell slots to recover. The spell slots can have a combined level that is equal to or less than half your druid level (rounded up), and none of the slots can be 6th level or higher. You can’t use this feature again until you finish a long rest.",
+    ],
+    6=>[
+      "Land's Stride: Moving through nonmagical difficult terrain costs you no extra movement. You can also pass through nonmagical plants without being slowed by them and without taking damage from them if they have thorns, spines, or a similar hazard.
+      In addition, you have advantage on saving throws against plants that are magically created or manipulated to impede movement, such those created by the entangle spell.",
+    ],
+    10=>[
+      "Nature's Ward: You can't be charmed or frightened by elementals or fey, and you are immune to poison and disease.",
+    ],
+    14=>[
+      "Nature's Sanctuary: Creatures of the natural world sense your connection to nature and become hesitant to attack you. When a beast or plant creature attacks you, that creature must make a Wisdom saving throw against your druid spell save DC. On a failed save, the creature must choose a different target, or the attack automatically misses. On a successful save, the creature is immune to this effect for 24 hours.
+      The creature is aware of this effect before it makes its attack against you.",
+    ],
+  },
+  custom: {},
+  equipment_choices: {},
+  extra_spells: {},
+  specific_spells: {
+    3=>[['Mirror Image','Normal'],['Misty Step','Normal']],
+    5=>[['Water Breathing','Normal'],['Water Walk','Normal']],
+    7=>[['Control Water','Normal'],['Freedom of Movement','Normal']],
+    9=>[['Conjure Elemental','Normal'],['Scrying','Normal']],
+    'stat'=>'Wisdom',
+    'source'=>'Circle of the Coast',
+  },
+  custom_mods: {},
+)
+
+Druid.subclasses.create(
+  name: "Circle of the Desert",
+  description: "The Circle of the Land is made up of mystics and sages who safeguard ancient knowledge and rites through a vast oral tradition. These druids meet within sacred circles of trees or standing stones to whisper primal secrets in Druidic. The circle’s wisest members preside as the chief priests of communities that hold to the Old Faith and serve as advisors to the rulers of those folk. As a member of this circle, your magic is influenced by the land where you were initiated into the circle’s mysterious rites.",
+  features: {
+    2=>[
+      "Bonus Cantrip: You learn one additional druid cantrip.",
+      "Natural Recovery: You can regain some of your magical energy by sitting in meditation and communing with nature. During a short rest, you choose expended spell slots to recover. The spell slots can have a combined level that is equal to or less than half your druid level (rounded up), and none of the slots can be 6th level or higher. You can’t use this feature again until you finish a long rest.",
+    ],
+    6=>[
+      "Land's Stride: Moving through nonmagical difficult terrain costs you no extra movement. You can also pass through nonmagical plants without being slowed by them and without taking damage from them if they have thorns, spines, or a similar hazard.
+      In addition, you have advantage on saving throws against plants that are magically created or manipulated to impede movement, such those created by the entangle spell.",
+    ],
+    10=>[
+      "Nature's Ward: You can't be charmed or frightened by elementals or fey, and you are immune to poison and disease.",
+    ],
+    14=>[
+      "Nature's Sanctuary: Creatures of the natural world sense your connection to nature and become hesitant to attack you. When a beast or plant creature attacks you, that creature must make a Wisdom saving throw against your druid spell save DC. On a failed save, the creature must choose a different target, or the attack automatically misses. On a successful save, the creature is immune to this effect for 24 hours.
+      The creature is aware of this effect before it makes its attack against you.",
+    ],
+  },
+  custom: {},
+  equipment_choices: {},
+  extra_spells: {},
+  specific_spells: {
+    3=>[['Blur','Normal'],['Silence','Normal']],
+    5=>[['Create Food and Water','Normal'],['Protection from Energy','Normal']],
+    7=>[['Blight','Normal'],['Hallucinatory Terrain','Normal']],
+    9=>[['Insect Plague','Normal'],['Wall of Stone','Normal']],
+    'stat'=>'Wisdom',
+    'source'=>'Circle of the Desert',
+  },
+  custom_mods: {},
+)
+
+Druid.subclasses.create(
+  name: "Circle of the Forest",
+  description: "The Circle of the Land is made up of mystics and sages who safeguard ancient knowledge and rites through a vast oral tradition. These druids meet within sacred circles of trees or standing stones to whisper primal secrets in Druidic. The circle’s wisest members preside as the chief priests of communities that hold to the Old Faith and serve as advisors to the rulers of those folk. As a member of this circle, your magic is influenced by the land where you were initiated into the circle’s mysterious rites.",
+  features: {
+    2=>[
+      "Bonus Cantrip: You learn one additional druid cantrip.",
+      "Natural Recovery: You can regain some of your magical energy by sitting in meditation and communing with nature. During a short rest, you choose expended spell slots to recover. The spell slots can have a combined level that is equal to or less than half your druid level (rounded up), and none of the slots can be 6th level or higher. You can’t use this feature again until you finish a long rest.",
+    ],
+    6=>[
+      "Land's Stride: Moving through nonmagical difficult terrain costs you no extra movement. You can also pass through nonmagical plants without being slowed by them and without taking damage from them if they have thorns, spines, or a similar hazard.
+      In addition, you have advantage on saving throws against plants that are magically created or manipulated to impede movement, such those created by the entangle spell.",
+    ],
+    10=>[
+      "Nature's Ward: You can't be charmed or frightened by elementals or fey, and you are immune to poison and disease.",
+    ],
+    14=>[
+      "Nature's Sanctuary: Creatures of the natural world sense your connection to nature and become hesitant to attack you. When a beast or plant creature attacks you, that creature must make a Wisdom saving throw against your druid spell save DC. On a failed save, the creature must choose a different target, or the attack automatically misses. On a successful save, the creature is immune to this effect for 24 hours.
+      The creature is aware of this effect before it makes its attack against you.",
+    ],
+  },
+  custom: {},
+  equipment_choices: {},
+  extra_spells: {},
+  specific_spells: {
+    3=>[['Barkskin','Normal'],['Spider Climb','Normal']],
+    5=>[['Call Lightning','Normal'],['Plant Growth','Normal']],
+    7=>[['Divination','Normal'],['Freedom of Movement','Normal']],
+    9=>[['Commune with Nature','Normal'],['Tree Stride','Normal']],
+    'stat'=>'Wisdom',
+    'source'=>'Circle of the Forest',
+  },
+  custom_mods: {},
+)
+
+Druid.subclasses.create(
+  name: "Circle of the Grassland",
+  description: "The Circle of the Land is made up of mystics and sages who safeguard ancient knowledge and rites through a vast oral tradition. These druids meet within sacred circles of trees or standing stones to whisper primal secrets in Druidic. The circle’s wisest members preside as the chief priests of communities that hold to the Old Faith and serve as advisors to the rulers of those folk. As a member of this circle, your magic is influenced by the land where you were initiated into the circle’s mysterious rites.",
+  features: {
+    2=>[
+      "Bonus Cantrip: You learn one additional druid cantrip.",
+      "Natural Recovery: You can regain some of your magical energy by sitting in meditation and communing with nature. During a short rest, you choose expended spell slots to recover. The spell slots can have a combined level that is equal to or less than half your druid level (rounded up), and none of the slots can be 6th level or higher. You can’t use this feature again until you finish a long rest.",
+    ],
+    6=>[
+      "Land's Stride: Moving through nonmagical difficult terrain costs you no extra movement. You can also pass through nonmagical plants without being slowed by them and without taking damage from them if they have thorns, spines, or a similar hazard.
+      In addition, you have advantage on saving throws against plants that are magically created or manipulated to impede movement, such those created by the entangle spell.",
+    ],
+    10=>[
+      "Nature's Ward: You can't be charmed or frightened by elementals or fey, and you are immune to poison and disease.",
+    ],
+    14=>[
+      "Nature's Sanctuary: Creatures of the natural world sense your connection to nature and become hesitant to attack you. When a beast or plant creature attacks you, that creature must make a Wisdom saving throw against your druid spell save DC. On a failed save, the creature must choose a different target, or the attack automatically misses. On a successful save, the creature is immune to this effect for 24 hours.
+      The creature is aware of this effect before it makes its attack against you.",
+    ],
+  },
+  custom: {},
+  equipment_choices: {},
+  extra_spells: {},
+  specific_spells: {
+    3=>[['Invisibility','Normal'],['Pass Without Trace','Normal']],
+    5=>[['Daylight','Normal'],['Haste','Normal']],
+    7=>[['Divination','Normal'],['Freedom of Movement','Normal']],
+    9=>[['Dream','Normal'],['Insect Plague','Normal']],
+    'stat'=>'Wisdom',
+    'source'=>'Circle of the Grassland',
+  },
+  custom_mods: {},
+)
+
+Druid.subclasses.create(
+  name: "Circle of the Mountain",
+  description: "The Circle of the Land is made up of mystics and sages who safeguard ancient knowledge and rites through a vast oral tradition. These druids meet within sacred circles of trees or standing stones to whisper primal secrets in Druidic. The circle’s wisest members preside as the chief priests of communities that hold to the Old Faith and serve as advisors to the rulers of those folk. As a member of this circle, your magic is influenced by the land where you were initiated into the circle’s mysterious rites.",
+  features: {
+    2=>[
+      "Bonus Cantrip: You learn one additional druid cantrip.",
+      "Natural Recovery: You can regain some of your magical energy by sitting in meditation and communing with nature. During a short rest, you choose expended spell slots to recover. The spell slots can have a combined level that is equal to or less than half your druid level (rounded up), and none of the slots can be 6th level or higher. You can’t use this feature again until you finish a long rest.",
+    ],
+    6=>[
+      "Land's Stride: Moving through nonmagical difficult terrain costs you no extra movement. You can also pass through nonmagical plants without being slowed by them and without taking damage from them if they have thorns, spines, or a similar hazard.
+      In addition, you have advantage on saving throws against plants that are magically created or manipulated to impede movement, such those created by the entangle spell.",
+    ],
+    10=>[
+      "Nature's Ward: You can't be charmed or frightened by elementals or fey, and you are immune to poison and disease.",
+    ],
+    14=>[
+      "Nature's Sanctuary: Creatures of the natural world sense your connection to nature and become hesitant to attack you. When a beast or plant creature attacks you, that creature must make a Wisdom saving throw against your druid spell save DC. On a failed save, the creature must choose a different target, or the attack automatically misses. On a successful save, the creature is immune to this effect for 24 hours.
+      The creature is aware of this effect before it makes its attack against you.",
+    ],
+  },
+  custom: {},
+  equipment_choices: {},
+  extra_spells: {},
+  specific_spells: {
+    3=>[['Spider Climb','Normal'],['Spike Growth','Normal']],
+    5=>[['Lightning Bolt','Normal'],['Meld into Stone','Normal']],
+    7=>[['Stone Shape','Normal'],['Stoneskin','Normal']],
+    9=>[['Passwall','Normal'],['Wall of Stone','Normal']],
+    'stat'=>'Wisdom',
+    'source'=>'Circle of the Mountain',
+  },
+  custom_mods: {},
+)
+
+Druid.subclasses.create(
+  name: "Circle of the Swamp",
+  description: "The Circle of the Land is made up of mystics and sages who safeguard ancient knowledge and rites through a vast oral tradition. These druids meet within sacred circles of trees or standing stones to whisper primal secrets in Druidic. The circle’s wisest members preside as the chief priests of communities that hold to the Old Faith and serve as advisors to the rulers of those folk. As a member of this circle, your magic is influenced by the land where you were initiated into the circle’s mysterious rites.",
+  features: {
+    2=>[
+      "Bonus Cantrip: You learn one additional druid cantrip.",
+      "Natural Recovery: You can regain some of your magical energy by sitting in meditation and communing with nature. During a short rest, you choose expended spell slots to recover. The spell slots can have a combined level that is equal to or less than half your druid level (rounded up), and none of the slots can be 6th level or higher. You can’t use this feature again until you finish a long rest.",
+    ],
+    6=>[
+      "Land's Stride: Moving through nonmagical difficult terrain costs you no extra movement. You can also pass through nonmagical plants without being slowed by them and without taking damage from them if they have thorns, spines, or a similar hazard.
+      In addition, you have advantage on saving throws against plants that are magically created or manipulated to impede movement, such those created by the entangle spell.",
+    ],
+    10=>[
+      "Nature's Ward: You can't be charmed or frightened by elementals or fey, and you are immune to poison and disease.",
+    ],
+    14=>[
+      "Nature's Sanctuary: Creatures of the natural world sense your connection to nature and become hesitant to attack you. When a beast or plant creature attacks you, that creature must make a Wisdom saving throw against your druid spell save DC. On a failed save, the creature must choose a different target, or the attack automatically misses. On a successful save, the creature is immune to this effect for 24 hours.
+      The creature is aware of this effect before it makes its attack against you.",
+    ],
+  },
+  custom: {},
+  equipment_choices: {},
+  extra_spells: {},
+  specific_spells: {
+    3=>[['Darkness','Normal'],["Melf's Acid Arrow",'Normal']],
+    5=>[['Water Walk','Normal'],['Stinking Cloud','Normal']],
+    7=>[['Freedom of Movement','Normal'],['Locate Creature','Normal']],
+    9=>[['Insect Plague','Normal'],['Scrying','Normal']],
+    'stat'=>'Wisdom',
+    'source'=>'Circle of the Swamp',
+  },
+  custom_mods: {},
+)
+
+Druid.subclasses.create(
+  name: "Circle of the Underdark",
+  description: "The Circle of the Land is made up of mystics and sages who safeguard ancient knowledge and rites through a vast oral tradition. These druids meet within sacred circles of trees or standing stones to whisper primal secrets in Druidic. The circle’s wisest members preside as the chief priests of communities that hold to the Old Faith and serve as advisors to the rulers of those folk. As a member of this circle, your magic is influenced by the land where you were initiated into the circle’s mysterious rites.",
+  features: {
+    2=>[
+      "Bonus Cantrip: You learn one additional druid cantrip.",
+      "Natural Recovery: You can regain some of your magical energy by sitting in meditation and communing with nature. During a short rest, you choose expended spell slots to recover. The spell slots can have a combined level that is equal to or less than half your druid level (rounded up), and none of the slots can be 6th level or higher. You can’t use this feature again until you finish a long rest.",
+    ],
+    6=>[
+      "Land's Stride: Moving through nonmagical difficult terrain costs you no extra movement. You can also pass through nonmagical plants without being slowed by them and without taking damage from them if they have thorns, spines, or a similar hazard.
+      In addition, you have advantage on saving throws against plants that are magically created or manipulated to impede movement, such those created by the entangle spell.",
+    ],
+    10=>[
+      "Nature's Ward: You can't be charmed or frightened by elementals or fey, and you are immune to poison and disease.",
+    ],
+    14=>[
+      "Nature's Sanctuary: Creatures of the natural world sense your connection to nature and become hesitant to attack you. When a beast or plant creature attacks you, that creature must make a Wisdom saving throw against your druid spell save DC. On a failed save, the creature must choose a different target, or the attack automatically misses. On a successful save, the creature is immune to this effect for 24 hours.
+      The creature is aware of this effect before it makes its attack against you.",
+    ],
+  },
+  custom: {},
+  equipment_choices: {},
+  extra_spells: {},
+  specific_spells: {
+    3=>[['Spider Climb','Normal'],['Web','Normal']],
+    5=>[['Gaseous Form','Normal'],['Stinking Cloud','Normal']],
+    7=>[['Greater Invisibility','Normal'],['Stone Shape','Normal']],
+    9=>[['Cloudkill','Normal'],['Insect Plague','Normal']],
+    'stat'=>'Wisdom',
+    'source'=>'Circle of the Underdark',
+  },
+  custom_mods: {},
 )
 
 Fighter = PlayerClass.create(
@@ -1313,7 +1811,7 @@ Fighter.subclasses.create(
     ],
   },
   features: {
-    1=> [
+    3=> [
       "Improved Critical: Your weapon attacks score a critical hit on a roll of 19 or 20.",
     ],
     7=> [
@@ -1329,6 +1827,57 @@ Fighter.subclasses.create(
     18=> [
       "Survivor: You attain the pinnacle of resilience in battle. At the start of each of your turns, you regain hit points equal to 5 + your Constitution modifier if you have no more than half of your hit points left. You don’t gain this benefit if you have 0 hit points.",
     ]
+  },
+  equipment_choices: {},
+  extra_spells: {},
+  specific_spells: {},
+  custom_mods: {},
+)
+
+Fighter.subclasses.create(
+  name: "Battle Master",
+  description: "Those who emulate the archetypal Battle Master employ martial techniques passed down through generations. To a Battle Master, combat is an academic field, sometimes including subjects beyond battle such as weaponsmithing and calligraphy. Not every fighter absorbs the lessons of history, theory, and artistry that are reflected in the Battle Master archetype, but those who do are well-rounded fighters of great skill and knowledge.",
+  custom: {
+    10=>[
+      "",
+    ],
+  },
+  equipment_choices: {
+    'choices' => [
+      ['artisan#1'],
+    ],
+    'default' => [],
+  },
+  features: {
+    3=> [
+      "Combat Superiority: you learn maneuvers that are fueled by special dice called superiority dice.
+      
+      Maneuvers. You learn three maneuvers of your choice. Many maneuvers enhance an attack in some way. You can use only one maneuver per attack. You learn two additional maneuvers of your choice at 7th, 10th, and 15th level. Each time you learn new maneuvers, you can also replace one maneuver you know with a different one.
+
+Superiority Dice. You have four superiority dice, which are d8s. A superiority die is expended when you use it. You regain all of your expended superiority dice when you finish a short or long rest. You gain another superiority die at 7th level and one more at 15th level.
+
+Saving Throws. Some of your maneuvers require your target to make a saving throw to resist the maneuver's effects. The saving throw DC is calculated as follows:
+
+Maneuver save DC = 8 + your proficiency bonus + your Strength or Dexterity modifier (your choice)",
+      "Student of War: You gain proficiency with one type of artisan's tools of your choice.",
+    ],
+    7=> [
+      "Know Your Enemy:  if you spend at least 1 minute observing or interacting with another creature outside combat, you can learn certain information about its capabilities compared to your own. The DM tells you if the creature is your equal, superior, or inferior in regard to two of the following characteristics of your choice:
+
+      Strength score
+      Dexterity score
+      Constitution score
+      Armor Class
+      Current hit points
+      Total class levels, if any
+      Fighter class levels, if any",
+    ],
+    10=> [
+      "Improved Combat Superiority: Your superiority dice turn into d10s. At 18th level, they turn into d12s.",
+    ],
+    15=> [
+      "Relentless: When you roll initiative and have no superiority dice remaining, you regain 1 superiority die.",
+    ],
   },
   extra_spells: {},
   specific_spells: {},
@@ -1538,6 +2087,7 @@ Ranger.subclasses.create(
       "Uncanny Dodge: When an attacker that you can see hits you with an attackm you can use your reaction to halve the attack's damage against you.",
     ]
   },
+  equipment_choices: {},
   features: {},
   extra_spells: {},
   specific_spells: {},
@@ -1557,6 +2107,7 @@ Ranger.subclasses.create(
     15=>["When you cast a spell targeting yourself, you can also affect your beast companion with the spell if the beast is within 30 feet of you."],
     },
   custom: {},
+  equipment_choices: {},
   extra_spells: {},
   specific_spells: {},
   custom_mods: {},

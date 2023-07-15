@@ -73,6 +73,7 @@
             <div class="grid grid-cols-2 gap-2" data-sheet-target="backgroundSkills"></div>
             <div class="grid grid-cols-2 gap-2" data-sheet-target="featSkills"></div>
             <div class="grid grid-cols-2 gap-2" data-sheet-target="modSkills"></div>
+            <div class="grid grid-cols-2 gap-2" data-sheet-target="expertiseSkills"></div>
             <p class="font-black text-2xl mt-2 text-center">Languages</p>
             <div class="grid grid-cols-2 gap-2" data-sheet-target="raceLanguages"></div>
             <div class="grid grid-cols-2 gap-2" data-sheet-target="subraceLanguages"></div>
@@ -311,8 +312,12 @@
     <% for modal in @modals do %>
       <dialog class="border border-black rounded-md bg-gray-300" data-controller="modal" data-sheet-target="dialog<%= modal.gsub(/\s+/, "") %>">
         <p class="text-3xl font-black"><%= modal %></p>
+        <% if (modal == 'Traits') %>
+          <div class="grid grid-cols-2 lg:grid-cols-4 gap-2" data-sheet-target="<%= modal.downcase.gsub(/\s+/, "") %>ModalList"></div>
+        <% else %>
           <div class="grid grid-cols-2 md:grid-cols-3 gap-2" data-sheet-target="<%= modal.downcase.gsub(/\s+/, "") %>ModalList"></div>
-        <button class="px-8 py-2 rounded-lg bg-blue-400 border-b-2 border-r-2" data-action="sheet#submit<%= modal.gsub(/\s+/, "") %>Choices">Submit</button>
+        <% end %>
+        <button class="px-8 py-2 mt-4 rounded-lg bg-blue-400 border-b-2 border-r-2" data-action="sheet#submit<%= modal.gsub(/\s+/, "") %>Choices">Submit</button>
       </dialog>
     <% end %>
     <dialog class="border border-black rounded-md bg-gray-300" data-controller="modal" data-sheet-target="dialogClassSkills">
@@ -321,13 +326,13 @@
         <div class="grid grid-cols-2 md:grid-cols-3 gap-2" data-sheet-target="classSkillsModalList"></div>
       <p class="text-xl font-bold" id="extraSkillsLabel">Extra Skills</p>
         <div class="grid grid-cols-2 md:grid-cols-3 gap-2" data-sheet-target="extraSkillsModalList"></div>
-      <button class="px-8 py-2 rounded-lg bg-blue-400 border-b-2 border-r-2" data-action="sheet#submitClassSkillsChoices">Submit</button>
+      <button class="px-8 py-2 mt-4 rounded-lg bg-blue-400 border-b-2 border-r-2" data-action="sheet#submitClassSkillsChoices">Submit</button>
     </dialog>
     <dialog class="border border-black rounded-md bg-gray-300" data-controller="modal" data-sheet-target="dialogASI">
       <p class="text-3xl font-black">Ability Score Increases</p>
         <div data-sheet-target="asiModalList"></div>
         <div data-sheet-target="customASI"></div>
-      <button class="px-8 py-2 rounded-lg bg-blue-400 border-b-2 border-r-2" data-action="sheet#submitASIChoices">Submit</button>
+      <button class="px-8 py-2 mt-4 rounded-lg bg-blue-400 border-b-2 border-r-2" data-action="sheet#submitASIChoices">Submit</button>
     </dialog>
     <dialog class="border border-black rounded-md bg-gray-300" data-controller="modal" data-sheet-target="dialogSpells">
       <p class="text-3xl font-black">Spells</p>
@@ -335,13 +340,13 @@
       <div class="grid grid-cols-2 md:grid-cols-3 gap-2" data-sheet-target="cantripsModalList"></div>
       <h4 class="col-span-full font-black text-lg">Spells <span class="text-sm" data-sheet-target="spellsLimit"></span></h4>
       <div class="grid grid-cols-2 md:grid-cols-3 gap-2" data-sheet-target="spellsModalList"></div>
-      <button class="px-8 py-2 rounded-lg bg-blue-400 border-b-2 border-r-2" data-action="sheet#submitSpellsChoices">Submit</button>
+      <button class="px-8 py-2 mt-4 rounded-lg bg-blue-400 border-b-2 border-r-2" data-action="sheet#submitSpellsChoices">Submit</button>
     </dialog>
     <dialog class="border border-black rounded-md bg-gray-300" data-controller="modal" data-sheet-target="dialogExtraSpells">
       <p class="text-3xl font-black">Extra Spells</p>
         <div data-sheet-target="extraSpellsModalList"></div>
       <p class="font-black text-sm" data-sheet-target="extraSpellsLimit"></p>
-      <button class="px-8 py-2 rounded-lg bg-blue-400 border-b-2 border-r-2" data-action="sheet#submitExtraSpellsChoices">Submit</button>
+      <button class="px-8 py-2 mt-4 rounded-lg bg-blue-400 border-b-2 border-r-2" data-action="sheet#submitExtraSpellsChoices">Submit</button>
     </dialog>
     <dialog class="border border-black rounded-md bg-gray-300" data-controller="modal" data-sheet-target="dialogEquipment">
       <p class="text-3xl font-black">Starting Equipment</p>
@@ -353,8 +358,7 @@
             </div>
           </div>
         </div>
-      <p class="font-black text-sm">Choose 1 from each</p>
-      <button class="px-8 py-2 rounded-lg bg-blue-400 border-b-2 border-r-2" data-action="sheet#submitEquipmentChoices">Submit</button>
+      <button class="px-8 py-2 mt-4 rounded-lg bg-blue-400 border-b-2 border-r-2" data-action="sheet#submitEquipmentChoices">Submit</button>
     </dialog>
   </section>
 </div>
