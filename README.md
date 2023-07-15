@@ -17,17 +17,13 @@ Different methods of stat assignment
 Implement Feats - these can use customMOd for most things I think
 
 # Barbarian
-  fill subclasses
-
+  done
 # Bard
-  fill subclasses
-
+  done
 # Cleric
-  fill subclasses
-
+  done
 # Druid
-  specific_spells_choices handling in customModifiers() for circle of the land subclass
-  fill subclasses
+  done - used subclasses for different Land Circles
 
 # Fighter
   fill subclasses - Eldritch Knight might be weird

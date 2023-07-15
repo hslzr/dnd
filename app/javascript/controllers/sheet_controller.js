@@ -1876,11 +1876,18 @@ export default class extends Controller {
   }
   //-----------------Extra Spells Modal ------------------//
   chooseExtraSpells() {
-    //at this point we are in finalPass and our state variables are populated
-    //check for an empty collection to skip all this stuff for classes without extra spell lists
-    //we have to go through each collection, fetch the data needed, and populate the sheet or modal
-
-    //prep the modal by filling in spell slot information
+    /* example key/value pair
+    
+      'Any'=> {
+      'source'=> 'College of Lore',
+      'spells_choices'=> [
+        [6,2], #2 choices at level 6
+      ],
+      'cantrips_choices'=> 0,
+      'spell_ability'=> 'Charisma',
+      'spells_are_extra'=> false,
+    }
+    */
 
     this.prepExtraSpellsModal();
 
