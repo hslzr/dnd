@@ -211,6 +211,7 @@ export default class extends Controller {
     'specSpellsList',
     'dialogSpecialties',
     'specialtiesModalList',
+    'extraSpecialtiesButton',
   ];
 
   connect() {
@@ -234,6 +235,7 @@ export default class extends Controller {
       this.equipmentButtonTarget,
       this.asiButtonTarget,
       this.extraSpellsButtonTarget,
+      this.extraSpecialtiesButtonTarget
     ];
 
     this.stats = [0, 0, 0, 0, 0, 0];
@@ -1169,54 +1171,30 @@ export default class extends Controller {
         for (let item of specialties['limits']) {
           if (this.level >= item[0]) limit = item[1];
         }
-        this.populateSpecialtiesModal(specialties, limit);
+        Util.populateSpecialtiesModal(specialties, limit, this.specialtiesModalListTarget);
+      }
+
+      let dice = mods['dice'] || false;
+      if(dice) {
+        //show special dice in the top of the features list
+        this.prependDice(dice);
       }
     }
-  }
-
-  populateSpecialtiesModal(specialties, limit) {
-    target.append(
-      Util.getTag(
-        'h4',
-        'text-lg font-black text-center col-span-full',
-        specialties['title']
-      )
-    );
-    target.append(
-      Util.getTag(
-        'p',
-        'text-sm font-bold text-center col-span-full',
-        `Choose ${limit}`
-      )
-    );
-    for (let entry of specialties['list']) {
-      let frame = Util.getTag(
-        'div',
-        'flex flex-col justify-start gap-2 p-2 bg-gray-300'
-      );
-      frame.append(
-        Util.getTag('p', 'bg-gray-100 font-bold rounded-lg', entry[0])
-      );
-      frame.append(
-        Util.getTag('p', 'bg-gray-100 rounded-lg', entry[1])
-      );
-
-      let check = document.createElement('input');
-      check.type = 'checkbox';
-      check.value = entry[0];
-
-      frame.append(check);
-    }
-    this.specialtiesModalListTarget.append(frame);
   }
 
   submitSpecialties(event) {
     let chosen = [];
 
-    for (let item of this.specialtiesMoalListTarget.childNodes) {
+    for (let item of this.specialtiesModalListTarget.childNodes) {
       console.log(item.tagName);
       if (item.tagName == 'INPUT') {
+        console.log(item);
+      }
     }
+  }
+
+  prependDice(dice) {
+    console.log(dice);
   }
 
   //------------------------------- customModifiers() methods
@@ -2347,8 +2325,8 @@ export default class extends Controller {
 
       choice.forEach((code) => {
         //'Rapier#1'  or 'Longsword#1'
+        //or an array of these codes
         if (typeof code == 'string') {
-          //I think this is the only one that will ever fire
 
           let values = code.split('#');
 
@@ -2379,7 +2357,38 @@ export default class extends Controller {
             Util.getTag('p', 'text-lg font-black', 'or')
           );
         } else {
-          console.log('popEquipmentModel error');
+          let choice_box = Util.getTag('div', 'choice-box');
+          container.append(choice_box);
+
+          let choice_labels = Util.getTag(
+            'div',
+            'flex gap-4 items-center justify-center'
+          );
+          choice_box.append(choice_labels);
+          for (let item of code) {
+            let values = item.split('#');
+            for (let i = 0; i < parseInt(values[1]); i++) {
+              switch (values[0]) {
+                case 'simple':
+                  Util.appendWeaponSelectToTarget(
+                    'simple',
+                    choice_labels
+                  );
+                  break;
+                case 'martial':
+                  Util.appendWeaponSelectToTarget(
+                    'martial',
+                    choice_labels
+                  );
+                  break;
+                default:
+                  choice_labels.append(
+                    Util.getTag('p', 'p-1', values[0])
+                  );
+                  break;
+              }
+            }
+          }
         }
       });
       container.removeChild(container.lastChild); //get rid of last 'or'
@@ -2641,6 +2650,9 @@ export default class extends Controller {
   }
   showExtraSpellsDialog() {
     this.dialogExtraSpellsTarget.showModal();
+  }
+  showSpecialtiesDialog() {
+    this.dialogSpecialtiesTarget.showModal();
   }
 
   //----------------------------- Base Stat Methods ---------------------------------//

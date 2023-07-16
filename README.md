@@ -26,7 +26,8 @@ Implement Feats - these can use customMOd for most things I think
  used subclasses for different Land Circles
 
 # Fighter
-  fill subclasses - Eldritch Knight might be weird
+  fill subclasses 
+    do maneuvers for Battle Master
 
 # Monk
   ki points not handled at all yet
@@ -35,13 +36,13 @@ Implement Feats - these can use customMOd for most things I think
 # Ranger
   done
   fill subclasses
->>>>>>> 1d79eccd56ee7ea4cb0a00c5cafa8e57d7944ca2
 
 # Spells
    done
 
 # bugs
   attack spells dont populate attacks
+  racial tools modal has an empty select input
 
 # heroku
 https://uglysheetmaker-e6deabaebc10.herokuapp.com/

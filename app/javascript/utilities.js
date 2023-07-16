@@ -369,6 +369,44 @@ export function getSpellCard(source, stat, spells) {
   box.append(list);
   return box;
 }
+//---populate
+
+export function populateSpecialtiesModal(specialties, limit, target) {
+  target.append(
+    getTag(
+      'h4',
+      'text-lg font-black text-center col-span-full',
+      specialties['title']
+    )
+  );
+  target.append(
+    getTag(
+      'p',
+      'text-sm font-bold text-center col-span-full',
+      `Choose ${limit}`
+    )
+  );
+  for (let entry of specialties['list']) {
+    let frame = getTag(
+      'div',
+      'flex flex-col justify-start gap-2 p-2 bg-gray-300'
+    );
+    frame.append(
+      getTag('p', 'bg-gray-100 font-bold rounded-lg', entry[0])
+    );
+    frame.append(
+      getTag('p', 'bg-gray-100 rounded-lg', entry[1])
+    );
+
+    let check = document.createElement('input');
+    check.type = 'checkbox';
+    check.value = entry[0];
+
+    frame.append(check);
+
+    target.append(frame);
+  }
+}
 
 //------------------------------------------- little helpers
 //calculate skill modifier
