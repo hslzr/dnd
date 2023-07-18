@@ -29,7 +29,6 @@ Deactivate buttons that lead to empty modals
 
 # Fighter
   fill subclasses 
-    validate and submit maneuvers as specialties in customMod
 
 # Monk
   ki points not handled at all yet
@@ -41,6 +40,12 @@ Deactivate buttons that lead to empty modals
 
 # Spells
    done
+
+# Limits
+  'specialties' implemented as a customMod, but more than one would break the system, 
+    I have to limit use to subclasses for now since Fighter#BattleMaster was the first use
+    i could generate new <dialog> elements or pages in the existing one for each instance 
+    in a categoryMap like this.specialties if I make one
 
 # bugs
   attack spells dont populate attacks

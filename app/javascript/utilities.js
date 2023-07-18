@@ -287,10 +287,9 @@ export function putClassFeatures(name, collection, target) {
 
 //used on modal submission to output the selected items to the appropriate sheet targets
 export function putModalChecksToSheet(collection, target, name = '') {
-  //creates p tags for collection and appends list to target with label for category name
-  //clears allChildfren of Target before appending so I use it in specific labele
-  //we pass in a category instance, collection within it, and output target
-  //if the collection is empty, the function returns without side-effects
+  //creates p tags for collection and appends list to target with optional 'name'
+
+  //if the collection is empty, the function exits
 
   if (collection.length == 0 || target == null) return;
 
@@ -369,6 +368,15 @@ export function getSpellCard(source, stat, spells) {
   box.append(list);
   return box;
 }
+
+export function putDiceCustomPane(title, limit, size, target) {
+  let frame = getTag('div','flex flex-col text-center gap-2 p-2 bg-blue-400/50 rounded-sm border-2 border-blue-500');
+  let titlepane = getTag('h4','font-black w-full mx-4 rounded-lg',title);
+  let die = getTag('p','',`${limit}d${size}`);
+  frame.append(titlepane);
+  frame.append(die);
+  target.append(frame);
+}
 //---populate
 /*
   'specialties'=> {
@@ -382,47 +390,6 @@ export function getSpellCard(source, stat, spells) {
     'list'=> [['name','description'],['',''],['',''],],
   }
 */
-export function populateSpecialtiesModal(specialties, limit, target) {
-  target.append(
-    getTag(
-      'h4',
-      'text-lg font-black text-center col-span-full',
-      specialties['title']
-    )
-  );
-  target.append(
-    getTag(
-      'p',
-      'text-sm font-bold text-center col-span-full',
-      `Choose ${limit}`
-    )
-  );
-  for (let entry of specialties['list']) {
-    let frame = getTag(
-      'div',
-      'grid grid-cols-5 gap-2 p-2 bg-gray-300'
-    );
-
-    let checkframe = getTag('div','flex items-center justify-center bg-gray-400/80 rounded-md row-span-2'); //document.createElement('input');
-    let check = getTag('input','');
-    check.type = 'checkbox';
-    check.value = entry[0];
-    
-    checkframe.append(check);
-    frame.append(checkframe);
-
-    frame.append(
-      getTag('p', 'col-start-2 bg-gray-100 font-bold rounded-lg col-span-4 text-center py-4 h-14', entry[0])
-    );
-    frame.append(
-      getTag('p', 'col-start-2 bg-gray-100 rounded-lg col-span-4 px-4 py-2', entry[1])
-    );
-
-    
-
-    target.append(frame);
-  }
-}
 
 //------------------------------------------- little helpers
 //calculate skill modifier

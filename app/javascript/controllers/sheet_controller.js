@@ -90,6 +90,7 @@ export default class extends Controller {
     'trackingHitDice',
     'trackingDeathSaveSuccess',
     'trackingDeathSaveFailure',
+    'customPane',
     'featureList',
     'raceFeatures',
     'subraceFeatures',
@@ -211,6 +212,7 @@ export default class extends Controller {
     'specSpellsList',
     'dialogSpecialties',
     'specialtiesModalList',
+    'specialtyFeatures',
     'extraSpecialtiesButton',
   ];
 
@@ -670,7 +672,7 @@ export default class extends Controller {
   }
 
   //code 0 : run everything
-  //code 1 : dont run updatetats or statModUpdate
+  //code 1 : dont run updatetats or statModUpdate on 'asi' passed into catUpdate
   finalPass(code = 0) {
     this.setSkillMap();
     this.populateSkillModifiers();
@@ -731,12 +733,14 @@ export default class extends Controller {
     }
 
     this.resetProficiencies();
+
+    //cleared here to support multiple sources of customPane entries
+    Util.removeAllChildNodes(this.customPaneTarget);
     this.customModifiers();
   }
 
   //----------------------------- Final Pass methods ---------------------------------//
   setSkillMap() {
-    console.log('setSkillMap');
     this.skills.set('Athletics', [
       this.stats[0],
       this.athleticsModTarget,
@@ -1039,7 +1043,6 @@ export default class extends Controller {
   }
 
   resetProficiencies() {
-    console.log('resetProficiencies');
     let sources = [
       this.raceSkillsTarget,
       this.subraceSkillsTarget,
@@ -1092,7 +1095,6 @@ export default class extends Controller {
   }
 
   customModifiers() {
-    console.log('customModifiers');
     let keys = this.customMods.keys();
     for (let key of keys) {
       let mods = this.customMods.get(key); //we loop over every custom_mods assigned
@@ -1143,7 +1145,7 @@ export default class extends Controller {
       let dice = mods['dice'] || false;
       if(dice) {
         //show special dice in the top of the features list
-        this.prependDice(dice);
+        this.populateDice(dice);
       }
     }
   }
@@ -1227,7 +1229,6 @@ export default class extends Controller {
       ],
     */
     Util.removeAllChildNodes(this.extraSkillsModalListTarget);
-    //console.log(array);
     let count = 0;
     for (let item of array) {
       if (item[0] <= this.level) count += item[1];
@@ -1291,32 +1292,33 @@ export default class extends Controller {
     //we just grab the last characters of the 'Choose #' text and make it an integer
     let limit = parseInt(document.getElementById('speclimit').innerText.split(' ')[1]);
 
+    let title = this.specialtiesModalListTarget.firstChild.innerText;
+
     //our first two elements are titles but important because this is custom data, 
     //i could give them targets and avoid this index tracking and if() with a small refactor and sheet.html.erb update
     let index = 0;
     let count = 0;
     for (let item of this.specialtiesModalListTarget.childNodes) {
-
+      
       if(index > 1) {
         if(item.firstChild.firstChild.checked) {
           count++;
           let block = [ ...item.children ];
-          chosen.push([block[1].innerText,block[2].innerText]);
+          chosen.push(`${block[1].innerText}: ${block[2].innerText}`);
         }
       }
       index++;
     }
 
     if(chosen.length <= limit) {
-      this.putSpecialtiesToSheet(chosen);
+      Util.putModalChecksToSheet(
+        chosen,
+        this.specialtyFeaturesTarget,
+        title
+      );
       event.target.parentNode.close();
     }
   }
-
-  putSpeecialtiesToSheet(chosen) {
-    //do this just like features, we'll look for that code and try to use it here
-  }
-
 
   //custom dice, not implemented yet but theres a stub in customMods and the db
   /*
@@ -1334,8 +1336,26 @@ export default class extends Controller {
       },
     ],
   */
-  prependDice(dice) {
-    console.log(dice);
+  populateDice(dice) {
+    let limit = 0;
+    let size = 0;
+    let title = '';
+
+    for(let [key, value] of Object.entries(dice)) {
+      title = value.title;
+
+      
+      for(let entry of value.limits) {
+        if(this.level >= entry[0]) limit = entry[1];
+      }
+      for(let entry of value.size) {
+        if(this.level >= entry[0]) size = entry[1];
+      }
+
+      if(limit > 0) {
+        Util.putDiceCustomPane(title, limit, size, this.customPaneTarget);
+      }
+    }
   }
   
   //----------------------------- Choice Modals ---------------------------------//
@@ -2782,6 +2802,24 @@ export default class extends Controller {
       let rand = Math.floor(Math.random() * 20) + 1;
       this.base_stats[i] = rand;
       this.stats[i] = this.base_stats[i];
+    }
+
+    if (this.raceASI != 0 && this.subraceASI != 0)
+      Util.calculateStats(
+        this.stats,
+        this.base_stats,
+        this.raceASI,
+        this.subraceASI
+      );
+
+    Util.updateStats(this.stat_targets, this.stats);
+    this.catUpdate({}, 'stats');
+  }
+
+  evenStats() {
+    for (let i = 0; i < 6; i++) {
+      this.base_stats[i] = 10;
+      this.stats[i] = 10;
     }
 
     if (this.raceASI != 0 && this.subraceASI != 0)

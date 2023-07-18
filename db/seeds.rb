@@ -2159,8 +2159,10 @@ Ranger.subclasses.create(
   custom_mods: {},
 )
 
+
+
 Acolyte = Background.create(
-  name: "Acolyte",
+  name: "Dice Acolyte",
   description: 'You have spent your life in the service of a temple. You act as an intermediary between the realm of the holy and the mortal world.',
   skills: ['Insight', 'Religion'],
   extra_languages: 2,
@@ -2214,8 +2216,26 @@ Acolyte = Background.create(
     ],
   extra_spells: {},
   specific_spells: {},
-  custom_mods: {},
+  custom_mods: {
+    'dice'=> [
+      {
+        'title'=> 'Acolyte Dice',
+        'limits'=> [
+          [3,4],
+          [7,5],
+          [15,6],
+        ],
+        'size'=> [
+          [3,8],
+        ],
+      },
+    ],
+  },
 )
+
+
+
+
 
 Feat_alert = Feat.create(
   name: 'Alert',
