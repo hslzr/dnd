@@ -33,10 +33,10 @@
     <button class="px-4 py-2 rounded-lg bg-orange-300 border-b-2 border-r-2" data-action="sheet#showSpecialtiesDialog" data-sheet-target="extraSpecialtiesButton">Special Features</button>
   </div>
   <section class="flex flex-col" id="sheet">
-    <div class="grid grid-cols-2 md:grid-cols-3">
+    <div class="grid grid-cols-2 md:grid-cols-3 pr-4 pl-2">
       <div class="flex flex-col gap-2 col-span-2 md:col-span-1" id="firstcolumn">
 
-        <input type="text" placeholder="Character Name" class="sheetcell w-full" data-sheet-target="charName"></input>
+        <input type="text" placeholder="Character Name" class="sheetcell w-5/6 self-center" data-sheet-target="charName"></input>
         <p class="self-center" ><span class="sheetcell" data-sheet-target="profBonus"></span>Proficiency bonus</p>
         <p class="self-center"><span class="sheetcell" data-sheet-target="passPerception"></span>Passive Perception</p>
 
@@ -147,7 +147,7 @@
             </div>
           </div>
         </div>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 justify-around" id="substats">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 justify-around p-2" id="substats">
           <div class="flex flex-col p-2 border-2 border-black rounded-lg min-w-1/6">
               <p class="sheetcell" data-sheet-target="substatAC"></p>
               <p class="text-xs mx-2">AC</p>
@@ -165,28 +165,28 @@
               <p class="text-xs mx-2">Inspiration</p>
           </div>
         </div>
-          <div class="grid grid-cols-2 md:grid-cols-4 gap-2 justify-center " id="playtracking">
-            <div class="flex flex-col p-2 border-2 border-black rounded-lg">
-              <p class="sheetcell" data-sheet-target="trackingMaxHP"></p>
-              <p class="text-xs mx-2">MAX HP</p>
-              <p class="sheetcell" data-sheet-target="trackingCurrentHP"></p>
-              <p class="text-xs mx-2">CURRENT HP</p>
-            </div>
-            <div class="flex flex-col justify-center p-2 border-2 border-black rounded-lg">
-              <p class="sheetcell" data-sheet-target="trackingTemporaryHP"></p>
-              <p class="text-xs mx-2">TEMPORARY HP</p>
-            </div>
-            <div class="flex flex-col justify-center p-2 border-2 border-black rounded-lg">
-              <p class="sheetcell" data-sheet-target="trackingHitDice"></p>
-              <p class="text-xs mx-2">HIT DICE</p>
-            </div>
-            <div class="flex flex-col p-2 border-2 border-black rounded-lg">
-              <p class="sheetcell" data-sheet-target="trackingDeathSaveSuccess"></p>
-              <p class="text-xs mx-2">SUCCESSES</p>
-              <p class="sheetcell" data-sheet-target="trackingDeathSaveFailure"></p>
-              <p class="text-xs mx-2">FAILURES</p>
-              <p class="text-xs mx-2 -mb-2 font-black">DEATH SAVES</p>
-            </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-2 justify-center p-2" id="playtracking">
+          <div class="flex flex-col p-2 border-2 border-black rounded-lg">
+            <p class="sheetcell" data-sheet-target="trackingMaxHP"></p>
+            <p class="text-xs mx-2">MAX HP</p>
+            <p class="sheetcell" data-sheet-target="trackingCurrentHP"></p>
+            <p class="text-xs mx-2">CURRENT HP</p>
+          </div>
+          <div class="flex flex-col justify-center p-2 border-2 border-black rounded-lg">
+            <p class="sheetcell" data-sheet-target="trackingTemporaryHP"></p>
+            <p class="text-xs mx-2">TEMPORARY HP</p>
+          </div>
+          <div class="flex flex-col justify-center p-2 border-2 border-black rounded-lg">
+            <p class="sheetcell" data-sheet-target="trackingHitDice"></p>
+            <p class="text-xs mx-2">HIT DICE</p>
+          </div>
+          <div class="flex flex-col p-2 border-2 border-black rounded-lg">
+            <p class="sheetcell" data-sheet-target="trackingDeathSaveSuccess"></p>
+            <p class="text-xs mx-2">SUCCESSES</p>
+            <p class="sheetcell" data-sheet-target="trackingDeathSaveFailure"></p>
+            <p class="text-xs mx-2">FAILURES</p>
+            <p class="text-xs mx-2 -mb-2 font-black">DEATH SAVES</p>
+          </div>
         </div>
         <div data-sheet-target="customPane" class="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3"></div>
         <div class="flex flex-col gap-1  rounded-sm text-center justify-center" data-sheet-target="attackList">
