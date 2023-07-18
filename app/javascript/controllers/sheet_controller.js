@@ -1109,34 +1109,12 @@ export default class extends Controller {
       //attacks
       let attacks = mods['attacks'] || false;
       if (attacks) {
-        //clear attacks
-        while (this.attackListTarget.children.length > 2) {
-          this.attackListTarget.removeChild(
-            this.attackListTarget.lastChild
-          );
-        }
-
-        //populate attacks
-        for (let attack of attacks) {
-          let damage;
-          for (let item of attack['damage']) {
-            if (item[0] <= this.level) damage = item[1];
-          }
-
-          this.populateModAttack(
-            attack['name'],
-            damage,
-            attack['dmg_type'],
-            eval(attack['properties']),
-            attack['bonus']
-          );
-        }
+        this.populateAttacks(attacks);
       }
 
       //ability score increases, select 1
       let custom_asi = mods['extra_asi'] || false;
       if (custom_asi) {
-        Util.removeAllChildNodes(this.customASITarget);
         this.populateModASI(custom_asi);
       }
 
@@ -1149,22 +1127,10 @@ export default class extends Controller {
       //extra proficiency expertise selections
       let expertise_choices = mods['expertise_choices'] || false;
       if (expertise_choices) {
-        let num = mods['num_expertise'];
-        let source = mods['expertise_source'];
-        this.populateExtraExpertise(expertise_choices, num, source);
+        this.populateExtraExpertise(expertise_choices, mods['num_expertise'], mods['expertise_source']);
       }
-      /*
-        'specialties'=> {
-          'title'=> 'Maneuvers',
-          'limits'=> [
-            [1,3],
-            [5,4],
-            [7,5],
-            [14,7]
-          ],
-          'list'=> [['name','description'],['',''],['',''],],
-        }
-      */
+
+    
       let specialties = mods['specialties'] || false;
       if (specialties) {
         let limit = 0;
@@ -1187,8 +1153,9 @@ export default class extends Controller {
 
     for (let item of this.specialtiesModalListTarget.childNodes) {
       console.log(item.tagName);
-      if (item.tagName == 'INPUT') {
-        console.log(item);
+      if (item.tagName == 'DIV') {
+        console.log(item.firstChild);
+        console.log(item.firstChild.tagName);
       }
     }
   }
@@ -1197,8 +1164,35 @@ export default class extends Controller {
     console.log(dice);
   }
 
+  //theres an eval on attack['properties'] which is like, a little scary but I do control the input
+  populateAttacks(attacks) {
+    //clear attacks
+    while (this.attackListTarget.children.length > 2) {
+      this.attackListTarget.removeChild(
+        this.attackListTarget.lastChild
+      );
+    }
+
+    //populate attacks
+    for (let attack of attacks) {
+      let damage;
+      for (let item of attack['damage']) {
+        if (item[0] <= this.level) damage = item[1];
+      }
+
+      this.populateModAttack(
+        attack['name'],
+        damage,
+        attack['dmg_type'],
+        eval(attack['properties']),
+        attack['bonus']
+      );
+    }
+  }
+
   //------------------------------- customModifiers() methods
   populateModASI(length) {
+    Util.removeAllChildNodes(this.customASITarget);
     let list = ['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA'];
     for (let i = 0; i < length; i++) {
       let container = Util.getTag('div', 'asi-box');
@@ -2368,28 +2362,26 @@ export default class extends Controller {
           for (let item of code) {
             let values = item.split('#');
             for (let i = 0; i < parseInt(values[1]); i++) {
-              switch (values[0]) {
-                case 'simple':
-                  Util.appendWeaponSelectToTarget(
-                    'simple',
-                    choice_labels
-                  );
-                  break;
-                case 'martial':
-                  Util.appendWeaponSelectToTarget(
-                    'martial',
-                    choice_labels
-                  );
-                  break;
-                default:
-                  choice_labels.append(
-                    Util.getTag('p', 'p-1', values[0])
-                  );
-                  break;
+              //codes for a select box are all lowercase, but named items are capitalized
+              if (values[0].toLowerCase() == values[0]) {
+                Util.getSelect(values[0], choice_labels);
+              } else {
+                choice_labels.append(
+                  Util.getTag('p', 'p-1', values[0])
+                );
               }
             }
           }
+          let checkbox = Util.getTag('input', '');
+          checkbox.type = 'checkbox';
+          choice_box.prepend(checkbox);
+          
+          container.append(
+            Util.getTag('p', 'text-lg font-black', 'or')
+          );
         }
+
+
       });
       container.removeChild(container.lastChild); //get rid of last 'or'
       target.append(container);
@@ -2600,7 +2592,7 @@ export default class extends Controller {
     this.attackListTarget.append(row);
   }
 
-  //used for dragonborne breath weapons
+  //customMod attack population helper
   populateModAttack(weapon, die, dmg_type, properties, bonus) {
     let name = Util.getTag('p', 'sheetcell w-1/4', weapon);
     let damage = Util.getTag(
@@ -2611,6 +2603,37 @@ export default class extends Controller {
     let props = Util.getTag('p', 'sheetcell w-1/3', properties);
 
     let atk_bonus = Util.getTag('p', 'sheetcell w-1/4', bonus);
+
+    let row = Util.getTag('div', 'flex p-2 w-full');
+    row.append(name);
+    row.append(atk_bonus);
+    row.append(damage);
+    row.append(props);
+    this.attackListTarget.append(row);
+  }
+
+  //spell attack population helper
+  populateSpellAttack(spell) {
+    let name = Util.getTag('p', 'sheetcell w-1/4', spell['name']);
+
+    let amt_damage = 0;
+    for(let [key, val] of Object.entries(spell)) {
+      if(this.level >= parseInt(key)) amt_damage = val;
+    }
+
+    let damage = Util.getTag(
+      'p',
+      'sheetcell w-1/4',
+      `${amt_damage} ${spell['dmg_type']}`
+    );
+
+    //I grab the first letters to cut off any listed material components
+    let components = spell['components'].map((word) => word.charAt(0)).join(', ');
+    //we'll use range and components as our 'properties'
+    let props = Util.getTag('p', 'sheetcell w-1/3', `${spell['range']} ${components}`);
+    
+    //pull the AttackBonus from the sheet since we don't use a state variable for that
+    let atk_bonus = Util.getTag('p', 'sheetcell w-1/4', this.castingAttackBonusTarget.innerText);
 
     let row = Util.getTag('div', 'flex p-2 w-full');
     row.append(name);

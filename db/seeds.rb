@@ -646,7 +646,7 @@ Barbarian = PlayerClass.create(
     'Survival',
   ],
   num_skills: 2,
-  equipment_choices: { #testing this format
+  equipment_choices: {
     'choices'=>[
       ['martial#1','Greataxe#1'],
       ['simple#1','Handaxe#2'],
@@ -1850,11 +1850,11 @@ Fighter.subclasses.create(
 
       Maneuvers. You learn three maneuvers of your choice. Many maneuvers enhance an attack in some way. You can use only one maneuver per attack. You learn two additional maneuvers of your choice at 7th, 10th, and 15th level. Each time you learn new maneuvers, you can also replace one maneuver you know with a different one.
 
-Superiority Dice. You have four superiority dice, which are d8s. A superiority die is expended when you use it. You regain all of your expended superiority dice when you finish a short or long rest. You gain another superiority die at 7th level and one more at 15th level.
+      Superiority Dice. You have four superiority dice, which are d8s. A superiority die is expended when you use it. You regain all of your expended superiority dice when you finish a short or long rest. You gain another superiority die at 7th level and one more at 15th level.
 
-Saving Throws. Some of your maneuvers require your target to make a saving throw to resist the maneuver's effects. The saving throw DC is calculated as follows:
+      Saving Throws. Some of your maneuvers require your target to make a saving throw to resist the maneuver's effects. The saving throw DC is calculated as follows:
 
-Maneuver save DC = 8 + your proficiency bonus + your Strength or Dexterity modifier (your choice)",
+      Maneuver save DC = 8 + your proficiency bonus + your Strength or Dexterity modifier (your choice)",
       "Student of War: You gain proficiency with one type of artisan's tools of your choice.",
     ],
     7=> [

@@ -370,7 +370,18 @@ export function getSpellCard(source, stat, spells) {
   return box;
 }
 //---populate
-
+/*
+  'specialties'=> {
+    'title'=> 'Maneuvers',
+    'limits'=> [
+      [1,3],
+      [5,4],
+      [7,5],
+      [14,7]
+    ],
+    'list'=> [['name','description'],['',''],['',''],],
+  }
+*/
 export function populateSpecialtiesModal(specialties, limit, target) {
   target.append(
     getTag(
@@ -389,20 +400,25 @@ export function populateSpecialtiesModal(specialties, limit, target) {
   for (let entry of specialties['list']) {
     let frame = getTag(
       'div',
-      'flex flex-col justify-start gap-2 p-2 bg-gray-300'
-    );
-    frame.append(
-      getTag('p', 'bg-gray-100 font-bold rounded-lg', entry[0])
-    );
-    frame.append(
-      getTag('p', 'bg-gray-100 rounded-lg', entry[1])
+      'grid grid-cols-5 gap-2 p-2 bg-gray-300'
     );
 
-    let check = document.createElement('input');
+    let checkframe = getTag('div','flex items-center justify-center bg-gray-400/80 rounded-md row-span-2'); //document.createElement('input');
+    let check = getTag('input','');
     check.type = 'checkbox';
     check.value = entry[0];
+    
+    checkframe.append(check);
+    frame.append(checkframe);
 
-    frame.append(check);
+    frame.append(
+      getTag('p', 'col-start-2 bg-gray-100 font-bold rounded-lg col-span-4 text-center py-4 h-14', entry[0])
+    );
+    frame.append(
+      getTag('p', 'col-start-2 bg-gray-100 rounded-lg col-span-4 px-4 py-2', entry[1])
+    );
+
+    
 
     target.append(frame);
   }

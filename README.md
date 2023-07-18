@@ -27,7 +27,7 @@ Implement Feats - these can use customMOd for most things I think
 
 # Fighter
   fill subclasses 
-    do maneuvers for Battle Master
+    validate and submit maneuvers as specialties in customMod
 
 # Monk
   ki points not handled at all yet
@@ -42,7 +42,12 @@ Implement Feats - these can use customMOd for most things I think
 
 # bugs
   attack spells dont populate attacks
+    sheet#populateSpellAttack is written to accept a spell object from the db
+
   racial tools modal has an empty select input
+  equipment modal population
+    -no checkboxes on some entries
+    =some entries missing, shows 'entry or'
 
 # heroku
 https://uglysheetmaker-e6deabaebc10.herokuapp.com/
