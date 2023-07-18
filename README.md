@@ -14,7 +14,9 @@ Fill out the seed with remaining classes, subclasses, backgrounds, and feats
 
 Different methods of stat assignment
 
-Implement Feats - these can use customMOd for most things I think
+Implement Feats
+
+Deactivate buttons that lead to empty modals
 
 # Barbarian
   done

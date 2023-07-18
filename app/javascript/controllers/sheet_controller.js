@@ -1137,7 +1137,7 @@ export default class extends Controller {
         for (let item of specialties['limits']) {
           if (this.level >= item[0]) limit = item[1];
         }
-        Util.populateSpecialtiesModal(specialties, limit, this.specialtiesModalListTarget);
+        this.populateSpecialtiesModal(specialties, limit, this.specialtiesModalListTarget);
       }
 
       let dice = mods['dice'] || false;
@@ -1146,22 +1146,6 @@ export default class extends Controller {
         this.prependDice(dice);
       }
     }
-  }
-
-  submitSpecialties(event) {
-    let chosen = [];
-
-    for (let item of this.specialtiesModalListTarget.childNodes) {
-      console.log(item.tagName);
-      if (item.tagName == 'DIV') {
-        console.log(item.firstChild);
-        console.log(item.firstChild.tagName);
-      }
-    }
-  }
-
-  prependDice(dice) {
-    console.log(dice);
   }
 
   //theres an eval on attack['properties'] which is like, a little scary but I do control the input
@@ -1218,6 +1202,24 @@ export default class extends Controller {
     }
   }
 
+  //these choices co-exist in the Skills Modal
+  populateExtraExpertise(choices, num, source) {
+    this.extraSkillsModalListTarget.append(
+      Util.getTag(
+        'h4',
+        'col-span-full text-lg font-bold',
+        `Expertise from ${source}`
+      )
+    );
+    for (let i = 0; i < num; i++) {
+      Util.putSelect(
+        'Expertise',
+        choices,
+        this.extraSkillsModalListTarget
+      );
+    }
+  }
+
   populateExtraSkillsModal(array) {
     /*
       'extra_profs'=> [
@@ -1240,54 +1242,102 @@ export default class extends Controller {
     }
   }
 
-  //put num selects with choices options to extraSkillsModalListTarget
-  populateExtraExpertise(choices, num, source) {
-    this.extraSkillsModalListTarget.append(
+  //Specialties have a separate Modal
+  populateSpecialtiesModal(specialties, limit, target) {
+    target.append(
       Util.getTag(
         'h4',
-        'col-span-full text-lg font-bold',
-        `Expertise from ${source}`
+        'text-lg font-black text-center col-span-full',
+        specialties['title']
       )
     );
-    for (let i = 0; i < num; i++) {
-      Util.putSelect(
-        'Expertise',
-        choices,
-        this.extraSkillsModalListTarget
+    let limit_tag = Util.getTag(
+      'p',
+      'text-sm font-bold text-center col-span-full',
+      `Choose ${limit}`
+    );
+    limit_tag.id = 'speclimit';
+    target.append(limit_tag);
+
+    for (let entry of specialties['list']) {
+      let frame = Util.getTag(
+        'div',
+        'grid grid-cols-5 gap-2 p-2 bg-gray-300'
       );
+  
+      let checkframe = Util.getTag('div','flex items-center justify-center bg-gray-400/80 rounded-md row-span-2');
+      let check = Util.getTag('input','');
+      check.type = 'checkbox';
+      check.value = entry[0];
+      
+      checkframe.append(check);
+      frame.append(checkframe);
+  
+      frame.append(
+        Util.getTag('p', 'col-start-2 bg-gray-100 font-bold rounded-lg col-span-4 text-center py-4 h-14', entry[0])
+      );
+      frame.append(
+        Util.getTag('p', 'col-start-2 bg-gray-100 rounded-lg col-span-4 px-4 py-2', entry[1])
+      );
+  
+      
+  
+      target.append(frame);
     }
   }
 
-  submitExtraSkillsChoices() {
-    Util.removeAllChildNodes(this.modSkillsTarget);
-
+  submitSpecialties(event) {
     let chosen = [];
-    let expertise = [];
+    //we just grab the last characters of the 'Choose #' text and make it an integer
+    let limit = parseInt(document.getElementById('speclimit').innerText.split(' ')[1]);
 
-    //the checkboxes are wrapped in a span for alignment
-    this.extraSkillsModalListTarget.childNodes.forEach((node) => {
-      if (node.tagName == 'SELECT') {
-        if (node.firstChild.innerText == 'Skills') {
-          chosen.push(node.value);
-        } else {
-          expertise.push(node.value);
+    //our first two elements are titles but important because this is custom data, 
+    //i could give them targets and avoid this index tracking and if() with a small refactor and sheet.html.erb update
+    let index = 0;
+    let count = 0;
+    for (let item of this.specialtiesModalListTarget.childNodes) {
+
+      if(index > 1) {
+        if(item.firstChild.firstChild.checked) {
+          count++;
+          let block = [ ...item.children ];
+          chosen.push([block[1].innerText,block[2].innerText]);
         }
       }
-    });
+      index++;
+    }
 
-    Util.putModalChecksToSheet(
-      chosen,
-      this.modSkillsTarget,
-      'Extra Skills'
-    );
-
-    Util.putModalChecksToSheet(
-      expertise,
-      this.expertiseSkillsTarget,
-      'Expertise'
-    );
+    if(chosen.length <= limit) {
+      this.putSpecialtiesToSheet(chosen);
+      event.target.parentNode.close();
+    }
   }
 
+  putSpeecialtiesToSheet(chosen) {
+    //do this just like features, we'll look for that code and try to use it here
+  }
+
+
+  //custom dice, not implemented yet but theres a stub in customMods and the db
+  /*
+    'dice'=> [
+      {
+        'title'=> 'Superiority Dice',
+        'limits'=> [
+          [3,4],
+          [7,5],
+          [15,6],
+        ],
+        'size'=> [
+          [3,8],
+        ],
+      },
+    ],
+  */
+  prependDice(dice) {
+    console.log(dice);
+  }
+  
   //----------------------------- Choice Modals ---------------------------------//
   //----------------- Languages Modal ------------------//
   chooseLanguages() {
@@ -1417,6 +1467,36 @@ export default class extends Controller {
 
     event.target.parentNode.close();
     this.resetProficiencies();
+  }
+
+  submitExtraSkillsChoices() {
+    Util.removeAllChildNodes(this.modSkillsTarget);
+
+    let chosen = [];
+    let expertise = [];
+
+    //the checkboxes are wrapped in a span for alignment
+    this.extraSkillsModalListTarget.childNodes.forEach((node) => {
+      if (node.tagName == 'SELECT') {
+        if (node.firstChild.innerText == 'Skills') {
+          chosen.push(node.value);
+        } else {
+          expertise.push(node.value);
+        }
+      }
+    });
+
+    Util.putModalChecksToSheet(
+      chosen,
+      this.modSkillsTarget,
+      'Extra Skills'
+    );
+
+    Util.putModalChecksToSheet(
+      expertise,
+      this.expertiseSkillsTarget,
+      'Expertise'
+    );
   }
 
   //----------------- Class Features Modal ------------------//
