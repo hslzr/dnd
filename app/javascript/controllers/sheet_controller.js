@@ -1480,11 +1480,16 @@ export default class extends Controller {
   chooseTools() {
     Util.removeAllChildNodes(this.toolsModalListTarget);
 
-    Util.putSelect(
-      'Tools',
-      this.raceToolChoices,
-      this.toolsModalListTarget
-    );
+    if(this.raceToolChoices.length > 0) {
+      Util.putSelect(
+        'Tools',
+        this.raceToolChoices,
+        this.toolsModalListTarget
+      );
+
+    } else {
+      Util.deactivateButton(this.toolsButtonTarget, this.active_color, this.disabled_color);
+    }
   }
 
   submitToolsChoices() {
