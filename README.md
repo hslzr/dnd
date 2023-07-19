@@ -16,7 +16,7 @@ Different methods of stat assignment
 
 Implement Feats
 
-Deactivate buttons that lead to empty modals
+Deactivate buttons that lead to empty modals (Tools done)
 
 # Barbarian
   done
@@ -25,36 +25,34 @@ Deactivate buttons that lead to empty modals
 # Cleric
   done
 # Druid
- used subclasses for different Land Circles
-
+  done
 # Fighter
-  fill subclasses 
-
+  done
 # Monk
   ki points not handled at all yet
   fill subclasses
-
+# Paladin
 # Ranger
-  done
   fill subclasses
+# Rogue
+# Sorceror
+# Warlock
+# Wizard
 
 # Spells
-   done
+   seed done
+
+   attack spells dont populate attacks
+    sheet#populateSpellAttack is written to accept a spell object from the db
 
 # Limits
   'specialties' implemented as a customMod, but more than one would break the system, 
     I have to limit use to subclasses for now since Fighter#BattleMaster was the first use
     i could generate new <dialog> elements or pages in the existing one for each instance 
-    in a categoryMap like this.specialties if I make one
+    in a categoryMap
 
 # bugs
-  attack spells dont populate attacks
-    sheet#populateSpellAttack is written to accept a spell object from the db
-
-  racial tools modal has an empty select input
-  equipment modal population
-    -no checkboxes on some entries
-    =some entries missing, shows 'entry or'
+  cleared
 
 # heroku
 https://uglysheetmaker-e6deabaebc10.herokuapp.com/
