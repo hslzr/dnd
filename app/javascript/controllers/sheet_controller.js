@@ -674,6 +674,8 @@ export default class extends Controller {
   //code 0 : run everything
   //code 1 : dont run updatetats or statModUpdate on 'asi' passed into catUpdate
   finalPass(code = 0) {
+    console.log('finalpass');
+    console.log(code);
     this.setSkillMap();
     this.populateSkillModifiers();
     this.classFeatureHandler(); //we depend on level to show correct class features so we have to do these in finalPass
@@ -1147,32 +1149,12 @@ export default class extends Controller {
         //show special dice in the top of the features list
         this.populateDice(dice);
       }
-    }
-  }
 
-  //theres an eval on attack['properties'] which is like, a little scary but I do control the input
-  populateAttacks(attacks) {
-    //clear attacks
-    while (this.attackListTarget.children.length > 2) {
-      this.attackListTarget.removeChild(
-        this.attackListTarget.lastChild
-      );
-    }
-
-    //populate attacks
-    for (let attack of attacks) {
-      let damage;
-      for (let item of attack['damage']) {
-        if (item[0] <= this.level) damage = item[1];
+      let override_spells = mods['spell_list'] || false;
+      if(override_spells) {
+        //cn only handle one because it overrides whatever exists already, can't put on a player_class with spellcasting
+        this.overrideSpellcasting( mods['spell_list'], mods['spell_stat'], mods['spell_table']);
       }
-
-      this.populateModAttack(
-        attack['name'],
-        damage,
-        attack['dmg_type'],
-        eval(attack['properties']),
-        attack['bonus']
-      );
     }
   }
 
@@ -1355,6 +1337,69 @@ export default class extends Controller {
       if(limit > 0) {
         Util.putDiceCustomPane(title, limit, size, this.customPaneTarget);
       }
+    }
+  }
+
+  overrideSpellcasting(spell_list, ability, table) {
+    this.spell_table = table;
+    this.spellcasting_ability = ability;
+        let statnames = [
+          'None',
+          'Strangth',
+          'Dexterity',
+          'Constitution',
+          'Intelligence',
+          'Wisdom',
+          'Charisma',
+        ];
+        this.castingAbilityTarget.innerText =
+          statnames[ability];
+
+        Util.deactivateButton(
+          this.spellsButtonTarget,
+          this.active_color,
+          this.disabled_color
+        );
+
+        fetch(`/class_spell_lists/${spell_list}`)
+          .then((response) => response.json())
+          .then((data) => (this.setOverrideSpells(data)));
+  }
+
+  setOverrideSpells(data) {
+    this.spellList = data;
+    this.setSpellInformation();
+    this.chooseSpells();
+    Util.activateButton(
+      this.spellsButtonTarget,
+      this.active_color,
+      this.disabled_color
+    );
+  }
+
+  //theres an eval on attack['properties'] which is like, a little scary but I do control the input
+  populateAttacks(attacks) {
+    //clear attacks
+    while (this.attackListTarget.children.length > 2) {
+      this.attackListTarget.removeChild(
+        this.attackListTarget.lastChild
+      );
+    }
+
+    //populate attacks
+    for (let attack of attacks) {
+      let damage;
+      for (let item of attack['damage']) {
+        if (item[0] <= this.level) damage = item[1];
+      }
+
+      this.populateModAttack(
+        attack['name'],
+        damage,
+        attack['dmg_type'],
+        eval(attack['properties']),
+        attack['bonus']
+      );
     }
   }
   
@@ -1894,6 +1939,8 @@ export default class extends Controller {
         this.spellsModalListTarget.append(title);
       }
 
+      console.log(this.spellList);
+
       this.spellList.forEach((item) => {
         if (item.level == i) {
           let container = Util.getTag(
@@ -1906,6 +1953,7 @@ export default class extends Controller {
           check.id = item.id; //for validation on submit
           container.append(check);
           container.append(item.name);
+          container.append(Util.getTag('p','text-small text-gray-700',item.school));
           if (i == 0) {
             this.cantripsModalListTarget.append(container);
           } else {

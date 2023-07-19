@@ -170,6 +170,12 @@ export function activateButtons(buttons, act_color, dis_color) {
   });
 }
 
+export function activateButton(target, act_color, dis_color) {
+  target.disabled = false;
+  target.classList.remove(dis_color);
+  target.classList.add(act_color);
+}
+
 export function deactivateButton(target, act_color, dis_color) {
   target.disabled = true;
   target.classList.remove(act_color);

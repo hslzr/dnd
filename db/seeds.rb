@@ -1930,6 +1930,75 @@ Fighter.subclasses.create(
   },
 )
 
+Fighter.subclasses.create(
+  name: "Eldritch Knight",
+  description: "The archetypal Eldritch Knight combines the martial mastery common to all fighters with a careful study of magic. Eldritch Knights use magical techniques similar to those practiced by wizards. They focus their study on two of the eight schools of magic: abjuration and evocation. Abjuration spells grant an Eldritch Knight additional protection in battle, and evocation spells deal damage to many foes at once, extending the fighter's reach in combat. These knights learn a comparatively small number of spells, committing them to memory instead of keeping them in a spellbook.",
+  custom: {},
+  equipment_choices: {},
+  features: {
+    3=> [
+      "Spellcasting: You augment your martial prowess with the ability to cast spells.",
+      "Spells Known: You know three 1st-level wizard spells of your choice, two of which you must choose from the abjuration and evocation spells on the wizard spell list.
+
+      The Spells Known column of the Eldritch Knight Spellcasting table shows when you learn more wizard spells of 1st level or higher. Each of these spells must be an abjuration or evocation spell of your choice, and must be of a level for which you have spell slots. For instance, when you reach 7th level in this class, you can learn one new spell of 1st or 2nd level.
+      
+      The spells you learn at 8th, 14th, and 20th level can come from any school of magic.
+      
+      Whenever you gain a level in this class, you can replace one of the wizard spells you know with another spell of your choice from the wizard spell list. The new spell must be of a level for which you have spell slots, and it must be an abjuration or evocation spell, unless you're replacing the spell you gained at 3rd, 8th, 14th, or 20th level from any school of magic.",
+      "Spellcasting Ability: Intelligence is your spellcasting ability for your wizard spells, since you learn your spells through study and memorization. You use your Intelligence whenever a spell refers to your spellcasting ability. In addition, you use your Intelligence modifier when setting the saving throw DC for a wizard spell you cast and when making an attack roll with one.
+
+      Spell save DC = 8 + your proficiency bonus + your Intelligence modifier
+      
+      Spell attack modifier = your proficiency bonus + your Intelligence modifier",
+      "Weapon Bond: you learn a ritual that creates a magical bond between yourself and one weapon. You perform the ritual over the course of 1 hour, which can be done during a short rest. The weapon must be within your reach throughout the ritual, at the conclusion of which you touch the weapon and forge the bond.
+
+      Once you have bonded a weapon to yourself, you can't be disarmed of that weapon unless you are incapacitated. If it is on the same plane of existence, you can summon that weapon as a bonus action on your turn, causing it to teleport instantly to your hand.
+      
+      You can have up to two bonded weapons, but can summon only one at a time with your bonus action. If you attempt to bond with a third weapon, you must break the bond with one of the other two.",
+    ],
+    7=> [
+      "War Magic: When you use your action to cast a cantrip, you can make one weapon attack as a bonus action.",
+    ],
+    10=> [
+      "Eldritch Strike: You learn how to make your weapon strikes undercut a creature's resistance to your spells. When you hit a creature with a weapon attack, that creature has disadvantage on the next saving throw it makes against a spell you cast before the end of your next turn.",
+    ],
+    15=> [
+      "Arcane Charge: You gain the ability to teleport up to 30 feet to an unoccupied space you can see when you use your Action Surge. You can teleport before or after the additional action.",
+    ],
+    18=> [
+      "War Magic: When you use your action to cast a spell, you can make one weapon attack as a bonus action.",
+    ]
+  },
+  extra_spells: {},
+  specific_spells: {},
+  custom_mods: {
+    'spell_table'=> [
+      [0,0,0,0,0,0,0,0,0,0,0],
+      [0,0,0,0,0,0,0,0,0,0,0],
+      [3,2,2,0,0,0,0,0,0,0,0],
+      [4,2,3,0,0,0,0,0,0,0,0],
+      [4,2,3,0,0,0,0,0,0,0,0],
+      [4,2,3,0,0,0,0,0,0,0,0],
+      [5,2,4,2,0,0,0,0,0,0,0],
+      [6,2,4,2,0,0,0,0,0,0,0],
+      [6,2,4,2,0,0,0,0,0,0,0],
+      [7,3,4,3,0,0,0,0,0,0,0],
+      [8,3,4,3,0,0,0,0,0,0,0],
+      [8,3,4,3,0,0,0,0,0,0,0],
+      [9,3,4,3,2,0,0,0,0,0,0],
+      [10,3,4,3,2,0,0,0,0,0,0],
+      [10,3,4,3,2,0,0,0,0,0,0],
+      [11,3,4,3,3,0,0,0,0,0,0],
+      [11,3,4,3,3,0,0,0,0,0,0],
+      [11,3,4,3,3,0,0,0,0,0,0],
+      [12,3,4,3,3,1,0,0,0,0,0],
+      [13,3,4,3,3,1,0,0,0,0,0],
+    ],
+    'spell_stat'=> 4, #we dont count from zero on these because 0 is 'None
+    'spell_list'=> 'Wizard',
+  },
+)
+
 Monk = PlayerClass.create(
   name: 'Monk',
   hit_die: 8,
@@ -2159,10 +2228,8 @@ Ranger.subclasses.create(
   custom_mods: {},
 )
 
-
-
 Acolyte = Background.create(
-  name: "Dice Acolyte",
+  name: "Acolyte",
   description: 'You have spent your life in the service of a temple. You act as an intermediary between the realm of the holy and the mortal world.',
   skills: ['Insight', 'Religion'],
   extra_languages: 2,
@@ -2216,26 +2283,8 @@ Acolyte = Background.create(
     ],
   extra_spells: {},
   specific_spells: {},
-  custom_mods: {
-    'dice'=> [
-      {
-        'title'=> 'Acolyte Dice',
-        'limits'=> [
-          [3,4],
-          [7,5],
-          [15,6],
-        ],
-        'size'=> [
-          [3,8],
-        ],
-      },
-    ],
-  },
+  custom_mods: {},
 )
-
-
-
-
 
 Feat_alert = Feat.create(
   name: 'Alert',
