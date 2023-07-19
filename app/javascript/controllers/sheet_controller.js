@@ -531,6 +531,7 @@ export default class extends Controller {
         this.sheet_subclass = data.name;
         this.subclassFeatureList = data.features; //default features
         this.subclassFeatureChoices = data.custom; //modal choices
+        this.subclass_equip_choices = data.equipment_choices;
 
         break;
 
@@ -2398,26 +2399,24 @@ export default class extends Controller {
   //-----------------Equipment Modal ------------------//
 
   //working with this section of the class and background
-  /*
-  equipment_choices: {
-    'choices' => [
-      ['Rapier#1','Longsword#1','simple#1'],
-      ["Diplomat's Pack#1","Entertainer's Pack#1"],
-      ['Lute#1','Bagpipes#1'],
-    ],
-    'default' => ['Leather Armor#1','Dagger#1'],
-  },
-  */
+
   chooseEquipment() {
     Util.removeAllChildNodes(this.equipmentClassStartTarget);
     Util.removeAllChildNodes(this.equipmentBGStartTarget);
     let class_choices = false;
     let bg_choices = false;
+    let subclass_choices = false;
+
     if (this.class_equip_choices['choices'].length > 0)
       class_choices = this.class_equip_choices['choices'];
 
+    if (this.subclass_equip_choices['choices'].length > 0)
+      subclass_choices = this.subclass_equip_choices['choices'];
+
     if (this.bg_equip_choices['choices'].length > 0)
       bg_choices = this.bg_equip_choices['choices'];
+
+    
 
     if (class_choices) {
       this.populateEquipmentModal(
@@ -2425,28 +2424,21 @@ export default class extends Controller {
         this.equipmentClassStartTarget,
         'Class'
       );
-    } else {
-      this.equipmentClassStartTarget.append(
-        Util.getTag(
-          'p',
-          'font-semibold p-4',
-          'No choices for this class.'
-        )
+    }
+
+    if (subclass_choices) {
+      this.populateEquipmentModal(
+        subclass_choices,
+        this.equipmentClassStartTarget,
+        'Subclass'
       );
     }
+
     if (bg_choices) {
       this.populateEquipmentModal(
         bg_choices,
         this.equipmentBGStartTarget,
         'Background'
-      );
-    } else {
-      this.equipmentBGStartTarget.append(
-        Util.getTag(
-          'p',
-          'font-semibold p-4',
-          'No choices for this background.'
-        )
       );
     }
   }
