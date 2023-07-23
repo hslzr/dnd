@@ -1208,7 +1208,7 @@ export default class extends Controller {
         let checkframe = Util.getTag('div','flex items-center justify-center bg-gray-400/80 rounded-md row-span-2');
         let check = Util.getTag('input','');
         check.type = 'checkbox';
-        check.value = entry[0];
+        check.value = title;
         
         checkframe.append(check);
         frame.append(checkframe);
@@ -1231,7 +1231,7 @@ export default class extends Controller {
   populatePoints(points) {
     let title;
     let limit = 0;
-    for(let [key, value] of Object.entries(dice)) {
+    for(let [key, value] of Object.entries(points)) {
       if(key == 'name') {
         title = value;
       } else {
@@ -1381,7 +1381,6 @@ export default class extends Controller {
       let entries = section.children;
       for (let i = 2; i < entries.length; i++) {
         if(entries[i].firstChild.firstChild.checked) {
-          count++;
           let block = [ ...entries[i].children ];
           chosen.push(`${block[1].innerText}: ${block[2].innerText}`);
         }
@@ -2509,13 +2508,13 @@ export default class extends Controller {
     let bg_choices = false;
     let subclass_choices = false;
 
-    if (this.class_equip_choices['choices'].length > 0)
+    if (this.class_equip_choices['choices'])
       class_choices = this.class_equip_choices['choices'];
 
-    if (this.subclass_equip_choices['choices'].length > 0)
+    if (this.subclass_equip_choices['choices'])
       subclass_choices = this.subclass_equip_choices['choices'];
 
-    if (this.bg_equip_choices['choices'].length > 0)
+    if (this.bg_equip_choices['choices'])
       bg_choices = this.bg_equip_choices['choices'];
 
     
