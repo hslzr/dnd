@@ -1142,7 +1142,7 @@ export default class extends Controller {
         for (let item of specialties['limits']) {
           if (this.level >= item[0]) limit = item[1];
         }
-        this.populateSpecialtiesModal(specialties, limit, this.specialtiesModalListTarget);
+        this.populateSpecialtiesModal(specialties, limit, key, this.specialtiesModalListTarget);
       }
 
       let dice = mods['dice'] || false;
@@ -1156,7 +1156,37 @@ export default class extends Controller {
         //cn only handle one because it overrides whatever exists already, can't put on a player_class with spellcasting
         this.overrideSpellcasting( mods['spell_list'], mods['spell_stat'], mods['spell_table']);
       }
+
+      let custom_points = mods['points'] || false;
+      if(custom_points) {
+        this.populatePoints(custom_points);
+      }
+
+      let gated_collection = mods['level_gated_collection'] || false;
+      if(gated_collection) {
+        this.populateGatedCollection(gated_collection, key);
+      }
     }
+  }
+
+  populateGatedCollection(gated_collection, source) {
+    
+  }
+
+  populatePoints(points) {
+    let title;
+    let limit = 0;
+    for(let [key, value] of Object.entries(dice)) {
+      if(key == 'name') {
+        title = value;
+      } else {
+        if(this.level >= parseInt(key)) {
+          limit = value;
+        }
+      }
+    }
+
+    Util.putPointsCustomPane(title, limit, this.customPaneTarget);
   }
 
   //------------------------------- customModifiers() methods
@@ -1226,9 +1256,19 @@ export default class extends Controller {
     }
   }
 
-  //Specialties have a separate Modal
-  populateSpecialtiesModal(specialties, limit, target) {
-    target.append(
+  //I use a new pattern here to label and clear target additions based on the source from this.customMods CategoryMap object
+  //I should add this elsewhere, it could help me reduce the number of modals I actually need
+  //can i break it out into a function? it would need to handle unique id labels somehow
+  populateSpecialtiesModal(specialties, limit, source, target) {
+
+    let check = document.getElementById(source + 'specialtymodal');
+    if(check)
+      check.remove();
+
+    let these_specialties = Util.getTag('div', 'grid grid-cols-2 md:grid-cols-3 gap-2 items-start');
+    these_specialties.id = source + 'specialtymodal';
+
+    these_specialties.append(
       Util.getTag(
         'h4',
         'text-lg font-black text-center col-span-full',
@@ -1241,7 +1281,7 @@ export default class extends Controller {
       `Choose ${limit}`
     );
     limit_tag.id = 'speclimit';
-    target.append(limit_tag);
+    these_specialties.append(limit_tag);
 
     for (let entry of specialties['list']) {
       let frame = Util.getTag(
@@ -1266,8 +1306,9 @@ export default class extends Controller {
   
       
   
-      target.append(frame);
+      these_specialties.append(frame);
     }
+    target.append(these_specialties);
   }
 
   submitSpecialties(event) {

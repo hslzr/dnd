@@ -2105,6 +2105,29 @@ Monk = PlayerClass.create(
         ],
       },
     ],
+
+    'points'=> {
+      'name'=> 'Ki Points',
+      '2'=> 2,
+      '3'=> 3,
+      '4'=> 4,
+      '5'=> 5,
+      '6'=> 6,
+      '7'=> 7,
+      '8'=> 8,
+      '9'=> 9,
+      '10'=> 10,
+      '11'=> 11,
+      '12'=> 12,
+      '13'=> 13,
+      '14'=> 14,
+      '15'=> 15,
+      '16'=> 16,
+      '17'=> 17,
+      '18'=> 18,
+      '19'=> 19,
+      '20'=> 20,
+    },
   },
   spellcasting_ability: 0,
   spell_table: [
@@ -2131,6 +2154,95 @@ Monk = PlayerClass.create(
   ],
   extra_spells: {},
   specific_spells: {},
+)
+
+Monk.subclasses.create(
+  name: "Way of the Open Hand",
+  description: "Monks of the Way of the Open Hand are the ultimate masters of martial arts combat, whether armed or unarmed. They learn techniques to push and trip their opponents, manipulate ki to heal damage to their bodies, and practice advanced meditation that can protect them from harm.",
+  custom: {},
+  features: {
+    3=> [
+      "Way of the Open Hand: You can manipulate your enemy’s ki when you harness your own. Whenever you hit a creature with one of the attacks granted by your Flurry of Blows, you can impose one of the following effects on that target:
+
+      It must succeed on a Dexterity saving throw or be knocked prone.
+      It must make a Strength saving throw. If it fails, you can push it up to 15 feet away from you.
+      It can’t take reactions until the end of your next turn.",
+    ],
+    6=> [
+      "Wholeness of Body: You gain the ability to heal yourself. As an action, you can regain hit points equal to three times your monk level. You must finish a long rest before you can use this feature again.",
+    ],
+    11=> [
+      "Tranquility: You can enter a special meditation that surrounds you with an aura of peace. At the end of a long rest, you gain the effect of a sanctuary spell that lasts until the start of your next long rest (the spell can end early as normal). The saving throw DC for the spell equals 8 + your Wisdom modifier + your proficiency bonus.",
+    ],
+    17=> [
+      "Quivering Palm: You gain the ability to set up lethal vibrations in someone’s body. When you hit a creature with an unarmed strike, you can spend 3 ki points to start these imperceptible vibrations, which last for a number of days equal to your monk level. The vibrations are harmless unless you use your action to end them. To do so, you and the target must be on the same plane of existence. When you use this action, the creature must make a Constitution saving throw. If it fails, it is reduced to 0 hit points. If it succeeds, it takes 10d10 necrotic damage.",
+    ],
+  },
+  equipment_choices: {},
+  extra_spells: {},
+  specific_spells: {},
+  custom_mods: {},
+)
+
+Monk.subclasses.create(
+  name: "Way of the Four Elements",
+  description: "You follow a monastic tradition that teaches you to harness the elements. When you focus your ki, you can align yourself with the forces of creation and bend the four elements to your will, using them as an extension of your body. Some members of this tradition dedicate themselves to a single element, but others weave the elements together.",
+  custom: {},
+  features: {
+    3=> [
+      "Way of the Four Elements: you learn magical disciplines that harness the power of the four elements. A discipline requires you to spend ki points each time you use it.
+
+      You know the Elemental Attunement discipline and one other elemental discipline of your choice. You learn one additional elemental discipline of your choice at 6th, 11th, and 17th level.
+      
+      Whenever you learn a new elemental discipline, you can also replace one elemental discipline that you already know with a different discipline.
+      
+      Once you reach 5th level in this class, you can spend additional ki points to increase the level of an elemental discipline spell that you cast, provided that the spell has an enhanced effect at a higher level, as Burning Hands does. The spell's level increases by 1 for each additional ki point you spend. For example, if you are a 5th-level monk and use Sweeping Cinder Strike to cast Burning Hands, you can spend 3 ki points to cast it as a 2nd-level spell (the discipline's base cost of 2 ki points plus 1).
+
+The maximum number of ki points you can spend to cast a spell in this way (including its base ki point cost and any additional ki points you spend to increase its level) is determined by your monk level, as shown in the Spells and Ki Points table.",
+    ],
+  },
+  equipment_choices: {},
+  extra_spells: {},
+  specific_spells: {},
+  custom_mods: {
+    'level_gated_collection'=> {
+      'title'=> "Elemental Attunements",
+      'levels'=> [
+        [2,1],
+        [6,2],
+        [11,3],
+        [17,4],
+      ],
+      'defaults'=> [
+        'Elemental Attunement',
+      ]
+      'Breath of Winter'=> [17, "You can spend 6 ki points to cast Cone of Cold",["Cone of Cold",]],
+      'Elemental Attunement'=> [
+        2, 
+        "You can use your action to briefly control elemental forces within 30 feet of you, causing one of the following effects of your choice:
+
+        Create a harmless, instantaneous sensory effect related to air, earth, fire, or water such as a shower of sparks, a puff of wind, a spray of light mist, or a gentle rumbling of stone.
+        Instantaneously light or snuff out a candle, a torch, or a small campfire.
+        Chill or warm up to 1 pound of nonliving material for up to 1 hour.
+        Cause earth, fire, water, or mist that can fit within a 1-foot cube to shape itself into a crude form you designate for 1 minute.",
+        [],
+      ],
+      "Eternal Mountain Defense"=> [17, "You can spend 5 ki points to cast Stoneskin, targeting yourself.", ["Stoneskin"]],
+      "Fangs of the Fire Snake"=> [2, "When you use the Attack action on your turn, you can spend 1 ki point to cause tendrils of flame to stretch out from your fists and feet. Your reach with your unarmed strikes increases by 10 feet for that action, as well as the rest of the turn. A hit with such an attack deals fire damage instead of bludgeoning damage, and if you spend 1 ki point when the attack hits, it also deals an extra 1d10 fire damage.", []],
+      "Fist of Four Thunders"=> [2, "You can spend 2 ki points to cast Thunderwave.",['Thunderwave']],
+      "Fist of Unbroken Air"=> [2, "You can create a blast of compressed air that strikes like a mighty fist. As an action, you can spend 2 ki points and choose a creature within 30 feet of you. That creature must make a Strength saving throw. On a failed save, the creature takes 3d10 bludgeoning damage, plus an extra 1d10 bludgeoning damage for each additional ki point you spend, and you can push the creature up to 20 feet away from you and knock it prone. On a successful save, the creature takes half as much damage, and you don't push it or knock it prone.", [],],
+      "Flames of the Phoenix"=> [11, "You can spend 4 ki points to cast Fireball", ["Fireball"]],
+      "Gong of the Summit"=> [6, "You can spend 3 ki points to cast Shatter", ["Shatter"]],
+      "Mist Stance"=> [11, "You can spend 4 ki points to cast Gaseous Form, targeting yourself.", ["Gaseous Form"]],
+      "Ride the Wind"=> [11, "You can spend 4 ki points to cast Fly, targeting yourself.", ["Fly"]],
+      "River of Hungry Flame"=> [17, "You can spend 5 ki points to cast Wall of Fire.", ["Wall of Fire"]],
+      "Rush of the Gale Spirits"=> [2, "You can spend 2 ki points to cast Gust of Wind.", ["Gust of Wind"]],
+      "Shape the Flowing River"=> [2, "As an action, you can spend 1 ki point to choose an area of ice or water no larger than 30 feet on a side within 120 feet of you. You can change water to ice within the area and vice versa, and you can reshape ice in the area in any manner you choose. You can raise or lower the ice's elevation, create or fill in a trench, erect or flatten a wall, or form a pillar. The extent of any such changes can't exceed half the area's largest dimension. For example, if you affect a 30-foot square, you can create a pillar up to 15 feet high, raise or lower the square's elevation by up to 15 feet, dig a trench up to 15 feet deep, and so on. You can't shape the ice to trap or injure a creature in the area.", []],
+      "Sweeping Cinder Strike"=> [2, "You can spend 2 ki points to cast Burning Hands.", ["Burning Hands"]],
+      "Water Whip"=> [2, "You can spend 2 ki points as an action to create a whip of water that shoves and pulls a creature to unbalance it. A creature that you can see that is within 30 feet of you must make a Dexterity saving throw. On a failed save, the creature takes 3d10 bludgeoning damage, plus an extra 1d10 bludgeoning damage for each additional ki point you spend, and you can either knock it prone or pull it up to 25 feet closer to you. On a successful save, the creature takes half as much damage, and you don't pull it or knock it prone.", []],
+      "Wave of Rolling Earth"=> [17, "You can spend 6 ki points to cast Wall of Stone.", ["Wall of Stone"]]
+    }
+  },
 )
 
 Ranger = PlayerClass.create(

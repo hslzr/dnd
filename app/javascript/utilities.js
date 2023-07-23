@@ -383,6 +383,15 @@ export function putDiceCustomPane(title, limit, size, target) {
   frame.append(die);
   target.append(frame);
 }
+
+export function putPointsCustomPane(title, limit, target) {
+  let frame = getTag('div','flex flex-col text-center gap-2 p-2 bg-blue-400/50 rounded-sm border-2 border-blue-500');
+  let titlepane = getTag('h4','font-black w-full mx-4 rounded-lg',title);
+  let die = getTag('p','',`${limit}`);
+  frame.append(titlepane);
+  frame.append(die);
+  target.append(frame);
+}
 //---populate
 /*
   'specialties'=> {
