@@ -1164,13 +1164,68 @@ export default class extends Controller {
 
       let gated_collection = mods['level_gated_collection'] || false;
       if(gated_collection) {
-        this.populateGatedCollection(gated_collection, key);
+        this.populateGatedCollection(gated_collection, key, this.specialtiesModalListTarget);
       }
     }
   }
 
-  populateGatedCollection(gated_collection, source) {
+  //submits along with modspecialties, so this is coupled to pop and validation methods on those
+  populateGatedCollection(gated_collection, source, target) {
+    let check = document.getElementById(source + 'gatedcollection');
+    if(check)
+      check.remove();
+
+    let this_collection = Util.getTag('div', 'grid grid-cols-2 md:grid-cols-3 gap-2 items-start');
+    this_collection.id = source + 'gatedcollection';
+
+    this_collection.append(
+      Util.getTag(
+        'h4',
+        'text-lg font-black text-center col-span-full',
+        gated_collection['title']
+      )
+    );
+
+    let limit = 0;
+    for(let entry of gated_collection['levels']) {
+      if(this.level >= entry[0]) limit = entry[1];
+    }
+
+    let limit_tag = Util.getTag(
+      'p',
+      'text-sm font-bold text-center col-span-full',
+      `Choose ${limit}`
+    );
+    this_collection.append(limit_tag);
+
+    for (let [title, info] of Object.entries(gated_collection['options'])) {
+      if(info[0] <= this.level) { //only populate those elements valid to be chosen
+        let frame = Util.getTag(
+          'div',
+          'grid grid-cols-5 gap-2 p-2 bg-gray-300'
+        );
     
+        let checkframe = Util.getTag('div','flex items-center justify-center bg-gray-400/80 rounded-md row-span-2');
+        let check = Util.getTag('input','');
+        check.type = 'checkbox';
+        check.value = entry[0];
+        
+        checkframe.append(check);
+        frame.append(checkframe);
+    
+        frame.append(
+          Util.getTag('p', 'col-start-2 bg-gray-100 font-bold rounded-lg col-span-4 text-center py-4 h-14', title)
+        );
+        frame.append(
+          Util.getTag('p', 'col-start-2 bg-gray-100 rounded-lg col-span-4 px-4 py-2', info[1])
+        );
+        frame.append(
+          Util.getTag('p', 'hidden', info[2])
+        );
+        this_collection.append(frame);
+      }
+    }
+    target.append(this_collection);
   }
 
   populatePoints(points) {
@@ -1280,7 +1335,6 @@ export default class extends Controller {
       'text-sm font-bold text-center col-span-full',
       `Choose ${limit}`
     );
-    limit_tag.id = 'speclimit';
     these_specialties.append(limit_tag);
 
     for (let entry of specialties['list']) {
@@ -1303,45 +1357,47 @@ export default class extends Controller {
       frame.append(
         Util.getTag('p', 'col-start-2 bg-gray-100 rounded-lg col-span-4 px-4 py-2', entry[1])
       );
-  
-      
-  
       these_specialties.append(frame);
     }
     target.append(these_specialties);
   }
 
   submitSpecialties(event) {
-    let chosen = [];
-    //we just grab the last characters of the 'Choose #' text and make it an integer
-    let limit = parseInt(document.getElementById('speclimit').innerText.split(' ')[1]);
+    //this should support multiple specialtiesModal entries now, as long as they are formatted the same way
+    //multiple things need to be able to flag bad input
+    //if any validations fail they push a 1 to this array, length > 0 means input is no good
+    let validated = [];
 
-    let title = this.specialtiesModalListTarget.firstChild.innerText;
+    for(let section of this.specialtiesModalListTarget.children) {
+      let chosen = [];
+      //we just grab the last characters of the 'Choose #' text and make it an integer
+      let limit = parseInt(section.firstChild.nextSibling.innerText.split(' ')[1]);
 
-    //our first two elements are titles but important because this is custom data, 
-    //i could give them targets and avoid this index tracking and if() with a small refactor and sheet.html.erb update
-    let index = 0;
-    let count = 0;
-    for (let item of this.specialtiesModalListTarget.childNodes) {
-      
-      if(index > 1) {
-        if(item.firstChild.firstChild.checked) {
+      let title = section.firstChild.innerText;
+
+      //our first two elements are titles but important because this is custom data, 
+      //i could give them targets and avoid this index tracking
+
+      let entries = section.children;
+      for (let i = 2; i < entries.length; i++) {
+        if(entries[i].firstChild.firstChild.checked) {
           count++;
-          let block = [ ...item.children ];
+          let block = [ ...entries[i].children ];
           chosen.push(`${block[1].innerText}: ${block[2].innerText}`);
         }
       }
-      index++;
-    }
 
-    if(chosen.length <= limit) {
-      Util.putModalChecksToSheet(
-        chosen,
-        this.specialtyFeaturesTarget,
-        title
-      );
-      event.target.parentNode.close();
+      if(chosen.length <= limit) {
+        Util.putModalChecksToSheet(
+          chosen,
+          this.specialtyFeaturesTarget,
+          title
+        );
+      } else {
+        validated.push(1);
+      }
     }
+    if(validated.length == 0) event.target.parentNode.close();
   }
 
   //custom dice, not implemented yet but theres a stub in customMods and the db
