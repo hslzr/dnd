@@ -29,13 +29,15 @@ Deactivate buttons that lead to empty modals (Tools done)
 # Fighter
   done
 # Monk
-  ki points not handled at all yet
-  fill subclasses
+  done
 # Paladin
+  done
 # Ranger
-  fill subclasses
+  done
 # Rogue
 # Sorceror
+  Draconic Resilience needs customMods
+  maybe implement a wild magic roll button if wild magic chosen
 # Warlock
 # Wizard
 

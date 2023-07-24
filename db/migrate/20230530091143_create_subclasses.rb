@@ -13,6 +13,7 @@ class CreateSubclasses < ActiveRecord::Migration[7.0]
       t.string :weapons, array: true, default: []
       t.string :armor, array: true, default: []
       t.string :tools, array: true, default: []
+      t.string :languages, array: true, default: []
       t.string :extra_languages, default: 0
       t.string :description, default: ""
 
