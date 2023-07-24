@@ -2361,7 +2361,7 @@ Paladin = PlayerClass.create(
       "Aura of Protection: whenever you or a friendly creature within 10 feet of you must make a saving throw, the creature gains a bonus to the saving throw equal to your Charisma modifier (with a minimum bonus of +1). You must be conscious to grant this bonus.
 
       At 18th level, the range of this aura increases to 30 feet.",
-    ]
+    ],
     8=>[
       "Ability Score Increase:"
     ],
@@ -2372,7 +2372,7 @@ Paladin = PlayerClass.create(
     ],
     11=>[
       "Improved Divine Smite: you are so suffused with righteous might that all your melee weapon strikes carry divine power with them. Whenever you hit a creature with a melee weapon, the creature takes an extra 1d8 radiant damage.",
-    ]
+    ],
     12=>[
       "Ability Score Increase:"
     ],
@@ -2684,7 +2684,7 @@ Ranger = PlayerClass.create(
     ],
     20=>[
       "Foe Slayer: You become an unparalleled hunter of your enemies. Once on each of your turns, you can add your Wisdom modifier to the attack roll or the damage roll of an attack you make against one of your favored enemies. You can choose to use this feature before or after the roll, but before any effects of the roll are applied."
-    ]
+    ],
   },
   custom: {
     2=>[
