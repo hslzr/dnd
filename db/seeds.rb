@@ -2198,7 +2198,7 @@ Monk.subclasses.create(
       
       Once you reach 5th level in this class, you can spend additional ki points to increase the level of an elemental discipline spell that you cast, provided that the spell has an enhanced effect at a higher level, as Burning Hands does. The spell's level increases by 1 for each additional ki point you spend. For example, if you are a 5th-level monk and use Sweeping Cinder Strike to cast Burning Hands, you can spend 3 ki points to cast it as a 2nd-level spell (the discipline's base cost of 2 ki points plus 1).
 
-The maximum number of ki points you can spend to cast a spell in this way (including its base ki point cost and any additional ki points you spend to increase its level) is determined by your monk level, as shown in the Spells and Ki Points table.",
+  The maximum number of ki points you can spend to cast a spell in this way (including its base ki point cost and any additional ki points you spend to increase its level) is determined by your monk level, as shown in the Spells and Ki Points table.",
     ],
   },
   equipment_choices: {},
@@ -2245,6 +2245,337 @@ The maximum number of ki points you can spend to cast a spell in this way (inclu
       },
     },
   },
+)
+
+Monk.subclasses.create(
+  name: "Way of Shadow",
+  description: "Monks of the Way of Shadow follow a tradition that values stealth and subterfuge. These monks might be called ninjas or shadowdancers, and they serve as spies and assassins. Sometimes the members of a ninja monastery are family members, forming a clan sworn to secrecy about their arts and missions. Other monasteries are more like thieves' guilds, hiring out their services to nobles, rich merchants, or anyone else who can pay their fees.",
+  custom: {},
+  features: {
+    3=> [
+      "Shadow Arts: You can use your ki to duplicate the effects of certain spells. As an action, you can spend 2 ki points to cast darkness, darkvision, pass without trace, or silence, without providing material components. Additionally, you gain the minor illusion cantrip if you don't already know it.",
+    ],
+    6=> [
+      "Shadow Step: You gain the ability to step from one shadow into another. When you are in dim light or darkness, as a bonus action you can teleport up to 60 feet to an unoccupied space you can see that is also in dim light or darkness. You then have advantage on the first melee attack you make before the end of the turn.",
+    ],
+    11=> [
+      "Cloak of Shadows: You have learned to become one with the shadows. When you are in an area of dim light or darkness, you can use your action to become invisible. You remain invisible until you make an attack, cast a spell, or are in an area of bright light.",
+    ],
+    17=> [
+      "Oportunist:  you can exploit a creature's momentary distraction when it is hit by an attack. Whenever a creature within 5 feet of you is hit by an attack made by a creature other than you, you can use your reaction to make a melee attack against that creature.",
+    ],
+  },
+  equipment_choices: {},
+  extra_spells: {},
+  specific_spells: {
+    3=> [
+      ['Minor Illusion', 'Cantrip'],
+      ['Darkness','Normal'],
+      ['Darkvision','Normal'],
+      ['Pass Without Trace','Normal'],
+      ['Silence','Normal'],
+    ],
+    'stat'=> 'Wisdom',
+    'source'=> 'Way of Shadow',
+  },
+  custom_mods: {},
+)
+
+Paladin = PlayerClass.create(
+  name: 'Ranger',
+  hit_die: 10,
+  starting_hp: 10,
+  primary_abilities: [0,5],
+  saving_throws: [4,5],
+  armor: ['Light','Medium','Heavy','Shields'],
+  weapons: ['Simple','Martial'],
+  tools: [],
+  skill_choices: ['Athletics','Insight','Intimidation','Medicine','Persuasion','Religion'],
+  num_skills: 2,
+  equipment_choices: {
+    'choices'=>[
+      [['martial#1', 'Round Shield#1'],'martial#2'],
+      ['Javelin#5','simple#1'],
+      ["Priest's Pack#1","Explorer's Pack#1"],
+    ],
+    'default'=>['Chain Mail#1','Holy Emblem#1'],
+  },
+  spellcasting_ability: 6,
+  spell_table: [
+    [0,0,0,0,0,0,0,0,0,0,0],
+    [2,0,2,0,0,0,0,0,0,0,0],
+    [3,0,3,0,0,0,0,0,0,0,0],
+    [3,0,3,0,0,0,0,0,0,0,0],
+    [4,0,4,2,0,0,0,0,0,0,0],
+    [4,0,4,2,0,0,0,0,0,0,0],
+    [5,0,4,3,0,0,0,0,0,0,0],
+    [5,0,4,3,0,0,0,0,0,0,0],
+    [6,0,4,3,2,0,0,0,0,0,0],
+    [6,0,4,3,2,0,0,0,0,0,0],
+    [7,0,4,3,3,0,0,0,0,0,0],
+    [7,0,4,3,3,0,0,0,0,0,0],
+    [8,0,4,3,3,1,0,0,0,0,0],
+    [8,0,4,3,3,1,0,0,0,0,0],
+    [9,0,4,3,3,2,0,0,0,0,0],
+    [9,0,4,3,3,2,0,0,0,0,0],
+    [10,0,4,3,3,3,1,0,0,0,0],
+    [10,0,4,3,3,3,1,0,0,0,0],
+    [11,0,4,3,3,3,2,0,0,0,0],
+    [11,0,4,3,3,3,2,0,0,0,0],
+  ],
+  wealth_die: 5,
+  features: {
+    1=>[
+      "Divine Sense: The presence of strong evil registers on your senses like a noxious odor, and powerful good rings like heavenly music in your ears. As an action, you can open your awareness to detect such forces. Until the end of your next turn, you know the location of any celestial, fiend, or undead within 60 feet of you that is not behind total cover. You know the type (celestial, fiend, or undead) of any being whose presence you sense, but not its identity (the vampire Count Strahd von Zarovich, for instance). Within the same radius, you also detect the presence of any place or object that has been consecrated or desecrated, as with the Hallow spell.
+
+      You can use this feature a number of times equal to 1 + your Charisma modifier. When you finish a long rest, you regain all expended uses.",
+      "Lay on Hands: Your blessed touch can heal wounds. You have a pool of healing power that replenishes when you take a long rest. With that pool, you can restore a total number of hit points equal to your paladin level x 5.
+
+      As an action, you can touch a creature and draw power from the pool to restore a number of hit points to that creature, up to the maximum amount remaining in your pool.
+      
+      Alternatively, you can expend 5 hit points from your pool of healing to cure the target of one disease or neutralize one poison affecting it. You can cure multiple diseases and neutralize multiple poisons with a single use of Lay on Hands, expending hit points separately for each one.",
+    ],
+    2=>[
+      "Fighting Style: You adopt a particular style of fighting as your specialty. You can't take a Fighting Style option more than once, even if you later get to choose again.",
+      "Spellcasting: You have learned to draw on divine magic through meditation and prayer to cast spells as a cleric does.
+      
+      You prepare the list of paladin spells that are available for you to cast, choosing from the paladin spell list. When you do so, choose a number of paladin spells equal to your Charisma modifier + half your paladin level, rounded down (minimum of one spell). The spells must be of a level for which you have spell slots.
+        
+      You can change your list of prepared spells when you finish a long rest. Preparing a new list of paladin spells requires time spent in prayer and meditation: at least 1 minute per spell level for each spell on your list.",
+      "Divine Smite: when you hit a creature with a melee weapon attack, you can expend one spell slot to deal radiant damage to the target, in addition to the weapon's damage. The extra damage is 2d8 for a 1st-level spell slot, plus 1d8 for each spell level higher than 1st, to a maximum of 5d8. The damage increases by 1d8 if the target is an undead or a fiend, to a maximum of 6d8.",
+    ],
+    3=>[
+      "Divine Health: the divine magic flowing through you makes you immune to disease.",
+      "Sacred Oath: You swear the oath that binds you as a paladin forever. Up to this time you have been in a preparatory stage, committed to the path but not yet sworn to it.",
+    ],
+    4=>[
+      "Ability Score Increase:"
+    ],
+    5=>[
+      "Extra Attack: You can attack twice, instead of once, whenever you take the Attack action on your turn.",
+    ],
+    6=>[
+      "Aura of Protection: whenever you or a friendly creature within 10 feet of you must make a saving throw, the creature gains a bonus to the saving throw equal to your Charisma modifier (with a minimum bonus of +1). You must be conscious to grant this bonus.
+
+      At 18th level, the range of this aura increases to 30 feet.",
+    ]
+    8=>[
+      "Ability Score Increase:"
+    ],
+    10=>[
+      "Aura of Courage: You and friendly creatures within 10 feet of you can't be frightened while you are conscious.
+
+      At 18th level, the range of this aura increases to 30 feet.",
+    ],
+    11=>[
+      "Improved Divine Smite: you are so suffused with righteous might that all your melee weapon strikes carry divine power with them. Whenever you hit a creature with a melee weapon, the creature takes an extra 1d8 radiant damage.",
+    ]
+    12=>[
+      "Ability Score Increase:"
+    ],
+    14=>[
+      "Cleansing Touch: you can use your action to end one spell on yourself or on one willing creature that you touch.
+
+      You can use this feature a number of times equal to your Charisma modifier (a minimum of once). You regain expended uses when you finish a long rest.",
+    ],
+    16=>[
+      "Ability Score Increase:"
+    ],
+    19=>[
+      "Ability Score Increase:"
+    ],
+  },
+  custom: {
+    2=> [
+      "Blind Fighting: You have blindsight with a range of 10 feet. Within that range, you can effectively see anything that isn't behind total cover, even if you're blinded or in darkness. Moreover, you can see an invisible creature within that range, unless the creature successfully hides from you.",
+      "Defense: While you are wearing armor, you gain a +1 bonus to AC.",
+      "Dueling: When you are wielding a melee weapon in one hand and no other weapons, you gain a +2 bonus to damage rolls with that weapon.",
+      "Great Weapon Fighting: When you roll a 1 or 2 on a damage die for an attack you make with a melee weapon that you are wielding with two hands, you can reroll the die and must use the new roll, even if the new roll is a 1 or a 2. The weapon must have the two-handed or versatile property for you to gain this benefit.",
+      "Protection: When a creature you can see attacks a target other than you that is within 5 feet of you, you can use your reaction to impose disadvantage on the attack roll. You must be wielding a shield.",
+      "Tunnel Fighter: As a bonus action, you can enter a defensive stance that lasts until the start of your next turn. While in your defensive stance, you can make opportunity attacks without using your reaction, and you can use your reaction to make a melee attack against a creature that moves more than 5 feet while within your reach.",
+    ]
+  },
+  extra_spells: {},
+  specific_spells: {},
+  custom_mods: {},
+)
+
+Paladin.subclasses.create(
+  name: "Oath of the Ancients",
+  description: "The Oath of the Ancients is as old as the race of elves and the rituals of the druids. Sometimes called fey knights, green knights, or horned knights, paladins who swear this oath cast their lot with the side of the light in the cosmic struggle against darkness because they love the beautiful and life-giving things of the world, not necessarily because they believe in principles of honor, courage, and justice. They adorn their armor and clothing with images of growing things-leaves, antlers, or flowers-to reflect their commitment to preserving life and light in the world.",
+  custom: {
+    3=>[
+      "Nature's Wrath: You can use your Channel Divinity to invoke primeval forces to ensnare a foe. As an action, you can cause spectral vines to spring up and reach for a creature within 10 feet of you that you can see. The creature must succeed on a Strength or Dexterity saving throw (its choice) or be restrained. While restrained by the vines, the creature repeats the saving throw at the end of each of its turns. On a success, it frees itself and the vines vanish.",
+      "Turn the Faithless: You can use your Channel Divinity to utter ancient words that are painful for fey and fiends to hear. As an action, you present your holy symbol, and each fey or fiend within 30 feet of you that can hear you must make a Wisdom saving throw. On a failed save, the creature is turned for 1 minute or until it takes damage.
+
+      A turned creature must spend its turns trying to move as far away from you as it can, and it can't willingly move to a space within 30 feet of you. It also can't take reactions. For its action, it can use only the Dash action or try to escape from an effect that prevents it from moving. If there's nowhere to move, the creature can use the Dodge action.
+      
+      If the creature's true form is concealed by an illusion, shapeshifting, or other effect, that form is revealed while it is turned.",
+    ],
+  },
+  equipment_choices: {},
+  features: {
+    7=> [
+      "Aura of Warding: Ancient magic lies so heavily upon you that it forms an eldritch ward. You and friendly creatures within 10 feet of you have resistance to damage from spells. At 18th level, the range of this aura increases to 30 feet.",
+    ],
+    15=> [
+      "Undying Sentinel: when you are reduced to 0 hit points and are not killed outright, you can choose to drop to 1 hit point instead. Once you use this ability, you can't use it again until you finish a long rest.
+
+      Additionally, you suffer none of the drawbacks of old age, and you can't be aged magically.",
+    ],
+    20=> [
+      "Elder Champion: You can assume the form of an ancient force of nature, taking on an appearance you choose. For example, your skin might turn green or take on a bark-like texture, your hair might become leafy or moss-like, or you might sprout antlers or a lion-like mane.
+
+      Using your action, you undergo a transformation. For 1 minute, you gain the following benefits:
+      
+      At the start of each of your turns, you regain 10 hit points.
+      Whenever you cast a paladin spell that has a casting time of 1 action, you can cast it using a bonus action instead.
+      Enemy creatures within 10 feet of you have disadvantage on saving throws against your paladin spells and Channel Divinity options.
+      Once you use this feature, you can't use it again until you finish a long rest.",
+    ],
+  },
+  extra_spells: {},
+  specific_spells: {
+    3=> [
+      ['Ensnaring Strike','Normal'],
+      ['Speak with Animals','Normal'],
+    ],
+    5=> [
+      ['Moonbeam','Normal'],
+      ['Misty Step','Normal'],
+    ],
+    9=> [
+      ['Plant Growth','Normal'],
+      ['Protection from Energy','Normal'],
+    ],
+    13=> [
+      ['Ice Storm','Normal'],
+      ['Stoneskin','Normal'],
+    ],
+    17=> [
+      ['Commune with Nature','Normal'],
+      ['Tree Stride','Normal'],
+    ],
+    'stat'=> 'Charisma',
+    'source'=> 'Oath of the Ancients',
+  },
+  custom_mods: {},
+)
+
+Paladin.subclasses.create(
+  name: "Oath of Devotion",
+  description: "The Oath of Devotion binds a paladin to the loftiest ideals of justice, virtue, and order. Sometimes called cavaliers, white knights, or holy warriors, these paladins meet the ideal of the knight in shining armor, acting with honor in pursuit of justice and the greater good. They hold themselves to the highest standards of conduct, and some, for better or worse, hold the rest of the world to the same standards. Many who swear this oath are devoted to gods of law and good and use their gods' tenets as the measure of their devotion.",
+  custom: {
+    3=>[
+      "Sacred Weapon: As an action, you can imbue one weapon that you are holding with positive energy, using your Channel Divinity. For 1 minute, you add your Charisma modifier to attack rolls made with that weapon (with a minimum bonus of +1). The weapon also emits bright light in a 20-foot radius and dim light 20 feet beyond that. If the weapon is not already magical, it becomes magical for the duration.
+
+      You can end this effect on your turn as part of any other action. If you are no longer holding or carrying this weapon, or if you fall unconscious, this effect ends.",
+      "Turn the Unholy: As an action, you present your holy symbol and speak a prayer censuring fiends and undead, using your Channel Divinity. Each fiend or undead that can see or hear you within 30 feet of you must make a Wisdom saving throw. If the creature fails its saving throw, it is turned for 1 minute or until it takes damage.
+
+      A turned creature must spend its turns trying to move as far away from you as it can, and it can't willingly move to a space within 30 feet of you. It also can't take reactions. For its action, it can use only the Dash action or try to escape from an effect that prevents it from moving. If there's nowhere to move, the creature can use the Dodge action.",
+    ],
+  },
+  equipment_choices: {},
+  features: {
+    7=> [
+      "Aura of Devotion: You and friendly creatures within 10 feet of you can't be charmed while you are conscious. At 18th level, the range of this aura increases to 30 feet.",
+    ],
+    15=> [
+      "Purity of Spirit: You are always under the effects of a Protection from Evil and Good spell.",
+    ],
+    20=> [
+      "Holy Nimbus: As an action, you can emanate an aura of sunlight. For 1 minute, bright light shines from you in a 30-foot radius, and dim light shines 30 feet beyond that.
+
+      Whenever an enemy creature starts its turn in the bright light, the creature takes 10 radiant damage.
+      
+      In addition, for the duration, you have advantage on saving throws against spells cast by fiends or undead.
+      
+      Once you use this feature, you can't use it again until you finish a long rest.",
+    ],
+  },
+  extra_spells: {},
+  specific_spells: {
+    3=> [
+      ['Protection from Evil and Good','Normal'],
+      ['Sanctuary','Normal'],
+    ],
+    5=> [
+      ['Lesser Restoration','Normal'],
+      ['Zone of Truth','Normal'],
+    ],
+    9=> [
+      ['Beacon of Hope','Normal'],
+      ['Dispel Magic','Normal'],
+    ],
+    13=> [
+      ['Freedom of Movement','Normal'],
+      ['Guardian of Faith','Normal'],
+    ],
+    17=> [
+      ['Commune','Normal'],
+      ['Flame Strike','Normal'],
+    ],
+    'stat'=> 'Charisma',
+    'source'=> 'Oath of Devotion',
+  },
+  custom_mods: {},
+)
+
+Paladin.subclasses.create(
+  name: "Oath of Vengeance",
+  description: "The Oath of Vengeance is a solemn commitment to punish those who have committed a grievous sin. When evil forces slaughter helpless villagers, when an entire people turns against the will of the gods, when a thieves' guild grows too violent and powerful, when a dragon rampages through the countryside – at times like these, paladins arise and swear an Oath of Vengeance to set right that which has gone wrong. To these paladins – sometimes called avengers or dark knights – their own purity is not as important as delivering justice.",
+  custom: {
+    3=>[
+      "Abjure Enemy: As an action, you present your holy symbol and speak a prayer of denunciation, using your Channel Divinity. Choose one creature within 60 feet of you that you can see. That creature must make a Wisdom saving throw, unless it is immune to being frightened. Fiends and undead have disadvantage on this saving throw.
+
+      On a failed save, the creature is frightened for 1 minute or until it takes any damage. While frightened, the creature's speed is 0, and it can't benefit from any bonus to its speed.
+      
+      On a successful save, the creature's speed is halved for 1 minute or until the creature takes any damage.",
+      "Vow of Enmity: As a bonus action, you can utter a vow of enmity against a creature you can see within 10 feet of you, using your Channel Divinity. You gain advantage on attack rolls against the creature for 1 minute or until it drops to 0 hit points or falls unconscious.",
+    ],
+  },
+  equipment_choices: {},
+  features: {
+    7=> [
+      "Relentless Avenger: Your supernatural focus helps you close off a foe's retreat. When you hit a creature with an opportunity attack, you can move up to half your speed immediately after the attack and as part of the same reaction. This movement doesn't provoke opportunity attacks.",
+    ],
+    15=> [
+      "Soul of Vengeance: The authority with which you speak your Vow of Enmity gives you greater power over your foe. When a creature under the effect of your Vow of Enmity makes an attack, you can use your reaction to make a melee weapon attack against that creature if it is within range.",
+    ],
+    20=> [
+      "Avenging Angel: You can assume the form of an angelic avenger. Using your action, you undergo a transformation. For 1 hour, you gain the following benefits:
+
+      Wings sprout from your back and grant you a flying speed of 60 feet.
+      You emanate an aura of menace in a 30-foot radius. The first time any enemy creature enters the aura or starts its turn there during a battle, the creature must succeed on a Wisdom saving throw or become frightened of you for 1 minute or until it takes any damage. Attack rolls against the frightened creature have advantage.
+      Once you use this feature, you can't use it again until you finish a long rest.",
+    ],
+  },
+  extra_spells: {},
+  specific_spells: {
+    3=> [
+      ['Bane','Normal'],
+      ["Hunter's Mark",'Normal'],
+    ],
+    5=> [
+      ['Hold Person','Normal'],
+      ['Misty Step','Normal'],
+    ],
+    9=> [
+      ['Haste','Normal'],
+      ['Protection from Energy','Normal'],
+    ],
+    13=> [
+      ['Banishment','Normal'],
+      ['Dimension Door','Normal'],
+    ],
+    17=> [
+      ['Hold Monster','Normal'],
+      ['Scrying','Normal'],
+    ],
+    'stat'=> 'Charisma',
+    'source'=> 'Oath of Vengeance',
+  },
+  custom_mods: {},
 )
 
 Ranger = PlayerClass.create(
@@ -2413,6 +2744,97 @@ Ranger.subclasses.create(
   extra_spells: {},
   specific_spells: {},
   custom_mods: {},
+)
+
+Sorceror = PlayerClass.create(
+  name: 'Sorceror',
+  hit_die: 6,
+  starting_hp: 6,
+  primary_abilities: [2,5],
+  saving_throws: [2,5],
+  armor: [],
+  weapons: ['Dagger','Darts','Sling','Quarterstaff','Light Crossbow'],
+  tools: [],
+  skill_choices: ['Arcana','Deception','Insight','Intimidation','Persuasion','Religion'],
+  num_skills: 2,
+  equipment_choices: {
+    'choices'=>[
+      [['Light Crossbow#1','Bolts#1'],'simple#1'],
+      ['Component Pouch#1','Arcane Crystal#1'],
+      ["Dungeoneer's Pack#1","Explorer's Pack#1"],
+    ],
+    'default'=>['Dagger#2'],
+  },
+  spellcasting_ability: 6,
+  spell_table: [
+    [2,4,2,0,0,0,0,0,0,0,0],
+    [3,4,3,0,0,0,0,0,0,0,0],
+    [4,4,4,2,0,0,0,0,0,0,0],
+    [5,5,4,3,0,0,0,0,0,0,0],
+    [6,5,4,3,2,0,0,0,0,0,0],
+    [7,5,4,3,3,0,0,0,0,0,0],
+    [8,5,4,3,3,1,0,0,0,0,0],
+    [9,5,4,3,3,2,0,0,0,0,0],
+    [10,5,4,3,3,3,1,0,0,0,0],
+    [11,6,4,3,3,3,2,0,0,0,0],
+    [12,6,4,3,3,3,2,1,0,0,0],
+    [12,6,4,3,3,3,2,1,0,0,0],
+    [13,6,4,3,3,3,2,1,1,0,0],
+    [13,6,4,3,3,3,2,1,1,0,0],
+    [14,6,4,3,3,3,2,1,1,1,0],
+    [14,6,4,3,3,3,2,1,1,1,0],
+    [15,6,4,3,3,3,2,1,1,1,1],
+    [15,6,4,3,3,3,3,1,1,1,1],
+    [15,6,4,3,3,3,3,2,1,1,1],
+    [15,6,4,3,3,3,3,2,2,1,1],
+  ],
+  wealth_die: 5,
+  features: {
+    1=>[
+      "Spellcasting: An event in your past, or in the life of a parent or ancestor, left an indelible mark on you, infusing you with arcane magic. This font of magic, whatever its origin, fuels your spells. Additionally, when you gain a level in this class, you can choose one of the sorcerer spells you know and replace it with another spell from the sorcerer spell list, which also must be of a level for which you have spell slots.",
+      "Sorcerous Origin: Choose a sorcerous origin, which describes the source of your innate magical power. Your choice grants you features when you choose it at 1st level and again at 6th, 14th, and 18th level.",
+    ],
+    2=>[
+      "Font of Magic: you tap into a deep wellspring of magic within yourself. This wellspring is represented by sorcery points, which allow you to create a variety of magical effects.
+
+      Sorcery Points. You have 2 sorcery points, and you gain more as you reach higher levels, as shown in the Sorcery Points column of the Sorcerer table. You can never have more sorcery points than shown on the table for your level. You regain all spent sorcery points when you finish a long rest.
+      Flexible Casting. You can use your sorcery points to gain additional spell slots, or sacrifice spell slots to gain additional sorcery points. You learn other ways to use your sorcery points as you reach higher levels.
+      Creating Spell Slots. You can transform unexpended sorcery points into one spell slot as a bonus action on your turn. The Creating Spell Slots table shows the cost of creating a spell slot of a given level. You can create spell slots no higher in level than 5th. Any spell slot you create with this feature vanishes when you finish a long rest.
+      Converting a Spell Slot to Sorcery Points. As a bonus action on your turn, you can expend one spell slot and gain a number of sorcery points equal to the slot's level.",
+    ],
+    3=>[
+      "Metamagic: you gain the ability to twist your spells to suit your needs. You gain two of the following Metamagic options of your choice. You gain another one at 10th and 17th level.
+
+      You can use only one Metamagic option on a spell when you cast it, unless otherwise noted."
+    ],
+    4=>[
+      "Ability Score Increase:"
+    ],
+    5=>[
+      "Extra Attack: You can attack twice whenever you take the Attack action on your turn."
+    ],
+
+    12=>[
+      "Ability Score Increase:"
+    ],
+    16=>[
+      "Ability Score Increase:"
+    ],
+    19=>[
+      "Ability Score Increase:"
+    ],
+    20=>[
+      "Sorcerous Restoration: You regain 4 expended sorcery points whenever you finish a short rest.",
+    ]
+  },
+  custom: {},
+  extra_spells: {},
+  specific_spells: {},
+  custom_mods: {},
+)
+
+Sorceror.subclasses.create(
+  
 )
 
 Acolyte = Background.create(
