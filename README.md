@@ -39,11 +39,10 @@ Deactivate buttons that lead to empty modals (Tools done)
   Draconic Resilience needs customMods
   maybe implement a wild magic roll button if wild magic chosen
 # Warlock
+
 # Wizard
-
+  done
 # Spells
-   seed done
-
    attack spells dont populate attacks
     sheet#populateSpellAttack is written to accept a spell object from the db
 
@@ -52,9 +51,13 @@ Deactivate buttons that lead to empty modals (Tools done)
     I have to limit use to subclasses for now since Fighter#BattleMaster was the first use
     i could generate new <dialog> elements or pages in the existing one for each instance 
     in a categoryMap
+    i can fix this with the id strategy used in customMod for gated_collections
 
 # bugs
-  cleared
+  cleared, lol
+
+# wish list
+  integration testing
 
 # heroku
 https://uglysheetmaker-e6deabaebc10.herokuapp.com/
