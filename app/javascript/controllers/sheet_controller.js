@@ -675,8 +675,6 @@ export default class extends Controller {
   //code 0 : run everything
   //code 1 : dont run updatetats or statModUpdate on 'asi' passed into catUpdate
   finalPass(code = 0) {
-    console.log('finalpass');
-    console.log(code);
     this.setSkillMap();
     this.populateSkillModifiers();
     this.classFeatureHandler(); //we depend on level to show correct class features so we have to do these in finalPass
@@ -2041,8 +2039,6 @@ export default class extends Controller {
         this.spellsModalListTarget.append(title);
       }
 
-      console.log(this.spellList);
-
       this.spellList.forEach((item) => {
         if (item.level == i) {
           let container = Util.getTag(
@@ -2324,11 +2320,11 @@ export default class extends Controller {
     let limit = 0;
     if (feature_details['spells_choices'] == 0) {
       for (let item of feature_details['cantrips_choices']) {
-        if (this.level >= item[0]) limit += item[1];
+        if (this.level >= item[0]) limit = item[1];
       }
     } else {
       for (let item of feature_details['spells_choices']) {
-        if (this.level >= item[0]) limit += item[1];
+        if (this.level >= item[0]) limit = item[1];
       }
     }
 
@@ -2378,8 +2374,12 @@ export default class extends Controller {
 
     //limit output to cantrips if appropriate
     if (feature_details['spells_choices'] == 0) max_spell_level = 0;
+    
+    //limit output to spells if appropriate
+    let spell_level_index = 0;
+    if(feature_details['cantrips_choices'] == 0) spell_level_index = 1;
 
-    for (let i = 0; i <= max_spell_level; i++) {
+    for (let i = spell_level_index; i <= max_spell_level; i++) {
       let innerframe = Util.getTag(
         'div',
         'col-span-3 grid grid-cols-2 md:grid-cols-3 gap-2 p-2'
@@ -2477,6 +2477,8 @@ export default class extends Controller {
       this.spellsTaken9Target,
     ];
 
+    //the validation i attempted here doesn't limit dual population
+    //and this is a gross implementation
     if (this.allSpells) {
       chosen.forEach((taken) => {
         if (!this.chosenClassSpells.includes(taken)) {
@@ -2540,7 +2542,7 @@ export default class extends Controller {
   }
 
   getDefaultEquipmentSelects(default_list, target_list) {
-    for(let i = 0; i < default_list.length, i++) {
+    for(let i = 0; i < default_list.length; i++) {
       let values = default_list[i].split('#');
       if(values[0].toLowerCase() == values[0]) {
         target_list.push([default_list[i]]);

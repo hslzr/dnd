@@ -10,7 +10,7 @@ The seed file is one big copyright violation, this is a student project and not 
 
 # main tasks
 
-Fill out the seed with remaining classes, subclasses, backgrounds, and feats
+backgrounds and feats in seed
 
 Different methods of stat assignment
 
@@ -48,13 +48,10 @@ Deactivate buttons that lead to empty modals (Tools done)
 
 # Limits
   'specialties' implemented as a customMod, but more than one would break the system, 
-    I have to limit use to subclasses for now since Fighter#BattleMaster was the first use
-    i could generate new <dialog> elements or pages in the existing one for each instance 
-    in a categoryMap
     i can fix this with the id strategy used in customMod for gated_collections
 
 # bugs
-  cleared, lol
+  extra spells double population if submit twice
 
 # wish list
   integration testing

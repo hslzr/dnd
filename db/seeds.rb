@@ -3132,51 +3132,54 @@ Warlock = PlayerClass.create(
   },
   spellcasting_ability: 6,
   spell_table: [
-    [2,4,2,0,0,0,0,0,0,0,0],
-    [3,4,3,0,0,0,0,0,0,0,0],
-    [4,4,4,2,0,0,0,0,0,0,0],
-    [5,5,4,3,0,0,0,0,0,0,0],
-    [6,5,4,3,2,0,0,0,0,0,0],
-    [7,5,4,3,3,0,0,0,0,0,0],
-    [8,5,4,3,3,1,0,0,0,0,0],
-    [9,5,4,3,3,2,0,0,0,0,0],
-    [10,5,4,3,3,3,1,0,0,0,0],
-    [11,6,4,3,3,3,2,0,0,0,0],
-    [12,6,4,3,3,3,2,1,0,0,0],
-    [12,6,4,3,3,3,2,1,0,0,0],
-    [13,6,4,3,3,3,2,1,1,0,0],
-    [13,6,4,3,3,3,2,1,1,0,0],
-    [14,6,4,3,3,3,2,1,1,1,0],
-    [14,6,4,3,3,3,2,1,1,1,0],
-    [15,6,4,3,3,3,2,1,1,1,1],
-    [15,6,4,3,3,3,3,1,1,1,1],
-    [15,6,4,3,3,3,3,2,1,1,1],
-    [15,6,4,3,3,3,3,2,2,1,1],
+    [2,2,1,0,0,0,0,0,0,0,0],
+    [3,2,2,0,0,0,0,0,0,0,0],
+    [4,2,0,2,0,0,0,0,0,0,0],
+    [5,3,0,2,0,0,0,0,0,0,0],
+    [6,3,0,0,2,0,0,0,0,0,0],
+    [7,3,0,0,2,0,0,0,0,0,0],
+    [8,3,0,0,0,2,0,0,0,0,0],
+    [9,3,0,0,0,2,0,0,0,0,0],
+    [10,3,0,0,0,0,2,0,0,0,0],
+    [10,4,0,0,0,0,2,0,0,0,0],
+    [11,4,0,0,0,0,3,0,0,0,0],
+    [11,4,0,0,0,0,3,0,0,0,0],
+    [12,4,0,0,0,0,3,0,0,0,0],
+    [12,4,0,0,0,0,3,0,0,0,0],
+    [13,4,0,0,0,0,3,0,0,0,0],
+    [13,4,0,0,0,0,3,0,0,0,0],
+    [14,4,0,0,0,0,4,0,0,0,0],
+    [14,4,0,0,0,0,4,0,0,0,0],
+    [15,4,0,0,0,0,4,0,0,0,0],
+    [15,4,0,0,0,0,4,0,0,0,0],
   ],
-  wealth_die: 5,
+  wealth_die: 4,
   features: {
     1=>[
-      "Spellcasting: An event in your past, or in the life of a parent or ancestor, left an indelible mark on you, infusing you with arcane magic. This font of magic, whatever its origin, fuels your spells. Additionally, when you gain a level in this class, you can choose one of the sorcerer spells you know and replace it with another spell from the sorcerer spell list, which also must be of a level for which you have spell slots.",
-      "Sorcerous Origin: Choose a sorcerous origin, which describes the source of your innate magical power. Your choice grants you features when you choose it at 1st level and again at 6th, 14th, and 18th level.",
+      "Otherwordly Patron: You have struck a bargain with an otherworldly being of your choice. Your arcane research and the magic bestowed on you by your patron have given you facility with spells.",
     ],
     2=>[
-      "Font of Magic: you tap into a deep wellspring of magic within yourself. This wellspring is represented by sorcery points, which allow you to create a variety of magical effects.
+      "Eldritch Invocations: In your study of occult lore, you have unearthed Eldritch Invocations, fragments of forbidden knowledge that imbue you with an abiding magical ability.
 
-      Sorcery Points. You have 2 sorcery points, and you gain more as you reach higher levels, as shown in the Sorcery Points column of the Sorcerer table. You can never have more sorcery points than shown on the table for your level. You regain all spent sorcery points when you finish a long rest.
-      Flexible Casting. You can use your sorcery points to gain additional spell slots, or sacrifice spell slots to gain additional sorcery points. You learn other ways to use your sorcery points as you reach higher levels.
-      Creating Spell Slots. You can transform unexpended sorcery points into one spell slot as a bonus action on your turn. The Creating Spell Slots table shows the cost of creating a spell slot of a given level. You can create spell slots no higher in level than 5th. Any spell slot you create with this feature vanishes when you finish a long rest.
-      Converting a Spell Slot to Sorcery Points. As a bonus action on your turn, you can expend one spell slot and gain a number of sorcery points equal to the slot's level.",
+      At 2nd level, you gain two eldritch invocations of your choice. When you gain certain warlock levels, you gain additional invocations of your choice, as shown in the Invocations Known column of the Warlock table. A level prerequisite refers to your level in this class.
+      
+      Additionally, when you gain a level in this class, you can choose one of the invocations you know and replace it with another invocation that you could learn at that level.",
     ],
     3=>[
-      "Metamagic: you gain the ability to twist your spells to suit your needs. You gain two of the following Metamagic options of your choice. You gain another one at 10th and 17th level.
-
-      You can use only one Metamagic option on a spell when you cast it, unless otherwise noted."
+      "Pact Boon: Your otherworldly patron bestows a gift upon you for your loyal service. You gain one feature of your choice.",
     ],
     4=>[
       "Ability Score Increase:"
     ],
     8=>[
       "Ability Score Increase:"
+    ],
+    11=>[
+      "Mystic Arcanum: Your patron bestows upon you a magical secret called an arcanum. Choose one 6th-level spell from the warlock spell list as this arcanum.
+
+      You can cast your arcanum spell once without expending a spell slot. You must finish a long rest before you can do so again.
+      
+      At higher levels, you gain more warlock spells of your choice that can be cast in this way: one 7th-level spell at 13th level, one 8th-level spell at 15th level, and one 9th-level spell at 17th level. You regain all uses of your Mystic Arcanum when you finish a long rest.",
     ],
     12=>[
       "Ability Score Increase:"
@@ -3188,7 +3191,7 @@ Warlock = PlayerClass.create(
       "Ability Score Increase:"
     ],
     20=>[
-      "Sorcerous Restoration: You regain 4 expended sorcery points whenever you finish a short rest.",
+      "Eldritch Master: You can draw on your inner reserve of mystical power while entreating your patron to regain expended spell slots. You can spend 1 minute entreating your patron for aid to regain all your expended spell slots from your Pact Magic feature. Once you regain spell slots with this feature, you must finish a long rest before you can do so again.",
     ]
   },
   custom: {},
