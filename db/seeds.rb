@@ -35,7 +35,9 @@ User.create(
 BlankSubrace = Subrace.create(
   name: 'None',
   extra_languages: 0,
-  extra_spells: {},
+  extra_spells: {
+
+  },
   specific_spells: {},
   custom_mods: {},
 )
@@ -1707,7 +1709,7 @@ Fighter = PlayerClass.create(
   equipment_choices: {
     'choices'=> [
       ['Chain Mail#1',['Leather Armor#1','Longbow#1','Arrows#1']],
-      [['martial#1','Round Shield'],'martial#2'],
+      [['martial#1','Round Shield#1'],'martial#2'],
       [['Light Crossbow#1','Bolts#1'],'Handaxe#2'],
       ['Dungeoneer\'s Pack#1','Explorer\'s Pack#1'],
     ],
@@ -2741,6 +2743,210 @@ Ranger.subclasses.create(
     7=>["On any of your turns when your beast companion doesn't attack, you can use a bonus action to command the beast to take the Dash, Disengage, DOdge, or Help action on its turn."],
     11=>["When you command your beast companion to take the Attack action, the beast can make two attcks, or it can take the Multiattack action if it has that action."],
     15=>["When you cast a spell targeting yourself, you can also affect your beast companion with the spell if the beast is within 30 feet of you."],
+    },
+  custom: {},
+  equipment_choices: {},
+  extra_spells: {},
+  specific_spells: {},
+  custom_mods: {},
+)
+
+Rogue = PlayerClass.create(
+  name: 'Rogue',
+  hit_die: 8,
+  starting_hp: 8,
+  primary_abilities: [1,3],
+  saving_throws: [1,3],
+  armor: ['Light'],
+  weapons: ['Simple','Hand Crossbow','Longsword','Rapier','Shortsword'],
+  tools: ["Thief's Tools"],
+  skill_choices: ['Acrobatics','Athletics','Deception','Insight','Intimidation','Investigation','Perception','Performance','Persuasion','Sleight of Hand','Stealth'],
+  num_skills: 4,
+  equipment_choices: {
+    'choices'=> [
+      ['Rapier#1','Shortsword#1'],
+      [['Shortbow#1','Arrows#1'],'Shortsword#1'],
+      [['Light Crossbow#1','Bolts#1'],'Handaxe#2'],
+      ["Burglar's Pack", 'Dungeoneer\'s Pack#1','Explorer\'s Pack#1'],
+    ],
+    'default'=> [
+      "Leather Armor#1",
+      "Dagger#2",
+      "Thief's Tools",
+    ],
+  },
+  wealth_die: 5,
+  features: {
+    1=> [
+      "Expertise: Choose two of your skill proficiencies, or one of your skill proficiencies and your proficiency with thieves' tools. Your proficiency bonus is doubled for any ability check you make that uses either of the chosen proficiencies.
+
+      At 6th level, you can choose two more of your proficiencies (in skills or with thieves' tools) to gain this benefit.",
+      "Thieve's Cant: During your rogue training you learned thieves' cant, a secret mix of dialect, jargon, and code that allows you to hide messages in seemingly normal conversation. Only another creature that knows thieves' cant understands such messages. It takes four times longer to convey such a message than it does to speak the same idea plainly.
+
+      In addition, you understand a set of secret signs and symbols used to convey short, simple messages, such as whether an area is dangerous or the territory of a thieves' guild, whether loot is nearby, or whether the people in an area are easy marks or will provide a safe house for thieves on the run.",
+    ],
+    2=> [
+      "Cunning Action: Your quick thinking and agility allow you to move and act quickly. You can take a bonus action on each of your turns in combat. This action can be used only to take the Dash, Disengage, or Hide action.",
+    ],
+    3=>[
+      "Roguish Archetype: You choose an archetype that you emulate in the exercise of your rogue abilities. Your archetype choice grants you features at 3rd level and then again at 9th, 13th, and 17th level.",
+    ]
+    4=>[
+      "Ability Score Increase:",
+    ],
+    5=>[
+      "Uncanny Dodge: When an attacker that you can see hits you with an attack, you can use your reaction to halve the attack's damage against you.",
+    ],
+    6=>[
+      "Ability Score Increase:",
+    ],
+    7=>[
+      "Evasion: You can nimbly dodge out of the way of certain area effects, such as a red dragon's fiery breath or an Ice Storm spell. When you are subjected to an effect that allows you to make a Dexterity saving throw to take only half damage, you instead take no damage if you succeed on the saving throw, and only half damage if you fail.",
+    ]
+    8=>[
+      "Ability Score Increase:",
+    ],
+    11=>[
+      "Reliable Talent: You have refined your chosen skills until they approach perfection. Whenever you make an ability check that lets you add your proficiency bonus, you can treat a d20 roll of 9 or lower as a 10.",
+    ],
+    12=>[
+      "Ability Score Increase:",
+    ],
+    14=>[
+      "Ability Score Increase:",
+      "Blindsense: You are so evasive that attackers rarely gain the upper hand against you. No attack roll has advantage against you while you aren't incapacitated.",
+    ],
+    16=>[
+      "Ability Score Increase:",
+    ],
+    19=>[
+      "Ability Score Increase:",
+    ],
+    20=>[
+      "Stroke of Luck: You have an uncanny knack for succeeding when you need to. If your attack misses a target within range, you can turn the miss into a hit. Alternatively, if you fail an ability check, you can treat the d20 roll as a 20.
+
+      Once you use this feature, you can't use it again until you finish a short or long rest.",
+    ],
+  },
+  custom: {},
+  extra_spells: {},
+  specific_spells: {},
+  custom_mods: {},
+  spellcasting_ability: 0,
+  spell_table: [
+    [0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0,0],
+  ],
+)
+
+Rogue.subclasses.create(
+  name: "Arcane Trickster",
+  description: "Some rogues enhance their fine-honed skills of stealth and agility with magic, learning tricks of enchantment and illusion. These rogues include pickpockets and burglars, but also pranksters, mischief-makers, and a significant number of adventurers.",
+  features: {
+    3=>["Mage Hand Legerdemain: When you cast Mage Hand, you can make the spectral hand invisible, and you can perform the following additional tasks with it:
+
+      You can stow one object the hand is holding in a container worn or carried by another creature.
+      You can retrieve an object in a container worn or carried by another creature.
+      You can use thieves' tools to pick locks and disarm traps at range.
+      You can perform one of these tasks without being noticed by a creature if you succeed on a Dexterity (Sleight of Hand) check contested by the creature's Wisdom (Perception) check.
+      
+      In addition, you can use the bonus action granted by your Cunning Action to control the hand."],
+    9=>["Magical Ambush: If you are hidden from a creature when you cast a spell on it, the creature has disadvantage on any saving throw it makes against the spell this turn."],
+    13=>["Versatile Trickster: You gain the ability to distract targets with your Mage Hand. As a bonus action on your turn, you can designate a creature within 5 feet of the spectral hand created by the spell. Doing so gives you advantage on attack rolls against that creature until the end of the turn."],
+    17=>["Spell Thief: You gain the ability to magically steal the knowledge of how to cast a spell from another spellcaster.
+
+      Immediately after a creature casts a spell that targets you or includes you in its area of effect, you can use your reaction to force the creature to make a saving throw with its spellcasting ability modifier. The DC equals your spell save DC. On a failed save, you negate the spell's effect against you, and you steal the knowledge of the spell if it is at least 1st level and of a level you can cast (it doesn't need to be a wizard spell). For the next 8 hours, you know the spell and can cast it using your spell slots. The creature can't cast that spell until the 8 hours have passed.
+      
+      Once you use this feature, you can't use it again until you finish a long rest."],
+    },
+  custom: {},
+  equipment_choices: {},
+  extra_spells: {},
+  specific_spells: {
+    3=> [["Mage Hand", 'Cantrip']],
+    'stat'=> 'Intelligence',
+    'source'=> 'Arcane Trickster',
+  },
+  custom_mods: {
+    'spell_table'=> [
+      [0,0,0,0,0,0,0,0,0,0,0],
+      [0,0,0,0,0,0,0,0,0,0,0],
+      [3,2,2,0,0,0,0,0,0,0,0],
+      [4,2,3,0,0,0,0,0,0,0,0],
+      [4,2,3,0,0,0,0,0,0,0,0],
+      [4,2,3,0,0,0,0,0,0,0,0],
+      [5,2,4,2,0,0,0,0,0,0,0],
+      [6,2,4,2,0,0,0,0,0,0,0],
+      [6,2,4,2,0,0,0,0,0,0,0],
+      [7,3,4,3,0,0,0,0,0,0,0],
+      [8,3,4,3,0,0,0,0,0,0,0],
+      [8,3,4,3,0,0,0,0,0,0,0],
+      [9,3,4,3,2,0,0,0,0,0,0],
+      [10,3,4,3,2,0,0,0,0,0,0],
+      [10,3,4,3,2,0,0,0,0,0,0],
+      [11,3,4,3,3,0,0,0,0,0,0],
+      [11,3,4,3,3,0,0,0,0,0,0],
+      [11,3,4,3,3,0,0,0,0,0,0],
+      [12,3,4,3,3,1,0,0,0,0,0],
+      [13,3,4,3,3,1,0,0,0,0,0],
+    ],
+    'spell_stat'=> 4, #we dont count from zero on these because 0 is 'None
+    'spell_list'=> 'Wizard',
+  },
+)
+
+Rogue.subclasses.create(
+  name: "Assassin",
+  description: "You focus your training on the grim art of death. Those who adhere to this archetype are diverse: hired killers, spies, bounty hunters, and even specially anointed priests trained to exterminate the enemies of their deity. Stealth, poison, and disguise help you eliminate your foes with deadly efficiency.",
+  features: {
+    3=>["Assassinate: You are at your deadliest when you get the drop on your enemies. You have advantage on attack rolls against any creature that hasn't taken a turn in the combat yet. In addition, any hit you score against a creature that is surprised is a critical hit."],
+    9=>["Infiltration Expertise: You can unfailingly create false identities for yourself. You must spend seven days and 25 gp to establish the history, profession, and affiliations for an identity. You can't establish an identity that belongs to someone else. For example, you might acquire appropriate clothing, letters of introduction, and official- looking certification to establish yourself as a member of a trading house from a remote city so you can insinuate yourself into the company of other wealthy merchants.
+
+      Thereafter, if you adopt the new identity as a disguise, other creatures believe you to be that person until given an obvious reason not to."],
+    13=>["Imposter: You gain the ability to unerringly mimic another person's speech, writing, and behavior. You must spend at least three hours studying these three components of the person's behavior, listening to speech, examining handwriting, and observing mannerisms.
+
+      Your ruse is indiscernible to the casual observer. If a wary creature suspects something is amiss, you have advantage on any Charisma (Deception) check you make to avoid detection."],
+    17=>["Death Strike: You become a master of instant death. When you attack and hit a creature that is surprised, it must make a Constitution saving throw (DC 8 + your Dexterity modifier + your proficiency bonus). On a failed save, double the damage of your attack against the creature."],
+    },
+  tools: ["Disguise Kit","Poisoner's Kit"],
+  custom: {},
+  equipment_choices: {},
+  extra_spells: {},
+  specific_spells: {},
+  custom_mods: {},
+)
+
+Rogue.subclasses.create(
+  name: "Thief",
+  description: "You hone your skills in the larcenous arts. Burglars, bandits, cutpurses, and other criminals typically follow this archetype, but so do rogues who prefer to think of themselves as professional treasure seekers, explorers, delvers, and investigators. In addition to improving your agility and stealth, you learn skills useful for delving into ancient ruins, reading unfamiliar languages, and using magic items you normally couldn't employ.",
+  features: {
+    3=>[
+      "Fast Hands: You can use the bonus action granted by your Cunning Action to make a Dexterity (Sleight of Hand) check, use your thieves' tools to disarm a trap or open a lock, or take the Use an Object action.",
+      "Second-Story Work: You gain the ability to climb faster than normal; climbing no longer costs you extra movement.
+
+      In addition, when you make a running jump, the distance you cover increases by a number of feet equal to your Dexterity modifier.",
+    ],
+    9=>["Supreme Sneak: You have advantage on a Dexterity (Stealth) check if you move no more than half your speed on the same turn."],
+    13=>["Use Magic Device: You have learned enough about the workings of magic that you can improvise the use of items even when they are not intended for you. You ignore all class, race, and level requirements on the use of magic items."],
+    17=>["Thief's Reflexes: You have become adept at laying ambushes and quickly escaping danger. You can take two turns during the first round of any combat. You take your first turn at your normal initiative and your second turn at your initiative minus 10. You can't use this feature when you are surprised."],
     },
   custom: {},
   equipment_choices: {},
@@ -11001,6 +11207,12 @@ Tool.create(
   name: "Woodcarver's Tools",
   cost_cp: 100,
   weight: 5,
+)
+
+Tool.crate(
+  name: "Thief's Tools",
+  cost_cp: 500,
+  weight: 2,
 )
 
 Tool.create(

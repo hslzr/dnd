@@ -35,11 +35,11 @@ Deactivate buttons that lead to empty modals (Tools done)
 # Ranger
   done
 # Rogue
+    filled but expertise not implemented, especially for thief's tools
 # Sorceror
   Draconic Resilience needs customMods
-  maybe implement a wild magic roll button if wild magic chosen
 # Warlock
-
+    -
 # Wizard
   done
 # Spells
