@@ -2508,18 +2508,9 @@ export default class extends Controller {
     let bg_choices = false;
     let subclass_choices = false;
 
-    if (this.class_equip_choices['choices'])
+    if (this.class_equip_choices['choices']) {
       class_choices = this.class_equip_choices['choices'];
-
-    if (this.subclass_equip_choices['choices'])
-      subclass_choices = this.subclass_equip_choices['choices'];
-
-    if (this.bg_equip_choices['choices'])
-      bg_choices = this.bg_equip_choices['choices'];
-
-    
-
-    if (class_choices) {
+      this.getDefaultEquipmentSelects(this.class_equip_choices['default'], class_choices);
       this.populateEquipmentModal(
         class_choices,
         this.equipmentClassStartTarget,
@@ -2527,7 +2518,9 @@ export default class extends Controller {
       );
     }
 
-    if (subclass_choices) {
+    if (this.subclass_equip_choices['choices']) {
+      subclass_choices = this.subclass_equip_choices['choices'];
+      this.getDefaultEquipmentSelects(this.subclass_equip_choices['default'], subclass_choices);
       this.populateEquipmentModal(
         subclass_choices,
         this.equipmentClassStartTarget,
@@ -2535,7 +2528,9 @@ export default class extends Controller {
       );
     }
 
-    if (bg_choices) {
+    if (this.bg_equip_choices['choices']) {
+      bg_choices = this.bg_equip_choices['choices'];
+      this.getDefaultEquipmentSelects(this.bg_equip_choices['default'], bg_choices);
       this.populateEquipmentModal(
         bg_choices,
         this.equipmentBGStartTarget,
@@ -2544,18 +2539,19 @@ export default class extends Controller {
     }
   }
 
-  /* choices looks like this
-    [
-      ['Rapier#1','Longsword#1','simple#1'],
-      ["Diplomat's Pack#1","Entertainer's Pack#1"],
-      ['Lute#1','Bagpipes#1'],
-    ],
-  */
+  getDefaultEquipmentSelects(default_list, target_list) {
+    for(let i = 0; i < default_list.length, i++) {
+      let values = default_list[i].split('#');
+      if(values[0].toLowerCase() == values[0]) {
+        target_list.push([default_list[i]]);
+      }
+    }
+  }
+
   populateEquipmentModal(choices, target, title) {
     Util.removeAllChildNodes(target);
 
     choices.forEach((choice) => {
-      let number_of_choices = choice.length; //[3,3,2] above
       let container = Util.getTag('div', 'equipment-row');
 
       choice.forEach((code) => {
@@ -2587,6 +2583,10 @@ export default class extends Controller {
           let checkbox = Util.getTag('input', '');
           checkbox.type = 'checkbox';
           choice_box.prepend(checkbox);
+
+          if(choice.length == 1) {
+            checkbox.checked = true;
+          }
 
           container.append(
             Util.getTag('p', 'text-lg font-black', 'or')

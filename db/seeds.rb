@@ -3111,6 +3111,92 @@ Sorceror.subclasses.create(
   custom_mods: {},
 )
 
+Warlock = PlayerClass.create(
+  name: 'Warlock',
+  hit_die: 8,
+  starting_hp: 8,
+  primary_abilities: [4,5],
+  saving_throws: [4,5],
+  armor: ['Light'],
+  weapons: ['Simple'],
+  tools: [],
+  skill_choices: ['Arcana','Deception','History','Intimidation','Investigation','Nature','Religion'],
+  num_skills: 2,
+  equipment_choices: {
+    'choices'=>[
+      [['Light Crossbow#1','Bolts#1'],'simple#1'],
+      ['Component Pouch#1','Arcane Crystal#1'],
+      ["Dungeoneer's Pack#1","Scholar's Pack#1"],
+    ],
+    'default'=>['Leather Armor#1','simple#1','Dagger#2'],
+  },
+  spellcasting_ability: 6,
+  spell_table: [
+    [2,4,2,0,0,0,0,0,0,0,0],
+    [3,4,3,0,0,0,0,0,0,0,0],
+    [4,4,4,2,0,0,0,0,0,0,0],
+    [5,5,4,3,0,0,0,0,0,0,0],
+    [6,5,4,3,2,0,0,0,0,0,0],
+    [7,5,4,3,3,0,0,0,0,0,0],
+    [8,5,4,3,3,1,0,0,0,0,0],
+    [9,5,4,3,3,2,0,0,0,0,0],
+    [10,5,4,3,3,3,1,0,0,0,0],
+    [11,6,4,3,3,3,2,0,0,0,0],
+    [12,6,4,3,3,3,2,1,0,0,0],
+    [12,6,4,3,3,3,2,1,0,0,0],
+    [13,6,4,3,3,3,2,1,1,0,0],
+    [13,6,4,3,3,3,2,1,1,0,0],
+    [14,6,4,3,3,3,2,1,1,1,0],
+    [14,6,4,3,3,3,2,1,1,1,0],
+    [15,6,4,3,3,3,2,1,1,1,1],
+    [15,6,4,3,3,3,3,1,1,1,1],
+    [15,6,4,3,3,3,3,2,1,1,1],
+    [15,6,4,3,3,3,3,2,2,1,1],
+  ],
+  wealth_die: 5,
+  features: {
+    1=>[
+      "Spellcasting: An event in your past, or in the life of a parent or ancestor, left an indelible mark on you, infusing you with arcane magic. This font of magic, whatever its origin, fuels your spells. Additionally, when you gain a level in this class, you can choose one of the sorcerer spells you know and replace it with another spell from the sorcerer spell list, which also must be of a level for which you have spell slots.",
+      "Sorcerous Origin: Choose a sorcerous origin, which describes the source of your innate magical power. Your choice grants you features when you choose it at 1st level and again at 6th, 14th, and 18th level.",
+    ],
+    2=>[
+      "Font of Magic: you tap into a deep wellspring of magic within yourself. This wellspring is represented by sorcery points, which allow you to create a variety of magical effects.
+
+      Sorcery Points. You have 2 sorcery points, and you gain more as you reach higher levels, as shown in the Sorcery Points column of the Sorcerer table. You can never have more sorcery points than shown on the table for your level. You regain all spent sorcery points when you finish a long rest.
+      Flexible Casting. You can use your sorcery points to gain additional spell slots, or sacrifice spell slots to gain additional sorcery points. You learn other ways to use your sorcery points as you reach higher levels.
+      Creating Spell Slots. You can transform unexpended sorcery points into one spell slot as a bonus action on your turn. The Creating Spell Slots table shows the cost of creating a spell slot of a given level. You can create spell slots no higher in level than 5th. Any spell slot you create with this feature vanishes when you finish a long rest.
+      Converting a Spell Slot to Sorcery Points. As a bonus action on your turn, you can expend one spell slot and gain a number of sorcery points equal to the slot's level.",
+    ],
+    3=>[
+      "Metamagic: you gain the ability to twist your spells to suit your needs. You gain two of the following Metamagic options of your choice. You gain another one at 10th and 17th level.
+
+      You can use only one Metamagic option on a spell when you cast it, unless otherwise noted."
+    ],
+    4=>[
+      "Ability Score Increase:"
+    ],
+    8=>[
+      "Ability Score Increase:"
+    ],
+    12=>[
+      "Ability Score Increase:"
+    ],
+    16=>[
+      "Ability Score Increase:"
+    ],
+    19=>[
+      "Ability Score Increase:"
+    ],
+    20=>[
+      "Sorcerous Restoration: You regain 4 expended sorcery points whenever you finish a short rest.",
+    ]
+  },
+  custom: {},
+  extra_spells: {},
+  specific_spells: {},
+  custom_mods: {},
+)
+
 Wizard = PlayerClass.create(
   name: 'Wizard',
   hit_die: 6,
