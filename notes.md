@@ -18,6 +18,10 @@ Deactivate buttons that lead to empty modals (Tools done)
     -lots of work
     support proficiencies in eldritch invocations under gated_collections
 
+# EquipmentGearpacks
+    in the seed but not implemented
+    weight also not calculated for inventory yet
+
 # Spells
    attack spells dont populate attacks
     sheet#populateSpellAttack is written to accept a spell object from the db

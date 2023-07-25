@@ -1173,11 +1173,6 @@ export default class extends Controller {
     }
   }
 
-  //warlock mystic arcanum
-  populateArcanum(arcanum) {
-
-  }
-
   //submits along with modspecialties, so this is coupled to pop and validation methods on those
   populateGatedCollection(gated_collection, source, target) {
     let check = document.getElementById(source + 'gatedcollection');
@@ -2232,7 +2227,9 @@ export default class extends Controller {
       for (let key of listkeys) {
         let details = item[key];
 
-        if (key == 'Any') {
+        if (!this.allSpells && key == 'Any') { 
+          //we'll load everything if extra spells from this.extraSpellLists aren't limited to one list
+          //we are looping over several keys stored in this.extraSpellLists so we check for allSpells to avoid calling this endpoint more than once
           fetch(`/labels/anyspell`)
             .then((response) => response.json())
             .then((data) => {
@@ -2243,9 +2240,9 @@ export default class extends Controller {
                 max_spell_level
               );
               this.allSpells = true;
-              this.allSpellList = data;
+              this.allSpellList = data; //we refer to this later in putExtraSpellsToSheet
             });
-        } else {
+        } else { //otherwise we just grab spells from that list to reduce overhead
           fetch(`/class_spell_lists/${key}`)
             .then((response) => response.json())
             .then((data) => {
@@ -2255,9 +2252,8 @@ export default class extends Controller {
                 key,
                 max_spell_level
               );
-              this.validatedExtraSpells.push(data);
+              this.validatedExtraSpells.push(data); //we refer to this later in putExtraSpellsToSheet
             });
-          //use those to populate the extra spells modal
         }
       }
     }
@@ -2319,6 +2315,40 @@ export default class extends Controller {
       //using i+2 because the first two indexes are spells known and cantrips known
     }
     this.extraSpellsModalListTarget.append(slotframe);
+  }
+
+  //warlock mystic arcanum
+  populateArcanum(arcanum) {
+    
+    //we want to plug in to the the existing modal and use the existing submit button 
+    //so we have to populate, validate, and submit the same way
+
+    //----rerun the fetch code to get/update state variables for the spell lists we may add from arcanum
+    let key = arcanum['spell_list'];
+    if (!this.allSpells && key == 'Any') { 
+      fetch(`/labels/anyspell`)
+        .then((response) => response.json())
+        .then((data) => {
+          this.appendArcanum( //we use a different function here
+            data,
+            arcanum
+          );
+          this.allSpells = true;
+          this.allSpellList = data;
+        });
+    } else {
+      fetch(`/class_spell_lists/${key}`)
+        .then((response) => response.json())
+        .then((data) => {
+          this.appendArcanum(
+            data,
+            arcanum
+          );
+          this.validatedExtraSpells.push(data);
+        });
+    }
+
+
   }
 
   populateExtraSpellsModal(
@@ -2430,31 +2460,125 @@ export default class extends Controller {
     this.extraSpellsModalListTarget.append(list_frame);
   }
 
+  appendArcanum( spells, arcanum ) {
+
+    let list_frame = Util.getTag(
+      'div',
+      'grid grid-cols-3 gap-2 p-2 rounded-lg bg-blue-300/50'
+    );
+    list_frame.append(
+      Util.getTag(
+        'p',
+        'col-span-3 text-center rounded-md font-black text-2xl',
+        arcanum['source']
+      )
+    );
+
+    let info = Util.getTag(
+      'div',
+      'col-span-3 grid grid-cols-2 flex gap-2 items-center justify-evenly'
+    );
+
+    info.append(
+      Util.getTag(
+        'p',
+        'text-center col-span-2 font-black text-sm -mt-2',
+        `Choose ${limit}`
+      )
+    );
+
+    info.append(
+      Util.getTag(
+        'p',
+        'text-center font-semibold',
+        `${arcanum['spell_list']} Spell List`
+      )
+    );
+    info.append(
+      Util.getTag(
+        'p',
+        'text-center font-semibold',
+        `Spellcasting Stat:  ${this.spellcasting_ability}`
+      )
+    );
+
+    list_frame.append(info);
+
+    let spell_levels = [];
+    for(let item of arcanum['choices']) {
+      if(this.level >= item[0]){
+        spell_levels.push(item[2]);
+      }
+    }
+
+    for (let i of spell_levels) {
+      let innerframe = Util.getTag(
+        'div',
+        'col-span-3 grid grid-cols-2 md:grid-cols-3 gap-2 p-2'
+      );
+      let title = Util.getTag(
+        'h4',
+        'col-span-2 md:col-span-3 text-center font-bold text-lg'
+      );
+
+      title.innerText = `Level ${i}`;
+
+      innerframe.append(title);
+      spells.forEach((item) => {
+        if (item.level == i) {
+          let container = Util.getTag(
+            'div',
+            'flex gap-2 align-center justify-center rounded-md border border-white'
+          );
+          let align_span = Util.getTag('span', '');
+          let check = document.createElement('input');
+          check.type = 'checkbox';
+          check.value = item.level;
+          check.id = item.id; //for validation on submit
+
+          align_span.append(check);
+          container.append(align_span);
+          container.append(item.name);
+          innerframe.append(container);
+        }
+      });
+      list_frame.append(innerframe);
+    }
+
+    this.mysticArcanumModalListTarget.append(list_frame);
+  }
+
   submitExtraSpellsChoices(event) {
+    //this is coupled to populateExtraSpellsModal and populateArcanum through the HTML structure of the <dialog>
+
     let chosen = [];
+    let spells_chosen = 0;
     let frame_i = 0;
     let source_i = 0;
     let children_i = 0;
+    //these indexes are used to implement nth child in a sense, we're navigating the DOM with them under children.forEach loops
+    //nextSibling might be used to simplify this whole thing or putting IDs on the checkboxes and using a document.getElements
     let source_children = [];
-    let limit = 0;
+    let spell_limit = 0;
     this.extraSpellsModalListTarget.childNodes.forEach((frame) => {
-      if (frame_i > 0) {
+      if (frame_i > 0) { //skip the title frame
         source_i = 0;
-        frame.childNodes.forEach((container) => {
-          if (source_i == 1) {
+        frame.children.forEach((container) => {
+          if (source_i == 1) { //second child is 'Choose #' so grab that number as the limit
             let choose_text = container.firstChild.innerText;
             let textsplit = choose_text.split(' ');
-            limit += parseInt(textsplit[1]);
+            spell_limit = parseInt(textsplit[1]);
           }
-          if (source_i > 1) {
+          if (source_i > 1) { //these will be spell select boxes
             source_children = container.children || [];
             for (let item of source_children) {
-              if (children_i > 0) {
+              if (children_i > 0) { //skipping a name
                 if (item.firstChild.firstChild.checked) {
                   chosen.push([
                     item.firstChild.firstChild.id, //db id
                     item.firstChild.firstChild.value, //spell level
                   ]);
+                  spells_chosen++;
                 }
               }
               children_i++;
@@ -2467,7 +2591,47 @@ export default class extends Controller {
       frame_i++;
     });
 
-    if (chosen.length <= limit) {
+    let mystic_spells_chosen = 0;
+    frame_i = 0;
+    source_i = 0;
+    children_i = 0;
+    //these indexes are used to implement nth child in a sense, we're navigating the DOM with them under children.forEach loops
+    //nextSibling might be used to simplify this whole thing or putting IDs on the checkboxes and using a document.getElements
+    source_children = [];
+    mystic_limit = 0;
+
+    this.mysticArcanumModalListTarget.childNodes.forEach((frame) => {
+      if (frame_i > 0) { //skip the title frame
+        source_i = 0;
+        frame.children.forEach((container) => {
+          if (source_i == 1) { //second child is 'Choose #' so grab that number as the limit
+            let choose_text = container.firstChild.innerText;
+            let textsplit = choose_text.split(' ');
+            mystic_limit = parseInt(textsplit[1]);
+          }
+          if (source_i > 1) { //these will be spell select boxes
+            source_children = container.children || [];
+            for (let item of source_children) {
+              if (children_i > 0) { //skipping a name
+                if (item.firstChild.firstChild.checked) {
+                  chosen.push([
+                    item.firstChild.firstChild.id, //db id
+                    item.firstChild.firstChild.value, //spell level
+                  ]);
+                  mystic_spells_chosen++;
+                }
+              }
+              children_i++;
+            }
+            children_i = 0;
+          }
+          source_i++;
+        });
+      }
+      frame_i++;
+    });
+
+    if (spells_chosen <= spell_limit && mystic_spells_chosen <= mystic_limit) {
       this.chosenExtras = chosen;
       this.putExtraSpellsToSheet(chosen);
       event.target.parentNode.close();
@@ -2488,12 +2652,10 @@ export default class extends Controller {
       this.spellsTaken9Target,
     ];
 
-    //the validation i attempted here doesn't limit dual population
-    //and this is a gross implementation
     if (this.allSpells) {
       chosen.forEach((taken) => {
-        if (!this.chosenClassSpells.includes(taken)) {
-          this.allSpellList.forEach((spell) => {
+        if (!this.chosenClassSpells.includes(taken)) { //skip spells chosen already in the class section
+          this.allSpellList.forEach((spell) => { //refers to our 'cached' spell list
             if (spell.id == taken[0])
               this.putSingleSpellTaken(spell, targets[spell.level]);
           });
@@ -2502,7 +2664,7 @@ export default class extends Controller {
     } else {
       chosen.forEach((taken) => {
         if (!this.chosenClassSpells.includes(taken)) {
-          this.validatedExtraSpells.forEach((spell) => {
+          this.validatedExtraSpells.forEach((spell) => { //refers to our 'cached' spell list
             if (spell.id == taken[0])
               this.putSingleSpellTaken(spell, targets[spell.level]);
           });
