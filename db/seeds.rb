@@ -3197,7 +3197,123 @@ Warlock = PlayerClass.create(
   custom: {},
   extra_spells: {},
   specific_spells: {},
-  custom_mods: {},
+  custom_mods: {
+    'mystic_arcanum'=> {
+      'spell_list'=> 'Warlock',
+      'source'=> 'Mystic Arcanum',
+      'choices'=> [
+        #[level, number, spell_level]
+        #these are cumulative
+        [11, 1, 6],
+        [13, 1, 7],
+        [15, 1, 8],
+      ],
+    }
+  },
+  'level_gated_collection'=> {
+    'title'=> "Eldritch Invocations",
+    'levels'=> [
+      [2,2],
+      [5,3],
+      [7,4],
+      [9,5],
+      [12,6],
+      [15,7],
+      [18,8],
+    ],
+    'defaults'=> [],
+    'options'=> {
+      #'name'=> [int(level requirement), str(description), [str(spell name to add to list, optional)])]
+      "Agonizing Blast"=> [2, "When you cast eldritch blast, add your Charisma modifier to the damage it deals on a hit.",[],],
+      "Armor of Shadows"=> [2,"You can cast mage armor on yourself at will, without expending a spell slot or material components.",["Mage Armor"],],
+      "Ascendant Step"=> [9,"You can cast levitate on yourself at will, without expending a spell slot or material components.",["Levitate"],],
+      "Aspect of the Moon"=> [
+        2,
+        "Prerequisite: Pact of the Tome feature.
+        
+        You no longer need to sleep and can't be forced to sleep by any means. To gain the benefits of a long rest, you can spend all 8 hours doing light activity, such as reading your Book of Shadows and keeping watch.",
+        [],
+      ],
+      "Beast Soeech"=> [2,"You can cast speak with animals at will, without expending a spell slot.",["Speak with Animals"]],
+      "Beguiling Influence"=> [2,"You gain proficiency in the Deception and Persuasion skills.",[]],
+      "Bewitching Whispers"=> [7,"You can cast compulsion once using a warlock spell slot. You can't do so again until you finish a long rest.",["Compulsion"]],
+      "Book of Ancient Secrets"=> [
+        2,
+        "Prerequisite: Pact of the Tome feature
+
+        You can now inscribe magical rituals in your Book of Shadows. Choose two 1st-level spells that have the ritual tag from any class's spell list (the two needn't be from the same list). The spells appear in the book and don't count against the number of spells you know. With your Book of Shadows in hand, you can cast the chosen spells as rituals. You can't cast the spells except as rituals, unless you've learned them by some other means. You can also cast a warlock spell you know as a ritual if it has the ritual tag.
+        
+        On your adventures, you can add other ritual spells to your Book of Shadows. When you find such a spell, you can add it to the book if the spell's level is equal to or less than half your warlock level (rounded up) and if you can spare the time to transcribe the spell. For each level of the spell, the transcription process takes 2 hours and costs 50 gp for the rare inks needed to inscribe it.",
+        [],
+      ],
+      "Chains of Carceri"=> [
+        15,
+        "Prerequisite: Pact of the Chain feature
+
+        You can cast hold monster at will – targeting a celestial, fiend, or elemental – without expending a spell slot or material components. You must finish a long rest before you can use this invocation on the same creature again.",
+        ["Hold Monster"],
+      ],
+      "Cloak of Flies"=> [
+        5,
+        "As a bonus action, you can surround yourself with a magical aura that looks like buzzing flies. The aura extends 5 feet from you in every direction, but not through total cover. It lasts until you're incapacitated or you dismiss it as a bonus action.
+
+        The aura grants you advantage on Charisma (Intimidation) checks but disadvantage on all other Charisma checks. Any other creature that starts its turn in the aura takes poison damage equal to your Charisma modifier (minimum of 0 damage).
+        
+        Once you use this invocation, you can't use it again until you finish a short or long rest.",
+        [],
+      ],
+      "Devil's Sight"=> [2,"You can see normally in darkness, both magical and nonmagical, to a distance of 120 feet.",[],],
+      "Dreadful Word"=> [7,"You can cast confusion once using a warlock spell slot. You can't do so again until you finish a long rest.",["Confusion"],],
+      "Eldritch Mind"=> [2,"You have advantage on Constitution saving throws that you make to maintain your concentration on a spell.",[],],
+      "Eldritch Sight"=> [2,"You can cast detect magic at will, without expending a spell slot or material components.",["Detect Magic"],],
+      "Eldritch Smite"=> [
+        5,
+        "Prerequisite: Pact of the Blade feature
+
+        Once per turn when you hit a creature with your pact weapon, you can expend a warlock spell slot to deal an extra 1d8 force damage to the target, plus another 1d8 per level of the spell slot, and you can knock the target prone if it is Huge or smaller.",
+        [],
+      ],
+      "Eldritch Spear"=> [2,"When you cast eldritch blast, its range is 300 feet.",[],],
+      "Eyes of the Rune Keeper"=> [2,"You can read all writing.",[],],
+      "Fiendish Vigor"=> [2,"You can cast false life on yourself at will as a 1st-level spell, without expending a spell slot or material components.",["False Life"],],
+      "Gaze of Two Minds"=> [2,"You can use your action to touch a willing humanoid and perceive through its senses until the end of your next turn. As long as the creature is on the same plane of existence as you, you can use your action on subsequent turns to maintain this connection, extending the duration until the end of your next turn. While perceiving through the other creature's senses, you benefit from any special senses possessed by that creature, and you are blinded and deafened to your own surroundings.",[],],
+      "Lifedrinker"=> [
+        12,
+        "Prerequisite: Pact of the Blade feature
+
+        When you hit a creature with your pact weapon, the creature takes extra necrotic damage equal to your Charisma modifier (minimum 1).",
+        [],
+      ],
+      "Mask of Many Faces"=> [2,"You can cast disguise self at will, without expending a spell slot.",[],],
+      "Master of Myriad Forms"=> [15,"You can cast alter self at will, without expending a spell slot.",["Alter Self"],],
+      "Minions of Chaos"=> [9,"You can cast conjure elemental once using a warlock spell slot. You can't do so again until you finish a long rest.",["Conjure Elemental"],],
+      "Mire the Mind"=> [5,"You can cast slow once using a warlock spell slot. You can't do so again until you finish a long rest.",["Slow"],],
+      "Misty Visions"=> [2,"You can cast silent image at will, without expending a spell slot or material components.",["Silent Image"],],
+      "One with Shadows"=> [5,"When you are in an area of dim light or darkness, you can use your action to become invisible until you move or take an action or a reaction.",[],],
+      "Otherworldly Leap"=> [9,"You can cast jump at will, without expending a spell slot.",["Jump"],],
+      "Repelling Blast"=> [2,"When you hit a creature with eldritch blast, you can push the creature up to 10 feet away from you in a straight line.",[],],
+      "Sculptor of Flesh"=> [7,"You can cast polymorph once using a warlock spell slot. You can't do so again until you finish a long rest.",["Polymorph"],],
+      "Sign of Ill Omen"=> [5,"You can cast bestow curse once using a warlock spell slot. You can't do so again until you finish a long rest.",["Bestow Curse"],],
+      "Thief of Five Fates"=> [2,"You can cast bane once using a warlock spell slot. You can't do so again until you finish a long rest.",["Bane"],],
+      "Thirsting Blade"=> [
+        2,
+        "Prerequisite: Pact of the Blade feature
+
+        You can attack with your pact weapon twice, instead of once, whenever you take the Attack action on your turn.",
+        [],
+      ],
+      "Visions of Distant Realms"=> [15,"You can cast arcane eye at will, without expending a spell slot.",["Arcane Eye"],],
+      "Voice of the Chain Master"=> [
+        2,
+        "Prerequisite: Pact of the Chain feature
+
+        You can communicate telepathically with your familiar and perceive through your familiar's senses as long as you are on the same plane of existence. Additionally, while perceiving through your familiar's senses, you can also speak through your familiar in your own voice, even if your familiar is normally incapable of speech.",
+        [],
+      ],
+      "Whispers of the Grave"=> [9,"You can cast speak with dead at will, without expending a spell slot.",["Speak with Dead"],],
+      "Witch Sight"=> [15,"You can see the true form of any shapechanger or creature concealed by illusion or transmutation magic while the creature is within 30 feet of you and within line of sight.",[],],     
+    },
+  },
 )
 
 Wizard = PlayerClass.create(

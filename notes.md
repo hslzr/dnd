@@ -16,6 +16,7 @@ Deactivate buttons that lead to empty modals (Tools done)
   Draconic Resilience needs customMods
 # Warlock
     -lots of work
+    support proficiencies in eldritch invocations under gated_collections
 
 # Spells
    attack spells dont populate attacks
@@ -23,7 +24,7 @@ Deactivate buttons that lead to empty modals (Tools done)
 
 # Limits
   'specialties' implemented as a customMod, but more than one would break the system, 
-    i can fix this with the id strategy used in customMod for gated_collections
+    i can fix this with the id strategy used in customMod for gated_collections - Beguiling Influence
 
 # Bugs
 

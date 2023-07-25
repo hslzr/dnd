@@ -214,6 +214,7 @@ export default class extends Controller {
     'specialtiesModalList',
     'specialtyFeatures',
     'extraSpecialtiesButton',
+    'mysticArcanumModalList',
   ];
 
   connect() {
@@ -1164,7 +1165,17 @@ export default class extends Controller {
       if(gated_collection) {
         this.populateGatedCollection(gated_collection, key, this.specialtiesModalListTarget);
       }
+
+      let mystic_arcanum = mods['mystic_arcanum'] | false;
+      if(mystic_arcanum) {
+        this.populateArcanum(mystic_arcanum);
+      }
     }
+  }
+
+  //warlock mystic arcanum
+  populateArcanum(arcanum) {
+
   }
 
   //submits along with modspecialties, so this is coupled to pop and validation methods on those
@@ -2204,12 +2215,13 @@ export default class extends Controller {
 
     this.prepExtraSpellsModal();
 
+
+    //we'll only populate spells that are at or below max spell slot level
+    //first two entries are informational, not numbers of spell slots
     let max_spell_level = 0;
     for (let i = 2; i < 11; i++) {
       if (this.spell_table[this.level - 1][i] > 0) max_spell_level++;
     }
-
-    //first two entries are informational, not numbers of spell slots
 
     //fetch each spell list in extra SpellLists
     let lists = this.extraSpellLists.values();
@@ -2256,7 +2268,6 @@ export default class extends Controller {
     ]; //eliminate duplicates
   }
 
-  //error in calculating spell slots, chooses wrong index
   prepExtraSpellsModal() {
     //we clear it here because populateExtraSpellsModal() will be called several times
     Util.removeAllChildNodes(this.extraSpellsModalListTarget);
