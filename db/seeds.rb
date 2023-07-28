@@ -3317,6 +3317,30 @@ Warlock = PlayerClass.create(
   
 )
 
+Warlock.subclasses.create(
+  name: "Pact of the ",
+  description: "",
+  features: {
+    1=>[
+      "",
+    ],
+    6=>[
+      "",
+    ],
+    14=>[
+      "",
+    ],
+    18=>[
+      "",
+    ],
+  },
+  custom: {},
+  equipment_choices: {},
+  extra_spells: {},
+  specific_spells: {},
+  custom_mods: {},
+)
+
 Wizard = PlayerClass.create(
   name: 'Wizard',
   hit_die: 6,
