@@ -11,12 +11,12 @@ Deactivate buttons that lead to empty modals (Tools done)
 
 
 # Rogue
-    filled but expertise not implemented, especially for thief's tools
+    filled but expertise not implemented
 # Sorceror
   Draconic Resilience needs customMods
 # Warlock
-    -lots of work
     support proficiencies in eldritch invocations under gated_collections
+    -blocked out expanded spell list and it might work, controller takes a big param havent tested that
 
 # EquipmentGearpacks
     in the seed but not implemented
@@ -32,24 +32,7 @@ Deactivate buttons that lead to empty modals (Tools done)
 
 # Bugs
 
-    extra spells double population if submit twice
-
-
 # Refactors 
 
     putExtraSpellsToSheet
-
     spellsModal looks worse than ExtraSpellsModal though that needs some style work as well
-
-
-# handoff notes
-
-    have to implement some warlock features, then add the subclasses
-
-    after Warlock I feel like a big refactor is needed,
-        -firstly get it working as best as I can, functional beta in production is the priority
-        -clean unused db entries like primary_skills
-        -determine what db columns should just be customMods or vice versa
-        -organize by concern
-        -document the data being passed into each function and the side effects
-        -break out modules for everything but the control loop so I can isolate that

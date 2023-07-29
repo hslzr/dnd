@@ -36,6 +36,19 @@ class LabelsController < ApplicationController
     end
   end
 
+  #send csv string of spell names in to get db spells
+  def spells
+    @spells = params[:name].split(',', -1)
+    
+    @list = @spells.map do |spell|
+      Spell.where(name: spell)
+    end
+
+    respond_to do |format|
+      format.json { render json: @list }
+    end
+  end
+
   def anyspell
     @spells = Spell.all
     respond_to do |format|

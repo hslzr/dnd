@@ -1166,12 +1166,29 @@ export default class extends Controller {
         this.populateGatedCollection(gated_collection, key, this.specialtiesModalListTarget);
       }
 
-      let mystic_arcanum = mods['mystic_arcanum'] | false;
+      let mystic_arcanum = mods['mystic_arcanum'] || false;
       if(mystic_arcanum) {
         this.populateArcanum(mystic_arcanum);
       }
-    }
+
+      let expanded_spell_list = mods['expanded_spell_list'] || false;
+      if(expanded_spell_list) {
+        this.appendToSpellList(expanded_spell_list);
+      }
   }
+
+  appendToSpellList(spells) {
+    let param_string = spells.join(',');
+    fetch(`/labels/${param_string}`)
+      .then((response) => response.json())
+      .then((data) => {
+        //add the right data to this.spellList?
+        data.forEach((item) => {
+          this.spellList.push(item);
+        })
+        this.chooseSpells();
+      });
+}
 
   //submits along with modspecialties, so this is coupled to pop and validation methods on those
   populateGatedCollection(gated_collection, source, target) {
@@ -1729,7 +1746,7 @@ export default class extends Controller {
   }
 
   populateOptionalFeatureModal(feature, target) {
-    let frame = Util.getTag('div', 'flex flex-col gap-2 p-2');
+    let frame = Util.getTag('div', 'flex flex-col gap-2 p-2 col-span-full');
     let title = Util.getTag(
       'h4',
       'text-center font-bold text-xl',
