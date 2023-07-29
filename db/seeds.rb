@@ -3194,7 +3194,23 @@ Warlock = PlayerClass.create(
       "Eldritch Master: You can draw on your inner reserve of mystical power while entreating your patron to regain expended spell slots. You can spend 1 minute entreating your patron for aid to regain all your expended spell slots from your Pact Magic feature. Once you regain spell slots with this feature, you must finish a long rest before you can do so again.",
     ]
   },
-  custom: {},
+  custom: {
+    3=>[
+      "Pact of the Chain: You learn the find familiar spell and can cast it as a ritual. The spell doesn’t count against your number of spells known.
+
+      When you cast the spell, you can choose one of the normal forms for your familiar or one of the following special forms: imp, pseudodragon, quasit, or sprite.
+      
+      Additionally, when you take the Attack action, you can forgo one of your own attacks to allow your familiar to make one attack of its own with its reaction.",
+      "Pact of the Blade: You can use your action to create a pact weapon in your empty hand. You can choose the form that this melee weapon takes each time you create it. You are proficient with it while you wield it. This weapon counts as magical for the purpose of overcoming resistance and immunity to nonmagical attacks and damage.
+
+      Your pact weapon disappears if it is more than 5 feet away from you for 1 minute or more. It also disappears if you use this feature again, if you dismiss the weapon (no action required), or if you die.
+      
+      You can transform one Magic Weapon into your pact weapon by performing a special ritual while you hold the weapon. You perform the ritual over the course of 1 hour, which can be done during a short rest. You can then dismiss the weapon, shunting it into an extradimensional space, and it appears whenever you create your pact weapon thereafter. You can’t affect an artifact or a sentient weapon in this way. The weapon ceases being your pact weapon if you die, if you perform the 1-hour ritual on a different weapon, or if you use a 1-hour ritual to break your bond to it. The weapon appears at your feet if it is in the extradimensional space when the bond breaks.",
+      "Pact of the Tome: Your patron gives you a grimoire called a Book of Shadows. When you gain this feature, choose three cantrips from any class’s spell list (the three needn’t be from the same list). While the book is on your person, you can cast those cantrips at will. They don’t count against your number of cantrips known. If they don’t appear on the warlock spell list, they are nonetheless warlock spells for you.
+
+      If you lose your Book of Shadows, you can perform a 1-hour ceremony to receive a replacement from your patron. This ceremony can be performed during a short or long rest, and it destroys the previous book. The book turns to ash when you die.",
+    ],
+  },
   extra_spells: {},
   specific_spells: {},
   custom_mods: {
@@ -3318,27 +3334,132 @@ Warlock = PlayerClass.create(
 )
 
 Warlock.subclasses.create(
-  name: "Pact of the ",
-  description: "",
+  name: "The Archfey",
+  description: "Your patron is a lord or lady of the fey, a creature of legend who holds secrets that were forgotten before the mortal races were born. This being's motivations are often inscrutable, and sometimes whimsical, and might involve a striving for greater magical power or the settling of age-old grudges.",
   features: {
     1=>[
-      "",
+      "Fey Presence: Your patron bestows upon you the ability to project the beguiling and fearsome presence of the fey. As an action, you can cause each creature in a 10-foot cube originating from you to make a Wisdom saving throw against your warlock spell save DC. The creatures that fail their saving throws are all charmed or frightened by you (your choice) until the end of your next turn.
+
+      Once you use this feature, you can't use it again until you finish a short or long rest.",
     ],
     6=>[
-      "",
+      "Misty Escape: You can vanish in a puff of mist in response to harm. When you take damage, you can use your reaction to turn invisible and teleport up to 60 feet to an unoccupied space you can see. You remain invisible until the start of your next turn or until you attack or cast a spell.
+
+      Once you use this feature, you can't use it again until you finish a short or long rest.",
+    ],
+    10=>[
+      "Beguiling Defenses: Your patron teaches you how to turn the mind-affecting magic of your enemies against them. You are immune to being charmed, and when another creature attempts to charm you, you can use your reaction to attempt to turn the charm back on that creature. The creature must succeed on a Wisdom saving throw against your warlock spell save DC or be charmed by you for 1 minute or until the creature takes any damage.",
     ],
     14=>[
-      "",
-    ],
-    18=>[
-      "",
+      "Dark Delirium: You can plunge a creature into an illusory realm. As an action, choose a creature that you can see within 60 feet of you. It must make a Wisdom saving throw against your warlock spell save DC. On a failed save, it is charmed or frightened by you (your choice) for 1 minute or until your concentration is broken (as if you are concentrating on a spell). This effect ends early if the creature takes any damage.
+
+      Until this illusion ends, the creature thinks it is lost in a misty realm, the appearance of which you choose. The creature can see and hear only itself, you, and the illusion.
+      
+      You must finish a short or long rest before you can use this feature again.",
     ],
   },
   custom: {},
   equipment_choices: {},
   extra_spells: {},
   specific_spells: {},
-  custom_mods: {},
+  custom_mods: {
+    'expanded_spell_list'=> [
+      "Faerie Fire",
+      "Sleep",
+      "Calm Emotions",
+      "Phantasmal Force",
+      "Blink",
+      "Plant Growth",
+      "Dominate Beast",
+      "Greater Invisibility",
+      "Dominate Person",
+      "Seeming",
+    ],
+  },
+)
+
+Warlock.subclasses.create(
+  name: "The Fiend",
+  description: "You have made a pact with a fiend from the lower planes of existence, a being whose aims are evil, even if you strive against those aims. Such beings desire the corruption or destruction of all things, ultimately including you.",
+  features: {
+    1=>[
+      "Dark One's Blessing: When you reduce a hostile creature to 0 hit points, you gain temporary hit points equal to your Charisma modifier + your warlock level (minimum of 1).",
+    ],
+    6=>[
+      "Dark One's Own Luck: You can call on your patron to alter fate in your favor. When you make an ability check or a saving throw, you can use this feature to add a d10 to your roll. You can do so after seeing the initial roll but before any of the roll’s effects occur.
+
+      Once you use this feature, you can’t use it again until you finish a short or long rest.",
+    ],
+    10=>[
+      "Fiendish Resilience: You can choose one damage type when you finish a short or long rest. You gain resistance to that damage type until you choose a different one with this feature. Damage from magical weapons or silver weapons ignores this resistance.",
+    ],
+    14=>[
+      "Hurl Through Hell: When you hit a creature with an attack, you can use this feature to instantly transport the target through the lower planes. The creature disappears and hurtles through a nightmare landscape.
+
+      At the end of your next turn, the target returns to the space it previously occupied, or the nearest unoccupied space. If the target is not a fiend, it takes 10d10 psychic damage as it reels from its horrific experience.
+      
+      Once you use this feature, you can’t use it again until you finish a long rest.",
+    ],
+  },
+  custom: {},
+  equipment_choices: {},
+  extra_spells: {},
+  specific_spells: {},
+  custom_mods: {
+    'expanded_spell_list'=> [
+      "Burning Hands", 
+      "Command",
+      "Blindness/Deafness",
+      "Scorching Ray",
+      "Fireball",
+      "Stinking Cloud",
+      "Fire Shield",
+      "Wall of Fire",
+      "Flame Strike",
+      "Hallow",
+    ],
+  },
+)
+
+Warlock.subclasses.create(
+  name: "The Great Old One",
+  description: "Your patron is a mysterious entity whose nature is utterly foreign to the fabric of reality. It might come from the Far Realm, the space beyond reality, or it could be one of the elder gods known only in legends. Its motives are incomprehensible to mortals, and its knowledge so immense and ancient that even the greatest libraries pale in comparison to the vast secrets it holds. ",
+  features: {
+    1=>[
+      "Awakened Mind: Your alien knowledge gives you the ability to touch the minds of other creatures. You can telepathically speak to any creature you can see within 30 feet of you. You don't need to share a language with the creature for it to understand your telepathic utterances, but the creature must be able to understand at least one language.",
+    ],
+    6=>[
+      "Entropic Ward: You learn to magically ward yourself against attack and to turn an enemy's failed strike into good luck for yourself. When a creature makes an attack roll against you, you can use your reaction to impose disadvantage on that roll. If the attack misses you, your next attack roll against the creature has advantage if you make it before the end of your next turn.
+
+      Once you use this feature, you can't use it again until you finish a short or long rest.",
+    ],
+    10=>[
+      "Thought Shield: Your thoughts can't be read by telepathy or other means unless you allow it. You also have resistance to psychic damage, and whenever a creature deals psychic damage to you, that creature takes the same amount of damage that you do.",
+    ],
+    14=>[
+      "Create Thrall: You gain the ability to infect a humanoid's mind with the alien magic of your patron. You can use your action to touch an incapacitated humanoid. That creature is then charmed by you until a Remove Curse spell is cast on it, the charmed condition is removed from it, or you use this feature again.
+
+      You can communicate telepathically with the charmed creature as long as the two of you are on the same plane of existence.",
+    ],
+  },
+  custom: {},
+  equipment_choices: {},
+  extra_spells: {},
+  specific_spells: {},
+  custom_mods: {
+    'expanded_spell_list'=> [
+      "Dissonant Whispers",
+      "Tasha's Hideous Laughter",
+      "Detect Thoughts",
+      "Phantasmal Force",
+      "Clairvoyance",
+      "Sending",
+      "Dominate Beast",
+      "Evard's Black Tentacles",
+      "Dominate Person",
+      "Telekinesis",
+    ],
+  },
 )
 
 Wizard = PlayerClass.create(
