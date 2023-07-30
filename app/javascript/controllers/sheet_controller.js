@@ -1175,6 +1175,7 @@ export default class extends Controller {
       if(expanded_spell_list) {
         this.appendToSpellList(expanded_spell_list);
       }
+    }
   }
 
   appendToSpellList(spells) {
